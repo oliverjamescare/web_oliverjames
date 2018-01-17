@@ -1,0 +1,16 @@
+.fixed-wrapper
+{
+    position: fixed;
+    width: 100%;
+    right: 0;
+    left: 0;
+    .wrapper-container
+    {
+        padding: 43px 43px 53px;
+    }
+    .lead-picture
+    {
+        max-height: 433px;
+        width: auto;
+    }
+}

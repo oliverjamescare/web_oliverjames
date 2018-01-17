@@ -1,0 +1,24 @@
+@import "variables";
+
+#main-menu
+{
+    a.nav-link
+    {
+        padding: 0px 40px;
+        font-size: 17px;
+        font-weight: 500;
+        position: relative;
+        text-align: center;
+        &:after
+        {
+            content: "";
+            width: 45px;
+            height: 4px;
+            background: $grey-brown-color;
+            position: absolute;
+            top: 35px;
+            left: 100%;
+            right: 100%;
+        }
+    }
+}
