@@ -4,6 +4,7 @@
     width: 100%;
     right: 0;
     left: 0;
+    font-size: 18px;
     .wrapper-container
     {
         padding: 43px 43px 53px;
@@ -12,5 +13,15 @@
     {
         max-height: 433px;
         width: auto;
+    }
+    .large-logo
+    {
+        margin-top: 100px;
+        max-width: 565px;
+        margin-left: 20px;
+    }
+    .static-content-container
+    {
+        padding: 0 40px 60px;
     }
 }

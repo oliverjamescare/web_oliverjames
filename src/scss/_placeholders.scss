@@ -1,0 +1,12 @@
+@import "variables";
+
+%main-transition
+{
+    transition: $main-transition;
+    &:hover
+    {
+        transition: $main-transition;
+    }
+}
+
+

@@ -7,6 +7,11 @@
 
 .app-wrapper
 {
-    padding: 0 43px;
     font-family: $main-font;
+    color:  $grey-brown-color;
+}
+
+.form-control
+{
+    border-radius: 0;
 }
