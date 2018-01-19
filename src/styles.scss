@@ -11,7 +11,53 @@
     color:  $grey-brown-color;
 }
 
+#content
+{
+    width: 90%;
+    margin: 530px auto 0;
+    padding: 30px 45px 60px;
+}
+
 .form-control
 {
     border-radius: 0;
+    border: 2px solid $light-grey-color;
+    color: $light-grey-color;
+    padding: 10px 0;
+    text-align: center;
+    &:focus
+    {
+        border-color: $light-grey-color;
+        color: $light-grey-color;
+        box-shadow: 0 0 0 0.2rem rgba($grey-brown-color, 0.25);
+    }
+}
+
+.btn-success
+{
+    border-radius: 0;
+    color: $white-color;
+    text-align: center;
+    padding: 10px;
+    background: $green-color;
+    border-color: $green-color;
+    font-family: $main-font;
+    font-weight: 500;
+    width: 100%;
+    &:hover
+    {
+        background: lighten($green-color, 5%);
+        border-color: $green-color;
+    }
+    &:focus, &:active:focus, &:not([disabled]):not(.disabled):active:focus
+    {
+        box-shadow: 0 0 0 0.2rem rgba($green-color, 0.5);
+        background: $green-color;
+        border-color: $green-color;
+    }
+}
+
+hr
+{
+
 }

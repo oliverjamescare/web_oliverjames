@@ -1,0 +1,110 @@
+@import "variables";
+@import "placeholders";
+
+nav.navbar-expand-lg
+{
+    padding: 0;
+}
+#main_menu
+{
+    ul
+    {
+        margin: 0 auto;
+    }
+    a.nav-link
+    {
+        margin: 5px 15%;
+        padding: 0;
+        cursor: pointer;
+        font-size: 17px;
+        font-weight: 500;
+        color: $grey-brown-color;
+        @extend %main-transition;
+        &:hover, &.active
+        {
+            color: $green-color;
+            .bottom-line
+            {
+                background: $green-color;
+            }
+        }
+        @media #{$large}
+        {
+            margin: 0 10%;
+        }
+        @media #{$x-large}
+        {
+            margin: 0 15%;
+        }
+
+    }
+    .bottom-line
+    {
+        width: 45px;
+        height: 4px;
+        background: $grey-brown-color;
+        margin: 10px auto 0;
+        @extend %main-transition;
+    }
+}
+
+.fixed-wrapper
+{
+    background: $white-color;
+    z-index: 999;
+    position: fixed;
+    width: 90%;
+    left: 5%;
+    font-size: 18px;
+    top: 0;
+    .wrapper-container
+    {
+        margin: 40px 40px 0;
+    }
+    .lead-picture
+    {
+        margin-top: 35px;
+        max-height: 433px;
+        width: auto;
+    }
+    .logo-picture
+    {
+        margin-left: 50px;
+    }
+    .large-logo
+    {
+        margin-top: 80px;
+    }
+    .static-content-container
+    {
+        max-width: 565px;
+        margin: 0 auto;
+    }
+    .section-desctiption
+    {
+        margin: 15px 0 20px;
+    }
+    hr
+    {
+        margin: 40px 20px 0;
+        border-top: 2px solid lighten($light-grey-color, 30%);
+    }
+}
+
+.carer-buttons
+{
+    a
+    {
+        display: inline-block;
+        float: left;
+        width: 48%;
+        &:first-child
+        {
+            margin-right: 10px;
+        }
+        &:last-child
+        {
+            margin-left: 10px;
+        }
+    }
+}
