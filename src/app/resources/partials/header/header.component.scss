@@ -1,12 +1,49 @@
 @import "variables";
 @import "placeholders";
 
+.wrapper-container
+{
+    margin: 25px 0 0;
+}
+.lead-picture
+{
+    margin-top: 35px;
+    max-height: 433px;
+    width: auto;
+}
+.logo-picture
+{
+    margin-left: 50px;
+}
+.large-logo
+{
+    margin-top: 80px;
+}
+.static-content-container
+{
+    max-width: 565px;
+    margin: 0 auto;
+}
+.section-desctiption
+{
+    margin: 15px 0 20px;
+}
+hr
+{
+    margin: 25px 20px 0;
+    border-top: 2px solid lighten($light-grey-color, 30%);
+}
+
 nav.navbar-expand-lg
 {
     padding: 0;
 }
 #main_menu
 {
+    .nav-item
+    {
+        margin-top: 15px;
+    }
     ul
     {
         margin: 0 auto;
@@ -30,7 +67,7 @@ nav.navbar-expand-lg
         }
         @media #{$large}
         {
-            margin: 0 10%;
+            margin: 0 8px;
         }
         @media #{$x-large}
         {
@@ -43,53 +80,11 @@ nav.navbar-expand-lg
         width: 45px;
         height: 4px;
         background: $grey-brown-color;
-        margin: 10px auto 0;
+        margin: 5px auto 0;
         @extend %main-transition;
     }
 }
 
-.fixed-wrapper
-{
-    background: $white-color;
-    z-index: 999;
-    position: fixed;
-    width: 90%;
-    left: 5%;
-    font-size: 18px;
-    top: 0;
-    .wrapper-container
-    {
-        margin: 40px 40px 0;
-    }
-    .lead-picture
-    {
-        margin-top: 35px;
-        max-height: 433px;
-        width: auto;
-    }
-    .logo-picture
-    {
-        margin-left: 50px;
-    }
-    .large-logo
-    {
-        margin-top: 80px;
-    }
-    .static-content-container
-    {
-        max-width: 565px;
-        margin: 0 auto;
-    }
-    .section-desctiption
-    {
-        margin: 15px 0 20px;
-    }
-    hr
-    {
-        margin: 40px 20px 0;
-        border-top: 2px solid lighten($light-grey-color, 30%);
-    }
-}
 
 .carer-buttons
 {

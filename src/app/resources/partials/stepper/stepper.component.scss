@@ -1,0 +1,68 @@
+@import "variables";
+
+.steps-container
+{
+    text-align: center;
+    margin-bottom: 50px;
+}
+.step
+{
+    display: inline-block;
+    position: relative;
+    width: 190px;
+    text-align: center;
+    &:first-child .line-left, &:last-child .line-right
+    {
+        display: none;
+    }
+
+    .line-right
+    {
+        right: 0;
+    }
+}
+.circle
+{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid $grey-brown-color;
+    margin: 0 auto;
+    background: $white-color;
+    z-index: 999;
+    &.active
+    {
+        border-color: $green-color;
+    }
+    &.completed
+    {
+        border-color: $green-color;
+        background: $green-color;
+    }
+}
+.line
+{
+    position: absolute;
+    width: 50%;
+    height: 3px ;
+    top: 20px;
+    background: $grey-brown-color;
+    z-index: -999;
+
+    &.active
+    {
+        background: $green-color;
+    }
+}
+.label
+{
+    margin-top: 20px;
+    font-weight: 500;
+    &.active
+    {
+        color: $green-color;
+    }
+}
+
+
+

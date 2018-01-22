@@ -1,5 +1,11 @@
 <div class="row">
     <div class="col-12">
+        <app-stepper [steps]="steps"></app-stepper>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
         <ul>
             <li>
                 Oliver James Carers enjoy many benefits, including earning a lot more than other agency carers, payments within 3 working days and the freedom to choose when, where and which homes they work with
@@ -11,5 +17,25 @@
                 Our Terms and Conditions govern the use of the Oliver James platform by all carers and customers. To proceed with your application, you will need to acknowledge that you have read and accepted these conditions.
             </li>
         </ul>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="terms" ngModel name="terms" required>
+                <label class="custom-control-label" for="terms">I understand and accept the Oliver James Terms & Conditions</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="taxObligations" ngModel name="taxObligations" required>
+                <label class="custom-control-label" for="taxObligations">I understand that Oliver James carers are self-employed and responsible for managing their own tax obligations and obtaining liability insurance</label>
+            </div>
+
+            <div class="text-center">
+                <button class="btn btn-success" [disabled]="!form.valid">Proceed</button>
+                <small class="form-text text-muted">By clicking proceed, you are agreeing to the above</small>
+            </div>
+        </form>
     </div>
 </div>

@@ -1,7 +1,9 @@
 <div class="app-wrapper">
-    <app-header></app-header>
+    <header class="fixed-wrapper" #fixedWrapper >
+        <app-header></app-header>
+    </header>
 
-    <section id="content">
+    <section id="content" appContentResizer [relativeTo]="fixedWrapper">
         <div class="container-fluid">
             <router-outlet></router-outlet>
         </div>

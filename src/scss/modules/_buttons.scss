@@ -1,0 +1,29 @@
+//success button
+.btn-success
+{
+    border-radius: 0;
+    color: $white-color;
+    text-align: center;
+    padding: 10px;
+    background: $green-color;
+    border-color: $green-color;
+    font-family: $main-font;
+    font-weight: 500;
+    width: 100%;
+    &:hover
+    {
+        background: lighten($green-color, 5%);
+        border-color: $green-color;
+    }
+    &:focus, &:active:focus, &:not([disabled]):not(.disabled):active:focus
+    {
+        box-shadow: 0 0 0 0.2rem rgba($green-color, 0.5);
+        background: $green-color;
+        border-color: $green-color;
+    }
+    &.disabled, &:disabled
+    {
+        background: $green-color;
+        border-color: $green-color;
+    }
+}
