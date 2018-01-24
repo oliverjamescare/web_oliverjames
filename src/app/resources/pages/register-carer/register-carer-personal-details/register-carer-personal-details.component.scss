@@ -1,0 +1,31 @@
+@import "variables";
+@import "placeholders";
+
+.address-toggler
+{
+    color: $green-color;
+    margin: 5px 0;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    display: inline-block;
+    @extend %main-transition;
+    &:hover
+    {
+        color: lighten($green-color, 5%);
+    }
+}
+.form-control
+{
+    text-align: left;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.address-preview
+{
+    width: 100%;
+    margin: 2px 0 0;
+    border: none;
+    font-size: 14px;
+    background: $white-color;
+}

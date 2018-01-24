@@ -13,6 +13,7 @@ import { UserService } from '../../../../services/user.service';
 })
 export class RegisterCarerPersonalDetailsComponent implements OnInit
 {
+    addressVisible = false;
     steps: Array<{ name: string, active: boolean, completed: boolean }> = [
         {
             name: "Terms & Conditions",
@@ -137,5 +138,9 @@ export class RegisterCarerPersonalDetailsComponent implements OnInit
             surname: new FormControl(null,[ Validators.required, Validators.maxLength(100), alpha ]),
             location_id : new FormControl(null),
         });
+    }
+    toggleAddress()
+    {
+        this.addressVisible = !this.addressVisible;
     }
 }

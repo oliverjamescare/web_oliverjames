@@ -42,13 +42,39 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-6">
-                    <div class="form-inlinep">
-                        <input type="text" class="form-control" placeholder="Your postcode" formControlName="location_id">
+                <div class="col-3">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Your postcode" id="postcode" name="postcode">
+                        <span (click)="toggleAddress()" class="address-toggler">Enter address manually</span>
+                        <input type="text" class="address-preview" id="address" name="address" readonly disabled>
                     </div>
                 </div>
                 <div class="col-3">
-
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Date of birth dd/mm/yyyy" >
+                    </div>
+                </div>
+            </div>
+            <div class="row" [ngClass]="{'d-none': !addressVisible }">
+                <div class="col-3">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Company" id="company" name="company">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Address line 1" id="line_one" name="line_one">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Address line 2" id="line_two" name="line_two">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Town / City" id="city" name="city">
+                    </div>
                 </div>
             </div>
         </form>
