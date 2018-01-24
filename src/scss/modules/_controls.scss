@@ -12,6 +12,24 @@
         color: $light-grey-color;
         box-shadow: 0 0 0 0.2rem rgba($grey-brown-color, 0.25);
     }
+    &.is-valid
+    {
+        border-color: $green-color;
+        &:focus
+        {
+            border-color: $green-color;
+            box-shadow: 0 0 0 0.2rem rgba($green-color, 0.25);
+        }
+    }
+    //&.is-invalid
+    //{
+    //    border-color: $red-color;
+    //    &:focus
+    //    {
+    //        border-color: $red-color;
+    //        box-shadow: 0 0 0 0.2rem rgba($red-color, 0.25);
+    //    }
+    //}
 }
 
 //custom controls

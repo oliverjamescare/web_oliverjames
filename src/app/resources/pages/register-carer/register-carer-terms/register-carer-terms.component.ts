@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CarerService } from '../../../../services/carer.service';
 
 @Component({
     selector: 'app-register-carer-terms',
@@ -32,11 +33,14 @@ export class RegisterCarerTermsComponent
         }
     ];
 
-    constructor(private router: Router) {}
+    constructor(private router: Router, private carerService: CarerService) {}
 
     onSubmit(form: NgForm)
     {
         if(form.valid)
+        {
+            this.carerService.registerStep = this.carerService.availableSteps.PERSONAL_DETAILS;
             this.router.navigate(['/carer/register/personal-details'])
+        }
     }
 }

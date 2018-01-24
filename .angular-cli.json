@@ -19,7 +19,8 @@
             "testTsconfig": "tsconfig.spec.json",
             "prefix": "app",
             "styles": [
-                "../node_modules/bootstrap/dist/css/bootstrap.css",
+                "../node_modules/bootstrap/dist/css/bootstrap.min.css",
+                "../node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css",
                 "styles.scss"
             ],
             "stylePreprocessorOptions": {
@@ -27,7 +28,12 @@
                     "scss"
                 ]
             },
-            "scripts": [],
+            "scripts": [
+                "../node_modules/xregexp/xregexp-all.js",
+                "../node_modules/jquery/dist/jquery.min.js",
+                "../node_modules/bootstrap/dist/js/bootstrap.min.js",
+                "../node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"
+            ],
             "environmentSource": "environments/environment.ts",
             "environments": {
                 "dev": "environments/environment.ts",

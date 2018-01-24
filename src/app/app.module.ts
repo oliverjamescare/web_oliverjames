@@ -1,10 +1,16 @@
 //modules
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 
 //directives
 import { ContentResizerDirective } from './directives/content-resizer.directive';
+
+//services
+import { CarerService } from './services/carer.service';
+import { UserService } from './services/user.service';
+import { ApiService } from './services/api.service';
 
 //components
 import { AppComponent } from './app.component';
@@ -19,7 +25,6 @@ import { RegisterCarerSummaryComponent } from './resources/pages/register-carer/
 import { RegisterCarerComponent } from './resources/pages/register-carer/register-carer.component';
 import { StepperComponent } from './resources/partials/stepper/stepper.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 
 @NgModule({
     declarations: [
@@ -40,9 +45,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         BrowserModule,
         AppRoutingModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        HttpClientModule
     ],
-    providers: [],
+    providers: [
+        ApiService,
+        CarerService,
+        UserService
+    ],
     bootstrap: [ AppComponent ]
 })
 export class AppModule {

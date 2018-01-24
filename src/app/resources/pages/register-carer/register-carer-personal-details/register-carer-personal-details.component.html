@@ -1,8 +1,67 @@
-<div class="custom-control custom-radio">
-    <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-    <label class="custom-control-label" for="customRadio1">Toggle this custom radio</label>
+<div class="row">
+    <div class="col-12">
+        <app-stepper [steps]="steps"></app-stepper>
+    </div>
 </div>
-<div class="custom-control custom-radio">
-    <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-    <label class="custom-control-label" for="customRadio2">Or toggle this other custom radio</label>
+
+<div class="row">
+    <div class="col-12">
+        <form [formGroup]="form">
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="Email" formControlName="email" [ngClass]="formUtils.handleValidationStateClass(form, 'email')">
+                        <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'email', messages) }} </span>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Phone number" formControlName="phone_number" [ngClass]="formUtils.handleValidationStateClass(form, 'phone_number')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'phone_number', messages) }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="First name (as it appears on your passport)" formControlName="first_name" [ngClass]="formUtils.handleValidationStateClass(form, 'first_name')">
+                        <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'first_name', messages) }} </span>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Middle names (as it appears on your passport)" formControlName="middle_name" [ngClass]="formUtils.handleValidationStateClass(form, 'middle_name')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'middle_name', messages) }} </span>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Surname (as it appears on your passport)" formControlName="surname" [ngClass]="formUtils.handleValidationStateClass(form, 'surname')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'surname', messages) }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-inlinep">
+                        <input type="text" class="form-control" placeholder="Your postcode" formControlName="location_id">
+                    </div>
+                </div>
+                <div class="col-3">
+
+                </div>
+            </div>
+        </form>
+    </div>
 </div>
+
+
+
+<!--<div class="custom-control custom-radio">-->
+    <!--<input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">-->
+    <!--<label class="custom-control-label" for="customRadio1">Toggle this custom radio</label>-->
+<!--</div>-->
+<!--<div class="custom-control custom-radio">-->
+    <!--<input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">-->
+    <!--<label class="custom-control-label" for="customRadio2">Or toggle this other custom radio</label>-->
+<!--</div>-->
