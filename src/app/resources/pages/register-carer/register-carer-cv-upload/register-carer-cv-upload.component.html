@@ -1,3 +1,41 @@
-<p>
-  register-carer-cv-upload works!
-</p>
+<div class="row">
+    <div class="col-12">
+        <app-stepper [steps]="steps"></app-stepper>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="text-center">
+                <h4>Please upload your CV</h4>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="text-center">
+                        <div class="form-group">
+                            <input type="text" class="form-control" readonly [value]="form.get('cv').value">
+                            <input type="file" formControlName="cv" (change)="onFileChange($event)" class="d-none" #fileInput>
+                            <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'cv', messages) }} </span>
+                            <small class="form-text text-muted">Only word processing doctypes (word / pdf) and images (no exe, zip files, etc). At least 125kb</small>
+                        </div>
+                        <button class="btn btn-success choose-file" type="button" (click)="triggerFileBrowser(fileInput)">Choose file</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <br><br>
+            <div class="row">
+                <div class="col-3">
+                    <button class="btn btn-secondary" (click)="previousStep()">Back</button>
+                </div>
+                <div class="col-6">
+                    <div class="text-center">
+                        <button class="btn btn-success" type="submit" [disabled]="!form.valid">Next</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -18,8 +18,6 @@
 .form-control
 {
     text-align: left;
-    padding-left: 10px;
-    padding-right: 10px;
 }
 .address-preview
 {
@@ -28,4 +26,30 @@
     border: none;
     font-size: 14px;
     background: $white-color;
+}
+.custom-control
+{
+    display: inline-block;
+}
+
+.btn-secondary
+{
+    max-width: 120px;
+}
+.btn-success
+{
+    max-width: 350px;
+}
+label
+{
+    font-size: 18px;
+    font-weight: 500;
+}
+.custom-control label
+{
+    font-weight: normal;
+}
+.invalid-feedback
+{
+    display: block;
 }

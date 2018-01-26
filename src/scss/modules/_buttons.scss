@@ -27,3 +27,17 @@
         border-color: $green-color;
     }
 }
+
+//secondary button
+.btn-secondary
+{
+    background: $grey-brown-color;
+    border-color: $grey-brown-color;
+    font-family: $main-font;
+    font-weight: 500;
+    width: 100%;border-radius: 0;
+    color: $white-color;
+    text-align: center;
+    padding: 10px;
+
+}

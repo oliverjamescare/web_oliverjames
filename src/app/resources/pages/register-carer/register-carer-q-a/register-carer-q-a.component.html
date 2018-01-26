@@ -1,3 +1,176 @@
-<p>
-  register-carer-q-a works!
-</p>
+<div class="row">
+    <div class="col-12">
+        <app-stepper [steps]="steps"></app-stepper>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>Do you have a criminal record or any police convictions (you will be DBS checked)</label>
+                        <br>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="criminal_record_value_yes" class="custom-control-input" value="0"  formControlName="criminal_record_value">
+                            <label class="custom-control-label" for="criminal_record_value_yes">Yes</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="criminal_record_value_no" class="custom-control-input" value="1"  formControlName="criminal_record_value">
+                            <label class="custom-control-label" for="criminal_record_value_no">No</label>
+                        </div>
+
+                        <textarea class="form-control"  rows="3" formControlName="criminal_record_text" [ngClass]="formUtils.handleValidationStateClass(form, 'criminal_record_text')" placeholder="Please explain when and what happened and why you are still eligible to work in care"></textarea>
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'criminal_record_text', messages) }} </span>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>Do you have any of the following physical issues: Working with hazardous materials (e.g. bleach)</label>
+                        <br>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="physical_issues_yes" class="custom-control-input" value="0"  formControlName="physical_issues_value">
+                            <label class="custom-control-label" for="physical_issues_yes">Yes</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="physical_issues_no" class="custom-control-input" value="1"  formControlName="physical_issues_value">
+                            <label class="custom-control-label" for="physical_issues_no">No</label>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>Engaging in moving and handling (of residents and objects)</label>
+                        <br>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="engaging_in_moving_value_yes" class="custom-control-input" value="0"  formControlName="engaging_in_moving_value">
+                            <label class="custom-control-label" for="engaging_in_moving_value_yes">Yes</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="engaging_in_moving_value_no" class="custom-control-input" value="1"  formControlName="engaging_in_moving_value">
+                            <label class="custom-control-label" for="engaging_in_moving_value_no">No</label>
+                        </div>
+
+                        <textarea class="form-control"  rows="3" formControlName="engaging_in_moving_text" [ngClass]="formUtils.handleValidationStateClass(form, 'engaging_in_moving_text')" placeholder="Please explain how this effects your ability to work"></textarea>
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'engaging_in_moving_text', messages) }} </span>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>Typically, in what order would you carry out personal care for a resident who could not do it for themselves?</label>
+                        <br>
+                        <div class="custom-control custom-radio block">
+                            <input type="radio" id="personal_care_for_resident_value_a" class="custom-control-input" value="0"  formControlName="personal_care_for_resident_value">
+                            <label class="custom-control-label" for="personal_care_for_resident_value_a">Cream them, lower body, upper body face, dress them</label>
+                        </div>
+                        <div class="custom-control custom-radio block">
+                            <input type="radio" id="personal_care_for_resident_value_b" class="custom-control-input" value="1"  formControlName="personal_care_for_resident_value">
+                            <label class="custom-control-label" for="personal_care_for_resident_value_b">Face, upper body, lower body, creams, dress them</label>
+                        </div>
+                        <div class="custom-control custom-radio block">
+                            <input type="radio" id="personal_care_for_resident_value_c" class="custom-control-input" value="2"  formControlName="personal_care_for_resident_value">
+                            <label class="custom-control-label" for="personal_care_for_resident_value_c">Face, lower body, upper body, dress them, creams</label>
+                        </div>
+                        <div class="custom-control custom-radio block">
+                            <input type="radio" id="personal_care_for_resident_value_d" class="custom-control-input" value="3"  formControlName="personal_care_for_resident_value">
+                            <label class="custom-control-label" for="personal_care_for_resident_value_d">I’m not sure</label>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>It’s 7.30am. You realise you are going to be 15 minutes late to your 8am booking (6 hour shift). What do you do?</label>
+                        <br>
+                        <div class="custom-control custom-radio block">
+                            <input type="radio" id="you_are_late_value_a" class="custom-control-input" value="0"  formControlName="you_are_late_value">
+                            <label class="custom-control-label" for="you_are_late_value_a">I’d accept I’m going to be late and focus on getting there ASAP to minimise delay</label>
+                        </div>
+                        <div class="custom-control custom-radio block">
+                            <input type="radio" id="you_are_late_value_b" class="custom-control-input" value="1"  formControlName="you_are_late_value">
+                            <label class="custom-control-label" for="you_are_late_value_b">I’d take 2 minutes to call the client and let them know I’m running late.</label>
+                        </div>
+                        <div class="custom-control custom-radio block">
+                            <input type="radio" id="you_are_late_value_c" class="custom-control-input" value="2"  formControlName="you_are_late_value">
+                            <label class="custom-control-label" for="you_are_late_value_c">15 minutes is too long. I’d call them and advise them to find someone else to cover the shift</label>
+                        </div>
+                        <div class="custom-control custom-radio block">
+                            <input type="radio" id="you_are_late_value_d" class="custom-control-input" value="3"  formControlName="you_are_late_value">
+                            <label class="custom-control-label" for="you_are_late_value_d">I’m not sure</label>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>What procedure do you follow if you find a resident fallen on the floor in their room?</label>
+                        <br>
+                        <div class="custom-control custom-radio block">
+                            <input type="radio" id="find_fallen_resident_value_a" class="custom-control-input" value="0"  formControlName="find_fallen_resident_value">
+                            <label class="custom-control-label" for="find_fallen_resident_value_a">Help the resident get up. Maintain their dignity. Then ring the emergency bell.</label>
+                        </div>
+                        <div class="custom-control custom-radio block">
+                            <input type="radio" id="find_fallen_resident_value_b" class="custom-control-input" value="1"  formControlName="find_fallen_resident_value">
+                            <label class="custom-control-label" for="find_fallen_resident_value_b">Ring the emergency bell. Comfort the resident but not move them. Wait for other carers</label>
+                        </div>
+                        <div class="custom-control custom-radio block">
+                            <input type="radio" id="find_fallen_resident_value_c" class="custom-control-input" value="2"  formControlName="find_fallen_resident_value">
+                            <label class="custom-control-label" for="find_fallen_resident_value_c">Check for injuries. If they say they are fine, help them up by myself. Make a note to tell care team when I see them.</label>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>You are asked to serve the lunch meals to a home’s 20 residents. Meals are not labelled with resident names. What would you ask the other carers before serving?</label>
+                        <br>
+                        <div class="custom-control custom-radio block">
+                            <input type="radio" id="serve_lunch_meals_value_a" class="custom-control-input" value="0"  formControlName="serve_lunch_meals_value">
+                            <label class="custom-control-label" for="serve_lunch_meals_value_a">This isn’t right – can someone please stay with me this time</label>
+                        </div>
+                        <div class="custom-control custom-radio block">
+                            <input type="radio" id="serve_lunch_meals_value_b" class="custom-control-input" value="1"  formControlName="serve_lunch_meals_value">
+                            <label class="custom-control-label" for="serve_lunch_meals_value_b">Where can I find the care plans – I will check each one to be safe and sure</label>
+                        </div>
+                        <div class="custom-control custom-radio block">
+                            <input type="radio" id="serve_lunch_meals_value_c" class="custom-control-input" value="2"  formControlName="serve_lunch_meals_value">
+                            <label class="custom-control-label" for="serve_lunch_meals_value_c">Who are the residents with swallowing or choking risks. Should I be aware of any other issues before I serve – like diabetic meals?</label>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <br><br>
+            <div class="row">
+                <div class="col-3">
+                    <button class="btn btn-secondary" (click)="previousStep()">Back</button>
+                </div>
+                <div class="col-6">
+                    <div class="text-center">
+                        <button class="btn btn-success" [disabled]="!form.valid">Submit</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+

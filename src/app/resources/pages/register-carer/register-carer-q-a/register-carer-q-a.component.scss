@@ -1,0 +1,28 @@
+textarea
+{
+    max-width: 550px;
+    text-align: left;
+}
+.custom-control:not(.block)
+{
+    display: inline-block;
+    margin-bottom: 10px;
+}
+label
+{
+    font-size: 18px;
+    font-weight: 500;
+}
+.custom-control label
+{
+    font-weight: normal;
+}
+.btn-secondary
+{
+    max-width: 120px;
+    margin: 0 auto;
+}
+.btn-success
+{
+    max-width: 350px;
+}

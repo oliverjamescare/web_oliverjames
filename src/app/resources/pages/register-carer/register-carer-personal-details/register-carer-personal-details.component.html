@@ -6,15 +6,15 @@
 
 <div class="row">
     <div class="col-12">
-        <form [formGroup]="form">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <div class="row">
-                <div class="col-3">
+                <div class="col-4">
                     <div class="form-group">
                         <input type="email" class="form-control" placeholder="Email" formControlName="email" [ngClass]="formUtils.handleValidationStateClass(form, 'email')">
                         <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'email', messages) }} </span>
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-4">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Phone number" formControlName="phone_number" [ngClass]="formUtils.handleValidationStateClass(form, 'phone_number')">
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'phone_number', messages) }} </span>
@@ -22,19 +22,33 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-3">
+                <div class="col-4">
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Password" formControlName="password" [ngClass]="formUtils.handleValidationStateClass(form, 'password')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'password', messages) }} </span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Confirm password" formControlName="password_confirm" [ngClass]="formUtils.handleValidationStateClass(form, 'password_confirm')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'password_confirm', messages) }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="First name (as it appears on your passport)" formControlName="first_name" [ngClass]="formUtils.handleValidationStateClass(form, 'first_name')">
                         <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'first_name', messages) }} </span>
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-4">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Middle names (as it appears on your passport)" formControlName="middle_name" [ngClass]="formUtils.handleValidationStateClass(form, 'middle_name')">
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'middle_name', messages) }} </span>
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-4">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Surname (as it appears on your passport)" formControlName="surname" [ngClass]="formUtils.handleValidationStateClass(form, 'surname')">
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'surname', messages) }} </span>
@@ -42,38 +56,152 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-3">
+                <div class="col-4">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Your postcode" id="postcode" name="postcode">
+                        <input type="text" class="form-control" placeholder="Your postcode" id="postcode" name="postcode" formControlName="postal_code" [ngClass]="formUtils.handleValidationStateClass(form, 'postal_code')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'postal_code', messages) }} </span>
                         <span (click)="toggleAddress()" class="address-toggler">Enter address manually</span>
                         <input type="text" class="address-preview" id="address" name="address" readonly disabled>
                     </div>
                 </div>
-                <div class="col-3">
+                <div class="col-4">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Date of birth dd/mm/yyyy" >
+                        <input type="text" class="form-control" placeholder="Date of birth yyyy-mm-dd" id="datepicker" formControlName="date_of_birth" [ngClass]="formUtils.handleValidationStateClass(form, 'date_of_birth')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'date_of_birth', messages) }} </span>
                     </div>
                 </div>
             </div>
             <div class="row" [ngClass]="{'d-none': !addressVisible }">
                 <div class="col-3">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Company" id="company" name="company">
+                        <input type="text" class="form-control" placeholder="Company" id="company" name="company" formControlName="company" [ngClass]="formUtils.handleValidationStateClass(form, 'company')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'company', messages) }} </span>
                     </div>
                 </div>
                 <div class="col-3">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Address line 1" id="line_one" name="line_one">
+                        <input type="text" class="form-control" placeholder="Address line 1" id="line_one" name="line_one" formControlName="address_line_1" [ngClass]="formUtils.handleValidationStateClass(form, 'address_line_1')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'address_line_1', messages) }} </span>
                     </div>
                 </div>
                 <div class="col-3">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Address line 2" id="line_two" name="line_two">
+                        <input type="text" class="form-control" placeholder="Address line 2" id="line_two" name="line_two" formControlName="address_line_2" [ngClass]="formUtils.handleValidationStateClass(form, 'address_line_2')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'address_line_2', messages) }} </span>
                     </div>
                 </div>
                 <div class="col-3">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Town / City" id="city" name="city">
+                        <input type="text" class="form-control" placeholder="Town / City" id="city" name="city" formControlName="city" [ngClass]="formUtils.handleValidationStateClass(form, 'city')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'city', messages) }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>Please confirm you have permission to work in the UK</label>
+                                <br>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="ukPermissionYes" name="ukPermission" class="custom-control-input" value="1"  formControlName="ukPermission">
+                                    <label class="custom-control-label" for="ukPermissionYes">Yes</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="ukPermissionNo" name="ukPermission" class="custom-control-input" value="0"  formControlName="ukPermission">
+                                    <label class="custom-control-label" for="ukPermissionNo">No</label>
+                                </div>
+                                <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'ukPermission', messages) }} </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>What job roles are you interested in</label>
+                                <br>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="jobRoleCarer" name="jobRoleCarer" value="Carer" formControlName="jobRoleCarer">
+                                    <label class="custom-control-label" for="jobRoleCarer">Carer</label>
+                                </div>
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="jobRoleSeniorCarer" name="jobRoleSeniorCarer" value="Senior Carer" formControlName="jobRoleSeniorCarer">
+                                    <label class="custom-control-label" for="jobRoleSeniorCarer">Senior Carer</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>Confirm you have an Android or Apple mobile phone</label>
+                                <br>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="mobileYes" class="custom-control-input" value="2" formControlName="mobile">
+                                    <label class="custom-control-label" for="mobileYes">Yes</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="mobileGetAfterSuccesfull" class="custom-control-input" value="1" formControlName="mobile">
+                                    <label class="custom-control-label" for="mobileGetAfterSuccesfull">No, but I can get one if I’m successful</label>
+                                </div>
+                                <div class="custom-control custom-radio">
+                                    <input type="radio" id="mobileNo" class="custom-control-input" value="0" formControlName="mobile">
+                                    <label class="custom-control-label" for="mobileNo">No</label>
+                                </div>
+                                <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'mobile', messages) }} </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label>How much care experience do you have?</label>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="careExperianceNone" class="custom-control-input" value="0" formControlName="careExperiance">
+                                            <label class="custom-control-label" for="careExperianceNone">None</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="careExperiance0_6"class="custom-control-input" value="1" formControlName="careExperiance">
+                                            <label class="custom-control-label" for="careExperiance0_6">0-6 months</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="careExperiance6_12" class="custom-control-input" value="2" formControlName="careExperiance">
+                                            <label class="custom-control-label" for="careExperiance6_12">6-12 months</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" id="careExperianceOverYear" class="custom-control-input" value="3" formControlName="careExperiance">
+                                            <label class="custom-control-label" for="careExperianceOverYear">more than 1 year</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'careExperiance', messages) }} </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br><br>
+            <div class="row">
+                <div class="col-3">
+                    <button class="btn btn-secondary" (click)="previousStep()">Back</button>
+                </div>
+                <div class="col-6">
+                    <div class="text-center">
+                        <button class="btn btn-success" [disabled]="!form.valid">Next</button>
                     </div>
                 </div>
             </div>
@@ -83,11 +211,4 @@
 
 
 
-<!--<div class="custom-control custom-radio">-->
-    <!--<input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">-->
-    <!--<label class="custom-control-label" for="customRadio1">Toggle this custom radio</label>-->
-<!--</div>-->
-<!--<div class="custom-control custom-radio">-->
-    <!--<input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">-->
-    <!--<label class="custom-control-label" for="customRadio2">Or toggle this other custom radio</label>-->
-<!--</div>-->
+

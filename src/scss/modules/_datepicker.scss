@@ -1,0 +1,19 @@
+//datepicker
+.gj-datepicker-md [role="right-icon"]
+{
+    font-size: 30px;
+    right: 5px;
+    top: 8px;
+}
+.gj-datepicker
+{
+    display: block;
+}
+.gj-calendar-md table tr td.selected div
+{
+    background: $green-color;
+}
+.gj-calendar-md table tr td.today div
+{
+    color: $green-color;
+}

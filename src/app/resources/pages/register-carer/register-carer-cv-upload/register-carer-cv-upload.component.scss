@@ -1,0 +1,41 @@
+@import "variables";
+.btn-secondary
+{
+    max-width: 120px;
+    margin: 0 auto;
+}
+.btn-success
+{
+    max-width: 350px;
+    &.choose-file
+    {
+        display: inline-block;
+        width: auto;
+        margin-top: -2px;
+        min-width: 180px;
+        margin-left: 20px;
+    }
+}
+.invalid-feedback
+{
+    display: block;
+    text-align: left;
+}
+.form-control
+{
+    background: $white-color;
+}
+.form-group
+{
+    display: inline-block;
+    vertical-align: top;
+    max-width: 350px;
+}
+.form-text
+{
+    text-align: left;
+}
+h4
+{
+    margin-bottom: 50px;
+}

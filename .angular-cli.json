@@ -20,7 +20,7 @@
             "prefix": "app",
             "styles": [
                 "../node_modules/bootstrap/dist/css/bootstrap.min.css",
-                "../node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css",
+                "../node_modules/gijgo/combined/css/gijgo.min.css",
                 "styles.scss"
             ],
             "stylePreprocessorOptions": {
@@ -32,7 +32,8 @@
                 "../node_modules/xregexp/xregexp-all.js",
                 "../node_modules/jquery/dist/jquery.min.js",
                 "../node_modules/bootstrap/dist/js/bootstrap.min.js",
-                "../node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"
+                "../node_modules/gijgo/combined/js/gijgo.min.js",
+                "../node_modules/moment/min/moment.min.js"
             ],
             "environmentSource": "environments/environment.ts",
             "environments": {

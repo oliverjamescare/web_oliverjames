@@ -7,4 +7,8 @@ export class CarerService
         QA: 3
     };
     public registerStep = this.availableSteps.TERMS;
+    public personalDetailsFormValues;
+    public cv: File;
+    public qaFormValues;
+
 }
