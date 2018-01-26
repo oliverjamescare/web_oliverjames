@@ -8,11 +8,18 @@ export class UserService
 
     checkEmailUniqueness(email: string)
     {
-        console.log(this);
         return this.apiService.checkUniqueness("email", email);
     }
     checkPhoneNumberUniqueness(phoneNumber: string)
     {
         return this.apiService.checkUniqueness("phone_number", phoneNumber);
+    }
+
+    forgotPassword(email: string)
+    {
+        let form = new FormData();
+        form.append("email", email);
+
+        return this.apiService.forgotPassword(form);
     }
 }

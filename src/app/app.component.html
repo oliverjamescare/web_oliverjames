@@ -1,6 +1,6 @@
 <div class="app-wrapper">
     <header class="fixed-wrapper" #fixedWrapper >
-        <app-header></app-header>
+        <app-header (carerLoginTriggered)="initCarerLogin()" (careHomeLoginTriggered)="initCareHomeLogin()"></app-header>
     </header>
 
     <section id="content" appContentResizer [relativeTo]="fixedWrapper">
@@ -8,5 +8,10 @@
             <router-outlet></router-outlet>
         </div>
     </section>
+
+    <app-login [type]="'carer'" *ngIf="carerLogin" (closed)="onCarerClosed()" (forgotPasswordTriggered)="onForgotPasswordOpen()"></app-login>
+    <app-login [type]="'careHome'" *ngIf="careHomeLogin" (closed)="onCareHomeClosed()" (forgotPasswordTriggered)="onForgotPasswordOpen()"></app-login>
+    <app-forgot-password *ngIf="forgotPassword" (closed)="onForgotPasswordClosed()"></app-forgot-password>
 </div>
+
 

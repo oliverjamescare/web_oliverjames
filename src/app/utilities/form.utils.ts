@@ -1,5 +1,6 @@
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export function handleUniqueValidator(method: Function)
 {
@@ -32,6 +33,18 @@ export function handleValidationErrorMessage(form: FormGroup, field, messages: A
         }
     }
 
+    return message;
+}
+
+export function getMessageError(error: HttpErrorResponse): string
+{
+    let message = '';
+
+    const errorsArray = error.error.errors || [];
+    if(errorsArray.length)
+        message = errorsArray[0].message || "";
+
+    console.log(message)
     return message;
 }
 

@@ -41,3 +41,30 @@
     padding: 10px;
 
 }
+
+//outline success
+.btn-outline-success
+{
+    border-radius: 0;
+    color: $green-color;
+    text-align: center;
+    padding: 10px;
+    background: $white-color;
+    border: 2px solid $green-color;
+    font-family: $main-font;
+    font-weight: 500;
+    width: 100%;
+    &:hover
+    {
+        background: darken($white-color, 5%);
+        border: 2px solid $green-color;
+        color: $green-color;
+    }
+    &:focus, &:active:focus, &:not([disabled]):not(.disabled):active:focus
+    {
+        box-shadow: 0 0 0 0.2rem rgba($green-color, 0.5);
+        background: $white-color;
+        border: 2px solid $green-color;
+    }
+}
+

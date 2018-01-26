@@ -34,6 +34,9 @@ export class RegisterCarerQAComponent implements OnInit
         }
     ];
 
+    inProgress: boolean = false;
+    registerError: boolean = false;
+
     //form config
     form: FormGroup
     formUtils = { handleValidationStateClass, handleValidationErrorMessage }
@@ -64,15 +67,15 @@ export class RegisterCarerQAComponent implements OnInit
     ngOnInit()
     {
         //protection against missing steps
-        // if(this.carerService.registerStep < this.carerService.availableSteps.QA)
-        //     this.router.navigate(["/carer/register/cv"]);
+        if(this.carerService.registerStep < this.carerService.availableSteps.QA)
+            this.router.navigate(["/carer/register/cv"]);
 
         this.form = new FormGroup({
             criminal_record_value: new FormControl(null, [ Validators.required ]),
-            criminal_record_text: new FormControl(null),
+            criminal_record_text: new FormControl(""),
             physical_issues_value: new FormControl(null, [ Validators.required ]),
             engaging_in_moving_value: new FormControl(null, [ Validators.required ]),
-            engaging_in_moving_text: new FormControl(null),
+            engaging_in_moving_text: new FormControl(""),
             personal_care_for_resident_value: new FormControl(null, [ Validators.required ]),
             you_are_late_value: new FormControl(null, [ Validators.required ]),
             find_fallen_resident_value: new FormControl(null, [ Validators.required ]),
@@ -95,6 +98,8 @@ export class RegisterCarerQAComponent implements OnInit
                 control.setValidators(Validators.required);
             control.updateValueAndValidity();
         });
+
+
     }
 
     previousStep()
@@ -107,10 +112,19 @@ export class RegisterCarerQAComponent implements OnInit
         if(this.form.valid)
         {
             this.carerService.qaFormValues = this.form.value;
-
-            //handle submit
-            //this.router.navigate(['/carer/register/cv'])
+            $("#popup").modal();
         }
     }
 
+    onConfirmedSubmit()
+    {
+        this.inProgress = true;
+        this.carerService
+            .registerCarer()
+            .subscribe(() => {
+                $('#popup').modal('hide');
+                this.carerService.clearRegisterForms();
+                this.router.navigate([ "/carer/register/summary" ]);
+            },(error) => this.registerError = true, () => this.inProgress = false);
+    }
 }

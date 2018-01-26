@@ -1,0 +1,35 @@
+.form-control
+{
+    text-align: left;
+    margin-bottom: 15px;
+}
+.buttons-container
+{
+    margin: 20px auto 10px;
+    button
+    {
+        display: inline-block;
+        width: 48%;
+        &.btn-outline-success
+        {
+            float: right;
+        }
+    }
+}
+.forgot-password-link
+{
+    font-size: 18px;
+    font-weight: 500;
+    margin-left: 10px;
+    cursor: pointer;
+    &:hover
+    {
+        text-decoration: underline;
+    }
+}
+
+.invalid-feedback
+{
+    text-align: center;
+    padding-bottom: 10px;
+}

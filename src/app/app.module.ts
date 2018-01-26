@@ -11,6 +11,7 @@ import { ContentResizerDirective } from './directives/content-resizer.directive'
 import { CarerService } from './services/carer.service';
 import { UserService } from './services/user.service';
 import { ApiService } from './services/api.service';
+import { CareHomeService } from './services/care-home.service';
 
 //components
 import { AppComponent } from './app.component';
@@ -25,6 +26,9 @@ import { RegisterCarerSummaryComponent } from './resources/pages/register-carer/
 import { RegisterCarerComponent } from './resources/pages/register-carer/register-carer.component';
 import { StepperComponent } from './resources/partials/stepper/stepper.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PopupComponent } from './resources/partials/popup/popup.component';
+import { LoginComponent } from './resources/pages/login/login.component';
+import { ForgotPasswordComponent } from './resources/pages/forgot-password/forgot-password.component';
 
 @NgModule({
     declarations: [
@@ -39,7 +43,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
         RegisterCarerQAComponent,
         RegisterCarerSummaryComponent,
         RegisterCarerComponent,
-        StepperComponent
+        StepperComponent,
+        PopupComponent,
+        LoginComponent,
+        ForgotPasswordComponent
     ],
     imports: [
         BrowserModule,
@@ -51,7 +58,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     providers: [
         ApiService,
         CarerService,
-        UserService
+        UserService,
+        CareHomeService
     ],
     bootstrap: [ AppComponent ]
 })

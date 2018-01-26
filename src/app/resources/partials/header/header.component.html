@@ -23,7 +23,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Care Home Login
+                                <a class="nav-link" (click)="openCareHomeLogin()">Care Home Login
                                     <div class="bottom-line"></div>
                                 </a>
                             </li>
@@ -59,9 +59,10 @@
                     <div *ngIf="activatedModule == 'carer'" class="carer-module">
                         <p class="section-desctiption">Get recognised for your hard work and take control of your career</p>
                         <div class="carer-buttons">
-                            <a class="btn btn-success" href="#">Login</a>
+                            <button class="btn btn-success" (click)="openCarerLogin()">Login</button>
                             <a class="btn btn-success" routerLink="carer/register/terms">Register</a>
                         </div>
+
                         <br>
                     </div>
                 </div>
@@ -70,4 +71,3 @@
     </div>
     <hr>
 </div>
-

@@ -171,6 +171,16 @@
     </div>
 </div>
 
+<!-- popup config -->
+<app-popup [title]="'Oliver James Carers'">
+    <p class="modal-description">Please be aware that after you submit, you will not be able to modify your application</p>
+    <div class="buttons-container">
+        <button type="button" class="btn btn-success" (click)="onConfirmedSubmit()" [disabled]="inProgress">Confirm Submit</button>
+        <button type="button" class="btn btn-outline-success" data-dismiss="modal">Back</button>
+        <span class="invalid-feedback" *ngIf="registerError">Unknown register error</span>
+    </div>
+</app-popup>
+
 
 
 

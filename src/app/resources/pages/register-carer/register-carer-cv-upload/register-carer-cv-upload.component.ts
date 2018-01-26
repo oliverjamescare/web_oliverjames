@@ -71,8 +71,8 @@ export class RegisterCarerCvUploadComponent implements OnInit
     ngOnInit()
     {
         //protection against missing steps
-        // if(this.carerService.registerStep < this.carerService.availableSteps.CV)
-        //     this.router.navigate(["/carer/register/personal-details"]);
+        if(this.carerService.registerStep < this.carerService.availableSteps.CV)
+            this.router.navigate(["/carer/register/personal-details"]);
 
 
         this.form = new FormGroup({

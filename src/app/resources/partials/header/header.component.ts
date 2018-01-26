@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -10,6 +10,8 @@ export class HeaderComponent implements OnInit
 {
     modules: [ string ] = ["careHomeRegister", "careHomeWaitingListForm", "carer", "slim"];
     activatedModule: string = this.modules[0];
+    @Output() carerLoginTriggered: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() careHomeLoginTriggered: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     constructor(private route: ActivatedRoute, private router: Router) {}
 
@@ -24,5 +26,14 @@ export class HeaderComponent implements OnInit
             else
                 this.activatedModule = "slim";
         })
+    }
+
+    openCarerLogin()
+    {
+        this.carerLoginTriggered.emit(true);
+    }
+    openCareHomeLogin()
+    {
+        this.careHomeLoginTriggered.emit(true);
     }
 }

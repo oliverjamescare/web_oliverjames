@@ -17,5 +17,21 @@ export class ApiService
         return this.httpClient.get(this.endpoint + "/user/uniqueness", { params: new HttpParams().set(param, value) });
     }
 
+    //auth
+    register(form: FormData)
+    {
+        return this.httpClient.post(this.endpoint + "/register", form);
+    }
+
+    login(form: FormData)
+    {
+        return this.httpClient.post(this.endpoint + "/login", form);
+    }
+
+    forgotPassword(form: FormData)
+    {
+        return this.httpClient.post(this.endpoint + "/password/remind", form);
+    }
+
 
 }

@@ -235,8 +235,8 @@ export class RegisterCarerPersonalDetailsComponent implements OnInit
     ngOnInit()
     {
         //protection against missing steps
-        // if(this.carerService.registerStep < this.carerService.availableSteps.PERSONAL_DETAILS)
-        //     this.router.navigate(["/carer/register/terms"]);
+        if(this.carerService.registerStep < this.carerService.availableSteps.PERSONAL_DETAILS)
+            this.router.navigate(["/carer/register/terms"]);
 
         //form config
         this.form = new FormGroup({
@@ -255,9 +255,9 @@ export class RegisterCarerPersonalDetailsComponent implements OnInit
             password_confirm: new FormControl(null, [ Validators.required ]),
             date_of_birth: new FormControl(null, [ Validators.required, invalidDate, adult ]),
             postal_code: new FormControl(null, Validators.required),
-            company: new FormControl(null),
+            company: new FormControl(""),
             address_line_1: new FormControl(null, Validators.required),
-            address_line_2: new FormControl(null),
+            address_line_2: new FormControl(""),
             city: new FormControl(null, Validators.required ),
             ukPermission: new FormControl(null, [ Validators.required, equalTo(1) ]),
             jobRoleCarer: new FormControl(null),
@@ -265,6 +265,10 @@ export class RegisterCarerPersonalDetailsComponent implements OnInit
             mobile: new FormControl(null, [ Validators.required, greaterThan(0) ]),
             careExperiance: new FormControl(null, [ Validators.required, greaterThan(2)])
         });
+
+        //overriding values
+        if(this.carerService.personalDetailsFormValues)
+            this.form.setValue(this.carerService.personalDetailsFormValues);
 
         //password confirmation
         this.form.get('password')
