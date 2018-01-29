@@ -77,11 +77,7 @@ export class CarerService
 
     loginCarer(email: string, password: string)
     {
-        let form = new FormData();
-        form.append("email", email);
-        form.append("password", password);
-        form.append("userType", "carer");
-
-        return this.apiService.login(form);
+        const body = { email, password, "userType": "carer"};
+        return this.apiService.login(body);
     }
 }

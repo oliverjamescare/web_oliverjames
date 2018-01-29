@@ -9,11 +9,7 @@ export class CareHomeService
 
     loginCareHome(email: string, password: string)
     {
-        let form = new FormData();
-        form.append("email", email);
-        form.append("password", password);
-        form.append("userType", "careHome");
-
-        return this.apiService.login(form);
+        const body = { email, password, "userType": "careHome"};
+        return this.apiService.login(body);
     }
 }

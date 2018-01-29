@@ -23,14 +23,14 @@ export class ApiService
         return this.httpClient.post(this.endpoint + "/register", form);
     }
 
-    login(form: FormData)
+    login(body: Object)
     {
-        return this.httpClient.post(this.endpoint + "/login", form);
+        return this.httpClient.post(this.endpoint + "/login", body);
     }
 
-    forgotPassword(form: FormData)
+    forgotPassword(body: Object)
     {
-        return this.httpClient.post(this.endpoint + "/password/remind", form);
+        return this.httpClient.post(this.endpoint + "/password/remind", body);
     }
 
 
