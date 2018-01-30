@@ -11,6 +11,12 @@ export class ApiService
         this.endpoint = environment.api;
     }
 
+    //contact
+    sendContactMessage(body: Object)
+    {
+        return this.httpClient.post(this.endpoint + "/contact", body);
+    }
+
     //user
     checkUniqueness(param: string, value: string)
     {

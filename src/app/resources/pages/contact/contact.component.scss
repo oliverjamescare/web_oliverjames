@@ -1,0 +1,14 @@
+@import "variables";
+.section-header
+{
+    font-weight: 500;
+    font-size: 25px;
+    font-family: $main-font;
+    text-align: center;
+    color: $grey-brown-color;
+    margin-bottom: 15px;
+}
+.form-control
+{
+    text-align: left;
+}

@@ -12,6 +12,8 @@ import { CarerService } from './services/carer.service';
 import { UserService } from './services/user.service';
 import { ApiService } from './services/api.service';
 import { CareHomeService } from './services/care-home.service';
+import { GeneralService } from './services/general.service';
+import { AuthService } from './services/auth.service';
 
 //components
 import { AppComponent } from './app.component';
@@ -29,6 +31,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PopupComponent } from './resources/partials/popup/popup.component';
 import { LoginComponent } from './resources/pages/login/login.component';
 import { ForgotPasswordComponent } from './resources/pages/forgot-password/forgot-password.component';
+import { RegisterCareHomeComponent } from './resources/pages/register-care-home/register-care-home.component';
+import { ContactComponent } from './resources/pages/contact/contact.component';
+import { CarerDashboardComponent } from './resources/pages/carer/carer-dashboard/carer-dashboard.component';
 
 @NgModule({
     declarations: [
@@ -46,7 +51,10 @@ import { ForgotPasswordComponent } from './resources/pages/forgot-password/forgo
         StepperComponent,
         PopupComponent,
         LoginComponent,
-        ForgotPasswordComponent
+        ForgotPasswordComponent,
+        RegisterCareHomeComponent,
+        ContactComponent,
+        CarerDashboardComponent
     ],
     imports: [
         BrowserModule,
@@ -57,9 +65,11 @@ import { ForgotPasswordComponent } from './resources/pages/forgot-password/forgo
     ],
     providers: [
         ApiService,
+        AuthService,
         CarerService,
         UserService,
-        CareHomeService
+        CareHomeService,
+        GeneralService
     ],
     bootstrap: [ AppComponent ]
 })

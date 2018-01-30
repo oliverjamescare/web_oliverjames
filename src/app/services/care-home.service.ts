@@ -5,6 +5,8 @@ import 'rxjs/Rx';
 @Injectable()
 export class CareHomeService
 {
+    public address;
+
     constructor(private apiService: ApiService) {}
 
     loginCareHome(email: string, password: string)

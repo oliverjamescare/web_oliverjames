@@ -33,7 +33,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Contact us
+                                <a class="nav-link" routerLink="/contact" routerLinkActive="active">Contact us
                                     <div class="bottom-line"></div>
                                 </a>
                             </li>
@@ -49,9 +49,34 @@
                         <p class="section-desctiption">Quality temporary carers at affordable prices</p>
                         <form>
                             <div class="form-group">
-                                <input type="text" placeholder="Enter your postcode" class="form-control">
+                                <input type="text" placeholder="Enter your postcode" class="form-control" name="postal_code">
                             </div>
                             <button class="btn btn-success">Book now / Register as a care home</button>
+                        </form>
+                        <br>
+                    </div>
+
+                    <div *ngIf="activatedModule == 'careHomeAddToWaitingList'" class="care-home-module">
+                        <p class="section-desctiption error">Sorry, we aren’t yet covering your area. Please enter your details below so you don’t miss out when we come to your area</p>
+                        <form>
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Your name" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <input type="email" placeholder="E-mail" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Enter your postcode" class="form-control" name="postal_code">
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-success">Send</button>
                         </form>
                         <br>
                     </div>
@@ -62,7 +87,6 @@
                             <button class="btn btn-success" (click)="openCarerLogin()">Login</button>
                             <a class="btn btn-success" routerLink="carer/register/terms">Register</a>
                         </div>
-
                         <br>
                     </div>
                 </div>

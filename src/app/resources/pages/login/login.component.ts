@@ -4,6 +4,7 @@ import { CarerService } from '../../../services/carer.service';
 import { getMessageError } from '../../../utilities/form.utils';
 import { HttpErrorResponse } from '@angular/common/http';
 import { CareHomeService } from '../../../services/care-home.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-login',
@@ -20,7 +21,7 @@ export class LoginComponent implements OnInit, AfterViewInit
     inProgress: boolean = false;
     error: string = "";
 
-    constructor(private carerService: CarerService, private careHomeService: CareHomeService) { }
+    constructor(private carerService: CarerService, private careHomeService: CareHomeService, private router: Router) { }
 
     ngOnInit()
     {
@@ -42,6 +43,9 @@ export class LoginComponent implements OnInit, AfterViewInit
                 .loginCarer(form.value.email, form.value.password)
                 .subscribe(() => {
                         this.inProgress = false;
+                        $("#" + this.type + "_id").modal("hide");
+                        this.router.navigate(["/carer-dashboard"]);
+
                 },
                 (error: HttpErrorResponse) => {
                     this.error = getMessageError(error);

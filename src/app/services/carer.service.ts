@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 import 'rxjs/Rx';
+import { User } from '../models/user.model';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class CarerService
@@ -16,7 +18,7 @@ export class CarerService
     public cv: File;
     public qaFormValues;
 
-    constructor(private apiService: ApiService) {}
+    constructor(private apiService: ApiService, private authService: AuthService) {}
 
     registerCarer()
     {
@@ -78,6 +80,14 @@ export class CarerService
     loginCarer(email: string, password: string)
     {
         const body = { email, password, "userType": "carer"};
-        return this.apiService.login(body);
+        return this.apiService
+            .login(body)
+            .map(result => {
+
+                //carer login handle
+                const user = new User(result["user"]);
+                this.authService.login(user);
+                return result;
+            });
     }
 }

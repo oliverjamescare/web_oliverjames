@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-8 offset-2">
+        <h2 class="section-header">Contact us</h2>
+        <div class="contact-form-container">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Your email address" formControlName="email" [ngClass]="formUtils.handleValidationStateClass(form, 'email')">
+                            <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'email', messages) }} </span>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Your name" formControlName="name" [ngClass]="formUtils.handleValidationStateClass(form, 'name')">
+                            <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'name', messages) }} </span>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Subject" formControlName="subject" [ngClass]="formUtils.handleValidationStateClass(form, 'subject')">
+                            <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'subject', messages) }} </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <textarea rows="5" placeholder="Main message" class="form-control" formControlName="message" [ngClass]="formUtils.handleValidationStateClass(form, 'message')"></textarea>
+                        <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'message', messages) }} </span>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-6">
+                        <button class="btn btn-success" [disabled]="!form.valid || inProgress" type="submit">Send</button>
+                        <span class="invalid-feedback"> {{ error }} </span>
+                    </div>
+                    <div class="col-6">
+                        <span>Our telephone number: TO COME</span>
+                        <br>
+                        <span>Our address: TO COME</span>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <br>
+            </form>
+        </div>
+    </div>
+</div>

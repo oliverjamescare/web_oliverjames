@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit
 {
-    modules: [ string ] = ["careHomeRegister", "careHomeWaitingListForm", "carer", "slim"];
+    modules: [ string ] = ["careHomeRegister", "careHomeAddToWaitingList", "carer", "slim"];
     activatedModule: string = this.modules[0];
     @Output() carerLoginTriggered: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() careHomeLoginTriggered: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit
     {
         //activated module handle
         this.router.events.subscribe(() => {
-            if(this.router.url == "/")
+            if(this.router.url == "/" || this.router.url == "/contact")
                 this.activatedModule = "careHomeRegister";
             else if(this.router.url == "/carer")
                 this.activatedModule = "carer";
