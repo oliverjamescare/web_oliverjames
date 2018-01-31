@@ -1,0 +1,37 @@
+<app-popup [id]="'logout'" [title]="'Logout'">
+    <p class="modal-description">
+        Are you sure you want to logout?
+    </p>
+    <div class="buttons-container">
+        <button type="button" type="submit" class="btn btn-success" (click)="onLogout()">OK</button>
+        <button type="button" class="btn btn-outline-success" data-dismiss="modal">Cancel</button>
+    </div>
+</app-popup>
+
+<h4>What do you want to do?</h4>
+<div class="row">
+    <div class="col-4">
+        <a href="#" class="btn btn-success">See my upcoming jobs</a>
+        <div class="text-center">
+            <small class="text-muted text-center">X jobs due in next 24 hours</small>
+        </div>
+    </div>
+    <div class="col-4">
+        <a href="#" class="btn btn-success">See new jobs available</a>
+        <div class="text-center">
+            <small class="text-muted text-center">X new jobs available</small>
+        </div>
+    </div>
+    <div class="col-4">
+        <button class="btn btn-success" (click)="showLogoutPopup()">Logout</button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-4">
+        <a href="#" class="btn btn-success">Set my availability</a>
+    </div>
+    <div class="col-4">
+        <a href="#" class="btn btn-success">See paid and submitted jobs</a>
+    </div>
+</div>
+

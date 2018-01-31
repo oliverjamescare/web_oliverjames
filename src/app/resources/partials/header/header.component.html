@@ -17,26 +17,64 @@
 
                     <div class="collapse navbar-collapse" id="main_menu">
                         <ul class="nav navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home
-                                    <div class="bottom-line"></div>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" (click)="openCareHomeLogin()">Care Home Login
-                                    <div class="bottom-line"></div>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" routerLink="/carer" routerLinkActive="active">Carer Login / Register
-                                    <div class="bottom-line"></div>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" routerLink="/contact" routerLinkActive="active">Contact us
-                                    <div class="bottom-line"></div>
-                                </a>
-                            </li>
+                            <ng-template [ngIf]="loggedUser && loggedUser.carer">
+                                <li class="nav-item">
+                                    <a class="nav-link" routerLink="/carer-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home
+                                        <div class="bottom-line"></div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" [routerLink]="['carer-dashboard','my-profile']" routerLinkActive="active">My profile
+                                        <div class="bottom-line"></div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" [routerLink]="['carer-dashboard','contact']" routerLinkActive="active">Contact us
+                                        <div class="bottom-line"></div>
+                                    </a>
+                                </li>
+                            </ng-template>
+
+                            <ng-template [ngIf]="loggedUser && loggedUser.care_home">
+                                <li class="nav-item">
+                                    <a class="nav-link" routerLink="/care-home-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home
+                                        <div class="bottom-line"></div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" [routerLink]="['care-home-dashboard','my-profile']" routerLinkActive="active">My profile
+                                        <div class="bottom-line"></div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" [routerLink]="['care-home-dashboard','contact']" routerLinkActive="active">Contact us
+                                        <div class="bottom-line"></div>
+                                    </a>
+                                </li>
+                            </ng-template>
+
+                            <ng-template [ngIf]="!loggedUser">
+                                <li class="nav-item">
+                                    <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home
+                                        <div class="bottom-line"></div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" (click)="openCareHomeLogin()">Care Home Login
+                                        <div class="bottom-line"></div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" routerLink="/carer" routerLinkActive="active">Carer Login / Register
+                                        <div class="bottom-line"></div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" routerLink="/contact" routerLinkActive="active">Contact us
+                                        <div class="bottom-line"></div>
+                                    </a>
+                                </li>
+                            </ng-template>
                         </ul>
                     </div>
                 </nav>

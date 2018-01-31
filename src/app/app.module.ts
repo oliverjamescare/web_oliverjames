@@ -15,6 +15,10 @@ import { CareHomeService } from './services/care-home.service';
 import { GeneralService } from './services/general.service';
 import { AuthService } from './services/auth.service';
 
+//guards
+import { CarerAuthGuardService } from './guards/carer-auth-guard.service';
+import { CareHomeAuthGuardService } from './guards/care-home-auth-guard.service';
+
 //components
 import { AppComponent } from './app.component';
 import { HomeComponent } from './resources/pages/home/home.component';
@@ -34,6 +38,11 @@ import { ForgotPasswordComponent } from './resources/pages/forgot-password/forgo
 import { RegisterCareHomeComponent } from './resources/pages/register-care-home/register-care-home.component';
 import { ContactComponent } from './resources/pages/contact/contact.component';
 import { CarerDashboardComponent } from './resources/pages/carer/carer-dashboard/carer-dashboard.component';
+import { CarerHomeComponent } from './resources/pages/carer/carer-home/carer-home.component';
+import { CarerMyProfileComponent } from './resources/pages/carer/carer-my-profile/carer-my-profile.component';
+import { CareHomeDashboardComponent } from './resources/pages/care-home/care-home-dashboard/care-home-dashboard.component';
+import { CareHomeHomeComponent } from './resources/pages/care-home/care-home-home/care-home-home.component';
+import { CareHomeMyProfileComponent } from './resources/pages/care-home/care-home-my-profile/care-home-my-profile.component';
 
 @NgModule({
     declarations: [
@@ -54,7 +63,12 @@ import { CarerDashboardComponent } from './resources/pages/carer/carer-dashboard
         ForgotPasswordComponent,
         RegisterCareHomeComponent,
         ContactComponent,
-        CarerDashboardComponent
+        CarerDashboardComponent,
+        CarerHomeComponent,
+        CarerMyProfileComponent,
+        CareHomeDashboardComponent,
+        CareHomeHomeComponent,
+        CareHomeMyProfileComponent
     ],
     imports: [
         BrowserModule,
@@ -69,7 +83,9 @@ import { CarerDashboardComponent } from './resources/pages/carer/carer-dashboard
         CarerService,
         UserService,
         CareHomeService,
-        GeneralService
+        GeneralService,
+        CarerAuthGuardService,
+        CareHomeAuthGuardService
     ],
     bootstrap: [ AppComponent ]
 })

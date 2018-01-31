@@ -1,5 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
+import { User } from '../../../models/user.model';
 
 @Component({
     selector: 'app-header',
@@ -12,8 +14,9 @@ export class HeaderComponent implements OnInit
     activatedModule: string = this.modules[0];
     @Output() carerLoginTriggered: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() careHomeLoginTriggered: EventEmitter<boolean> = new EventEmitter<boolean>();
+    loggedUser: User
 
-    constructor(private route: ActivatedRoute, private router: Router) {}
+    constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService) {}
 
     ngOnInit()
     {
@@ -25,7 +28,11 @@ export class HeaderComponent implements OnInit
                 this.activatedModule = "carer";
             else
                 this.activatedModule = "slim";
-        })
+
+            this.loggedUser = this.authService.getLoggedUser();
+        });
+
+        this.authService.authChanged.subscribe((user: User) => this.loggedUser = user);
     }
 
     openCarerLogin()

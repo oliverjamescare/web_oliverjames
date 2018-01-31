@@ -59,6 +59,8 @@ export class LoginComponent implements OnInit, AfterViewInit
                 .loginCareHome(form.value.email, form.value.password)
                 .subscribe(() => {
                         this.inProgress = false;
+                        $("#" + this.type + "_id").modal("hide");
+                        this.router.navigate(["/care-home-dashboard"]);
                     },
                     (error: HttpErrorResponse) => {
                         this.error = getMessageError(error);

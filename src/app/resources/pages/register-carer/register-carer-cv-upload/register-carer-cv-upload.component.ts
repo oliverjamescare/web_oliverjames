@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CarerService } from '../../../../services/carer.service';
 import { handleUniqueValidator, handleValidationStateClass, handleValidationErrorMessage }  from '../../../../utilities/form.utils';
 import { fileSize, fileType } from '../../../../utilities/validators';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -91,8 +91,8 @@ export class RegisterCarerCvUploadComponent implements OnInit
             if(this.validMimeTypes.indexOf(fileResource.type) != -1 && fileResource.size < 1024 * 1024 * this.maxFileSizeMB)
                 this.cv = fileResource;
 
-            //input file force validation
             const control = this.form.get('cv');
+            control.setValue(fileResource.name);
             control.markAsTouched();
             control.setValidators([ Validators.required, fileType(fileResource, this.validMimeTypes), fileSize(fileResource, this.maxFileSizeMB)]);
             control.updateValueAndValidity();
@@ -110,7 +110,6 @@ export class RegisterCarerCvUploadComponent implements OnInit
         {
             this.carerService.cv = this.cv;
             this.carerService.registerStep = this.carerService.availableSteps.QA;
-
             this.router.navigate(['/carer/register/questions-answers'])
         }
     }

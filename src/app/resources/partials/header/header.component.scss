@@ -54,7 +54,7 @@ nav.navbar-expand-lg
     }
     a.nav-link
     {
-        margin: 5px 15%;
+        margin: 5px 25px;
         padding: 0;
         cursor: pointer;
         font-size: 17px;
@@ -76,7 +76,7 @@ nav.navbar-expand-lg
         }
         @media #{$x-large}
         {
-            margin: 0 15%;
+            margin: 5px 25px;
         }
 
     }

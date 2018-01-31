@@ -13,7 +13,16 @@ import { RegisterCarerQAComponent } from './resources/pages/register-carer/regis
 import { RegisterCarerCvUploadComponent } from './resources/pages/register-carer/register-carer-cv-upload/register-carer-cv-upload.component';
 import { RegisterCareHomeComponent } from './resources/pages/register-care-home/register-care-home.component';
 import { ContactComponent } from './resources/pages/contact/contact.component';
+
 import { CarerDashboardComponent } from './resources/pages/carer/carer-dashboard/carer-dashboard.component';
+import { CarerHomeComponent } from './resources/pages/carer/carer-home/carer-home.component';
+import { CarerMyProfileComponent } from './resources/pages/carer/carer-my-profile/carer-my-profile.component';
+
+import { CareHomeDashboardComponent } from './resources/pages/care-home/care-home-dashboard/care-home-dashboard.component';
+import { CareHomeHomeComponent } from './resources/pages/care-home/care-home-home/care-home-home.component';
+import { CareHomeMyProfileComponent } from './resources/pages/care-home/care-home-my-profile/care-home-my-profile.component';
+import { CarerAuthGuardService } from './guards/carer-auth-guard.service';
+import { CareHomeAuthGuardService } from './guards/care-home-auth-guard.service';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -26,14 +35,26 @@ const routes: Routes = [
     { path: 'carer/register/summary', component: RegisterCarerSummaryComponent },
     { path: 'care-home/register', component: RegisterCareHomeComponent },
     {
-        path: '',
-        component: HomeComponent,
-        // canActivate: [AuthGuardService],
+        path: 'carer-dashboard',
+        component: CarerDashboardComponent,
+        canActivate: [ CarerAuthGuardService ],
         children: [
-            { path: '', pathMatch: 'full', redirectTo: 'carer-dashboard' },
-            { path: 'carer-dashboard', component: CarerDashboardComponent },
+            { path: '', pathMatch: 'full', component: CarerHomeComponent },
+            { path: 'my-profile', component: CarerMyProfileComponent },
+            { path: 'contact', component: ContactComponent },
         ]
-    }
+    },
+    {
+        path: 'care-home-dashboard',
+        component: CareHomeDashboardComponent,
+        canActivate: [ CareHomeAuthGuardService ],
+        children: [
+            { path: '', pathMatch: 'full', component: CareHomeHomeComponent },
+            { path: 'my-profile', component: CareHomeMyProfileComponent },
+            { path: 'contact', component: ContactComponent },
+        ]
+    },
+    { path: '**', redirectTo: "/"}
 ];
 
 @NgModule({
