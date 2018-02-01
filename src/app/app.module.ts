@@ -43,6 +43,8 @@ import { CarerMyProfileComponent } from './resources/pages/carer/carer-my-profil
 import { CareHomeDashboardComponent } from './resources/pages/care-home/care-home-dashboard/care-home-dashboard.component';
 import { CareHomeHomeComponent } from './resources/pages/care-home/care-home-home/care-home-home.component';
 import { CareHomeMyProfileComponent } from './resources/pages/care-home/care-home-my-profile/care-home-my-profile.component';
+import { PasswordResetComponent } from './resources/pages/password-reset/password-reset.component';
+import { EmailConfirmationComponent } from './resources/pages/email-confirmation/email-confirmation.component';
 
 @NgModule({
     declarations: [
@@ -68,7 +70,9 @@ import { CareHomeMyProfileComponent } from './resources/pages/care-home/care-hom
         CarerMyProfileComponent,
         CareHomeDashboardComponent,
         CareHomeHomeComponent,
-        CareHomeMyProfileComponent
+        CareHomeMyProfileComponent,
+        PasswordResetComponent,
+        EmailConfirmationComponent
     ],
     imports: [
         BrowserModule,

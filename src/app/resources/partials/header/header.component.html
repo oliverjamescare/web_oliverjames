@@ -79,17 +79,21 @@
                     </div>
                 </nav>
 
-                <div *ngIf="activatedModule != 'slim'" class="static-content-container text-center">
+                <div [ngClass]="{'d-none': activatedModule == 'slim'}" class="static-content-container text-center">
                     <img src="./assets/images/oliver-james-large-logo.png" class="img-fluid large-logo" alt="oliver-james-logo">
 
                     <!-- modules -->
-                    <div *ngIf="activatedModule == 'careHomeRegister'" class="care-home-module">
+                    <div [ngClass]="{'d-none': activatedModule != 'careHomeRegister'}" class="care-home-module">
                         <p class="section-desctiption">Quality temporary carers at affordable prices</p>
-                        <form>
+                        <form  [formGroup]="form" (ngSubmit)="onSubmit()">
                             <div class="form-group">
-                                <input type="text" placeholder="Enter your postcode" class="form-control" name="postal_code">
+                                <input type="text" placeholder="Enter your postcode" class="form-control" name="postal_code" formControlName="postal_code" [ngClass]="{'is-invalid': !form.valid && form.get('postal_code').touched, 'is-valid': form.valid && form.get('postal_code').touched }">
+                                <input type="text" name="company" formControlName="company" class="d-none">
+                                <input type="text" name="line_one" formControlName="address_line_1" class="d-none">
+                                <input type="text" name="line_two" formControlName="address_line_2" class="d-none">
+                                <input type="text" name="city" formControlName="city" class="d-none">
                             </div>
-                            <button class="btn btn-success">Book now / Register as a care home</button>
+                            <button class="btn btn-success" type="submit">Book now / Register as a care home</button>
                         </form>
                         <br>
                     </div>

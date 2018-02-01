@@ -23,10 +23,14 @@ import { CareHomeHomeComponent } from './resources/pages/care-home/care-home-hom
 import { CareHomeMyProfileComponent } from './resources/pages/care-home/care-home-my-profile/care-home-my-profile.component';
 import { CarerAuthGuardService } from './guards/carer-auth-guard.service';
 import { CareHomeAuthGuardService } from './guards/care-home-auth-guard.service';
+import { PasswordResetComponent } from './resources/pages/password-reset/password-reset.component';
+import { EmailConfirmationComponent } from './resources/pages/email-confirmation/email-confirmation.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'contact', component: ContactComponent },
+    { path: 'password-reset', component: PasswordResetComponent },
+    { path: 'email-verification', component: EmailConfirmationComponent },
     { path: 'carer', component: LandingCarerComponent },
     { path: 'carer/register/terms', component: RegisterCarerTermsComponent },
     { path: 'carer/register/personal-details', component: RegisterCarerPersonalDetailsComponent },

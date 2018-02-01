@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CarerService } from '../../../../services/carer.service';
 import { handleUniqueValidator, handleValidationStateClass, handleValidationErrorMessage }  from '../../../../utilities/form.utils';
@@ -11,7 +11,7 @@ import { UserService } from '../../../../services/user.service';
     templateUrl: './register-carer-personal-details.component.html',
     styleUrls: [ './register-carer-personal-details.component.scss' ]
 })
-export class RegisterCarerPersonalDetailsComponent implements OnInit
+export class RegisterCarerPersonalDetailsComponent implements OnInit, OnDestroy
 {
     steps: Array<{ name: string, active: boolean, completed: boolean }> = [
         {
@@ -40,6 +40,7 @@ export class RegisterCarerPersonalDetailsComponent implements OnInit
     form: FormGroup
     formUtils = { handleValidationStateClass, handleValidationErrorMessage }
     addressVisible = false;
+    pcaControl: any;
 
     messages = [
         {
@@ -276,8 +277,12 @@ export class RegisterCarerPersonalDetailsComponent implements OnInit
             .subscribe((password: string) => this.form.get('password_confirm').setValidators([ Validators.required, equalToFieldValue(password)]));
 
         //choosing address event from PCA
+        if(pca.load)
+            pca.load();
+
         pca.on("load", (type, id, control) => {
-             control.listen('populate', (address) => {
+
+            control.listen('populate', (address) => {
                  console.log(address)
                  this.form.patchValue({
                      postal_code: address['PostalCode'],
@@ -286,7 +291,11 @@ export class RegisterCarerPersonalDetailsComponent implements OnInit
                      address_line_2: address["Line2"],
                      city: address["City"]
                  });
-             })
+             });
+            //
+            // control.ignore("populate", () => {
+            //     console.log("zignorowano");
+            // })
         });
 
         //datepicker config
@@ -300,6 +309,15 @@ export class RegisterCarerPersonalDetailsComponent implements OnInit
             value: moment(adultDate).format('YYYY-MM-DD'),
             hide: (event: Event) => this.form.get('date_of_birth').setValue(event.target['value'])
         });
+    }
+
+    ngOnDestroy()
+    {
+        if(this.pcaControl)
+            this.pcaControl.destroy();
+
+        console.log(this.pcaControl)
+        console.log("ssss")
     }
 
     toggleAddress()

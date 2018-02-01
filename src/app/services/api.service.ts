@@ -22,6 +22,10 @@ export class ApiService
     {
         return this.httpClient.get(this.endpoint + "/user/uniqueness", { params: new HttpParams().set(param, value) });
     }
+    confirmEmail(body: Object)
+    {
+        return this.httpClient.put(this.endpoint + "/user/confirm-email", body);
+    }
 
     //auth
     register(form: FormData)
@@ -39,5 +43,9 @@ export class ApiService
         return this.httpClient.post(this.endpoint + "/password/remind", body);
     }
 
+    resetPassword(body: Object)
+    {
+        return this.httpClient.put(this.endpoint + "/password/remind/change", body);
+    }
 
 }
