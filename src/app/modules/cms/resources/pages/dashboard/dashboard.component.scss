@@ -1,0 +1,53 @@
+@import "variables";
+
+.side-menu
+{
+    position: fixed;
+    width: 300px;
+    padding: 30px 15px;
+    border-right: 2px solid $green-color;
+    text-align: center;
+    height: 100vh;
+    h2
+    {
+        margin-top: 10px;
+    }
+    .user-section
+    {
+        margin-top: 20px;
+        margin-bottom: 40px;
+        a
+        {
+            color: $green-color;
+            font-weight: 500;
+            margin: 20px;
+        }
+    }
+    .menu
+    {
+        background: $green-color;
+        margin: -15px;
+        padding: 30px;
+        height: 100%;
+        ul
+        {
+            list-style: none;
+            padding-left: 0;
+            text-align: left;
+            color: $white-color;
+            font-size: 18px;
+            a
+            {
+                color: $white-color;
+                font-weight: 500;
+                display: block;
+                margin-bottom: 10px;
+            }
+        }
+    }
+}
+#content-admin
+{
+    margin-left: 300px;
+}
+

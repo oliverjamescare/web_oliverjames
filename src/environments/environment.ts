@@ -5,5 +5,6 @@
 
 export const environment = {
     production: false,
-    api: "http://api.oliver-james.ready4s.it/api"
+    api: "http://localhost:8000/api",
+    admin: "http://localhost:8000/admin",
 };

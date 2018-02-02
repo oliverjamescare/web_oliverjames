@@ -1,0 +1,28 @@
+<div class="container login">
+    <div class="row">
+        <div class="col-12">
+            <div class="text-center">
+                <img src="./assets/images/oliver-james-large-logo.png" class="img-fluid" alt="logo">
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-6 offset-3">
+            <h4>Login</h4>
+            <div class="text-center">
+                <span class="invalid-feedback">{{ error }}</span>
+            </div>
+            <form [formGroup]="form" (ngSubmit)="onLogin()">
+                <div class="form-group">
+                    <input type="email" class="form-control" placeholder="Email" formControlName="email">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Password" formControlName="password">
+                </div>
+                <button class="btn btn-success" [disabled]="!form.valid || inProgress">Login</button>
+            </form>
+        </div>
+    </div>
+</div>
