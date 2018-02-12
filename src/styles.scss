@@ -3,12 +3,12 @@
 /*           SCSS Stylesheet           */
 /*      (C) 2017 www.mvpdoers.com      */
 /*-------------------------------------*/
-@import "variables";
+@import "scss/variables";
 
-@import "modules/controls";
-@import "modules/buttons";
-@import "modules/datepicker";
-
+@import "scss/modules/controls";
+@import "scss/modules/buttons";
+@import "scss/modules/datepicker";
+@import "scss/global";
 
 //layout
 .app-wrapper
