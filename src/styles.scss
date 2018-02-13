@@ -4,42 +4,45 @@
 /*      (C) 2017 www.mvpdoers.com      */
 /*-------------------------------------*/
 @import "scss/variables";
-
 @import "scss/modules/controls";
 @import "scss/modules/buttons";
 @import "scss/modules/datepicker";
 @import "scss/global";
+@import "scss/modules/subheader";
 
 //layout
-.app-wrapper
-{
-    font-family: $main-font;
-    color:  $grey-brown-color;
-}
-.fixed-wrapper {
-    background: $white-color;
-    z-index: 999;
-    position: fixed;
-    width: 90%;
-    left: 5%;
-    font-size: 18px;
-    top: 0;
+.app-wrapper {
+  font-family: $main-font;
+  color: $grey-brown-color;
 }
 
-#content
-{
-    width: 90%;
-    margin: 554px auto 0;
-    padding: 30px 45px 60px;
+.fixed-wrapper {
+  background: $white-color;
+  z-index: 999;
+  position: fixed;
+  width: 90%;
+  left: 5%;
+  font-size: 18px;
+  top: 0;
+}
+
+#content {
+  width: 90%;
+  margin: 554px auto 0;
+  padding: 30px 45px 60px;
+}
+@media screen and (max-width: 768px){
+  #content {
+    padding: 30px 7px 60px;
+  }
 }
 
 //form hekper label
-.text-muted
-{
-    font-size: 14px;
-    color: $grey-brown-color !important;
+.text-muted {
+  font-size: 14px;
+  color: $grey-brown-color !important;
 }
-.invalid-feedback
-{
-    display: block;
+
+.invalid-feedback {
+  display: block;
 }

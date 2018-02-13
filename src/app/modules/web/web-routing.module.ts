@@ -1,8 +1,8 @@
-//core
+// core
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-//components
+// components
 import { HomeComponent } from './resources/pages/home/home.component';
 import { LandingCarerComponent } from './resources/pages/landing-carer/landing-carer.component';
 import { RegisterCarerComponent } from './resources/pages/register-carer/register-carer.component';
@@ -26,6 +26,13 @@ import { CareHomeAuthGuardService } from './guards/care-home-auth-guard.service'
 import { PasswordResetComponent } from './resources/pages/password-reset/password-reset.component';
 import { EmailConfirmationComponent } from './resources/pages/email-confirmation/email-confirmation.component';
 import { WebComponent } from './web.component';
+import {CareHomeBookingComponent} from './resources/pages/care-home/care-home-booking/care-home-booking.component';
+import {
+    CareHomeBookingNewComponent,
+} from './resources/pages/care-home/care-home-booking/new-booking/care-home-booking-new.component';
+import {CareHomeBookingReviewComponent} from './resources/pages/care-home/care-home-booking/care-home-booking-review/care-home-booking-review.component';
+import {CareHomeBookingPaymentDetailsComponent} from './resources/pages/care-home/care-home-booking/care-home-booking-payment-details/care-home-booking-payment-details.component';
+import {CareHomeBookingSubmitedComponent} from './resources/pages/care-home/care-home-booking/care-home-booking-submitted/care-home-booking-submited.component';
 
 const routes: Routes = [
     {
@@ -62,6 +69,17 @@ const routes: Routes = [
                     { path: 'contact', component: ContactComponent },
                 ]
             },
+            {
+                path: 'care-home-booking',
+                component: CareHomeBookingComponent,
+                canActivate: [CareHomeAuthGuardService],
+                children: [
+                    {path: 'new-booking', component: CareHomeBookingNewComponent},
+                    {path: 'review', component: CareHomeBookingReviewComponent},
+                    {path: 'payment-details', component: CareHomeBookingPaymentDetailsComponent},
+                    {path: 'submited', component: CareHomeBookingSubmitedComponent}
+                ]
+            }
         ]
     },
 

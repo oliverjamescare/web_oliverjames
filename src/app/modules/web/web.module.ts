@@ -1,13 +1,13 @@
-//core
+// core
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { WebRoutingModule } from './web-routing.module';
 
-//directives
+// directives
 import { ContentResizerDirective } from './directives/content-resizer.directive';
 
-//services
+// services
 import { ApiService } from './services/api.service';
 import { AuthService } from './services/auth.service';
 import { CarerService } from './services/carer.service';
@@ -15,11 +15,11 @@ import { UserService } from './services/user.service';
 import { GeneralService } from './services/general.service';
 import { CareHomeService } from './services/care-home.service';
 
-//guards
+// guards
 import { CarerAuthGuardService } from './guards/carer-auth-guard.service';
 import { CareHomeAuthGuardService } from './guards/care-home-auth-guard.service';
 
-//components
+// components
 import { WebComponent } from './web.component';
 import { EmailConfirmationComponent } from './resources/pages/email-confirmation/email-confirmation.component';
 import { PasswordResetComponent } from './resources/pages/password-reset/password-reset.component';
@@ -44,6 +44,14 @@ import { RegisterCarerTermsComponent } from './resources/pages/register-carer/re
 import { HeaderComponent } from './resources/partials/header/header.component';
 import { LandingCarerComponent } from './resources/pages/landing-carer/landing-carer.component';
 import { HomeComponent } from './resources/pages/home/home.component';
+import {CareHomeBookingComponent} from './resources/pages/care-home/care-home-booking/care-home-booking.component';
+import {
+    CareHomeBookingNewComponent
+} from './resources/pages/care-home/care-home-booking/new-booking/care-home-booking-new.component';
+import {CareHomeBookingHeaderComponent} from './resources/pages/care-home/care-home-booking/care-home-booking-header/care-home-booking-header.component';
+import {CareHomeBookingReviewComponent} from './resources/pages/care-home/care-home-booking/care-home-booking-review/care-home-booking-review.component';
+import {CareHomeBookingSubmitedComponent} from './resources/pages/care-home/care-home-booking/care-home-booking-submitted/care-home-booking-submited.component';
+import {CareHomeBookingPaymentDetailsComponent} from './resources/pages/care-home/care-home-booking/care-home-booking-payment-details/care-home-booking-payment-details.component';
 
 @NgModule({
     declarations: [
@@ -71,7 +79,13 @@ import { HomeComponent } from './resources/pages/home/home.component';
         CareHomeHomeComponent,
         CareHomeMyProfileComponent,
         PasswordResetComponent,
-        EmailConfirmationComponent
+        EmailConfirmationComponent,
+        CareHomeBookingComponent,
+        CareHomeBookingHeaderComponent,
+        CareHomeBookingNewComponent,
+        CareHomeBookingReviewComponent,
+        CareHomeBookingPaymentDetailsComponent,
+        CareHomeBookingSubmitedComponent
     ],
     imports: [
         CommonModule,
