@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, UrlSegment} from '@angular/router';
 
 @Component({
     selector: 'app-care-home-booking',

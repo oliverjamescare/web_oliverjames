@@ -52,6 +52,11 @@ import {CareHomeBookingHeaderComponent} from './resources/pages/care-home/care-h
 import {CareHomeBookingReviewComponent} from './resources/pages/care-home/care-home-booking/care-home-booking-review/care-home-booking-review.component';
 import {CareHomeBookingSubmitedComponent} from './resources/pages/care-home/care-home-booking/care-home-booking-submitted/care-home-booking-submited.component';
 import {CareHomeBookingPaymentDetailsComponent} from './resources/pages/care-home/care-home-booking/care-home-booking-payment-details/care-home-booking-payment-details.component';
+import {BookingCalendarComponent} from './resources/pages/care-home/care-home-booking/booking-calendar/booking-calendar.component';
+import {CareHomeBookingService} from './services/care-home-booking.service';
+import {CalendarDayComponent} from './resources/pages/care-home/care-home-booking/booking-calendar/calendar-day/calendar-day.component';
+import {DayLabelRowComponent} from './resources/pages/care-home/care-home-booking/booking-calendar/day-label-row/day-label-row.component';
+import {MonthLabelComponent} from './resources/pages/care-home/care-home-booking/booking-calendar/month-label/month-label.component';
 
 @NgModule({
     declarations: [
@@ -85,7 +90,11 @@ import {CareHomeBookingPaymentDetailsComponent} from './resources/pages/care-hom
         CareHomeBookingNewComponent,
         CareHomeBookingReviewComponent,
         CareHomeBookingPaymentDetailsComponent,
-        CareHomeBookingSubmitedComponent
+        CareHomeBookingSubmitedComponent,
+        BookingCalendarComponent,
+        CalendarDayComponent,
+        DayLabelRowComponent,
+        MonthLabelComponent
     ],
     imports: [
         CommonModule,
@@ -101,7 +110,8 @@ import {CareHomeBookingPaymentDetailsComponent} from './resources/pages/care-hom
         CareHomeService,
         GeneralService,
         CarerAuthGuardService,
-        CareHomeAuthGuardService
+        CareHomeAuthGuardService,
+        CareHomeBookingService
     ]
 })
 export class WebModule {}

@@ -74,7 +74,7 @@ const routes: Routes = [
                 component: CareHomeBookingComponent,
                 canActivate: [CareHomeAuthGuardService],
                 children: [
-                    {path: 'new-booking', component: CareHomeBookingNewComponent},
+                    {path: 'new', component: CareHomeBookingNewComponent},
                     {path: 'review', component: CareHomeBookingReviewComponent},
                     {path: 'payment-details', component: CareHomeBookingPaymentDetailsComponent},
                     {path: 'submited', component: CareHomeBookingSubmitedComponent}
