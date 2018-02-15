@@ -1,10 +1,8 @@
 <div class="row">
     <div class="col-sm">
-        <app-month-label [month]="'January'" [showInstruction]="true"></app-month-label>
-        <app-day-label></app-day-label>
-        <app-calendar-day
-                *ngFor="let day of daysArray"
-                [dayData]="day"
-        ></app-calendar-day>
+        <app-calendar-cell
+                *ngFor="let cell of calendarArr"
+                [cellData]="cell"
+        ></app-calendar-cell>
     </div>
 </div>

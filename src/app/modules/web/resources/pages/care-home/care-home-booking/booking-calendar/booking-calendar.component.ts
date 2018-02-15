@@ -1,47 +1,79 @@
 import {Component, OnInit} from '@angular/core';
 import {CareHomeBookingService} from '../../../../../services/care-home-booking.service';
-import {CalendarDay} from '../../../../../models/calendar-day';
+import {CalendarCell} from './calendar-cell';
+import {CalendarDay} from '../../../../../models/care-home-booking/calendar-day';
 
 @Component({
     selector: 'app-booking-calendar',
     templateUrl: './booking-calendar.component.html'
 })
 export class BookingCalendarComponent implements OnInit {
-    arrayLength = 43; // 42 days + one label;
-    daysArray = [];
+    calendar: CalendarDay[];
+    calendarArr: CalendarCell[] = [];
+    monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+        'July', 'August', 'September', 'October', 'November', 'December'
+    ];
 
     constructor(public bookingService: CareHomeBookingService) {
     }
 
     ngOnInit() {
-        this.bookingService.getData()
+        this.getApiData();
+    }
+
+    private getApiData(): void {
+        this.bookingService.getCalendar()
             .subscribe(
-                response => {
-                    this.bookingService.calendar = [];
-                    response.calendar.forEach((day) => {
-                        this.bookingService.calendar.push(new CalendarDay(day));
-                    });
-                    console.log('Calendar', this.bookingService.calendar);
-                    this.setArray();
+                (response: CalendarDay[]) => {
+                    this.calendar = response;
+                    this.setCalendar();
+                    console.log('Calendar arr', this.calendarArr);
                 }
             );
     }
 
-    private setArray(): void {
-        this.bookingService.calendar.forEach((day, index) => {
-                console.log(day.day.getDate());
+    private setCalendar(): void {
+        this.addLabel(this.monthNames[this.calendar[0].day.getMonth()], true);
+        this.calendar.forEach((day, index) => {
                 if (day.day.getDate() === this.daysInMonth(day.day.getMonth() + 1, day.day.getFullYear())) {
                     for (let j = 0; j < 8; j++) {
-                        j === 0 ? this.daysArray.push(day.day.getDate()) : this.daysArray.push(0);
+                        j === 0 ? this.addDay(day.day.getDate(), day.jobs) : this.addEmptyDay();
                         if ((index + 1 + j) % 7 === 0) {
-                            this.daysArray.push(-1);
+                            this.addLabel(this.monthNames[this.calendar[0].day.getMonth() + 1], false);
                         }
                     }
                 } else {
-                    this.daysArray.push(day.day.getDate());
+                    this.addDay(day.day.getDate(), day.jobs);
                 }
             }
         );
+    }
+
+    private addLabel(month: string, showInstruction: boolean): void {
+        this.calendarArr.push({
+            templateType: 'label',
+            month: month,
+            showInstruction: showInstruction
+        });
+    }
+
+    private addEmptyDay(): void {
+        this.calendarArr.push({
+            templateType: 'day',
+            dayData: {
+                day: 0
+            }
+        });
+    }
+
+    private addDay(day: number, jobs: any[]): void {
+        this.calendarArr.push({
+            templateType: 'day',
+            dayData: {
+                day: day,
+                jobs: jobs
+            }
+        });
     }
 
     private daysInMonth(month, year): number {

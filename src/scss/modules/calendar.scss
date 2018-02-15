@@ -29,6 +29,7 @@
 .month-label-row {
   width: 100%;
   height: 35px;
+  float: left;
 
   .calendar-instruction {
     color: $light-grey-color;
@@ -37,15 +38,14 @@
 
   .month-label {
     color: $black-color;
-    float: left !important;
     font-size: 22px;
     font-weight: 500;
+    float: left;
   }
 }
 
 .month-label2 {
   border-bottom: 1px solid lightgray;
-  margin-top: 300px;
   span {
     color: $black-color;
     font-size: 22px;

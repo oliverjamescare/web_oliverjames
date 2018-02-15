@@ -1,0 +1,10 @@
+<app-calendar-day
+        *ngIf="cellData.templateType === 'day'"
+        [day]="cellData.dayData.day"
+        [jobs]="cellData.dayData.jobs"
+></app-calendar-day>
+<app-month-label
+        *ngIf="cellData.templateType === 'label'"
+        [month]="cellData.month"
+        [showInstruction]="cellData.showInstruction"
+></app-month-label>

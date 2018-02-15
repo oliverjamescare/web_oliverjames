@@ -1,10 +1,4 @@
-<div *ngIf="!labelCell" class="calendar-day">
+<div class="calendar-day">
     <div class="day-events"></div>
-    <span class="day-number">{{ dayNumber }}</span>
-</div>
-
-<div *ngIf="labelCell" class="month-label2">
-    <br>
-    <span>March</span>
-    <br>
+    <span class="day-number">{{ getDay(day) }}</span>
 </div>
