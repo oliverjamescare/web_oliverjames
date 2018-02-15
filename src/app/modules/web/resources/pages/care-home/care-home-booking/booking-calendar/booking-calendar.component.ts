@@ -27,23 +27,26 @@ export class BookingCalendarComponent implements OnInit {
                 (response: CalendarDay[]) => {
                     this.calendar = response;
                     this.setCalendar();
-                    console.log('Calendar arr', this.calendarArr);
                 }
             );
     }
 
     private setCalendar(): void {
         this.addLabel(this.monthNames[this.calendar[0].day.getMonth()], true);
+        let count = 0;
         this.calendar.forEach((day, index) => {
+                count++;
                 if (day.day.getDate() === this.daysInMonth(day.day.getMonth() + 1, day.day.getFullYear())) {
                     for (let j = 0; j < 8; j++) {
-                        j === 0 ? this.addDay(day.day.getDate(), day.jobs) : this.addEmptyDay();
+                        count++;
+                        j === 0 ? this.addDay(day.day.getDate(), day.jobs, this.getDirection(count)) : this.addEmptyDay();
                         if ((index + 1 + j) % 7 === 0) {
                             this.addLabel(this.monthNames[this.calendar[0].day.getMonth() + 1], false);
+                            count --;
                         }
                     }
                 } else {
-                    this.addDay(day.day.getDate(), day.jobs);
+                    this.addDay(day.day.getDate(), day.jobs, this.getDirection(count));
                 }
             }
         );
@@ -66,14 +69,19 @@ export class BookingCalendarComponent implements OnInit {
         });
     }
 
-    private addDay(day: number, jobs: any[]): void {
+    private addDay(day: number, jobs: any[], direction: string): void {
         this.calendarArr.push({
             templateType: 'day',
             dayData: {
                 day: day,
-                jobs: jobs
+                jobs: jobs,
+                direction: direction
             }
         });
+    }
+
+    private getDirection(index: number): string {
+        return index % 7 === 0 ? 'left' : 'right';
     }
 
     private daysInMonth(month, year): number {

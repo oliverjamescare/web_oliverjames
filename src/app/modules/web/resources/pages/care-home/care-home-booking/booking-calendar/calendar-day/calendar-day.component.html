@@ -1,4 +1,9 @@
-<div class="calendar-day">
+<div (click)="onOpenPopup()" class="calendar-day">
     <div class="day-events"></div>
     <span class="day-number">{{ getDay(day) }}</span>
+    <app-calendar-popup
+            *ngIf="showPopup && getDay(day)"
+            [direction]="direction"
+            (closePopup)="onClosePopup()"
+    ></app-calendar-popup>
 </div>

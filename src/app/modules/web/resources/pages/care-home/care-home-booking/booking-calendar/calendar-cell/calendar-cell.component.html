@@ -2,6 +2,7 @@
         *ngIf="cellData.templateType === 'day'"
         [day]="cellData.dayData.day"
         [jobs]="cellData.dayData.jobs"
+        [direction]="cellData.dayData.direction"
 ></app-calendar-day>
 <app-month-label
         *ngIf="cellData.templateType === 'label'"

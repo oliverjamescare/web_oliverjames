@@ -1,3 +1,44 @@
-<p>
-  calendar-popup works!
-</p>
+<div class="calendar-popup" [ngClass]="{'to-left': direction === 'left', 'to-right': direction === 'right'}">
+    <div class="header text text-center">
+        <span>New job</span>
+        <span (click)="onClosePopup(); $event.stopPropagation()" class="exit">X</span>
+    </div>
+    <div class="popup-content">
+        <form [formGroup]="form">
+            <label class="small-label">Start date</label>
+            <select formControlName="start_date" class="form-control">
+                <option value=""></option>
+            </select>
+            <div class="inline-input padding-right5">
+                <label class="small-label">From</label>
+                <select class="form-control">
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="inline-input padding-left5">
+                <label class="small-label">Till</label>
+                <select class="form-control">
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="inline-input padding-right5">
+                <label class="small-label">Role</label>
+                <select class="form-control">
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="inline-input padding-left5">
+                <label class="small-label">Number</label>
+                <select class="form-control">
+                    <option value=""></option>
+                </select>
+            </div>
+            <div class="inline-input padding-right5">
+                <button class="btn-success btn-popup">Book one-off</button>
+            </div>
+            <div class="inline-input padding-left5">
+                <button class="btn-outline-success btn-popup">Book recuiring</button>
+            </div>
+        </form>
+    </div>
+</div>
