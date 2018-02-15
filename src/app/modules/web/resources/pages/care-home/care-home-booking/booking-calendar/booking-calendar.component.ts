@@ -39,14 +39,14 @@ export class BookingCalendarComponent implements OnInit {
                 if (day.day.getDate() === this.daysInMonth(day.day.getMonth() + 1, day.day.getFullYear())) {
                     for (let j = 0; j < 8; j++) {
                         count++;
-                        j === 0 ? this.addDay(day.day.getDate(), day.jobs, this.getDirection(count)) : this.addEmptyDay();
+                        j === 0 ? this.addDay(day.day.getDate(), day.jobs, this.getDirection(count), count) : this.addEmptyDay();
                         if ((index + 1 + j) % 7 === 0) {
                             this.addLabel(this.monthNames[this.calendar[0].day.getMonth() + 1], false);
                             count --;
                         }
                     }
                 } else {
-                    this.addDay(day.day.getDate(), day.jobs, this.getDirection(count));
+                    this.addDay(day.day.getDate(), day.jobs, this.getDirection(count), count);
                 }
             }
         );
@@ -69,13 +69,14 @@ export class BookingCalendarComponent implements OnInit {
         });
     }
 
-    private addDay(day: number, jobs: any[], direction: string): void {
+    private addDay(day: number, jobs: any[], direction: string, index: number): void {
         this.calendarArr.push({
             templateType: 'day',
             dayData: {
                 day: day,
                 jobs: jobs,
-                direction: direction
+                direction: direction,
+                index: index
             }
         });
     }

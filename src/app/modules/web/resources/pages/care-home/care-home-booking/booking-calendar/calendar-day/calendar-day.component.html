@@ -2,7 +2,7 @@
     <div class="day-events"></div>
     <span class="day-number">{{ getDay(day) }}</span>
     <app-calendar-popup
-            *ngIf="showPopup && getDay(day)"
+            *ngIf="isOpen() && getDay(day)"
             [direction]="direction"
             (closePopup)="onClosePopup()"
     ></app-calendar-popup>

@@ -59,6 +59,7 @@ import {DayLabelRowComponent} from './resources/pages/care-home/care-home-bookin
 import {MonthLabelComponent} from './resources/pages/care-home/care-home-booking/booking-calendar/month-label/month-label.component';
 import { CalendarCellComponent } from './resources/pages/care-home/care-home-booking/booking-calendar/calendar-cell/calendar-cell.component';
 import { CalendarPopupComponent } from './resources/pages/care-home/care-home-booking/booking-calendar/calendar-popup/calendar-popup.component';
+import {CalendarPopupService} from './resources/pages/care-home/care-home-booking/booking-calendar/calendar-popup/calendar-popup.service';
 
 @NgModule({
     declarations: [
@@ -115,7 +116,8 @@ import { CalendarPopupComponent } from './resources/pages/care-home/care-home-bo
         GeneralService,
         CarerAuthGuardService,
         CareHomeAuthGuardService,
-        CareHomeBookingService
+        CareHomeBookingService,
+        CalendarPopupService
     ]
 })
 export class WebModule {}

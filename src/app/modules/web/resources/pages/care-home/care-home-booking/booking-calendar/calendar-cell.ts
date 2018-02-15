@@ -6,6 +6,7 @@ export class CalendarCell {
     showInstruction?: boolean;
     dayData?: {
         day: number;
+        index?: number;
         jobs?: Job[];
         direction?: string
     };
