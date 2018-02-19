@@ -60,6 +60,8 @@ import {MonthLabelComponent} from './resources/pages/care-home/care-home-booking
 import { CalendarCellComponent } from './resources/pages/care-home/care-home-booking/booking-calendar/calendar-cell/calendar-cell.component';
 import { CalendarPopupComponent } from './resources/pages/care-home/care-home-booking/booking-calendar/calendar-popup/calendar-popup.component';
 import {CalendarPopupService} from './resources/pages/care-home/care-home-booking/booking-calendar/calendar-popup/calendar-popup.service';
+import {HourPipe} from './pipes/hour.pipe';
+import {DatePipe} from './pipes/date.pipe';
 
 @NgModule({
     declarations: [
@@ -99,7 +101,9 @@ import {CalendarPopupService} from './resources/pages/care-home/care-home-bookin
         DayLabelRowComponent,
         MonthLabelComponent,
         CalendarCellComponent,
-        CalendarPopupComponent
+        CalendarPopupComponent,
+        HourPipe,
+        DatePipe
     ],
     imports: [
         CommonModule,

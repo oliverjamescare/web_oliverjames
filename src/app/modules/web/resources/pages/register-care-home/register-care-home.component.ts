@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {
-    getMessageError, handleUniqueValidator, handleValidationErrorMessage,
-    handleValidationStateClass
+    getMessageError, handleUniqueValidator, handleValidationErrorMessage, handleValidationStateClass
 } from '../../../../../utilities/form.utils';
 import {Router} from '@angular/router';
 import {CareHomeService} from '../../../services/care-home.service';

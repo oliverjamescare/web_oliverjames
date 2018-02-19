@@ -1,6 +1,7 @@
 <app-calendar-day
         *ngIf="cellData.templateType === 'day'"
-        [day]="cellData.dayData.day"
+        [date]="cellData.dayData.date"
+        [empty]="cellData.dayData.isEmpty"
         [jobs]="cellData.dayData.jobs"
         [direction]="cellData.dayData.direction"
         [index]="cellData.dayData.index"

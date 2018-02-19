@@ -5,7 +5,8 @@ export class CalendarCell {
     month?: string;
     showInstruction?: boolean;
     dayData?: {
-        day: number;
+        isEmpty?: boolean;
+        date?: Date;
         index?: number;
         jobs?: Job[];
         direction?: string

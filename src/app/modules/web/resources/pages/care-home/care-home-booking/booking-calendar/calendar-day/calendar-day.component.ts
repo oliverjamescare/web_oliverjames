@@ -1,12 +1,15 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CalendarPopupService} from '../calendar-popup/calendar-popup.service';
+import {isUndefined} from 'util';
 
 @Component({
     selector: 'app-calendar-day',
     templateUrl: './calendar-day.component.html'
 })
 export class CalendarDayComponent implements OnInit {
-    @Input() day: number;
+    @Input() dayNumber: number;
+    @Input() date: Date;
+    @Input() empty: boolean;
     @Input() jobs: any[];
     @Input() direction: string;
     @Input() index: number;
@@ -29,8 +32,8 @@ export class CalendarDayComponent implements OnInit {
         this.calendarPopupService.openPopup = null;
     }
 
-    getDay(day: number): number {
-        return day === 0 ? null : day;
+    getDay(empty: boolean, day: Date): number {
+        return (empty === true || isUndefined(day)) ? null : day.getDate();
     }
 
 }

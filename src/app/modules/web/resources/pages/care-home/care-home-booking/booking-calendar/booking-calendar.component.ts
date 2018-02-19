@@ -25,28 +25,28 @@ export class BookingCalendarComponent implements OnInit {
         this.bookingService.getCalendar()
             .subscribe(
                 (response: CalendarDay[]) => {
-                    this.calendar = response;
+                    this.bookingService.calendar = response;
                     this.setCalendar();
                 }
             );
     }
 
     private setCalendar(): void {
-        this.addLabel(this.monthNames[this.calendar[0].day.getMonth()], true);
+        this.addLabel(this.monthNames[this.bookingService.calendar[0].day.getMonth()], false);
         let count = 0;
-        this.calendar.forEach((day, index) => {
+        this.bookingService.calendar.forEach((day, index) => {
                 count++;
                 if (day.day.getDate() === this.daysInMonth(day.day.getMonth() + 1, day.day.getFullYear())) {
                     for (let j = 0; j < 8; j++) {
                         count++;
-                        j === 0 ? this.addDay(day.day.getDate(), day.jobs, this.getDirection(count), count) : this.addEmptyDay();
+                        j === 0 ? this.addDay(day.day, day.jobs, this.getDirection(count), count) : this.addEmptyDay();
                         if ((index + 1 + j) % 7 === 0) {
-                            this.addLabel(this.monthNames[this.calendar[0].day.getMonth() + 1], false);
+                            this.addLabel(this.monthNames[this.bookingService.calendar[0].day.getMonth() + 1], false);
                             count --;
                         }
                     }
                 } else {
-                    this.addDay(day.day.getDate(), day.jobs, this.getDirection(count), count);
+                    this.addDay(day.day, day.jobs, this.getDirection(count), count);
                 }
             }
         );
@@ -64,19 +64,19 @@ export class BookingCalendarComponent implements OnInit {
         this.calendarArr.push({
             templateType: 'day',
             dayData: {
-                day: 0
+                isEmpty: true
             }
         });
     }
 
-    private addDay(day: number, jobs: any[], direction: string, index: number): void {
+    private addDay(day: Date, jobs: any[], direction: string, index: number): void {
         this.calendarArr.push({
             templateType: 'day',
             dayData: {
-                day: day,
-                jobs: jobs,
+                date: day,
+                index: index,
                 direction: direction,
-                index: index
+                jobs: jobs
             }
         });
     }
