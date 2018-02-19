@@ -1,12 +1,14 @@
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {environment} from '../../../../environments/environment';
+import {Observable} from 'rxjs/Observable';
+import {AuthService} from './auth.service';
 
 @Injectable()
 export class ApiService {
     private endpoint: string;
 
-    constructor(private httpClient: HttpClient) {
+    constructor(private httpClient: HttpClient, private authService: AuthService) {
         this.endpoint = environment.api;
     }
 
@@ -48,5 +50,16 @@ export class ApiService {
     // carer
     checkCarersNearPoint(params: HttpParams) {
         return this.httpClient.get(this.endpoint + '/carers/nearby', {params: params});
+    }
+
+    // care home
+    getCalendarData(): Observable<any> {
+        return this.httpClient.get(this.endpoint + '/care-home/calendar', {headers: this.getAuthorizationHeaders()});
+    }
+
+    private getAuthorizationHeaders(): HttpHeaders {
+        return new HttpHeaders({
+            'X-access-token': this.authService.getAccessToken().token
+        });
     }
 }

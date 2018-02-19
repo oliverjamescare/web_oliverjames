@@ -1,0 +1,40 @@
+<div class="calendar-popup" [ngClass]="{'to-left': direction === 'left', 'to-right': direction === 'right'}">
+    <div class="header text text-center">
+        <span>New job</span>
+        <span (click)="onClosePopup(); $event.stopPropagation()" class="exit">X</span>
+    </div>
+    <div class="popup-content">
+        <div [formGroup]="form">
+            <label class="small-label">Start date</label>
+            <select formControlName="start_date" class="form-control">
+                <option
+                        *ngFor="let day of bookingService.calendar; let i = index" [value]="i"
+                >{{ day.day | date }}</option>
+            </select>
+            <div class="inline-input padding-right5">
+                <label class="small-label">From</label>
+                <select formControlName="from" class="form-control">
+                    <option *ngFor="let hour of timeFromArr" [value]="hour">{{ hour | hourPipe }}</option>
+                </select>
+            </div>
+            <div class="inline-input padding-left5">
+                <label class="small-label">Till</label>
+                <select formControlName="till" class="form-control">
+                    <option *ngFor="let hour of timeTillArr" [value]="hour">{{ hour | hourPipe }}</option>
+                </select>
+            </div>
+            <div class="inline-input padding-right5">
+                <label class="small-label">Role</label>
+                <select formControlName="role" class="form-control">
+                    <option value="carer">Carer</option>
+                    <option value="senior_carer">Senior carer</option>
+                </select>
+            </div>
+            <div class="inline-input padding-left5">
+                <label class="small-label">Number</label>
+                <input formControlName="number" class="form-control" type="number" min="1" max="5">
+            </div>
+        </div>
+        <button (click)="onAddBooking(); $event.stopPropagation()" type="button" class="btn-success btn-popup">Book one-off</button>
+    </div>
+</div>

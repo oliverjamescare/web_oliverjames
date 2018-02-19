@@ -1,21 +1,20 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { getMessageError, handleValidationErrorMessage, handleValidationStateClass } from '../../../../../utilities/form.utils';
-import { GeneralService } from '../../../services/general.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {getMessageError, handleValidationErrorMessage, handleValidationStateClass} from '../../../../../utilities/form.utils';
+import {GeneralService} from '../../../services/general.service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
     selector: 'app-contact',
     templateUrl: './contact.component.html',
-    styleUrls: [ './contact.component.scss' ]
+    styleUrls: ['./contact.component.scss']
 })
-export class ContactComponent implements OnInit
-{
-    //form config
-    form: FormGroup
-    formUtils = { handleValidationStateClass, handleValidationErrorMessage }
+export class ContactComponent implements OnInit {
+    // form config
+    form: FormGroup;
+    formUtils = {handleValidationStateClass, handleValidationErrorMessage};
     inProgress = false;
-    error: string = "";
+    error = '';
 
     messages = [
         {
@@ -23,11 +22,11 @@ export class ContactComponent implements OnInit
             errors: [
                 {
                     error: 'required',
-                    message: "Email is required"
+                    message: 'Email is required'
                 },
                 {
                     error: 'email',
-                    message: "This is not a valid email address"
+                    message: 'This is not a valid email address'
                 }
             ]
         },
@@ -36,11 +35,11 @@ export class ContactComponent implements OnInit
             errors: [
                 {
                     error: 'required',
-                    message: "Name is required"
+                    message: 'Name is required'
                 },
                 {
                     error: 'maxlength',
-                    message: "Name cannot be longer than 50 characters"
+                    message: 'Name cannot be longer than 50 characters'
                 }
             ]
         },
@@ -49,11 +48,11 @@ export class ContactComponent implements OnInit
             errors: [
                 {
                     error: 'required',
-                    message: "Subject is required"
+                    message: 'Subject is required'
                 },
                 {
                     error: 'maxlength',
-                    message: "Subject cannot be longer than 100 characters"
+                    message: 'Subject cannot be longer than 100 characters'
                 }
             ]
         },
@@ -62,33 +61,31 @@ export class ContactComponent implements OnInit
             errors: [
                 {
                     error: 'required',
-                    message: "Message is required"
+                    message: 'Message is required'
                 },
                 {
                     error: 'maxlength',
-                    message: "Message cannot be longer than 200 characters"
+                    message: 'Message cannot be longer than 200 characters'
                 }
             ]
         }
     ];
 
-    constructor(private generalService: GeneralService) { }
+    constructor(private generalService: GeneralService) {
+    }
 
-    ngOnInit()
-    {
-        //form config
+    ngOnInit() {
+        // form config
         this.form = new FormGroup({
-            email: new FormControl(null,[ Validators.required, Validators.email ]),
-            name: new FormControl(null,[ Validators.required, Validators.maxLength(50)]),
-            subject: new FormControl(null,[ Validators.required, Validators.maxLength(100)]),
-            message: new FormControl(null,[ Validators.required, Validators.maxLength(200)])
+            email: new FormControl(null, [Validators.required, Validators.email]),
+            name: new FormControl(null, [Validators.required, Validators.maxLength(50)]),
+            subject: new FormControl(null, [Validators.required, Validators.maxLength(100)]),
+            message: new FormControl(null, [Validators.required, Validators.maxLength(200)])
         });
     }
 
-    onSubmit()
-    {
-        if(this.form.valid)
-        {
+    onSubmit() {
+        if (this.form.valid) {
             this.inProgress = true;
             const formValues = this.form.value;
             this.generalService

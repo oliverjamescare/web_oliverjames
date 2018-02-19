@@ -1,12 +1,10 @@
-import { Model } from "../../../models/model.model";
+import {Model} from '../../../models/model.model';
 
-export class Token extends Model
-{
+export class Token extends Model {
     token: string = null;
     refresh_token: string = null;
 
-    constructor(object: Object = {})
-    {
+    constructor(object: Object = {}) {
         super();
         this.assignProperties(this, object);
     }

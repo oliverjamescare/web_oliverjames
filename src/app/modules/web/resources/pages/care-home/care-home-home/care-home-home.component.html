@@ -10,30 +10,30 @@
 
 <h4>What do you want to do?</h4>
 <div class="row">
-    <div class="col-4">
-        <a href="#" class="btn btn-success">Book a new job</a>
+    <div class="col-md-4">
+        <a [routerLink]="['/care-home-booking', 'new']" class="btn btn-success">Book a new job</a>
     </div>
-    <div class="col-4">
+    <div class="col-md-4">
         <a href="#" class="btn btn-success">See past jobs / invoices</a>
     </div>
-    <div class="col-4">
+    <div class="col-md-4">
         <button class="btn btn-success" (click)="showLogoutPopup()">Logout</button>
     </div>
 </div>
 <div class="row">
-    <div class="col-4">
+    <div class="col-md-4">
         <a href="#" class="btn btn-success">See all upcoming jobs</a>
         <div class="text-center">
             <small class="text-muted text-center">X orders placed / Y filled</small>
         </div>
     </div>
-    <div class="col-4">
+    <div class="col-md-4">
         <a href="#" class="btn btn-success">Write reviews of carers</a>
         <div class="text-center">
             <small class="text-muted text-center">X still to write</small>
         </div>
     </div>
-    <div class="col-4">
+    <div class="col-md-4">
         <a href="#" class="btn btn-success">Notifications</a>
         <div class="text-center">
             <small class="text-muted text-center">X new</small>
