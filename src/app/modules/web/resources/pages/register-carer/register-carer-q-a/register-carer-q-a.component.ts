@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { handleValidationErrorMessage, handleValidationStateClass } from '../../../../../../utilities/form.utils';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CarerService } from '../../../../services/carer.service';
+import { CarerAuthService } from '../../../../services/carer-auth.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -62,7 +62,7 @@ export class RegisterCarerQAComponent implements OnInit
         },
     ];
 
-    constructor(private router: Router, private carerService: CarerService) {}
+    constructor(private router: Router, private carerService: CarerAuthService) {}
 
     ngOnInit()
     {

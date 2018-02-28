@@ -10,7 +10,7 @@ import { ContentResizerDirective } from './directives/content-resizer.directive'
 // services
 import { ApiService } from './services/api.service';
 import { AuthService } from './services/auth.service';
-import { CarerService } from './services/carer.service';
+import { CarerAuthService } from './services/carer-auth.service';
 import { UserService } from './services/user.service';
 import { GeneralService } from './services/general.service';
 import { CareHomeService } from './services/care-home.service';
@@ -73,6 +73,7 @@ import { ReviewTableComponent } from './resources/pages/care-home/care-home-book
 import { PreferenceTabComponent } from './resources/pages/care-home/care-home-booking/care-home-booking-review/preference-tab/preference-tab.component';
 import { GeneralGuidanceComponent } from './resources/pages/care-home/care-home-booking/care-home-booking-review/genral-guidance/genral-guidance.component';
 import { CalendarPopupListComponent } from './resources/pages/care-home/care-home-booking/booking-calendar/calendar-popup-list/calendar-popup-list.component';
+import { UpcomingJobsComponent } from './resources/pages/carer/upcoming-jobs/upcoming-jobs.component';
 
 @NgModule({
     declarations: [
@@ -121,7 +122,8 @@ import { CalendarPopupListComponent } from './resources/pages/care-home/care-hom
         ReviewTableComponent,
         PreferenceTabComponent,
         GeneralGuidanceComponent,
-        CalendarPopupListComponent
+        CalendarPopupListComponent,
+        UpcomingJobsComponent
     ],
     imports: [
         CommonModule,
@@ -137,7 +139,7 @@ import { CalendarPopupListComponent } from './resources/pages/care-home/care-hom
     providers: [
         ApiService,
         AuthService,
-        CarerService,
+        CarerAuthService,
         UserService,
         CareHomeService,
         GeneralService,

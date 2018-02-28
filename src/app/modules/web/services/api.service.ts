@@ -53,6 +53,10 @@ export class ApiService {
         return this.httpClient.get(this.endpoint + '/carers/nearby', {params: params});
     }
 
+    getUpcomingJobs(): Observable<any> {
+        return this.httpClient.get(`${this.endpoint}/carer/my-jobs`, {headers: this.getAuthorizationHeaders()});
+    }
+
     // care home
     getCalendarData(): Observable<any> {
         return this.httpClient.get(this.endpoint + '/care-home/calendar', {headers: this.getAuthorizationHeaders()});

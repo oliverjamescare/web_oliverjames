@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CarerService } from '../../../../services/carer.service';
+import { CarerAuthService } from '../../../../services/carer-auth.service';
 
 @Component({
     selector: 'app-register-carer-terms',
@@ -33,7 +33,7 @@ export class RegisterCarerTermsComponent
         }
     ];
 
-    constructor(private router: Router, private carerService: CarerService) {}
+    constructor(private router: Router, private carerService: CarerAuthService) {}
 
     onSubmit(form: NgForm)
     {

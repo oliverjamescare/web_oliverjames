@@ -1,6 +1,6 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {CarerService} from '../../../services/carer.service';
+import {CarerAuthService} from '../../../services/carer-auth.service';
 import {getMessageError} from '../../../../../utilities/form.utils';
 import {HttpErrorResponse} from '@angular/common/http';
 import {CareHomeService} from '../../../services/care-home.service';
@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
     error: string = '';
     '';
 
-    constructor(private carerService: CarerService, private careHomeService: CareHomeService, private router: Router) {
+    constructor(private carerService: CarerAuthService, private careHomeService: CareHomeService, private router: Router) {
     }
 
     ngOnInit() {

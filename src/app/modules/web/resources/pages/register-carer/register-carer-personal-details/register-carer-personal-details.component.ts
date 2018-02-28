@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CarerService } from '../../../../services/carer.service';
+import { CarerAuthService } from '../../../../services/carer-auth.service';
 import { handleUniqueValidator, handleValidationStateClass, handleValidationErrorMessage }  from '../../../../../../utilities/form.utils';
 import { alpha, numbers, equalToFieldValue, invalidDate, adult, password, equalTo, greaterThan } from '../../../../../../utilities/validators';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -230,7 +230,7 @@ export class RegisterCarerPersonalDetailsComponent implements OnInit, OnDestroy
         }
     ];
 
-    constructor(private router: Router, private carerService: CarerService, private userService: UserService) {}
+    constructor(private router: Router, private carerService: CarerAuthService, private userService: UserService) {}
 
     ngOnInit()
     {

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CarerService } from '../../../../services/carer.service';
+import { CarerAuthService } from '../../../../services/carer-auth.service';
 import { handleUniqueValidator, handleValidationStateClass, handleValidationErrorMessage }  from '../../../../../../utilities/form.utils';
 import { fileSize, fileType } from '../../../../../../utilities/validators';
 import { FormControl, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
@@ -66,7 +66,7 @@ export class RegisterCarerCvUploadComponent implements OnInit
         },
     ];
 
-    constructor(private router: Router, private carerService: CarerService) {}
+    constructor(private router: Router, private carerService: CarerAuthService) {}
 
     ngOnInit()
     {
