@@ -11,4 +11,27 @@
 <app-login [type]="'carer'" *ngIf="carerLogin" (closed)="onCarerClosed()" (forgotPasswordTriggered)="onForgotPasswordOpen()"></app-login>
 <app-login [type]="'careHome'" *ngIf="careHomeLogin" (closed)="onCareHomeClosed()" (forgotPasswordTriggered)="onForgotPasswordOpen()"></app-login>
 <app-forgot-password *ngIf="forgotPassword" (closed)="onForgotPasswordClosed()"></app-forgot-password>
+
+<app-popup [title]="'Care home'" [id]="'care_home_waiting_confirmation_id'">
+    <div class="row">
+        <div class="col-12">
+            <p class="modal-description">
+                Thank you. We will be in touch when we come to your area.
+            </p>
+            <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+        </div>
+    </div>
+</app-popup>
+
+<app-popup [title]="'Contact'" [id]="'contact_confirmation_id'">
+    <div class="row">
+        <div class="col-12">
+            <p class="modal-description">
+                Email sent
+            </p>
+            <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+        </div>
+    </div>
+</app-popup>
+
 <simple-notifications></simple-notifications>

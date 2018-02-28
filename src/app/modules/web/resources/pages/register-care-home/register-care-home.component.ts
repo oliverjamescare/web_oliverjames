@@ -18,7 +18,6 @@ export class RegisterCareHomeComponent implements OnInit {
     // form config
     form: FormGroup;
     formUtils = {handleValidationStateClass, handleValidationErrorMessage};
-    addressVisible = false;
     inProgress = false;
     error = '';
 
@@ -104,7 +103,7 @@ export class RegisterCareHomeComponent implements OnInit {
                 },
                 {
                     error: 'equalToFieldValue',
-                    message: 'Wrong confirm password field value'
+                    message: "Passwords don't match"
                 },
             ]
         },
@@ -216,9 +215,4 @@ export class RegisterCareHomeComponent implements OnInit {
                     });
         }
     }
-
-    toggleAddress() {
-        this.addressVisible = !this.addressVisible;
-    }
-
 }

@@ -93,6 +93,7 @@ export class ContactComponent implements OnInit {
                 .subscribe(() => {
                         this.inProgress = false;
                         this.form.reset();
+                        $("#contact_confirmation_id").modal();
                     },
                     (error: HttpErrorResponse) => {
                         this.error = getMessageError(error);

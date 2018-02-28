@@ -39,7 +39,6 @@ export class RegisterCarerPersonalDetailsComponent implements OnInit, OnDestroy
     //form config
     form: FormGroup
     formUtils = { handleValidationStateClass, handleValidationErrorMessage }
-    addressVisible = false;
     pcaControl: any;
 
     messages = [
@@ -142,7 +141,7 @@ export class RegisterCarerPersonalDetailsComponent implements OnInit, OnDestroy
                 },
                 {
                     error: 'equalToFieldValue',
-                    message: "Wrong confirm password field value"
+                    message: "Passwords don't match"
                 },
             ]
         },
@@ -225,7 +224,7 @@ export class RegisterCarerPersonalDetailsComponent implements OnInit, OnDestroy
                 },
                 {
                     error: 'greaterThan',
-                    message: "You can't register if you don't have at least 1 year experiance"
+                    message: "You can't register if you don't have at least 1 year experience"
                 }
             ]
         }
@@ -318,11 +317,6 @@ export class RegisterCarerPersonalDetailsComponent implements OnInit, OnDestroy
 
         console.log(this.pcaControl)
         console.log("ssss")
-    }
-
-    toggleAddress()
-    {
-        this.addressVisible = !this.addressVisible;
     }
 
     previousStep()

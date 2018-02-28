@@ -153,6 +153,7 @@ export class HeaderComponent implements OnInit
                         this.inProgress = false;
                         this.waitingForm.reset();
                         this.activatedModule = "careHomeRegister";
+                        $("#care_home_waiting_confirmation_id").modal();
                     },
                     (error: HttpErrorResponse) => {
                         this.error = getMessageError(error);

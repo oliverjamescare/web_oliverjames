@@ -60,8 +60,6 @@
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Your postcode" id="postcode" name="postcode" formControlName="postal_code" [ngClass]="formUtils.handleValidationStateClass(form, 'postal_code')">
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'postal_code', messages) }} </span>
-                        <span (click)="toggleAddress()" class="address-toggler">Enter address manually</span>
-                        <input type="text" class="address-preview" id="address" name="address" readonly disabled>
                     </div>
                 </div>
                 <div class="col-4">
@@ -71,10 +69,10 @@
                     </div>
                 </div>
             </div>
-            <div class="row" [ngClass]="{'d-none': !addressVisible }">
+            <div class="row">
                 <div class="col-3">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Company" id="company" name="company" formControlName="company" [ngClass]="formUtils.handleValidationStateClass(form, 'company')">
+                        <input type="text" class="form-control" placeholder="Your name / Company name" id="company" name="company" formControlName="company" [ngClass]="formUtils.handleValidationStateClass(form, 'company')">
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'company', messages) }} </span>
                     </div>
                 </div>
