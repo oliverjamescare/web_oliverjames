@@ -90,3 +90,32 @@
   width: 50%;
   float: left;
 }
+
+.suggestions {
+  position: absolute;
+  width: 100%;
+  border-color: $light-grey-color;
+  border-top: none;
+  color: $grey-brown-color;
+  box-shadow: 0 0 0 0.2rem rgba($grey-brown-color, 0.25);
+  z-index: 1000;
+  background-color: white;
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    li {
+      width: 100%;
+      padding: 7px 0 6px 7px;
+      &:hover {
+        color: $white-color;
+        background-color: $green-color;
+      }
+      span {
+        float: left;
+      }
+
+    }
+  }
+}

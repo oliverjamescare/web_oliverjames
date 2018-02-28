@@ -1,6 +1,17 @@
 <app-care-home-booking-header
         navigationTitle="Ad more jobs"
-        navigationRoute="/care-home-booking/new-booking"
+        navigationRoute="/care-home-booking/new"
         mainTitle="Review your jobs then press submit"
 ></app-care-home-booking-header>
-<h1>Review works</h1>
+<br>
+<app-review-table></app-review-table>
+<br>
+<app-preference-tab></app-preference-tab>
+<br>
+<app-general-guidance></app-general-guidance>
+<br>
+<div class="row">
+    <div class="col-md-12 col-lg-7">
+        <button (click)="onSubmitBookings()" class="btn-success">Submit bookings</button>
+    </div>
+</div>

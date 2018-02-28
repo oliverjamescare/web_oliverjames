@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-sm-12">
+        <h5 *ngIf="bookingService.priorityCarers.length !== 0">Priority carers</h5>
+    </div>
+  <div class="col-sm">
+      <table *ngIf="bookingService.priorityCarers.length !== 0" class="custom-table">
+          <thead>
+            <tr>
+                <th>#</th>
+                <th>Carer</th>
+                <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let carer of bookingService.priorityCarers; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ carer.carer.first_name }} {{ carer.carer.surname }}</td>
+                <td>
+                    <div (click)="onCarerRemove(i)" class="text-center">
+                        <i class="fas fa-trash gj-cursor-pointer"></i>
+                    </div>
+                </td>
+            </tr>
+          </tbody>
+      </table>
+  </div>
+</div>

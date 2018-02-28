@@ -4,8 +4,8 @@
   float: left;
   position: relative;
   cursor: pointer;
-  border-bottom: 1px solid lightgray;
-  border-right: 1px solid lightgray;
+  border-bottom: 1px solid $ultra-light-grey;
+  border-right: 1px solid $ultra-light-grey;
 
   .day-number {
     position: absolute;
@@ -13,14 +13,30 @@
     right: 5px;
   }
 
+  .day-events {
+    position: absolute;
+    bottom: 0px;
+    .single-event {
+      width: 100%;
+      float: left;
+      font-size: 12px;
+    }
+    .job {
+      color: $green-color;
+    }
+    .pre-booked-job {
+      color: $yellow-color;
+    }
+  }
+
   .calendar-popup {
     position: absolute;
     z-index: 1000;
     top: 10px;
-    height: 285px;
+    height: 295px;
     width: 285px;
     background-color: $white-color;
-    border: 1px solid lightgray;
+    border: 1px solid $ultra-light-grey;
     cursor: auto;
 
     .header {
@@ -42,6 +58,23 @@
       padding: 20px;
       margin-top: 15px;
     }
+
+    .books-list {
+      list-style-type: none;
+      padding: 0;
+      li {
+        border-bottom: 1px solid $ultra-light-grey;
+        height: 35px;
+        padding: 6px;
+      }
+    }
+
+    .list-button {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      margin-bottom: 2px;
+    }
   }
 
   .to-left {
@@ -51,6 +84,10 @@
   .to-right {
     left: 10px;
   }
+}
+
+.past-day {
+  background-color: $ultra-light-grey;
 }
 
 .day-label {
@@ -84,7 +121,7 @@
 }
 
 .month-label2 {
-  border-bottom: 1px solid lightgray;
+  border-bottom: 1px solid $ultra-light-grey;
   span {
     color: $black-color;
     font-size: 22px;

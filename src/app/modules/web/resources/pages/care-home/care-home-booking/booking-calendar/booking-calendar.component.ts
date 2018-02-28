@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewChecked, Component, OnInit} from '@angular/core';
 import {CareHomeBookingService} from '../../../../../services/care-home-booking.service';
 import {CalendarCell} from './calendar-cell';
 import {CalendarDay} from '../../../../../models/care-home-booking/calendar-day';
+import {CalendarPopupService} from './calendar-popup/calendar-popup.service';
 
 @Component({
     selector: 'app-booking-calendar',
@@ -14,7 +15,8 @@ export class BookingCalendarComponent implements OnInit {
         'July', 'August', 'September', 'October', 'November', 'December'
     ];
 
-    constructor(public bookingService: CareHomeBookingService) {
+    constructor(public bookingService: CareHomeBookingService,
+                public popupService: CalendarPopupService) {
     }
 
     ngOnInit() {
@@ -26,7 +28,9 @@ export class BookingCalendarComponent implements OnInit {
             .subscribe(
                 (response: CalendarDay[]) => {
                     this.bookingService.calendar = response;
+                    console.log('Get calendar response', response);
                     this.setCalendar();
+                    this.emitPreBookedJobs();
                 }
             );
     }
@@ -39,14 +43,14 @@ export class BookingCalendarComponent implements OnInit {
                 if (day.day.getDate() === this.daysInMonth(day.day.getMonth() + 1, day.day.getFullYear())) {
                     for (let j = 0; j < 8; j++) {
                         count++;
-                        j === 0 ? this.addDay(day.day, day.jobs, this.getDirection(count), count) : this.addEmptyDay();
+                        j === 0 ? this.addDay(day.day, day.jobs, this.getDirection(count), index) : this.addEmptyDay();
                         if ((index + 1 + j) % 7 === 0) {
-                            this.addLabel(this.monthNames[this.bookingService.calendar[0].day.getMonth() + 1], false);
-                            count --;
+                            this.addLabel(this.monthNames[day.day.getMonth() + 1], false);
+                            count--;
                         }
                     }
                 } else {
-                    this.addDay(day.day, day.jobs, this.getDirection(count), count);
+                    this.addDay(day.day, day.jobs, this.getDirection(count), index);
                 }
             }
         );
@@ -87,6 +91,12 @@ export class BookingCalendarComponent implements OnInit {
 
     private daysInMonth(month, year): number {
         return new Date(year, month, 0).getDate();
+    }
+
+    private emitPreBookedJobs(): void {
+        setTimeout(() => {
+            this.bookingService.emitPreBookedJobs();
+        }, 200);
     }
 
 }

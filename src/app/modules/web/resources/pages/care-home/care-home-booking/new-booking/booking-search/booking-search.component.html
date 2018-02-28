@@ -1,0 +1,24 @@
+<div class="row">
+    <div class="col-lg">
+        <p >Select priority carers you have previously used that you want us to contact first.
+            We will only contact other carers after we have given them a chance to cover first.</p>
+    </div>
+
+    <div class="col-lg text-right">
+        <button
+                (click)="onNavigateNext()"
+                class="btn-success btn-subnav"
+        >Next</button>
+        <div class="input" (clickOutside)="onClickOutside()">
+            <input [formControl]="searchTerm" type="text" class="form-control margin-bottom10" placeholder="Search">
+            <div class="suggestions text-left" *ngIf="searchResult.length > 0">
+                <ul>
+                    <li *ngFor="let carer of searchResult" (click)="onSelect(carer)">
+                        {{carer.carer.first_name}} {{ carer.carer.surname }}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <p *ngIf="carersNotFoundMessage" class="not-found">No results found</p>
+    </div>
+</div>

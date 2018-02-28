@@ -11,3 +11,4 @@
 <app-login [type]="'carer'" *ngIf="carerLogin" (closed)="onCarerClosed()" (forgotPasswordTriggered)="onForgotPasswordOpen()"></app-login>
 <app-login [type]="'careHome'" *ngIf="careHomeLogin" (closed)="onCareHomeClosed()" (forgotPasswordTriggered)="onForgotPasswordOpen()"></app-login>
 <app-forgot-password *ngIf="forgotPassword" (closed)="onForgotPasswordClosed()"></app-forgot-password>
+<simple-notifications></simple-notifications>

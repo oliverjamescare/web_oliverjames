@@ -1,0 +1,14 @@
+<div class="calendar-popup" [ngClass]="{'to-left': direction === 'left', 'to-right': direction === 'right'}">
+    <div class="header text text-center">
+        <span>Booked jobs</span>
+        <span (click)="onClosePopup(); $event.stopPropagation()" class="exit">X</span>
+    </div>
+    <div class="popup-content">
+        <ul class="books-list">
+            <li
+                    *ngFor="let job of allJobs; let i = index"
+            >{{ i + 1 }}. {{ job.start | hourPipe }}-{{ job.end | hourPipe }}</li>
+        </ul>
+        <button (click)="onOpenAddPopup(); $event.stopPropagation()" type="button" class="btn-success btn-popup list-button">Book another job</button>
+    </div>
+</div>

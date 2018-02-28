@@ -3,7 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {CareHomeBookingService} from '../../../../../../services/care-home-booking.service';
 
 const TIMESTAMP_INTERVAL = 900000; // 15 min in milliseconds
-const NUMBER_OF_INTERVALS = 50; // number of 15 min intervals in select list
+const NUMBER_OF_INTERVALS = 50; // number of 15 min intervals in select list hour from 7:00, 19:00
 
 @Component({
     selector: 'app-calendar-popup',
@@ -13,6 +13,7 @@ const NUMBER_OF_INTERVALS = 50; // number of 15 min intervals in select list
 export class CalendarPopupComponent implements OnInit {
     @Input() direction: string;
     @Input() date: Date;
+    @Input() index: number;
     @Output() closePopup = new EventEmitter();
     form: FormGroup;
     timeFromArr: Date[] = [];
@@ -32,8 +33,15 @@ export class CalendarPopupComponent implements OnInit {
     }
 
     onAddBooking(): void {
-        console.log('Add form', this.form.value);
-        !this.form.valid ? this.errorMessage = 'One or many fields are incomplete' : this.bookingService.bookJob(this.form.value);
+        console.log('Start date', new Date(this.form.controls['from'].value));
+        if (!this.form.valid) {
+            this.errorMessage = 'One or many fields are incomplete';
+        } else if (!this.isValidFromTill(this.form.get('from').value, this.form.get('till').value)) {
+            this.errorMessage = 'Job end date must be at least 15 min later';
+        } else {
+            this.bookingService.bookJob(this.form.value, +this.form.controls['start_date'].value);
+            this.closePopup.emit();
+        }
     }
 
     private createForm(): void {
@@ -47,7 +55,7 @@ export class CalendarPopupComponent implements OnInit {
     }
 
     private getStartTime(): Date {
-        const date = new Date();
+        const date = this.date;
         date.setHours(7, 0, 0, 0);
         return date;
     }
@@ -73,6 +81,10 @@ export class CalendarPopupComponent implements OnInit {
             }
         }
         return -1;
+    }
+
+    private isValidFromTill(start: string, end: string): boolean {
+        return new Date(end).getTime() - new Date(start).getTime() >= TIMESTAMP_INTERVAL;
     }
 
 }

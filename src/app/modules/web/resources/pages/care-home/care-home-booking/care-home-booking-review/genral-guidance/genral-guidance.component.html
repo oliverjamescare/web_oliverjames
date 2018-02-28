@@ -1,0 +1,56 @@
+<div class="row">
+  <div class="col-sm-12">
+      <h5>General Guidance</h5>
+      <p>Complete optionally - this will be saved for all future jobs and seen by Oliver James carers coming to [CARE SERVICE NAME]</p>
+  </div>
+    <div [formGroup]="form" class="col-md-12 col-lg-7">
+        <div class="guidance-row">
+            <div class="guidance-left-tab text-center">
+                If our carer needs to call your service, who should they speak to
+            </div>
+            <textarea formControlName="superior_contact" class="guidance-right-tab"></textarea>
+        </div>
+
+        <div class="guidance-row">
+            <div class="guidance-left-tab text-center">
+                Where should carer report to upon arrival
+            </div>
+            <textarea formControlName="report_contact" class="guidance-right-tab"></textarea>
+        </div>
+
+        <div class="guidance-row">
+            <div class="guidance-left-tab text-center">
+                Carer guidance in event of fire alarm sounding:
+            </div>
+            <textarea formControlName="emergency_guidance" class="guidance-right-tab"></textarea>
+        </div>
+
+        <div class="guidance-row">
+            <div class="guidance-left-tab text-center">
+                Notes on High risk / complexity residents / any other requests for our carers:
+            </div>
+            <textarea formControlName="notes_for_carers" class="guidance-right-tab"></textarea>
+        </div>
+
+        <div class="guidance-row">
+            <div class="guidance-left-tab text-center">
+                Where to park your car
+            </div>
+            <textarea formControlName="parking" class="guidance-right-tab"></textarea>
+        </div>
+
+        <div class="guidance-row">
+            <div class="guidance-left-tab text-center">
+                Upload a floorplan of your care home
+            </div>
+            <div class="guidance-right-tab text-center">
+                <span *ngIf="form.get('floor_plan').value !== ''" class="file-link"><a [href]="" target="_blank">Floor plan</a></span>
+                <span *ngIf="form.get('floor_plan').value === ''" class="file-link">No floor plan updated so far</span>
+                <input type="file"
+                       id="file"
+                       class="form-control floor-plan"
+                       (change)="handleFileInput($event.target.files)">
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,6 @@
+<div class="day-events">
+    <span
+            *ngFor="let job of allJobs" class="single-event"
+            [ngClass]="{'job': !job.preBooked, 'pre-booked-job': job.preBooked}"
+    >{{ job.start | hourPipe }}-{{ job.end | hourPipe }}</span>
+</div>

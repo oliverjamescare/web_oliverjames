@@ -1,0 +1,10 @@
+<div class="row">
+    <div class="col-sm-12">
+        <h5>Gender preference</h5>
+    </div>
+  <div class="col-md-12 col-lg-7">
+      <div (click)="onTabChange(0)" [ngClass]="{'active-tab': selectedTab === 0}" class="preference-tab text-center ">No preference</div>
+      <div (click)="onTabChange(1)" [ngClass]="{'active-tab': selectedTab === 1}" class="preference-tab text-center no-left-border">Male</div>
+      <div (click)="onTabChange(2)" [ngClass]="{'active-tab': selectedTab === 2}" class="preference-tab text-center no-left-border">Female</div>
+  </div>
+</div>

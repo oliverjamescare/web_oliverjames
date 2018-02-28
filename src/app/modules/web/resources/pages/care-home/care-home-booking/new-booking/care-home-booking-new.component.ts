@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, UrlSegment} from '@angular/router';
 
 @Component({
     selector: 'app-care-home-booking-new',
@@ -7,7 +6,7 @@ import {ActivatedRoute, UrlSegment} from '@angular/router';
 })
 export class CareHomeBookingNewComponent implements OnInit {
 
-    constructor(private route: ActivatedRoute) {
+    constructor() {
     }
 
     ngOnInit() {

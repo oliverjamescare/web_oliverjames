@@ -1,3 +1,4 @@
 export class CalendarPopupService {
-    openPopup: number;
+    openAddPopup: number;
+    openListPopup: number;
 }

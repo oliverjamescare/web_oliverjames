@@ -1,0 +1,17 @@
+.preference-tab {
+  width: 33.3333333%;
+  border: 1px solid #d3d3d3;
+  float: left;
+  padding: 7px;
+  cursor: pointer;
+}
+
+.no-left-border {
+  border-left: none;
+}
+
+.active-tab {
+  border: 1px solid #03c88b;
+  color: white;
+  background-color: #03c88b;
+}

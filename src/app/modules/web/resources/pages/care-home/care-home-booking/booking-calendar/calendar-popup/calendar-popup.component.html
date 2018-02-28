@@ -1,9 +1,10 @@
-<div class="calendar-popup" [ngClass]="{'to-left': direction === 'left', 'to-right': direction === 'right'}">
+<div (click)="$event.stopPropagation()" class="calendar-popup" [ngClass]="{'to-left': direction === 'left', 'to-right': direction === 'right'}">
     <div class="header text text-center">
         <span>New job</span>
         <span (click)="onClosePopup(); $event.stopPropagation()" class="exit">X</span>
     </div>
     <div class="popup-content">
+        <p class="popup-error">{{ errorMessage }}</p>
         <div [formGroup]="form">
             <label class="small-label">Start date</label>
             <select formControlName="start_date" class="form-control">
@@ -26,8 +27,8 @@
             <div class="inline-input padding-right5">
                 <label class="small-label">Role</label>
                 <select formControlName="role" class="form-control">
-                    <option value="carer">Carer</option>
-                    <option value="senior_carer">Senior carer</option>
+                    <option value="Carer">Carer</option>
+                    <option value="Senior Carer">Senior carer</option>
                 </select>
             </div>
             <div class="inline-input padding-left5">

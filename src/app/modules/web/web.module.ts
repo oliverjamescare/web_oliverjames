@@ -62,6 +62,17 @@ import { CalendarPopupComponent } from './resources/pages/care-home/care-home-bo
 import {CalendarPopupService} from './resources/pages/care-home/care-home-booking/booking-calendar/calendar-popup/calendar-popup.service';
 import {HourPipe} from './pipes/hour.pipe';
 import {DatePipe} from './pipes/date.pipe';
+import { DayJobsListComponent } from './resources/pages/care-home/care-home-booking/booking-calendar/calendar-day/day-jobs-list/day-jobs-list.component';
+import { BookingSearchComponent } from './resources/pages/care-home/care-home-booking/new-booking/booking-search/booking-search.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {MatAutocompleteModule, MatInputModule} from '@angular/material';
+import { PriorityCarersListComponent } from './resources/pages/care-home/care-home-booking/new-booking/priority-carers-list/priority-carers-list.component';
+import { ClickOutsideModule } from 'ng-click-outside';
+import {SimpleNotificationsModule} from 'angular2-notifications';
+import { ReviewTableComponent } from './resources/pages/care-home/care-home-booking/care-home-booking-review/review-table/review-table.component';
+import { PreferenceTabComponent } from './resources/pages/care-home/care-home-booking/care-home-booking-review/preference-tab/preference-tab.component';
+import { GeneralGuidanceComponent } from './resources/pages/care-home/care-home-booking/care-home-booking-review/genral-guidance/genral-guidance.component';
+import { CalendarPopupListComponent } from './resources/pages/care-home/care-home-booking/booking-calendar/calendar-popup-list/calendar-popup-list.component';
 
 @NgModule({
     declarations: [
@@ -103,13 +114,25 @@ import {DatePipe} from './pipes/date.pipe';
         CalendarCellComponent,
         CalendarPopupComponent,
         HourPipe,
-        DatePipe
+        DatePipe,
+        DayJobsListComponent,
+        BookingSearchComponent,
+        PriorityCarersListComponent,
+        ReviewTableComponent,
+        PreferenceTabComponent,
+        GeneralGuidanceComponent,
+        CalendarPopupListComponent
     ],
     imports: [
         CommonModule,
         WebRoutingModule,
         ReactiveFormsModule,
-        FormsModule
+        FormsModule,
+        NgbModule.forRoot(),
+        MatAutocompleteModule,
+        MatInputModule,
+        ClickOutsideModule,
+        SimpleNotificationsModule.forRoot()
     ],
     providers: [
         ApiService,

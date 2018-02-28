@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col-sm-12">
+        <h5>Jobs to book</h5>
+    </div>
+    <div class="col-sm">
+        <table *ngIf="showTable && bookingService.preBookedJobs.length !== 0" class="custom-table text-center">
+            <thead>
+            <tr>
+                <th>Start date</th>
+                <th>From</th>
+                <th>Till</th>
+                <th>Carers required</th>
+                <th>Total hours</th>
+                <th>Role</th>
+                <th>Special notes for carers taking a practicular shift</th>
+                <th>Carers to contact</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let job of bookingService.preBookedJobs; let i = index">
+                <td>{{ job.getStartDate() | date }}</td>
+                <td>{{ job.getStartDate() | hourPipe }}</td>
+                <td>{{ job.getEndDate() | hourPipe }}</td>
+                <td>{{ job.amount }}</td>
+                <td>{{ job.getEndDate().getHours() - job.getStartDate().getHours() }}</td>
+                <td>{{ job.role }}</td>
+                <td>{{ job?.notes }}</td>
+                <td>{{ job.carersToContact }}</td>
+                <td>
+                    <div (click)="onJobRemove(i)" class="text-center">
+                        <span class="actions">Remove job</span>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+.guidance-row {
+  width: 100%;
+  .guidance-left-tab {
+    width: 50%;
+    color: #FFFFFF;
+    background-color: #03c88b;
+    border: 1px solid #03c88b;
+    border-bottom: 1px solid #d3d3d3;
+    float: left;
+    height: 100px;
+    padding: 7px;
+  }
+
+  .guidance-right-tab {
+    width: 50%;
+    border: 1px solid #d3d3d3;
+    float: left;
+    height: 100px;
+    padding: 5px;
+    position: relative;
+
+    .floor-plan {
+      width: 100%;
+      float: left;
+    }
+
+    .file-link {
+      width: 100%;
+      float: left;
+    }
+  }
+}
