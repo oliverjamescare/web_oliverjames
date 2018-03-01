@@ -1,0 +1,82 @@
+<app-care-home-booking-header
+        navigationTitle="Back"
+        navigationRoute="/carer-dashboard"
+        mainTitle="Set Availability"
+></app-care-home-booking-header>
+<br>
+<div class="row">
+    <div class="col-sm text-center">
+        <p class="red">You will not revice job notifications that cover dates you are not available</p>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-9">
+        <div>
+            <label>Select your week</label>
+            <select #week class="form-control" (change)="onWeekChange($event)">
+                <option [value]="0">General</option>
+                <option *ngFor="let startDay of weeks; let i = index" [value]="i + 1" [selected]="startDay.index === 1">
+                    {{ startDay | date }}
+                </option>
+            </select>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-9">
+        <p *ngIf="currentWeek === 0">Set your availability for all weeks</p>
+        <p *ngIf="currentWeek !== 0">Set your availability for week commencing {{ weeks[currentWeek] | date }}</p>
+        <table *ngIf="!loading" class="availability-table text-center">
+            <thead>
+            <tr>
+                <th class="main-label"></th>
+                <th class="main-label"></th>
+                <th class="main-label">AM shifts</th>
+                <th class="main-label">PM shifts</th>
+                <th class="main-label">Night shifts</th>
+            </tr>
+            <tr>
+                <th class="toggle-label"></th>
+                <th class="toggle-label"></th>
+                <th (click)="onToggleClick('am_shift')" class="toggle-label">Toggle all</th>
+                <th (click)="onToggleClick('pm_shift')" class="toggle-label">Toggle all</th>
+                <th (click)="onToggleClick('night_shift')" class="toggle-label">Toggle all</th>
+            </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let day of weekDaysArray">
+                    <th>{{ day }}</th>
+                    <th (click)="onAllClick(day)" class="toggle-label">All</th>
+                    <td *ngIf="availability.availability[day].am_shift" (click)="onSingleClick(day, 'am_shift')" class="available">
+                        <span >Available</span>
+                    </td>
+                    <td *ngIf="!availability.availability[day].am_shift" (click)="onSingleClick(day, 'am_shift')" class="not-available">
+                        <span>Not available</span>
+                    </td>
+
+                    <td *ngIf="availability.availability[day].pm_shift" (click)="onSingleClick(day, 'pm_shift')" class="available">
+                        <span >Available</span>
+                    </td>
+                    <td *ngIf="!availability.availability[day].pm_shift" (click)="onSingleClick(day, 'pm_shift')" class="not-available">
+                        <span>Not available</span>
+                    </td>
+
+                    <td *ngIf="availability.availability[day].night_shift" (click)="onSingleClick(day, 'night_shift')" class="available">
+                        <span >Available</span>
+                    </td>
+                    <td *ngIf="!availability.availability[day].night_shift" (click)="onSingleClick(day, 'night_shift')" class="not-available">
+                        <span>Not available</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-9">
+        <button (click)="onAvailabilitySave()" class="btn-success">Save availability</button>
+    </div>
+</div>

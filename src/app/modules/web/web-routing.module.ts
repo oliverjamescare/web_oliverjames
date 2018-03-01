@@ -33,6 +33,7 @@ import {
 import {CareHomeBookingReviewComponent} from './resources/pages/care-home/care-home-booking/care-home-booking-review/care-home-booking-review.component';
 import {CareHomeBookingPaymentDetailsComponent} from './resources/pages/care-home/care-home-booking/care-home-booking-payment-details/care-home-booking-payment-details.component';
 import {CareHomeBookingSubmitedComponent} from './resources/pages/care-home/care-home-booking/care-home-booking-submitted/care-home-booking-submited.component';
+import {CarerAvailabilityComponent} from './resources/pages/carer/carer-availability/carer-availability.component';
 
 const routes: Routes = [
     {
@@ -58,6 +59,11 @@ const routes: Routes = [
                     { path: 'my-profile', component: CarerMyProfileComponent },
                     { path: 'contact', component: ContactComponent },
                 ]
+            },
+            {
+                path: 'carer-availability',
+                component: CarerAvailabilityComponent,
+                canActivate: [CarerAuthGuardService]
             },
             {
                 path: 'care-home-dashboard',

@@ -8,6 +8,7 @@ import {PreBookedJob} from '../models/care-home-booking/pre-booked-job';
 import {Subject} from 'rxjs/Subject';
 import {Carer} from '../models/care-home-booking/Carer';
 import {GeneralGuidance} from '../models/care-home-booking/general-guidance';
+import {FakeApiService} from './fake-api.service';
 
 @Injectable()
 export class CareHomeBookingService {
@@ -19,7 +20,8 @@ export class CareHomeBookingService {
     generalGuidanceForm: GeneralGuidance;
     florPlanFile: File = null;
 
-    constructor(private apiService: ApiService) {
+    constructor(private apiService: ApiService,
+                private fakeApiService: FakeApiService) {
         this.loadPreBookedJobsFromSession();
     }
 
@@ -44,7 +46,7 @@ export class CareHomeBookingService {
     }
 
     searchForPriority(searchString: string): Observable<any> {
-        return this.apiService.searchForPriorityUsersFake(searchString)
+        return this.fakeApiService.searchForPriorityUsersFake(searchString)
             .map(
                 (response: SearchForPriorityResponse) => {
                     return response.carers;

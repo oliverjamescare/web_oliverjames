@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../../../environments/environment';
 import {Observable} from 'rxjs/Observable';
 import {AuthService} from './auth.service';
-import {GeneralGuidance} from '../models/care-home-booking/general-guidance';
+import {Availability} from '../models/carer-availability/carer-availability';
 
 @Injectable()
 export class ApiService {
@@ -53,8 +53,26 @@ export class ApiService {
         return this.httpClient.get(this.endpoint + '/carers/nearby', {params: params});
     }
 
-    getUpcomingJobs(): Observable<any> {
-        return this.httpClient.get(`${this.endpoint}/carer/my-jobs`, {headers: this.getAuthorizationHeaders()});
+    getUpcomingJobs(page: number): Observable<any> {
+        return this.httpClient.get(`${this.endpoint}/carer/my-jobs?page=${page}`, {headers: this.getAuthorizationHeaders()});
+    }
+
+    getAvailabilityCalendar(week: number): Observable<Availability> {
+        console.log('wchich week', week);
+        return this.httpClient.get<Availability>(
+            `${this.endpoint}/carer/availability?${week}`,
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
+    updateAvailabilityCalendar(week: number, availability: Availability): Observable<Availability> {
+        console.log('week', week);
+        console.log('availability', availability);
+        return this.httpClient.put<Availability>(
+            `${this.endpoint}/carer/availability?week=${week}`,
+            availability,
+            {headers: this.getAuthorizationHeaders()}
+        );
     }
 
     // care home
@@ -66,44 +84,6 @@ export class ApiService {
         return this.httpClient.get(
             `${this.endpoint}/care-home/carers/search`,
             {headers: this.getAuthorizationHeaders(), params: new HttpParams().set('search', searchString)});
-    }
-
-    searchForPriorityUsersFake(searchString: string): Observable<any> {
-        console.log('Token', this.authService.getAccessToken().token);
-        return new Observable(observer => {
-
-            setTimeout(() => {
-                observer.next({
-                    'carers': [
-                        {
-                            '_id': '5a6b1413599b6f3c8c7eaa8b',
-                            'carer': {
-                                'surname': 'Whats',
-                                'first_name': 'Mark'
-                            }
-                        },
-                        {
-                            '_id': '5a6b1413599b6f3c8c7eaa8c',
-                            'carer': {
-                                'surname': 'Neary',
-                                'first_name': 'Paul'
-                            }
-                        },
-                        {
-                            '_id': '5a6b1413599b6f3c8c7eaa8g',
-                            'carer': {
-                                'surname': 'ciaśniej',
-                                'first_name': 'W Szudlach'
-                            }
-                        }
-                    ]
-                });
-            }, 200);
-
-            setTimeout(() => {
-                observer.complete();
-            }, 2000);
-        });
     }
 
     checkCarersToContact(jobs: string, gender: string = 'no preference'): Observable<any> {

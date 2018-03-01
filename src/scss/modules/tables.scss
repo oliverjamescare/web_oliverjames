@@ -27,3 +27,34 @@
     color: $green-color;
   }
 }
+
+.availability-table {
+  width: 100%;
+  .main-label {
+    background-color: $green-color;
+    color: $white-color;
+  }
+
+  .toggle-label {
+    background-color: $white-color;
+    color: $green-color;
+  }
+
+  td, th {
+    padding: 5px;
+    height: 30px;
+    border-right: 1px solid $ultra-light-grey;
+    border-bottom: 1px solid $ultra-light-grey;
+    cursor: pointer;
+    min-width: 120px;
+  }
+
+  .available {
+    background-color: $green-color;
+  }
+
+  .not-available {
+    background-color: red;
+    color: $white-color;
+  }
+}
