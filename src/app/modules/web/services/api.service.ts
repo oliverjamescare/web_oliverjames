@@ -58,16 +58,13 @@ export class ApiService {
     }
 
     getAvailabilityCalendar(week: number): Observable<Availability> {
-        console.log('wchich week', week);
         return this.httpClient.get<Availability>(
-            `${this.endpoint}/carer/availability?${week}`,
+            `${this.endpoint}/carer/availability?week=${week}`,
             {headers: this.getAuthorizationHeaders()}
         );
     }
 
     updateAvailabilityCalendar(week: number, availability: Availability): Observable<Availability> {
-        console.log('week', week);
-        console.log('availability', availability);
         return this.httpClient.put<Availability>(
             `${this.endpoint}/carer/availability?week=${week}`,
             availability,
