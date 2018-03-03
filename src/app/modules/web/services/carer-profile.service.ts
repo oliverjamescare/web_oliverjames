@@ -13,4 +13,8 @@ export class CarerProfileService {
     getCarerProfile(): Observable<CarerProfileResponse> {
         return this.apiService.getUserProfile();
     }
+
+    changePassword(oldPassword: string, newPassword: string): Observable<any> {
+        return this.apiService.changePassword(oldPassword, newPassword);
+    }
 }

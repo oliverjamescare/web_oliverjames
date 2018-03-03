@@ -10,6 +10,7 @@ import {CarerProfileService} from '../../../../services/carer-profile.service';
 })
 export class CarerMyProfileComponent implements OnInit, OnDestroy {
     loading = true;
+    showChangePassword = false;
 
     getProfileSub: Subscription;
 

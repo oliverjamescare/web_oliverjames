@@ -80,6 +80,7 @@ import {DatesService} from './services/dates.service';
 import {FakeApiService} from './services/fake-api.service';
 import {CarerAvailableJobsComponent} from './resources/pages/carer/carer-available-jobs/carer-available-jobs.component';
 import {CarerProfileService} from './services/carer-profile.service';
+import { ChangePasswordComponent } from './resources/pages/carer/carer-my-profile/change-password/change-password.component';
 
 @NgModule({
     declarations: [
@@ -131,7 +132,8 @@ import {CarerProfileService} from './services/carer-profile.service';
         CalendarPopupListComponent,
         UpcomingJobsComponent,
         CarerAvailabilityComponent,
-        CarerAvailableJobsComponent
+        CarerAvailableJobsComponent,
+        ChangePasswordComponent
     ],
     imports: [
         CommonModule,

@@ -63,7 +63,9 @@
             <tr>
                 <th>Password</th>
                 <td class="relative tall">
-                    <span class="action"><button class="btn-success">Edit</button></span>
+                    <span class="action">
+                        <button (click)="showChangePassword = true" class="btn-success">Edit</button>
+                    </span>
                 </td>
             </tr>
             <tr>
@@ -86,3 +88,8 @@
         </table>
     </div>
 </div>
+
+<app-change-password
+        *ngIf="showChangePassword"
+        (closed)="showChangePassword = false"
+></app-change-password>

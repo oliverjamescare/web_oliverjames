@@ -98,6 +98,16 @@ export class ApiService {
         );
     }
 
+    bookJobs(data: any): Observable<any> {
+        return this.httpClient.post(
+            `${this.endpoint}/jobs`,
+            data,
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
+    // care home & carer
+
     getUserProfile(): Observable<any> {
         return this.httpClient.get(
             `${this.endpoint}/user/profile`,
@@ -105,10 +115,10 @@ export class ApiService {
         );
     }
 
-    bookJobs(data: any): Observable<any> {
-        return this.httpClient.post(
-            `${this.endpoint}/jobs`,
-            data,
+    changePassword(oldPassword: string, newPassword: string): Observable<any> {
+        return this.httpClient.put(
+            `${this.endpoint}/user/password`,
+            {old_password: oldPassword, new_password: newPassword},
             {headers: this.getAuthorizationHeaders()}
         );
     }
