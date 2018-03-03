@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {CarerService} from '../../../../services/carer.service';
+import {CarerJobService} from '../../../../services/carer-job.service';
 import {Subscription} from 'rxjs/Subscription';
 
 @Component({
@@ -12,7 +12,7 @@ export class UpcomingJobsComponent implements OnInit, OnDestroy {
 
     getJobsSub: Subscription;
 
-    constructor(public carerService: CarerService) {
+    constructor(public carerService: CarerJobService) {
     }
 
     ngOnInit() {

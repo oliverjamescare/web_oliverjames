@@ -5,6 +5,7 @@ export interface Address {
     location: Location;
     address_line_2?: any;
     company?: any;
+    link?: string;
 }
 
 export interface Location {

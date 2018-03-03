@@ -58,3 +58,42 @@
     color: $white-color;
   }
 }
+
+.profile-table {
+  th, td {
+    border-bottom: 1px solid $ultra-light-grey;
+    border-right: 1px solid $ultra-light-grey;
+    height: 35px;
+    padding: 5px;
+  }
+
+  button {
+    padding: 0px 3px 0px 3px;
+  }
+
+  .tall {
+    height: 70px;
+  }
+
+  .relative {
+    position: relative;
+
+    .action {
+      position: absolute;
+      right: 8px;
+      top: 15px;
+    }
+
+    .first-row {
+      float: left;
+      width: 100%;
+    }
+
+    .second-row {
+      float: left;
+      width: 100%;
+      font-size: 12px;
+    }
+  }
+
+}

@@ -34,6 +34,7 @@ import {CareHomeBookingReviewComponent} from './resources/pages/care-home/care-h
 import {CareHomeBookingPaymentDetailsComponent} from './resources/pages/care-home/care-home-booking/care-home-booking-payment-details/care-home-booking-payment-details.component';
 import {CareHomeBookingSubmitedComponent} from './resources/pages/care-home/care-home-booking/care-home-booking-submitted/care-home-booking-submited.component';
 import {CarerAvailabilityComponent} from './resources/pages/carer/carer-availability/carer-availability.component';
+import {CarerAvailableJobsComponent} from './resources/pages/carer/carer-available-jobs/carer-available-jobs.component';
 
 const routes: Routes = [
     {
@@ -63,6 +64,11 @@ const routes: Routes = [
             {
                 path: 'carer-availability',
                 component: CarerAvailabilityComponent,
+                canActivate: [CarerAuthGuardService]
+            },
+            {
+                path: 'carer-available-jobs',
+                component: CarerAvailableJobsComponent,
                 canActivate: [CarerAuthGuardService]
             },
             {

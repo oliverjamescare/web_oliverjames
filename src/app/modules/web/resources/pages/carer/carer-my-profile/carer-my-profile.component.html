@@ -1,3 +1,88 @@
-<p>
-  carer-my-profile works!
-</p>
+<app-care-home-booking-header
+        navigationTitle="Back"
+        navigationRoute="/carer-dashboard"
+        mainTitle="Profile details"
+></app-care-home-booking-header>
+<br>
+<div class="row">
+    <div class="col-sm">
+        <table *ngIf="!loading" class="profile-table">
+            <tr>
+                <th class="tall">Your email address</th>
+                <td class="tall relative">
+                    <span class="first-row">{{ carerProfileService.carerProfile.email }}</span>
+                    <span class="action"><button class="btn-success">Edit</button></span>
+                    <span *ngIf="!carerProfileService.carerProfile.email_verified" class="red second-row">
+                        Not verified - tap to resend verification email</span>
+                </td>
+            </tr>
+            <tr>
+                <th>Your Oliver James ID</th>
+                <td>{{ carerProfileService.carerProfile._id }}</td>
+            </tr>
+            <tr>
+                <th>Your phone number</th>
+                <td>{{ carerProfileService.carerProfile.phone_number }}</td>
+            </tr>
+            <tr>
+                <th>Your First Name</th>
+                <td>{{ carerProfileService.carerProfile.carer.first_name }}</td>
+            </tr>
+            <tr>
+                <th>Middle Name</th>
+                <td>{{ carerProfileService.carerProfile.carer?.middle_name }}</td>
+            </tr>
+            <tr>
+                <th>Your Surname</th>
+                <td>{{ carerProfileService.carerProfile.carer.surname }}</td>
+            </tr>
+            <tr>
+                <th>Profile pictrue</th>
+                <td>
+                    <div *ngIf="carerProfileService.carerProfile.carer.profile_image">
+                        <img [src]="carerProfileService.carerProfile.carer.profile_image" class="img img table-responsive">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>Address line 1</th>
+                <td>{{ carerProfileService.carerProfile.address.address_line_1 }}</td>
+            </tr>
+            <tr>
+                <th>Address line 2</th>
+                <td>{{ carerProfileService.carerProfile.address?.address_line_2 }}</td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td>{{ carerProfileService.carerProfile.address.city }}</td>
+            </tr>
+            <tr>
+                <th>Postcode</th>
+                <td>{{ carerProfileService.carerProfile.address.postal_code }}</td>
+            </tr>
+            <tr>
+                <th>Password</th>
+                <td class="relative tall">
+                    <span class="action"><button class="btn-success">Edit</button></span>
+                </td>
+            </tr>
+            <tr>
+                <th>Account details (to recive payment)</th>
+                <td class="relative tall">
+                    <span class="first-row">Stored: {{ carerProfileService.carerProfile.carer.payment_system.bank_number }}</span>
+                    <span class="action"><button class="btn-success">Edit</button></span>
+                </td>
+            </tr>
+            <tr>
+                <th>Max job distance</th>
+                <td>{{ carerProfileService.carerProfile.carer.max_job_distance }}</td>
+            </tr>
+            <tr>
+                <th>Eligible roles</th>
+                <td>
+                    <!--<span>{{ carerProfileService.carerProfile.carer. }}</span>-->
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

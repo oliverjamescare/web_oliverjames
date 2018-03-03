@@ -4,6 +4,7 @@ import {environment} from '../../../../environments/environment';
 import {Observable} from 'rxjs/Observable';
 import {AuthService} from './auth.service';
 import {Availability} from '../models/carer-availability/carer-availability';
+import {AvailableJobsResponse} from '../models/available-jobs/available-jobs-response';
 
 @Injectable()
 export class ApiService {
@@ -69,6 +70,13 @@ export class ApiService {
             `${this.endpoint}/carer/availability?week=${week}`,
             availability,
             {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
+    getAvailableJobs(params: HttpParams): Observable<AvailableJobsResponse> {
+        return this.httpClient.get<AvailableJobsResponse>(
+            `${this.endpoint}/carer/jobs`,
+            {headers: this.getAuthorizationHeaders(), params: params}
         );
     }
 

@@ -74,10 +74,12 @@ import {PreferenceTabComponent} from './resources/pages/care-home/care-home-book
 import {GeneralGuidanceComponent} from './resources/pages/care-home/care-home-booking/care-home-booking-review/genral-guidance/genral-guidance.component';
 import {CalendarPopupListComponent} from './resources/pages/care-home/care-home-booking/booking-calendar/calendar-popup-list/calendar-popup-list.component';
 import {UpcomingJobsComponent} from './resources/pages/carer/upcoming-jobs/upcoming-jobs.component';
-import {CarerService} from './services/carer.service';
+import {CarerJobService} from './services/carer-job.service';
 import {CarerAvailabilityComponent} from './resources/pages/carer/carer-availability/carer-availability.component';
 import {DatesService} from './services/dates.service';
 import {FakeApiService} from './services/fake-api.service';
+import {CarerAvailableJobsComponent} from './resources/pages/carer/carer-available-jobs/carer-available-jobs.component';
+import {CarerProfileService} from './services/carer-profile.service';
 
 @NgModule({
     declarations: [
@@ -128,7 +130,8 @@ import {FakeApiService} from './services/fake-api.service';
         GeneralGuidanceComponent,
         CalendarPopupListComponent,
         UpcomingJobsComponent,
-        CarerAvailabilityComponent
+        CarerAvailabilityComponent,
+        CarerAvailableJobsComponent
     ],
     imports: [
         CommonModule,
@@ -152,9 +155,11 @@ import {FakeApiService} from './services/fake-api.service';
         CareHomeAuthGuardService,
         CareHomeBookingService,
         CalendarPopupService,
-        CarerService,
+        CarerJobService,
         DatesService,
-        FakeApiService
+        FakeApiService,
+        CarerJobService,
+        CarerProfileService
     ]
 })
 export class WebModule {

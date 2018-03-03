@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {CarerService} from '../../../../services/carer.service';
+import {CarerJobService} from '../../../../services/carer-job.service';
 import {Subscription} from 'rxjs/Subscription';
 import {DatesService} from '../../../../services/dates.service';
 import {Availability} from '../../../../models/carer-availability/carer-availability';
@@ -21,7 +21,7 @@ export class CarerAvailabilityComponent implements OnInit, OnDestroy {
 
     getCalendarSub: Subscription;
 
-    constructor(public carerService: CarerService,
+    constructor(public carerService: CarerJobService,
                 private dateService: DatesService,
                 private notificationService: NotificationsService) {
     }

@@ -7,4 +7,5 @@ export interface Author {
     email: string;
     phone_number: string;
     address: Address;
+    distance?: number;
 }
