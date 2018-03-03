@@ -14,6 +14,10 @@ export class CarerProfileService {
         return this.apiService.getUserProfile();
     }
 
+    updateCarerProfile(formData: any): Observable<any> {
+        return this.apiService.updateCarerProfile(formData);
+    }
+
     changePassword(oldPassword: string, newPassword: string): Observable<any> {
         return this.apiService.changePassword(oldPassword, newPassword);
     }

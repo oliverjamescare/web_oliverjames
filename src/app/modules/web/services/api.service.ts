@@ -80,6 +80,14 @@ export class ApiService {
         );
     }
 
+    updateCarerProfile(body: any): Observable<any> {
+        return this.httpClient.put(
+            `${this.endpoint}/user/carer`,
+            body,
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
     // care home
     getCalendarData(): Observable<any> {
         return this.httpClient.get(this.endpoint + '/care-home/calendar', {headers: this.getAuthorizationHeaders()});

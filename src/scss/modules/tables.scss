@@ -60,11 +60,20 @@
 }
 
 .profile-table {
+  width: 100%;
   th, td {
     border-bottom: 1px solid $ultra-light-grey;
     border-right: 1px solid $ultra-light-grey;
     height: 35px;
     padding: 5px;
+  }
+
+  .profile-input {
+    border: none;
+    color: #4e4949;
+    &:focus {
+      outline: none;
+    }
   }
 
   button {

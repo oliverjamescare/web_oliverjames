@@ -6,7 +6,7 @@
 <br>
 <div class="row">
     <div class="col-sm">
-        <table *ngIf="!loading" class="profile-table">
+        <table *ngIf="!loading" [formGroup]="form" class="profile-table">
             <tr>
                 <th class="tall">Your email address</th>
                 <td class="tall relative">
@@ -22,7 +22,7 @@
             </tr>
             <tr>
                 <th>Your phone number</th>
-                <td>{{ carerProfileService.carerProfile.phone_number }}</td>
+                <td><input formControlName="phone_number" type="text" class="profile-input"></td>
             </tr>
             <tr>
                 <th>Your First Name</th>
@@ -46,19 +46,19 @@
             </tr>
             <tr>
                 <th>Address line 1</th>
-                <td>{{ carerProfileService.carerProfile.address.address_line_1 }}</td>
+                <td><input formControlName="address_line_1" type="text" class="profile-input"></td>
             </tr>
             <tr>
                 <th>Address line 2</th>
-                <td>{{ carerProfileService.carerProfile.address?.address_line_2 }}</td>
+                <td><input formControlName="address_line_2" type="text" class="profile-input"></td>
             </tr>
             <tr>
                 <th>City</th>
-                <td>{{ carerProfileService.carerProfile.address.city }}</td>
+                <td><input formControlName="city" type="text" class="profile-input"></td>
             </tr>
             <tr>
                 <th>Postcode</th>
-                <td>{{ carerProfileService.carerProfile.address.postal_code }}</td>
+                <td><input formControlName="postal_code" type="text" class="profile-input"></td>
             </tr>
             <tr>
                 <th>Password</th>
@@ -76,8 +76,8 @@
                 </td>
             </tr>
             <tr>
-                <th>Max job distance</th>
-                <td>{{ carerProfileService.carerProfile.carer.max_job_distance }}</td>
+                <th>Max job distance in miles</th>
+                <td><input formControlName="max_job_distance" type="text" class="profile-input"></td>
             </tr>
             <tr>
                 <th>Eligible roles</th>
@@ -86,6 +86,8 @@
                 </td>
             </tr>
         </table>
+        <br>
+        <button (click)="onUpdateProfile()" class="btn-success">Update profile</button>
     </div>
 </div>
 
