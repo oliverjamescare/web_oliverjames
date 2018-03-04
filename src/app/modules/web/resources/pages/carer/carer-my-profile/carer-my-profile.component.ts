@@ -12,6 +12,7 @@ import {NotificationsService} from 'angular2-notifications';
 })
 export class CarerMyProfileComponent implements OnInit, OnDestroy {
     loading = true;
+    showEditEmail = false;
     showChangePassword = false;
     form: FormGroup;
 

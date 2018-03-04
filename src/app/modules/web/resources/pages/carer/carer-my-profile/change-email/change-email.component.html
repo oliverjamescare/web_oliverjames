@@ -1,0 +1,28 @@
+<app-popup [title]="title" [id]="type + '_id'" [showLogo]="false">
+  <div class="row">
+    <div class="col-12">
+      <form [formGroup]="form">
+        <div class="form group text-center">
+                    <span
+                            *ngIf="apiError"
+                            class="invalid-feedback left"
+                    >{{ apiError }}</span>
+          <label class="left">Email address</label>
+          <input formControlName="email" type="email" placeholder="Email"
+                 class="form-control">
+          <span
+                  *ngIf="!form.controls['email'].valid && form.controls['email'].touched"
+                  class="invalid-feedback"
+          >This field is required</span>
+        </div>
+        <br>
+        <div class="buttons-container">
+          <button (click)="onEmailChange()" type="submit" class="btn btn-success"
+                  [disabled]="!form.valid">
+            Change password
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</app-popup>

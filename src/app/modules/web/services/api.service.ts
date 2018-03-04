@@ -123,6 +123,14 @@ export class ApiService {
         );
     }
 
+    changeEmail(email: string): Observable<any> {
+        return this.httpClient.put(
+            `${this.endpoint}/user/email`,
+            {email},
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
     changePassword(oldPassword: string, newPassword: string): Observable<any> {
         return this.httpClient.put(
             `${this.endpoint}/user/password`,

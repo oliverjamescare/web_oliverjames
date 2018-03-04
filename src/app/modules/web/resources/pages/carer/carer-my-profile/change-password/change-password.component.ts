@@ -2,6 +2,7 @@ import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@an
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {CarerProfileService} from '../../../../../services/carer-profile.service';
 import {NotificationsService} from 'angular2-notifications';
+import {ApiService} from '../../../../../services/api.service';
 
 @Component({
     selector: 'app-change-password',
@@ -16,10 +17,9 @@ export class ChangePasswordComponent implements OnInit, AfterViewInit {
     title = 'Change password';
     form: FormGroup;
     passwordsMatch = true;
-    passwordCorrect = true;
     apiError: string;
 
-    constructor(private carerProfileService: CarerProfileService,
+    constructor(private apiService: ApiService,
                 private notificationService: NotificationsService) {
     }
 
@@ -34,7 +34,7 @@ export class ChangePasswordComponent implements OnInit, AfterViewInit {
     }
 
     onPasswordChange(): void {
-        this.carerProfileService.changePassword(this.form.controls['oldPassword'].value, this.form.controls['newPassword'].value)
+        this.apiService.changePassword(this.form.controls['oldPassword'].value, this.form.controls['newPassword'].value)
             .subscribe(
                 response => {
                     console.log('Change carer password success response', response);
