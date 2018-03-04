@@ -1,0 +1,14 @@
+<app-month-label
+        *ngIf="cellData.templateType === 'label'"
+        [month]="cellData.month"
+        [showInstruction]="cellData.showInstruction"
+></app-month-label>
+
+<app-carer-calendar-day
+        *ngIf="cellData.templateType === 'day'"
+        [date]="cellData.dayData.date"
+        [empty]="cellData.dayData.isEmpty"
+        [jobs]="cellData.dayData.jobs"
+        [direction]="cellData.dayData.direction"
+        [index]="cellData.dayData.index"
+></app-carer-calendar-day>

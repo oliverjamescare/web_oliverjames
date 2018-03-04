@@ -37,7 +37,10 @@
                     <td>{{ job.author.distance }} mi</td>
                     <td>
                         <div class="text-center">
-                            <span class="actions">Apply for job</span>
+                            <span
+                                    [routerLink]="['/carer-apply-for-job', job._id]"
+                                    class="actions"
+                            >Apply for job</span>
                         </div>
                     </td>
                     <td>

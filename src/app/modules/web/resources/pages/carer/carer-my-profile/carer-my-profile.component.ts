@@ -65,7 +65,7 @@ export class CarerMyProfileComponent implements OnInit, OnDestroy {
         this.apiService.resendEmail()
             .subscribe(
                 response => {
-                    console.log('Resend email success respone', response);
+                    console.log('Resend email success response', response);
                     this.notificationService.success('Success', 'Email verification resend');
                 },
                 error => {

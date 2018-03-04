@@ -83,6 +83,11 @@ import {CarerProfileService} from './services/carer-profile.service';
 import { ChangePasswordComponent } from './resources/pages/carer/carer-my-profile/change-password/change-password.component';
 import { ChangeEmailComponent } from './resources/pages/carer/carer-my-profile/change-email/change-email.component';
 import { ChangeProfileImageComponent } from './resources/pages/carer/carer-my-profile/change-profile-image/change-profile-image.component';
+import { ApplyForJobComponent } from './resources/pages/carer/apply-for-job/apply-for-job.component';
+import { CarerCalendarComponent } from './resources/pages/carer/apply-for-job/carer-calendar/carer-calendar.component';
+import { CarerCalendarCellComponent } from './resources/pages/carer/apply-for-job/carer-calendar/carer-calendar-cell/carer-calendar-cell.component';
+import { CarerCalendarDayComponent } from './resources/pages/carer/apply-for-job/carer-calendar/carer-calendar-cell/carer-calendar-day/carer-calendar-day.component';
+import { CarerCalendarPopupComponent } from './resources/pages/carer/apply-for-job/carer-calendar/carer-calendar-cell/carer-calendar-day/carer-calendar-popup/carer-calendar-popup.component';
 
 @NgModule({
     declarations: [
@@ -137,7 +142,12 @@ import { ChangeProfileImageComponent } from './resources/pages/carer/carer-my-pr
         CarerAvailableJobsComponent,
         ChangePasswordComponent,
         ChangeEmailComponent,
-        ChangeProfileImageComponent
+        ChangeProfileImageComponent,
+        ApplyForJobComponent,
+        CarerCalendarComponent,
+        CarerCalendarCellComponent,
+        CarerCalendarDayComponent,
+        CarerCalendarPopupComponent
     ],
     imports: [
         CommonModule,

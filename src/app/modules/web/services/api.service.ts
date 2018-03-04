@@ -80,6 +80,13 @@ export class ApiService {
         );
     }
 
+    getCarerCalendar(): Observable<any> {
+        return this.httpClient.get(
+            `${this.endpoint}/carer/calendar`,
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
     updateCarerProfile(body: any): Observable<any> {
         return this.httpClient.put(
             `${this.endpoint}/user/carer`,
@@ -136,7 +143,7 @@ export class ApiService {
             `${this.endpoint}/user/email/verification`,
             {},
             {headers: this.getAuthorizationHeaders()}
-        )
+        );
     }
 
     changeProfileImage(formData: FormData): Observable<any> {

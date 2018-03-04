@@ -16,4 +16,15 @@ export class DatesService {
         }
         return arr;
     }
+
+    getMondayAsString(): string {
+        const monday = this.getMonday(new Date());
+        return `${monday.getFullYear()}-${monday.getMonth()}-${monday.getDay()}`;
+    }
+
+    getCalendarLastDayAsString(): string {
+        const monday = this.getMonday(new Date());
+        const lastDay = new Date(monday.getTime() + DAY_IN_MILLISECONDS * 34);
+        return `${lastDay.getFullYear()}-${lastDay.getMonth()}-${lastDay.getDay()}`;
+    }
 }

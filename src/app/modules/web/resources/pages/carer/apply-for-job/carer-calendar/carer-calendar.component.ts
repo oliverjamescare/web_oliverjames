@@ -1,44 +1,43 @@
 import {Component, OnInit} from '@angular/core';
-import {CareHomeBookingService} from '../../../../../services/care-home-booking.service';
-import {CalendarCell} from './calendar-cell';
-import {CalendarDay} from '../../../../../models/care-home-booking/calendar-day';
-import {CalendarPopupService} from './calendar-popup/calendar-popup.service';
+import {CarerJobService} from '../../../../../services/carer-job.service';
+import {CalendarCell} from '../../../care-home/care-home-booking/booking-calendar/calendar-cell';
 
 @Component({
-    selector: 'app-booking-calendar',
-    templateUrl: './booking-calendar.component.html'
+    selector: 'app-carer-calendar',
+    templateUrl: './carer-calendar.component.html',
+    styleUrls: ['./carer-calendar.component.scss']
 })
-export class BookingCalendarComponent implements OnInit {
-    calendar: CalendarDay[];
+export class CarerCalendarComponent implements OnInit {
     calendarArr: CalendarCell[] = [];
     monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
         'July', 'August', 'September', 'October', 'November', 'December'
     ];
 
-    constructor(public bookingService: CareHomeBookingService,
-                public popupService: CalendarPopupService) {
+    constructor(private carerJobService: CarerJobService) {
     }
 
     ngOnInit() {
-        this.getApiData();
+        this.getCalendarData();
     }
 
-    private getApiData(): void {
-        this.bookingService.getCalendar()
+    private getCalendarData(): void {
+        this.carerJobService.getCarerCalendar()
             .subscribe(
-                (response: CalendarDay[]) => {
-                    this.bookingService.calendar = response;
-                    console.log('Get calendar response', response);
+                response => {
+                    console.log('Get carer calendar success response', response);
+                    this.carerJobService.calendar = response;
                     this.setCalendar();
-                    this.emitPreBookedJobs();
+                },
+                error => {
+                    console.log('Get carer calendar error response', error);
                 }
             );
     }
 
     private setCalendar(): void {
-        this.addLabel(this.monthNames[this.bookingService.calendar[0].day.getMonth()], false);
+        this.addLabel(this.monthNames[this.carerJobService.calendar[0].day.getMonth()], false);
         let count = 0;
-        this.bookingService.calendar.forEach((day, index) => {
+        this.carerJobService.calendar.forEach((day, index) => {
                 count++;
                 if (day.day.getDate() === this.daysInMonth(day.day.getMonth() + 1, day.day.getFullYear())) {
                     for (let j = 0; j < 8; j++) {
@@ -91,12 +90,6 @@ export class BookingCalendarComponent implements OnInit {
 
     private daysInMonth(month, year): number {
         return new Date(year, month, 0).getDate();
-    }
-
-    private emitPreBookedJobs(): void {
-        setTimeout(() => {
-            this.bookingService.emitPreBookedJobs();
-        }, 200);
     }
 
 }

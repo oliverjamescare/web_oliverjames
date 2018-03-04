@@ -5,12 +5,17 @@ import {Availability} from '../models/carer-availability/carer-availability';
 import {HttpParams} from '@angular/common/http';
 import {AvailableJobsResponse} from '../models/available-jobs/available-jobs-response';
 import {Job} from '../models/care-home-booking/job';
+import {DatesService} from './dates.service';
+import {CalendarDay} from '../models/care-home-booking/calendar-day';
+import {GetCalendarResponse} from './care-home-booking.service';
 
 @Injectable()
 export class CarerJobService {
     availability: Availability;
+    calendar: CalendarDay[];
 
-    constructor(private apiService: ApiService) {
+    constructor(private apiService: ApiService,
+                private datesService: DatesService) {
     }
 
     getUpcomingJobs(page: number): Observable<any> {
@@ -39,6 +44,19 @@ export class CarerJobService {
             );
     }
 
+    getCarerCalendar(): Observable<any> {
+        return this.apiService.getCarerCalendar()
+            .map(
+                (response: GetCalendarResponse) => {
+                    const calendar: CalendarDay[] = [];
+                    response.calendar.forEach((cal) => {
+                        calendar.push(new CalendarDay(cal.day, cal.jobs));
+                    });
+                    return calendar;
+                }
+            );
+    }
+
     private getAvailableJobsParams(par: any): HttpParams {
         const params = new HttpParams();
         const keys = Object.keys(par);
@@ -49,4 +67,5 @@ export class CarerJobService {
         });
         return params;
     }
+
 }
