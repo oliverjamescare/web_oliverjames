@@ -106,3 +106,27 @@
   }
 
 }
+
+.job-details {
+  .details-header {
+    color: #000;
+    font-size: 22px;
+    font-weight: 500;
+  }
+  .details-row {
+    border-bottom: 1px solid $light-grey-color;
+    height: 62px;
+    padding: 10px 0 10px 0;
+    .details-label {
+      color: $green-color;
+      font-weight: 600;
+      width: 100%;
+      float: left;
+    }
+
+    .details-info {
+      width: 100%;
+      float: left;
+    }
+  }
+}

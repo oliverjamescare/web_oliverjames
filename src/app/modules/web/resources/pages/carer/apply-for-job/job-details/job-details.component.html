@@ -1,0 +1,69 @@
+<div *ngIf="!loading" class="job-details">
+    <span class="details-header">Job details</span>
+    <div class="details-row">
+        <span class="details-label">Job ID:</span>
+        <span class="details-info">
+            {{ carerJobService.jobDetails._id }}
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Start:</span>
+        <span class="details-info">
+            {{ carerJobService.jobDetails.getStartDate() | datePipe}}
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Time:</span>
+        <span class="details-info">
+            {{ carerJobService.jobDetails.getStartDate() | hourPipe}} till {{ carerJobService.jobDetails.getEndDate() | hourPipe }}
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Due in:</span>
+        <span class="details-info">
+            XXXX hours
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Phone:</span>
+        <span class="details-info">
+            {{ carerJobService.jobDetails.author.phone_number }}
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Address:</span>
+        <span class="details-info">
+            {{ carerJobService.jobDetails.author.address.address_line_1 }}
+            {{ carerJobService.jobDetails.author.address.address_line_2 }},
+            {{ carerJobService.jobDetails.author.address.city }}
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Contact on arrival:</span>
+        <span class="details-info">
+            {{ carerJobService.jobDetails.general_guidance.report_contact }}
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Job guidance:</span>
+        <span class="details-info">
+            {{ carerJobService.jobDetails.notes }}
+        </span>
+    </div>
+    <app-confirmation-popup
+            *ngIf="showConfirmationPopup"
+            (close)="showConfirmationPopup = false"
+    ></app-confirmation-popup>
+</div>
+<br>
+<div class="details-actions">
+    <button class="btn-success margin-r btn-red">Decline job</button>
+    <button (click)="showConfirmationPopup = true" class="btn-success right">Accept job</button>
+</div>

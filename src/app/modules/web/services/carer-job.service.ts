@@ -13,6 +13,8 @@ import {GetCalendarResponse} from './care-home-booking.service';
 export class CarerJobService {
     availability: Availability;
     calendar: CalendarDay[];
+    jobDetails: Job;
+    currentJobId: string;
 
     constructor(private apiService: ApiService,
                 private datesService: DatesService) {
@@ -55,6 +57,19 @@ export class CarerJobService {
                     return calendar;
                 }
             );
+    }
+
+    getJobDetails(jobId: string): Observable<Job> {
+        return this.apiService.getJobDetails(jobId)
+            .map(
+                response => {
+                    return Job.getInstance(response);
+                }
+            );
+    }
+
+    acceptJob(jobId: string): Observable<any> {
+        return this.apiService.acceptJob(jobId);
     }
 
     private getAvailableJobsParams(par: any): HttpParams {

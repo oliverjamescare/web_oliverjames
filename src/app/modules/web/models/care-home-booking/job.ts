@@ -1,4 +1,5 @@
 import {Author} from './author';
+import {GeneralGuidance} from './general-guidance';
 
 export class Job {
     _id: string;
@@ -7,6 +8,8 @@ export class Job {
     role: string;
     author: Author;
     conflict?: boolean;
+    general_guidance: GeneralGuidance;
+    notes: string;
 
     static getInstance(job: Job): Job {
         const j = new Job();

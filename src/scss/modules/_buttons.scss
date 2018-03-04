@@ -24,6 +24,27 @@
   }
 }
 
+.btn-red {
+  background: $dark-red;
+  border-color: $dark-red;
+
+  &:hover {
+    background: lighten($dark-red, 5%);
+    border-color: $dark-red;
+  }
+
+  &:focus, &:active:focus, &:not([disabled]):not(.disabled):active:focus {
+    box-shadow: 0 0 0 0.2rem rgba($dark-red, 0.5);
+    background: $dark-red;
+    border-color: $dark-red;
+  }
+
+  &.disabled, &:disabled {
+    background: $dark-red;
+    border-color: $dark-red;
+  }
+}
+
 //secondary button
 .btn-secondary {
   background: $grey-brown-color;

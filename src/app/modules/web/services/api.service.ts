@@ -87,6 +87,21 @@ export class ApiService {
         );
     }
 
+    getJobDetails(jobId: string): Observable<any> {
+        return this.httpClient.get(
+            `${this.endpoint}/jobs/${jobId}`,
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
+    acceptJob(jobId: string): Observable<any> {
+        return this.httpClient.put(
+            `${this.endpoint}/jobs/${jobId}/accept`,
+            {},
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
     updateCarerProfile(body: any): Observable<any> {
         return this.httpClient.put(
             `${this.endpoint}/user/carer`,
