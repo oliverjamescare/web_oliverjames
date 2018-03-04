@@ -82,6 +82,7 @@ import {CarerAvailableJobsComponent} from './resources/pages/carer/carer-availab
 import {CarerProfileService} from './services/carer-profile.service';
 import { ChangePasswordComponent } from './resources/pages/carer/carer-my-profile/change-password/change-password.component';
 import { ChangeEmailComponent } from './resources/pages/carer/carer-my-profile/change-email/change-email.component';
+import { ChangeProfileImageComponent } from './resources/pages/carer/carer-my-profile/change-profile-image/change-profile-image.component';
 
 @NgModule({
     declarations: [
@@ -135,7 +136,8 @@ import { ChangeEmailComponent } from './resources/pages/carer/carer-my-profile/c
         CarerAvailabilityComponent,
         CarerAvailableJobsComponent,
         ChangePasswordComponent,
-        ChangeEmailComponent
+        ChangeEmailComponent,
+        ChangeProfileImageComponent
     ],
     imports: [
         CommonModule,

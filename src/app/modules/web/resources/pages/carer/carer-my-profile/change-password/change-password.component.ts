@@ -1,6 +1,5 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {CarerProfileService} from '../../../../../services/carer-profile.service';
 import {NotificationsService} from 'angular2-notifications';
 import {ApiService} from '../../../../../services/api.service';
 

@@ -11,6 +11,7 @@ import {NotificationsService} from 'angular2-notifications';
 export class ChangeEmailComponent implements OnInit, AfterViewInit {
     @Input() type: string;
     @Output() closed = new EventEmitter();
+    @Output() update = new EventEmitter();
     form: FormGroup;
     title = 'Change email';
     apiError: string;
@@ -36,6 +37,7 @@ export class ChangeEmailComponent implements OnInit, AfterViewInit {
                     this.notificationService.success(
                         'Success',
                         'Your email will change once you tap the link we’ve emailed to that address');
+                    this.update.emit();
                     $('#' + this.type + '_id').modal('hide');
                 },
                 error => {

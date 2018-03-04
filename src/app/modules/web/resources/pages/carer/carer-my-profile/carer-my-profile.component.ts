@@ -4,6 +4,8 @@ import {CarerProfileResponse} from '../../../../models/carer-profile/carer-profi
 import {CarerProfileService} from '../../../../services/carer-profile.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {NotificationsService} from 'angular2-notifications';
+import {AuthService} from '../../../../services/auth.service';
+import {ApiService} from '../../../../services/api.service';
 
 @Component({
     selector: 'app-carer-my-profile',
@@ -14,13 +16,16 @@ export class CarerMyProfileComponent implements OnInit, OnDestroy {
     loading = true;
     showEditEmail = false;
     showChangePassword = false;
+    showChangeProfileImage = false;
     form: FormGroup;
 
     getProfileSub: Subscription;
     updateProfileSub: Subscription;
 
     constructor(public carerProfileService: CarerProfileService,
-                private notificationService: NotificationsService) {
+                private notificationService: NotificationsService,
+                public authService: AuthService,
+                private apiService: ApiService) {
     }
 
     ngOnInit() {
@@ -33,6 +38,10 @@ export class CarerMyProfileComponent implements OnInit, OnDestroy {
         if (this.updateProfileSub) {
             this.updateProfileSub.unsubscribe();
         }
+    }
+
+    onUpdateData(): void {
+        this.getCarerProfile();
     }
 
     onUpdateProfile(): void {
@@ -48,6 +57,19 @@ export class CarerMyProfileComponent implements OnInit, OnDestroy {
                 },
                 error => {
                     console.log('Update care profile error response', error);
+                }
+            );
+    }
+
+    onResendEmail(): void {
+        this.apiService.resendEmail()
+            .subscribe(
+                response => {
+                    console.log('Resend email success respone', response);
+                    this.notificationService.success('Success', 'Email verification resend');
+                },
+                error => {
+                    console.log('Resend email error response', error);
                 }
             );
     }

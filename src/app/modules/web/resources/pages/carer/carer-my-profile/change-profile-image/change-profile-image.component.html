@@ -1,0 +1,24 @@
+<app-popup [title]="title" [id]="type + '_id'" [showLogo]="false">
+    <div class="row">
+        <div class="col-12">
+            <div class="text-center">
+                <img [src]="getPictureUrl()" class="img img-responsive">
+            </div>
+            <br>
+            <div>
+                <label>Select new profile image</label>
+                <input type="file"
+                       id="file"
+                       class="form-control floor-plan"
+                       (change)="handleFileInput($event.target.files)">
+            </div>
+            <br>
+            <div class="buttons-container">
+                <button (click)="onPictureChange()" type="submit" class="btn btn-success"
+                        [disabled]="!profilePicture">
+                    Change profile image
+                </button>
+            </div>
+        </div>
+    </div>
+</app-popup>

@@ -131,6 +131,22 @@ export class ApiService {
         );
     }
 
+    resendEmail(): Observable<any> {
+        return this.httpClient.post(
+            `${this.endpoint}/user/email/verification`,
+            {},
+            {headers: this.getAuthorizationHeaders()}
+        )
+    }
+
+    changeProfileImage(formData: FormData): Observable<any> {
+        return this.httpClient.put(
+            `${this.endpoint}/user/profile-image`,
+            formData,
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
     changePassword(oldPassword: string, newPassword: string): Observable<any> {
         return this.httpClient.put(
             `${this.endpoint}/user/password`,
