@@ -15,6 +15,7 @@ export class CarerJobService {
     calendar: CalendarDay[];
     jobDetails: Job;
     currentJobId: string;
+    otherJobs: Job[] = [];
 
     constructor(private apiService: ApiService,
                 private datesService: DatesService) {
@@ -70,6 +71,23 @@ export class CarerJobService {
 
     acceptJob(jobId: string): Observable<any> {
         return this.apiService.acceptJob(jobId);
+    }
+
+    declineJob(): Observable<any> {
+        return this.apiService.declineJob(this.currentJobId);
+    }
+
+    getOtherJobs(): Observable<any> {
+        return this.apiService.getOtherJobs(this.currentJobId)
+            .map(
+                (response: AvailableJobsResponse) => {
+                    const jobsArr = [];
+                    response.results.forEach((job) => {
+                        jobsArr.push(Job.getInstance(job));
+                    });
+                    return jobsArr;
+                }
+            );
     }
 
     private getAvailableJobsParams(par: any): HttpParams {

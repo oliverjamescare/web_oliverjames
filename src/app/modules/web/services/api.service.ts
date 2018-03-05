@@ -102,9 +102,29 @@ export class ApiService {
         );
     }
 
+    declineJob(jobId: string): Observable<any> {
+        return this.httpClient.put(
+            `${this.endpoint}/jobs/${jobId}/decline`,
+            {},
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
+    getOtherJobs(jobId: string): Observable<any> {
+        return this.httpClient.get(
+            `${this.endpoint}/jobs/${jobId}/other-jobs`,
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
+
+
     updateCarerProfile(body: any): Observable<any> {
         return this.httpClient.put(
-            `${this.endpoint}/user/carer`,
+            `${this.endpoint}
+/user/
+    carer
+`,
             body,
             {headers: this.getAuthorizationHeaders()}
         );
@@ -117,69 +137,107 @@ export class ApiService {
 
     searchForPriorityUsers(searchString: string): Observable<any> {
         return this.httpClient.get(
-            `${this.endpoint}/care-home/carers/search`,
+            `${this.endpoint}
+/care-home/
+    carers
+/
+    search
+`,
             {headers: this.getAuthorizationHeaders(), params: new HttpParams().set('search', searchString)});
     }
 
     checkCarersToContact(jobs: string, gender: string = 'no preference'): Observable<any> {
         return this.httpClient.get(
-            `${this.endpoint}/jobs/carers`,
+            `${this.endpoint}
+/jobs/
+    carers
+`,
             {headers: this.getAuthorizationHeaders(), params: new HttpParams().set('jobs', jobs).set('gender', gender)}
         );
     }
 
     bookJobs(data: any): Observable<any> {
         return this.httpClient.post(
-            `${this.endpoint}/jobs`,
-            data,
-            {headers: this.getAuthorizationHeaders()}
-        );
-    }
+            `${this.endpoint}
+/jobs`,
+    data
+, {
+    headers: this
+.
 
-    // care home & carer
+    getAuthorizationHeaders()
+}
 
-    getUserProfile(): Observable<any> {
-        return this.httpClient.get(
-            `${this.endpoint}/user/profile`,
-            {headers: this.getAuthorizationHeaders()}
-        );
-    }
+)
+;
+}
 
-    changeEmail(email: string): Observable<any> {
-        return this.httpClient.put(
-            `${this.endpoint}/user/email`,
-            {email},
-            {headers: this.getAuthorizationHeaders()}
-        );
-    }
+// care home & carer
 
-    resendEmail(): Observable<any> {
-        return this.httpClient.post(
-            `${this.endpoint}/user/email/verification`,
-            {},
-            {headers: this.getAuthorizationHeaders()}
-        );
-    }
+getUserProfile()
+:
+Observable < any > {
+    return this.httpClient.get(
+        `${this.endpoint}/user/profile`,
+        {headers: this.getAuthorizationHeaders()}
+    );
+}
 
-    changeProfileImage(formData: FormData): Observable<any> {
-        return this.httpClient.put(
-            `${this.endpoint}/user/profile-image`,
-            formData,
-            {headers: this.getAuthorizationHeaders()}
-        );
-    }
+changeEmail(email
+:
+string
+):
+Observable < any > {
+    return this.httpClient.put(
+        `${this.endpoint}/user/email`,
+        {email},
+        {headers: this.getAuthorizationHeaders()}
+    );
+}
 
-    changePassword(oldPassword: string, newPassword: string): Observable<any> {
-        return this.httpClient.put(
-            `${this.endpoint}/user/password`,
-            {old_password: oldPassword, new_password: newPassword},
-            {headers: this.getAuthorizationHeaders()}
-        );
-    }
+resendEmail()
+:
+Observable < any > {
+    return this.httpClient.post(
+        `${this.endpoint}/user/email/verification`,
+        {},
+        {headers: this.getAuthorizationHeaders()}
+    );
+}
 
-    private getAuthorizationHeaders(): HttpHeaders {
-        return new HttpHeaders({
-            'X-access-token': this.authService.getAccessToken().token
-        });
-    }
+changeProfileImage(formData
+:
+FormData
+):
+Observable < any > {
+    return this.httpClient.put(
+        `${this.endpoint}/user/profile-image`,
+        formData,
+        {headers: this.getAuthorizationHeaders()}
+    );
+}
+
+changePassword(oldPassword
+:
+string, newPassword
+:
+string
+):
+Observable < any > {
+    return this.httpClient.put(
+        `${this.endpoint}/user/password`,
+        {old_password: oldPassword, new_password: newPassword},
+        {headers: this.getAuthorizationHeaders()}
+    );
+}
+
+private;
+getAuthorizationHeaders()
+:
+HttpHeaders
+{
+    return new HttpHeaders({
+        'X-access-token': this.authService.getAccessToken().token
+    });
+}
 }

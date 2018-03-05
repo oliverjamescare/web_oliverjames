@@ -90,6 +90,7 @@ import { CarerCalendarDayComponent } from './resources/pages/carer/apply-for-job
 import { CarerCalendarPopupComponent } from './resources/pages/carer/apply-for-job/carer-calendar/carer-calendar-cell/carer-calendar-day/carer-calendar-popup/carer-calendar-popup.component';
 import { JobDetailsComponent } from './resources/pages/carer/apply-for-job/job-details/job-details.component';
 import { ConfirmationPopupComponent } from './resources/pages/carer/apply-for-job/job-details/confirmation-popup/confirmation-popup.component';
+import { OtherJobsComponent } from './resources/pages/carer/apply-for-job/other-jobs/other-jobs.component';
 
 @NgModule({
     declarations: [
@@ -151,7 +152,8 @@ import { ConfirmationPopupComponent } from './resources/pages/carer/apply-for-jo
         CarerCalendarDayComponent,
         CarerCalendarPopupComponent,
         JobDetailsComponent,
-        ConfirmationPopupComponent
+        ConfirmationPopupComponent,
+        OtherJobsComponent
     ],
     imports: [
         CommonModule,

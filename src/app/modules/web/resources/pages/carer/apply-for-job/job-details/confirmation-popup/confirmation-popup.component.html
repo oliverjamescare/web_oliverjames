@@ -9,7 +9,7 @@
             <label class="weight">Important</label>
             <p>
                 You have accepted this job.
-            Please call the care home to confirm on [CARE HOME TEL NUMBER].
+            Please call the care home to confirm on {{ carerJobService.jobDetails.author.phone_number }}.
             This will ensure they don’t fill the shift with a carer from elsewhere – avoiding confusion and ensuring you still get paid
             Ask to speak to [TEXT FROM ‘IF OUR CARER NEEDS TO CALL YOUR SERVICE]
             </p>
@@ -19,7 +19,7 @@
             <label for="confirm" class="custom-control-label"></label>
             <p>I confirm that I have spoken to the care home and they have agreed to this job</p>
         </div>
-        <button (click)="onAcceptJob(); $event.stopPropagation()" type="button" class="btn-success btn-popup">
+        <button (click)="onConfirm(); $event.stopPropagation()" [disabled]="!confirmed" type="button" class="btn-success btn-popup">
             Ok
         </button>
     </div>

@@ -1,0 +1,41 @@
+<span class="section-title">Other jobs</span>
+<p *ngIf="!loading && carerJobService.otherJobs.length === 0">No jobs available</p>
+<table *ngIf="!loading && carerJobService.otherJobs.length !==0" class="custom-table text-center">
+    <thead>
+    <tr>
+        <th>Job ID</th>
+        <th>Start Date</th>
+        <th>From</th>
+        <th>Till</th>
+        <th>Projected income for you</th>
+        <th>Care home</th>
+        <th>Role</th>
+        <th>Job details</th>
+        <th>Notes</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let job of carerJobService.otherJobs">
+        <td>{{ job._id }}</td>
+        <td>{{ job.getStartDate() | date }}</td>
+        <td>{{ job.getStartDate() | hourPipe }}</td>
+        <td>{{ job.getEndDate() | hourPipe}}</td>
+        <td></td>
+        <td>{{ job.author.care_home.care_service_name }}</td>
+        <td>{{ job.role }}</td>
+        <td>
+            <div class="text-center">
+                <span
+                        [routerLink]="['/carer-apply-for-job', job._id]"
+                        class="actions"
+                >See details</span>
+            </div>
+        </td>
+        <td>
+            <div class="text-center">
+                <span *ngIf="job.conflict" class="red">Possible conflict</span>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>

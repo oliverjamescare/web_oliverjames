@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {CarerJobService} from '../../../../../services/carer-job.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Job} from '../../../../../models/care-home-booking/job';
+import {NotificationsService} from 'angular2-notifications';
 
 @Component({
     selector: 'app-job-details',
@@ -14,7 +15,9 @@ export class JobDetailsComponent implements OnInit {
     showConfirmationPopup = false;
 
     constructor(public carerJobService: CarerJobService,
-                private route: ActivatedRoute) {
+                private route: ActivatedRoute,
+                private notificationService: NotificationsService,
+                private router: Router) {
     }
 
     ngOnInit() {
@@ -24,6 +27,34 @@ export class JobDetailsComponent implements OnInit {
                 this.getJobDetails();
             }
         );
+    }
+
+    onAcceptJob(): void {
+        this.carerJobService.acceptJob(this.carerJobService.currentJobId)
+            .subscribe(
+                response => {
+                    console.log('Accept job success response', response);
+                    this.notificationService.success('Job accepted');
+                    this.showConfirmationPopup = true;
+                },
+                error => {
+                    console.log('Accept job error response', error);
+                }
+            );
+    }
+
+    onDeclineJob(): void {
+        this.carerJobService.declineJob()
+            .subscribe(
+                response => {
+                    console.log('Decline job success response', response);
+                    this.notificationService.warn('Job declined');
+                    this.router.navigate(['/carer-available-jobs']);
+                },
+                error => {
+                    console.log('Decline job error response', error);
+                }
+            );
     }
 
     private getJobDetails(): void {
