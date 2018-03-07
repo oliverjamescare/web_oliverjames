@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, NgZone, OnChanges, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subscription} from 'rxjs/Subscription';
 import {CarerProfileResponse} from '../../../../models/carer-profile/carer-profile-response';
 import {CarerProfileService} from '../../../../services/carer-profile.service';
@@ -6,18 +6,26 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {NotificationsService} from 'angular2-notifications';
 import {AuthService} from '../../../../services/auth.service';
 import {ApiService} from '../../../../services/api.service';
+import {Router} from '@angular/router';
+import {} from 'googlemaps';
+import {MapsAPILoader} from '@agm/core';
+import {} from '@types/googlemaps';
 
 @Component({
     selector: 'app-carer-my-profile',
     templateUrl: './carer-my-profile.component.html',
     styleUrls: ['./carer-my-profile.component.scss']
 })
-export class CarerMyProfileComponent implements OnInit, OnDestroy {
+export class CarerMyProfileComponent implements OnInit, OnDestroy, AfterViewInit {
     loading = true;
     showEditEmail = false;
     showChangePassword = false;
     showChangeProfileImage = false;
     form: FormGroup;
+
+    @ViewChild('search') searchElementRef: ElementRef;
+
+    searchControl: FormControl;
 
     getProfileSub: Subscription;
     updateProfileSub: Subscription;
@@ -25,12 +33,61 @@ export class CarerMyProfileComponent implements OnInit, OnDestroy {
     constructor(public carerProfileService: CarerProfileService,
                 private notificationService: NotificationsService,
                 public authService: AuthService,
-                private apiService: ApiService) {
+                private apiService: ApiService,
+                private router: Router,
+                private mapsAPILoader: MapsAPILoader,
+                private ngZone: NgZone) {
     }
 
     ngOnInit() {
+        this.searchControl = new FormControl();
         this.getCarerProfile();
         this.createDetailsForm();
+    }
+
+    ngAfterViewInit() {
+        this.mapsAPILoader.load().then(() => {
+            const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+                types: ['address']
+            });
+            autocomplete.addListener('place_changed', () => {
+                this.ngZone.run(() => {
+                    // get the place result
+                    const place: google.maps.places.PlaceResult = autocomplete.getPlace();
+                    // verify result
+                    if (place.geometry === undefined || place.geometry === null) {
+                        return;
+                    }
+                    // set latitude, longitude and zoom
+                    console.log(place);
+                    let city = '';
+                    let street = '';
+                    let street_number = '';
+                    let postal_code = '';
+                    place.address_components.forEach((addr) => {
+                        if (addr.types[0] === 'locality') {
+                            console.log(addr.long_name);
+                            city = addr.long_name;
+                        }
+                        if (addr.types[0] === 'postal_code') {
+                            console.log(addr.long_name);
+                            postal_code = addr.long_name;
+                        }
+                        if (addr.types[0] === 'route') {
+                            console.log(addr.long_name);
+                            street = addr.long_name;
+                        }
+                        if (addr.types[0] === 'street_number') {
+                            console.log(addr.long_name);
+                            street_number = addr.long_name;
+                        }
+                    });
+                    this.form.controls['city'].setValue(city);
+                    this.form.controls['postal_code'].setValue(postal_code);
+                    this.form.controls['address_line_1'].setValue(`${street} ${street_number}`);
+                });
+            });
+        });
     }
 
     ngOnDestroy() {
@@ -38,6 +95,10 @@ export class CarerMyProfileComponent implements OnInit, OnDestroy {
         if (this.updateProfileSub) {
             this.updateProfileSub.unsubscribe();
         }
+    }
+
+    onRoleChange(): void {
+        this.router.navigate(['/carer-dashboard', 'contact']);
     }
 
     onUpdateData(): void {
@@ -115,3 +176,5 @@ export class CarerMyProfileComponent implements OnInit, OnDestroy {
     }
 
 }
+
+

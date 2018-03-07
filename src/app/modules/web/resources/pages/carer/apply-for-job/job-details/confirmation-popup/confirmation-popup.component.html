@@ -1,5 +1,4 @@
-<div (click)="$event.stopPropagation()" class="confirmation-popup"
-     [ngClass]="{'to-left': direction === 'left', 'to-right': direction === 'right'}">
+<div (click)="$event.stopPropagation()" class="confirmation-popup">
     <div class="header text text-center">
         <span>Important!</span>
         <span (click)="onClosePopup(); $event.stopPropagation()" class="exit">X</span>

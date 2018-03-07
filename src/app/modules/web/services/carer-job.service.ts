@@ -51,6 +51,7 @@ export class CarerJobService {
         return this.apiService.getCarerCalendar()
             .map(
                 (response: GetCalendarResponse) => {
+                    console.log('Calendar response', response);
                     const calendar: CalendarDay[] = [];
                     response.calendar.forEach((cal) => {
                         calendar.push(new CalendarDay(cal.day, cal.jobs));

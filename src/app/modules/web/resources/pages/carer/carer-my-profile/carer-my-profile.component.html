@@ -6,16 +6,16 @@
 <br>
 <div class="row">
     <div class="col-sm">
-        <table *ngIf="!loading" [formGroup]="form" class="profile-table">
+        <table [formGroup]="form" class="profile-table">
             <tr>
                 <th class="tall">Your email address</th>
                 <td class="tall relative">
-                    <span class="first-row">{{ carerProfileService.carerProfile.email }}</span>
+                    <span class="first-row">{{ carerProfileService?.carerProfile?.email }}</span>
                     <span class="action">
                         <button (click)="showEditEmail = true" class="btn-success">Edit</button>
                     </span>
                     <span
-                            *ngIf="!carerProfileService.carerProfile.email_verified"
+                            *ngIf="!carerProfileService?.carerProfile?.email_verified"
                             (click)="onResendEmail()"
                             class="red second-row gj-cursor-pointer">
                         Not verified - tap to resend verification email
@@ -24,26 +24,26 @@
             </tr>
             <tr>
                 <th>Your Oliver James ID</th>
-                <td>{{ carerProfileService.carerProfile._id }}</td>
+                <td>{{ carerProfileService?.carerProfile?._id }}</td>
             </tr>
             <tr>
                 <th>Your phone number</th>
-                <td><input formControlName="phone_number" type="text" class="profile-input"></td>
+                <td><input formControlName="phone_number" type="text" class="form-control"></td>
             </tr>
             <tr>
                 <th>Your First Name</th>
-                <td>{{ carerProfileService.carerProfile.carer.first_name }}</td>
+                <td>{{ carerProfileService?.carerProfile?.carer.first_name }}</td>
             </tr>
             <tr>
                 <th>Middle Name</th>
-                <td>{{ carerProfileService.carerProfile.carer?.middle_name }}</td>
+                <td>{{ carerProfileService?.carerProfile?.carer?.middle_name }}</td>
             </tr>
             <tr>
                 <th>Your Surname</th>
-                <td>{{ carerProfileService.carerProfile.carer.surname }}</td>
+                <td>{{ carerProfileService?.carerProfile?.carer.surname }}</td>
             </tr>
             <tr>
-                <th>Profile pictrue</th>
+                <th>Profile picture</th>
                 <td class="relative tall">
                     <span class="action">
                         <button (click)="showChangeProfileImage = true" class="btn-success">Edit</button>
@@ -51,20 +51,33 @@
                 </td>
             </tr>
             <tr>
+                <th>Your address</th>
+                <td>
+                    <input
+                            placeholder=""
+                            autocorrect="off"
+                            autocapitalize="off"
+                            spellcheck="off"
+                            type="text"
+                            class="form-control"
+                            id="searchControl" #search [formControl]="searchControl">
+                </td>
+            </tr>
+            <tr>
                 <th>Address line 1</th>
-                <td><input formControlName="address_line_1" type="text" class="profile-input"></td>
+                <td><input formControlName="address_line_1" type="text" class="form-control"></td>
             </tr>
             <tr>
                 <th>Address line 2</th>
-                <td><input formControlName="address_line_2" type="text" class="profile-input"></td>
+                <td><input formControlName="address_line_2" type="text" class="form-control"></td>
             </tr>
             <tr>
                 <th>City</th>
-                <td><input formControlName="city" type="text" class="profile-input"></td>
+                <td><input formControlName="city" type="text" class="form-control"></td>
             </tr>
             <tr>
                 <th>Postcode</th>
-                <td><input formControlName="postal_code" type="text" class="profile-input"></td>
+                <td><input formControlName="postal_code" type="text" class="form-control"></td>
             </tr>
             <tr>
                 <th>Password</th>
@@ -75,20 +88,23 @@
                 </td>
             </tr>
             <tr>
-                <th>Account details (to recive payment)</th>
+                <th>Account details (to receive payment)</th>
                 <td class="relative tall">
-                    <span class="first-row">Stored: {{ carerProfileService.carerProfile.carer.payment_system.bank_number }}</span>
+                    <span class="first-row">Stored: {{ carerProfileService?.carerProfile?.carer.payment_system.bank_number }}</span>
                     <span class="action"><button class="btn-success">Edit</button></span>
                 </td>
             </tr>
             <tr>
                 <th>Max job distance in miles</th>
-                <td><input formControlName="max_job_distance" type="text" class="profile-input"></td>
+                <td><input formControlName="max_job_distance" type="text" class="form-control"></td>
             </tr>
             <tr>
                 <th>Eligible roles</th>
                 <td>
-                    <!--<span>{{ carerProfileService.carerProfile.carer. }}</span>-->
+                    <span
+                            *ngFor="let role of carerProfileService?.carerProfile?.carer.eligible_roles"
+                    >{{ role }}</span>
+                     <span (click)="onRoleChange()" class="request">Request for change</span>
                 </td>
             </tr>
         </table>
@@ -110,7 +126,7 @@
 
 <app-change-profile-image
         *ngIf="showChangeProfileImage"
-        [pictureUrl]="carerProfileService.carerProfile.carer.profile_image + '?access-token=' + authService.getAccessToken().token"
+        [pictureUrl]="carerProfileService?.carerProfile?.carer.profile_image + '?access-token=' + authService.getAccessToken().token"
         (closed)="showChangeProfileImage = false"
         (update)="onUpdateData()"
 ></app-change-profile-image>

@@ -66,12 +66,12 @@ export class CalendarDayComponent implements OnInit, OnChanges, OnDestroy {
         return (empty === true || isUndefined(day)) ? null : day.getDate();
     }
 
-    private validateDay(): boolean {
+    validateDay(): boolean {
         const today = new Date();
         if (isUndefined(this.date)) {
             return false;
         }
-        this.validDay = today.getTime() > this.date.getTime();
+        return this.validDay = today.getTime() > this.date.getTime();
     }
 
     private getBookedJob(): void {

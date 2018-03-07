@@ -91,6 +91,7 @@ import { CarerCalendarPopupComponent } from './resources/pages/carer/apply-for-j
 import { JobDetailsComponent } from './resources/pages/carer/apply-for-job/job-details/job-details.component';
 import { ConfirmationPopupComponent } from './resources/pages/carer/apply-for-job/job-details/confirmation-popup/confirmation-popup.component';
 import { OtherJobsComponent } from './resources/pages/carer/apply-for-job/other-jobs/other-jobs.component';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
     declarations: [
@@ -161,10 +162,13 @@ import { OtherJobsComponent } from './resources/pages/carer/apply-for-job/other-
         ReactiveFormsModule,
         FormsModule,
         NgbModule.forRoot(),
-        MatAutocompleteModule,
         MatInputModule,
         ClickOutsideModule,
-        SimpleNotificationsModule.forRoot()
+        SimpleNotificationsModule.forRoot(),
+        AgmCoreModule.forRoot({
+            apiKey: 'AIzaSyBWoEhh2-9yp52XVTtfTaLIPcxcmTkt_Ms',
+            libraries: ['places', 'geometry']
+        })
     ],
     providers: [
         ApiService,
