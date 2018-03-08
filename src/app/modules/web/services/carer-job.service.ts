@@ -104,6 +104,7 @@ export class CarerJobService {
     }
 
     private getAvailableJobsParams(par: any): HttpParams {
+        console.log('page', par.page);
         return new HttpParams()
             .set('distance', par.distance)
             .set('page', par.page)

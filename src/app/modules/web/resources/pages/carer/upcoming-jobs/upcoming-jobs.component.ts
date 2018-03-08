@@ -33,7 +33,8 @@ export class UpcomingJobsComponent implements OnInit, OnDestroy {
             .subscribe(
                 response => {
                     console.log('Get upcoming jobs success response', response);
-                    this.upcomingJobs = response;
+                    this.upcomingJobs = this.filterJobs(response);
+                    // this.upcomingJobs = response;
                     this.countDueJobs();
                 },
                 error => console.log('Get upcoming jobs error respone', error)
@@ -48,6 +49,16 @@ export class UpcomingJobsComponent implements OnInit, OnDestroy {
             }
         });
         this.jobsDue.emit(dueCount);
+    }
+
+    private filterJobs(jobs: Job[]): Job[] {
+        const arr = [];
+        jobs.forEach((job) => {
+            if (this.dateService.isUpcomingJob(job.getStartDate())) {
+                arr.push(job);
+            }
+        });
+        return arr;
     }
 
 }

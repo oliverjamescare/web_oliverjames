@@ -1,4 +1,6 @@
 const DAY_IN_MILLISECONDS = 86400000 * 7;
+const HOUR_IN_MILLISECONDS = 3600000;
+const FIVE_MIN_IN_MILLISECONDS = 300000;
 
 export class DatesService {
 
@@ -30,6 +32,11 @@ export class DatesService {
 
     isDueJob(jobStart: Date): boolean {
         const now = new Date();
-        return jobStart.getTime() - now.getTime() < 2 * DAY_IN_MILLISECONDS;
+        return (jobStart.getTime() - now.getTime() < 2 * DAY_IN_MILLISECONDS / 7) && this.isUpcomingJob(jobStart);
+    }
+
+    isUpcomingJob(jobStart: Date): boolean {
+        const now = new Date();
+        return jobStart.getTime() - now.getTime() > FIVE_MIN_IN_MILLISECONDS;
     }
 }

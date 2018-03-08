@@ -11,12 +11,23 @@ import {Job} from '../../../../models/care-home-booking/job';
 })
 export class CarerAvailableJobsComponent implements OnInit, OnDestroy {
     availableJobs: Job[] = [];
+    availableJobsWithoutCriteria: Job[] = [];
     showDistanceFilters = false;
     showStartFilters = false;
-    showEndFilter = false;
-    showRoleFilters = false;
+    // showEndFilter = false;
+    // showRoleFilters = false;
 
     getParams = {
+        page: 1,
+        results: null,
+        dont_meet_criteria: 0,
+        distance: null,
+        sort: null
+    };
+
+    pages: number[] = [];
+
+    getParamsWithoutCriteria = {
         page: 1,
         results: null,
         dont_meet_criteria: 1,
@@ -24,7 +35,9 @@ export class CarerAvailableJobsComponent implements OnInit, OnDestroy {
         sort: null
     };
 
-    loading = true;
+    pagesWithoutCriteria: number[] = [];
+
+    loading = false;
     getJobsSub: Subscription;
 
     constructor(public carerService: CarerJobService) {
@@ -32,6 +45,7 @@ export class CarerAvailableJobsComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.getAvailableJobs();
+        this.getAvailableJobsWithoutCriteria();
     }
 
     ngOnDestroy() {
@@ -42,14 +56,23 @@ export class CarerAvailableJobsComponent implements OnInit, OnDestroy {
         this.showDistanceFilters = !this.showDistanceFilters;
     }
 
-    onShowStartFilters(): void {
-        this.showStartFilters = !this.showStartFilters;
+    onPaginationWithoutChange(page: number): void {
+        this.getParamsWithoutCriteria.page = page;
+        this.getAvailableJobsWithoutCriteria();
     }
-
-    onSelectFilter(filter: string): void {
-        this.getParams.sort = filter;
+    onPaginationChange(page: number): void {
+        this.getParams.page = page;
         this.getAvailableJobs();
     }
+
+    // onShowStartFilters(): void {
+    //     this.showStartFilters = !this.showStartFilters;
+    // }
+    //
+    // onSelectFilter(filter: string): void {
+    //     this.getParams.sort = filter;
+    //     this.getAvailableJobs();
+    // }
 
     onSelectDistanceFilter(distance: number): void {
         this.getParams.distance = distance;
@@ -58,19 +81,39 @@ export class CarerAvailableJobsComponent implements OnInit, OnDestroy {
     }
 
     private getAvailableJobs(): void {
-        this.loading = true;
         this.getJobsSub = this.carerService.getAvailableJobs(this.getParams)
             .subscribe(
                 (response: any) => {
-                    this.loading = false;
                     console.log('getAvailableJobs success response', response);
                     this.availableJobs = response.jobs;
+                    this.pages = this.setPaginationArray(response.pages);
                 },
                 error => {
                     console.log('getAvailableJobs error response', error);
-                    this.loading = false;
                 }
             );
+    }
+
+    private getAvailableJobsWithoutCriteria(): void {
+        this.getJobsSub = this.carerService.getAvailableJobs(this.getParamsWithoutCriteria)
+            .subscribe(
+                (response: any) => {
+                    console.log('getAvailableJobsWithout criteria success response', response);
+                    this.availableJobsWithoutCriteria = response.jobs;
+                    this.pagesWithoutCriteria = this.setPaginationArray(response.pages);
+                },
+                error => {
+                    console.log('getAvailableJobs error response', error);
+                }
+            );
+    }
+
+    private setPaginationArray(length: number): number[] {
+        const arr = [];
+        for (let i = 0; i < length; i++) {
+            arr.push(i);
+        }
+        return arr;
     }
 
 }

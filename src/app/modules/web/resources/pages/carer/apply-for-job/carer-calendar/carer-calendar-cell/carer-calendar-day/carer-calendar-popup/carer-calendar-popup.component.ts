@@ -13,7 +13,6 @@ export class CarerCalendarPopupComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log('Job', this.job);
     }
 
 }

@@ -7,6 +7,7 @@
 
 <div class="row">
     <div class="col-sm">
+        <h5>New jobs available that meet your availability preferences</h5>
         <table class="custom-table text-center">
             <thead>
                 <tr>
@@ -82,5 +83,86 @@
                 </tr>
             </tbody>
         </table>
+        <br>
+        <div class="text-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li
+                            *ngFor="let page of pages"
+                            [ngClass]="{'active': getParams.page === page +1}"
+                            class="page-item">
+                        <a
+                                (click)="onPaginationChange(page + 1)"
+                                class="page-link">{{ page + 1 }}</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<br>
+<div class="row">
+    <div class="col-sm">
+        <h5>Available jobs  - that don’t meet your availability preferences</h5>
+        <table class="custom-table text-center">
+            <thead>
+            <tr>
+                <th>Job ID</th>
+                <th>Start Date</th>
+                <th>From</th>
+                <th>Till</th>
+                <th>Projected income for you</th>
+                <th>Care home</th>
+                <th>Role</th>
+                <th>Address</th>
+                <th>Distance from home</th>
+                <th>Job details</th>
+                <th>Notes</th>
+            </tr>
+            </thead>
+            <p *ngIf="!loading && availableJobsWithoutCriteria.length === 0">No jobs available</p>
+            <tbody *ngIf="!loading && availableJobsWithoutCriteria.length !==0">
+            <tr *ngFor="let job of availableJobsWithoutCriteria">
+                <td>{{ job?._id }}</td>
+                <td>{{ job?.getStartDate() | date }}</td>
+                <td>{{ job?.getStartDate() | hourPipe  }}</td>
+                <td>{{ job?.getEndDate() | hourPipe}}</td>
+                <td></td>
+                <td>{{ job?.author.care_home.care_service_name }}</td>
+                <td>{{ job?.role }}</td>
+                <td>{{ job?.author.address.address_line_1 }}, {{ job?.author.address.city}}</td>
+                <td>
+                    {{ job?.author.distance }} mi
+                </td>
+                <td>
+                    <div class="text-center">
+                            <span
+                                    [routerLink]="['/carer-apply-for-job', job?._id]"
+                                    class="actions"
+                            >Apply for job</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="text-center">
+                        <span *ngIf="job?.conflict" class="red">Possible conflict</span>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <div class="text-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li
+                            *ngFor="let page of pagesWithoutCriteria"
+                            [ngClass]="{'active': getParamsWithoutCriteria.page === page +1}"
+                            class="page-item">
+                        <a
+                                (click)="onPaginationWithoutChange(page + 1)"
+                                class="page-link">{{ page + 1 }}</a></li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </div>
