@@ -7,8 +7,7 @@
 
 <div class="row">
     <div class="col-sm">
-        <p *ngIf="!loading && availableJobs.length === 0">No jobs available</p>
-        <table *ngIf="!loading && availableJobs.length !==0" class="custom-table text-center">
+        <table class="custom-table text-center">
             <thead>
                 <tr>
                     <th>Job ID</th>
@@ -19,12 +18,42 @@
                     <th>Care home</th>
                     <th>Role</th>
                     <th>Address</th>
-                    <th>Distance from home</th>
+                    <th class="sort-cell" (clickOutside)="showDistanceFilters = false">
+                        Distance from home
+                        <span (click)="onShowFilters()" class="sort-icon">
+                            <i class="fas fa-sort"></i>
+                        </span>
+                        <div
+                                *ngIf="showDistanceFilters"
+                                class="suggestions text-left">
+                            <ul>
+                                <li (click)="onSelectDistanceFilter(0.5)">
+                                    0.5 miles
+                                </li>
+                                <li (click)="onSelectDistanceFilter(1)">
+                                    1 mile
+                                </li>
+                                <li (click)="onSelectDistanceFilter(2)">
+                                    2 mile
+                                </li>
+                                <li (click)="onSelectDistanceFilter(3)">
+                                    3 mile
+                                </li>
+                                <li (click)="onSelectDistanceFilter(5)">
+                                    5 mile
+                                </li>
+                                <li (click)="onSelectDistanceFilter(10)">
+                                    10 mile
+                                </li>
+                            </ul>
+                        </div>
+                    </th>
                     <th>Job details</th>
                     <th>Notes</th>
                 </tr>
             </thead>
-            <tbody>
+            <p *ngIf="!loading && availableJobs.length === 0">No jobs available</p>
+            <tbody *ngIf="!loading && availableJobs.length !==0">
                 <tr *ngFor="let job of availableJobs">
                     <td>{{ job._id }}</td>
                     <td>{{ job.getStartDate() | date }}</td>
@@ -34,7 +63,9 @@
                     <td>{{ job.author.care_home.care_service_name }}</td>
                     <td>{{ job.role }}</td>
                     <td>{{ job.author.address.address_line_1 }}, {{ job.author.address.city}}</td>
-                    <td>{{ job.author.distance }} mi</td>
+                    <td>
+                        {{ job.author.distance }} mi
+                    </td>
                     <td>
                         <div class="text-center">
                             <span

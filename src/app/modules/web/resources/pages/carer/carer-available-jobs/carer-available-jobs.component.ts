@@ -11,6 +11,10 @@ import {Job} from '../../../../models/care-home-booking/job';
 })
 export class CarerAvailableJobsComponent implements OnInit, OnDestroy {
     availableJobs: Job[] = [];
+    showDistanceFilters = false;
+    showStartFilters = false;
+    showEndFilter = false;
+    showRoleFilters = false;
 
     getParams = {
         page: 1,
@@ -34,14 +38,33 @@ export class CarerAvailableJobsComponent implements OnInit, OnDestroy {
         this.getJobsSub.unsubscribe();
     }
 
+    onShowFilters(): void {
+        this.showDistanceFilters = !this.showDistanceFilters;
+    }
+
+    onShowStartFilters(): void {
+        this.showStartFilters = !this.showStartFilters;
+    }
+
+    onSelectFilter(filter: string): void {
+        this.getParams.sort = filter;
+        this.getAvailableJobs();
+    }
+
+    onSelectDistanceFilter(distance: number): void {
+        this.getParams.distance = distance;
+        this.showDistanceFilters = false;
+        this.getAvailableJobs();
+    }
+
     private getAvailableJobs(): void {
         this.loading = true;
         this.getJobsSub = this.carerService.getAvailableJobs(this.getParams)
             .subscribe(
-                (response: Job[]) => {
+                (response: any) => {
                     this.loading = false;
                     console.log('getAvailableJobs success response', response);
-                    this.availableJobs = response;
+                    this.availableJobs = response.jobs;
                 },
                 error => {
                     console.log('getAvailableJobs error response', error);

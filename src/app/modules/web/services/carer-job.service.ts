@@ -48,7 +48,10 @@ export class CarerJobService {
                     response.results.forEach((job) => {
                         jobsArr.push(Job.getInstance(job));
                     });
-                    return jobsArr;
+                    return {
+                        jobs: jobsArr,
+                        pages: response.pages
+                    };
                 }
             );
     }
@@ -98,14 +101,10 @@ export class CarerJobService {
     }
 
     private getAvailableJobsParams(par: any): HttpParams {
-        const params = new HttpParams();
-        const keys = Object.keys(par);
-        keys.forEach((key) => {
-            if (par[key] !== null) {
-                params.set(key, par[key]);
-            }
-        });
-        return params;
+        return new HttpParams()
+            .set('distance', par.distance)
+            .set('page', par.page)
+            .set('sort', par.sort);
     }
 
 }

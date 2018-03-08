@@ -1,0 +1,12 @@
+.sort-cell {
+  position: relative;
+  cursor: pointer;
+  .sort-icon {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+  .sort-filters {
+    position: absolute;
+  }
+}

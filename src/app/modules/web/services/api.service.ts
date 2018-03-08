@@ -74,6 +74,7 @@ export class ApiService {
     }
 
     getAvailableJobs(params: HttpParams): Observable<AvailableJobsResponse> {
+        console.log('Distance param', params.get('distance'));
         return this.httpClient.get<AvailableJobsResponse>(
             `${this.endpoint}/carer/jobs`,
             {headers: this.getAuthorizationHeaders(), params: params}
