@@ -2,12 +2,15 @@ import {Component, OnInit} from '@angular/core';
 import {CareHomeBookingService} from '../../../../../services/care-home-booking.service';
 import {Router} from '@angular/router';
 import {NotificationsService} from 'angular2-notifications';
+import {GeneralGuidance} from '../../../../../models/care-home-booking/general-guidance';
 
 @Component({
     selector: 'app-care-home-booking-review',
     templateUrl: './care-home-booking-review.component.html'
 })
 export class CareHomeBookingReviewComponent implements OnInit {
+    showGuidanceForm = false;
+    showPreferenceTab = false;
 
     constructor(public bookingService: CareHomeBookingService,
                 private router: Router,
@@ -15,17 +18,39 @@ export class CareHomeBookingReviewComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.getGuidanceInfo();
     }
 
     onSubmitBookings(): void {
-        this.bookingService.bookJobs()
+        console.log('Card number', this.bookingService.card_number);
+        if (this.bookingService.card_number !== null) {
+            this.bookingService.bookJobs()
+                .subscribe(
+                    response => {
+                        this.bookingService.clearAfterBooking();
+                        this.router.navigate(['care-home-dashboard']);
+                        this.notificationService.success('Success', 'Jobs booked');
+                    },
+                    error => console.log('Book jobs error', error)
+                );
+        } else {
+            this.router.navigate(['/care-home-booking', 'payment-details']);
+        }
+    }
+
+    private getGuidanceInfo(): void {
+        this.showGuidanceForm = false;
+        this.showPreferenceTab = false;
+        this.bookingService.getGuidanceInfo()
             .subscribe(
-                response => {
-                    this.bookingService.clearAfterBooking();
-                    this.router.navigate(['care-home-dashboard']);
-                    this.notificationService.success('Success', 'Jobs booked');
+                (response: GeneralGuidance) => {
+                    this.bookingService.generalGuidance = response;
+                    this.bookingService.generalGuidanceForm = response;
+                    console.log('Get general guidance response', response);
+                    this.showGuidanceForm = true;
+                    this.showPreferenceTab = true;
                 },
-                error => console.log('Book jobs error', error)
+                error => console.log('Get guidance error response', error)
             );
     }
 

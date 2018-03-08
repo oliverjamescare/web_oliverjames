@@ -16,7 +16,7 @@ export class GeneralGuidanceComponent implements OnInit {
 
     ngOnInit() {
         this.createGuidanceForm();
-        this.getGuidanceInfo();
+        this.setUpForm();
         this.listenToFormChanges();
     }
 
@@ -35,19 +35,8 @@ export class GeneralGuidanceComponent implements OnInit {
         });
     }
 
-    private getGuidanceInfo(): void {
-        this.bookingService.getGuidanceInfo()
-            .subscribe(
-                (response: GeneralGuidance) => {
-                    this.bookingService.generalGuidance = response;
-                    console.log('Get general guidance response', response);
-                    this.setUpForm();
-                },
-                error => console.log('Get guidance error response', error)
-            );
-    }
-
     private setUpForm(): void {
+        console.log('Setting form', this.bookingService.generalGuidance);
         this.form.setValue(this.bookingService.generalGuidance);
     }
 

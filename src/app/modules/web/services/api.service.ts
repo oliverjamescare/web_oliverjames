@@ -200,6 +200,14 @@ export class ApiService {
         );
     }
 
+    updateCardDetails(token: string): Observable<any> {
+        return this.httpClient.put(
+            `${this.endpoint}/payments/card`,
+            {token},
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
 
     private getAuthorizationHeaders(): HttpHeaders {
         return new HttpHeaders({
