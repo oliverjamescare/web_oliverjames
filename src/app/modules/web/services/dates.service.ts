@@ -27,4 +27,9 @@ export class DatesService {
         const lastDay = new Date(monday.getTime() + DAY_IN_MILLISECONDS * 34);
         return `${lastDay.getFullYear()}-${lastDay.getMonth()}-${lastDay.getDay()}`;
     }
+
+    isDueJob(jobStart: Date): boolean {
+        const now = new Date();
+        return jobStart.getTime() - now.getTime() < 2 * DAY_IN_MILLISECONDS;
+    }
 }

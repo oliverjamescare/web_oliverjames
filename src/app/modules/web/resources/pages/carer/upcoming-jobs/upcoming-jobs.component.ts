@@ -1,6 +1,8 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {CarerJobService} from '../../../../services/carer-job.service';
 import {Subscription} from 'rxjs/Subscription';
+import {Job} from '../../../../models/care-home-booking/job';
+import {DatesService} from '../../../../services/dates.service';
 
 @Component({
     selector: 'app-upcoming-jobs',
@@ -9,10 +11,13 @@ import {Subscription} from 'rxjs/Subscription';
 })
 export class UpcomingJobsComponent implements OnInit, OnDestroy {
     page = 1;
+    upcomingJobs: Job[] = [];
+    @Output() jobsDue = new EventEmitter<number>();
 
     getJobsSub: Subscription;
 
-    constructor(public carerService: CarerJobService) {
+    constructor(public carerService: CarerJobService,
+                private dateService: DatesService) {
     }
 
     ngOnInit() {
@@ -26,9 +31,23 @@ export class UpcomingJobsComponent implements OnInit, OnDestroy {
     private getUpcomingJobs(): void {
         this.getJobsSub = this.carerService.getUpcomingJobs(this.page)
             .subscribe(
-                response => console.log('Get upcoming jobs success response', response),
+                response => {
+                    console.log('Get upcoming jobs success response', response);
+                    this.upcomingJobs = response;
+                    this.countDueJobs();
+                },
                 error => console.log('Get upcoming jobs error respone', error)
             );
+    }
+
+    private countDueJobs(): void {
+        let dueCount = 0;
+        this.upcomingJobs.forEach((job) => {
+            if (this.dateService.isDueJob(job.getStartDate())) {
+                dueCount++;
+            }
+        });
+        this.jobsDue.emit(dueCount);
     }
 
 }

@@ -1,3 +1,37 @@
-<p>
-  upcoming-jobs works!
-</p>
+<div class="row">
+    <div class="col-sm">
+        <p *ngIf="!loading && upcomingJobs.length === 0">No jobs available</p>
+        <table *ngIf="!loading && upcomingJobs.length !==0" class="custom-table text-center">
+            <thead>
+            <tr>
+                <th>Job ID</th>
+                <th>Start Date</th>
+                <th>From</th>
+                <th>Till</th>
+                <th>Projected income for you</th>
+                <th>Care home</th>
+                <th>Role</th>
+                <th>Job details</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let job of upcomingJobs">
+                <td>{{ job._id }}</td>
+                <td>{{ job.getStartDate() | date }}</td>
+                <td>{{ job.getStartDate() | hourPipe  }}</td>
+                <td>{{ job.getEndDate() | hourPipe}}</td>
+                <td></td>
+                <td>{{ job.author.care_home.care_service_name }}</td>
+                <td>{{ job.role }}</td>
+                <td>
+                    <div class="text-center">
+                            <span
+                                    class="actions"
+                            >See details/ modify</span>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

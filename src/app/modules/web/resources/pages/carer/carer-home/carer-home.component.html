@@ -11,9 +11,9 @@
 <h4>What do you want to do?</h4>
 <div class="row">
     <div class="col-4">
-        <a class="btn btn-success">See my upcoming jobs</a>
+        <a routerLink="/carer-upcoming-jobs" class="btn btn-success">See my upcoming jobs</a>
         <div class="text-center">
-            <small class="text-muted text-center">X jobs due in next 24 hours</small>
+            <small class="text-muted text-center">{{ jobsDue }} jobs due in next 24 hours</small>
         </div>
     </div>
     <div class="col-4">
@@ -34,6 +34,13 @@
         <a class="btn btn-success">See paid and submitted jobs</a>
     </div>
 </div>
-
-<app-upcoming-jobs></app-upcoming-jobs>
+<br>
+<div class="row">
+    <div class="col-sm">
+        <h5>My upcoming jobs</h5>
+    </div>
+</div>
+<app-upcoming-jobs
+        (jobsDue)="jobsDue = $event"
+></app-upcoming-jobs>
 

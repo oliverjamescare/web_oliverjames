@@ -23,7 +23,13 @@ export class CarerJobService {
 
     getUpcomingJobs(page: number): Observable<any> {
         return this.apiService.getUpcomingJobs(page)
-            .map(response => response);
+            .map(response => {
+                const jobsArr = [];
+                response.results.forEach((job) => {
+                    jobsArr.push(Job.getInstance(job));
+                });
+                return jobsArr;
+            });
     }
 
     getAvailabilityCalendar(week: number): Observable<Availability> {

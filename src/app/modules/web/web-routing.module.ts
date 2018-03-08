@@ -36,6 +36,7 @@ import {CareHomeBookingSubmitedComponent} from './resources/pages/care-home/care
 import {CarerAvailabilityComponent} from './resources/pages/carer/carer-availability/carer-availability.component';
 import {CarerAvailableJobsComponent} from './resources/pages/carer/carer-available-jobs/carer-available-jobs.component';
 import {ApplyForJobComponent} from './resources/pages/carer/apply-for-job/apply-for-job.component';
+import {UpcomingJobsTabComponent} from './resources/pages/carer/upcoming-jobs-tab/upcoming-jobs-tab.component';
 
 const routes: Routes = [
     {
@@ -65,6 +66,11 @@ const routes: Routes = [
             {
                 path: 'carer-availability',
                 component: CarerAvailabilityComponent,
+                canActivate: [CarerAuthGuardService]
+            },
+            {
+                path: 'carer-upcoming-jobs',
+                component: UpcomingJobsTabComponent,
                 canActivate: [CarerAuthGuardService]
             },
             {
