@@ -92,6 +92,8 @@ import { JobDetailsComponent } from './resources/pages/carer/apply-for-job/job-d
 import { ConfirmationPopupComponent } from './resources/pages/carer/apply-for-job/job-details/confirmation-popup/confirmation-popup.component';
 import { OtherJobsComponent } from './resources/pages/carer/apply-for-job/other-jobs/other-jobs.component';
 import { AgmCoreModule } from '@agm/core';
+import { CardDetailsComponent } from './resources/pages/carer/carer-my-profile/card-details/card-details.component';
+import { NgxStripeModule } from 'ngx-stripe';
 
 @NgModule({
     declarations: [
@@ -154,7 +156,8 @@ import { AgmCoreModule } from '@agm/core';
         CarerCalendarPopupComponent,
         JobDetailsComponent,
         ConfirmationPopupComponent,
-        OtherJobsComponent
+        OtherJobsComponent,
+        CardDetailsComponent
     ],
     imports: [
         CommonModule,
@@ -165,6 +168,7 @@ import { AgmCoreModule } from '@agm/core';
         MatInputModule,
         ClickOutsideModule,
         SimpleNotificationsModule.forRoot(),
+        NgxStripeModule.forRoot('pk_test_nNzWK5F1sMRLXASCYDBtV7eL'),
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyBWoEhh2-9yp52XVTtfTaLIPcxcmTkt_Ms',
             libraries: ['places', 'geometry']

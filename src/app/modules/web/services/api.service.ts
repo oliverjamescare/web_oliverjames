@@ -192,6 +192,14 @@ export class ApiService {
         );
     }
 
+    updateBankDetails(token: string): Observable<any> {
+        return this.httpClient.put(
+            `${this.endpoint}/payments/bank`,
+            {token},
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
 
     private getAuthorizationHeaders(): HttpHeaders {
         return new HttpHeaders({

@@ -21,6 +21,7 @@ export class CarerMyProfileComponent implements OnInit, OnDestroy, AfterViewInit
     showEditEmail = false;
     showChangePassword = false;
     showChangeProfileImage = false;
+    showBankAccountForm = false;
     form: FormGroup;
 
     @ViewChild('search') searchElementRef: ElementRef;

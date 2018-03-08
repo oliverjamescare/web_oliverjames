@@ -54,7 +54,7 @@
                 <th>Your address</th>
                 <td>
                     <input
-                            placeholder=""
+                            placeholder="Search for address"
                             autocorrect="off"
                             autocapitalize="off"
                             spellcheck="off"
@@ -88,10 +88,19 @@
                 </td>
             </tr>
             <tr>
-                <th>Account details (to receive payment)</th>
+                <th>Bank account details (to receive payment)</th>
                 <td class="relative tall">
-                    <span class="first-row">Stored: {{ carerProfileService?.carerProfile?.carer.payment_system.bank_number }}</span>
-                    <span class="action"><button class="btn-success">Edit</button></span>
+                    <span
+                            *ngIf="carerProfileService?.carerProfile?.carer.payment_system.bank_number"
+                            class="first-row"
+                    >Account set up</span>
+                    <span
+                            *ngIf="!carerProfileService?.carerProfile?.carer.payment_system.bank_number"
+                            class="first-row"
+                    >Account not set up</span>
+                    <span class="action">
+                        <button (click)="showBankAccountForm = true" class="btn-success">Edit</button>
+                    </span>
                 </td>
             </tr>
             <tr>
@@ -130,3 +139,8 @@
         (closed)="showChangeProfileImage = false"
         (update)="onUpdateData()"
 ></app-change-profile-image>
+
+<app-card-details
+    *ngIf="showBankAccountForm"
+    (closed)="showBankAccountForm = false"
+></app-card-details>
