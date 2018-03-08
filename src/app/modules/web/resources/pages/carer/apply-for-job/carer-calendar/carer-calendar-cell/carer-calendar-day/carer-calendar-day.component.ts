@@ -3,7 +3,9 @@ import {PreBookedJob} from '../../../../../../../models/care-home-booking/pre-bo
 import {CareHomeBookingService} from '../../../../../../../services/care-home-booking.service';
 import {CalendarPopupService} from '../../../../../care-home/care-home-booking/booking-calendar/calendar-popup/calendar-popup.service';
 import {Subscription} from 'rxjs/Subscription';
-import {isUndefined} from "util";
+import {isUndefined} from 'util';
+import {Job} from '../../../../../../../models/care-home-booking/job';
+import {CarerJobService} from '../../../../../../../services/carer-job.service';
 
 @Component({
     selector: 'app-carer-calendar-day',
@@ -19,34 +21,28 @@ export class CarerCalendarDayComponent implements OnInit, OnChanges, OnDestroy {
     @Input() index: number;
 
     validDay: boolean;
-    allJobs: { start: Date, end: Date, preBooked: boolean }[] = [];
-    preBookedJobs: PreBookedJob[] = [];
+    allJobs: { job: Job, type: string }[] = [];
+    consideredJob: Job;
 
-    bookedJobSub: Subscription;
+    consideredJobSub: Subscription;
 
     constructor(private calendarPopupService: CalendarPopupService,
-                private bookingService: CareHomeBookingService) {
+                private carerJobService: CarerJobService) {
     }
 
     ngOnInit() {
         this.validateDay();
-        this.getBookedJob();
     }
 
     ngOnChanges() {
+        this.getConsideredJob();
         this.setUpList();
     }
 
     ngOnDestroy() {
-        this.bookedJobSub.unsubscribe();
-    }
-
-    isAddPopupOpen(): boolean {
-        return this.calendarPopupService.openAddPopup === this.index;
-    }
-
-    isListPopupOpen(): boolean {
-        return this.calendarPopupService.openListPopup === this.index;
+        if (this.consideredJobSub) {
+            this.consideredJobSub.unsubscribe();
+        }
     }
 
     onOpenPopup(): void {
@@ -59,12 +55,17 @@ export class CarerCalendarDayComponent implements OnInit, OnChanges, OnDestroy {
         }
     }
 
-    onClosePopup(): void {
-        this.calendarPopupService.openAddPopup = null;
-    }
-
     getDay(empty: boolean, day: Date): number {
         return (empty === true || isUndefined(day)) ? null : day.getDate();
+    }
+
+    private getConsideredJob(): void {
+        this.carerJobService.consideredJob.subscribe(
+            (job: Job) => {
+                this.consideredJob = job;
+                this.setUpList();
+            }
+        );
     }
 
     private validateDay(): boolean {
@@ -75,32 +76,13 @@ export class CarerCalendarDayComponent implements OnInit, OnChanges, OnDestroy {
         this.validDay = today.getTime() > this.date.getTime();
     }
 
-    private getBookedJob(): void {
-        this.bookedJobSub = this.bookingService.addedBooking.subscribe(
-            (bookedJob: PreBookedJob) => {
-                if (bookedJob._id === this.index) {
-                    this.preBookedJobs.push(bookedJob);
-                    this.setUpList();
-                }
-            }
-        );
-    }
-
     private setUpList(): void {
         this.allJobs = [];
         if (!isUndefined(this.jobs)) {
             this.jobs.forEach((job) => {
                 this.allJobs.push({
-                    start: new Date(job.start_date),
-                    end: new Date(job.end_date),
-                    preBooked: false
-                });
-            });
-            this.preBookedJobs.forEach((job) => {
-                this.allJobs.push({
-                    start: job.getStartDate(),
-                    end: job.getEndDate(),
-                    preBooked: true
+                    job: Job.getInstance(job),
+                    type: 'normal'
                 });
             });
         }

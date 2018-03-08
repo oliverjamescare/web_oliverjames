@@ -1,3 +1,11 @@
-<p>
-  carer-calendar-popup works!
-</p>
+<div class="calendar-popup carer-popup text-center">
+    <div class="carer-popup-row">
+        {{ job.author.care_home.name }}
+    </div>
+    <div class="carer-popup-row">
+        {{ job.author.address.address_line_1 }} {{ job.author.address.postal_code }} {{ job.author.address.city }}
+    </div>
+    <div class="carer-popup-row">
+        {{ job.getStartDate() | datePipe }}, {{ job.getStartDate() | hourPipe }} till {{ job.getEndDate() | hourPipe }}
+    </div>
+</div>

@@ -33,7 +33,6 @@
     position: absolute;
     z-index: 1000;
     top: 10px;
-    height: 295px;
     width: 285px;
     background-color: $white-color;
     border: 1px solid $ultra-light-grey;
@@ -127,4 +126,21 @@
     font-size: 22px;
     font-weight: 500;
   }
+}
+
+.carer-job {
+  position: relative;
+  .carer-popup {
+    position: absolute;
+    left: 0;
+  }
+
+  .carer-popup-row {
+    height: 35px;
+    border-bottom: 1px solid $ultra-light-grey;
+    color: $black-color;
+    font-size: 14px;
+    padding: 5px;
+  }
+
 }

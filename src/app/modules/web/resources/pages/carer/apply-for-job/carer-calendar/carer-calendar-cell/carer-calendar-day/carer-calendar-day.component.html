@@ -3,11 +3,11 @@
         [ngClass]="{'past-day': validDay}"
         class="calendar-day"
 >
-  <app-day-jobs-list
+  <app-carer-job-list
           *ngIf="true"
           [jobs]="jobs"
           [index]="index"
           [allJobs]="allJobs"
-  ></app-day-jobs-list>
+  ></app-carer-job-list>
   <span class="day-number">{{ getDay(empty, date) }}</span>
 </div>

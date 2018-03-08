@@ -8,6 +8,7 @@ import {Job} from '../models/care-home-booking/job';
 import {DatesService} from './dates.service';
 import {CalendarDay} from '../models/care-home-booking/calendar-day';
 import {GetCalendarResponse} from './care-home-booking.service';
+import {Subject} from 'rxjs/Subject';
 
 @Injectable()
 export class CarerJobService {
@@ -16,6 +17,7 @@ export class CarerJobService {
     jobDetails: Job;
     currentJobId: string;
     otherJobs: Job[] = [];
+    consideredJob = new Subject<Job>();
 
     constructor(private apiService: ApiService,
                 private datesService: DatesService) {
@@ -74,6 +76,7 @@ export class CarerJobService {
         return this.apiService.getJobDetails(jobId)
             .map(
                 response => {
+                    this.consideredJob.next(Job.getInstance(response));
                     return Job.getInstance(response);
                 }
             );

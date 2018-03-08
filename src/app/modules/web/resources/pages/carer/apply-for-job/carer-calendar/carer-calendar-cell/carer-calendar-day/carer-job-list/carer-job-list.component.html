@@ -1,0 +1,12 @@
+<div class="day-events">
+    <span
+            (mouseenter)="onMouseEnter(i); $event.stopPropagation()"
+            (mouseleave)="onMouseLeave(i)"
+            *ngFor="let job of allJobs let i = index" class="single-event job carer-job">
+        {{ job.job.getStartDate() | hourPipe }}-{{ job.job.getEndDate() | hourPipe }}
+        <app-carer-calendar-popup
+                [job]="job.job"
+                *ngIf="showPopup[i]"
+        ></app-carer-calendar-popup>
+    </span>
+</div>

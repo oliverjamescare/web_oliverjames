@@ -1,15 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {Job} from '../../../../../../../../models/care-home-booking/job';
 
 @Component({
-  selector: 'app-carer-calendar-popup',
-  templateUrl: './carer-calendar-popup.component.html',
-  styleUrls: ['./carer-calendar-popup.component.scss']
+    selector: 'app-carer-calendar-popup',
+    templateUrl: './carer-calendar-popup.component.html',
+    styleUrls: ['./carer-calendar-popup.component.scss']
 })
 export class CarerCalendarPopupComponent implements OnInit {
+    @Input() job: Job;
 
-  constructor() { }
+    constructor() {
+    }
 
-  ngOnInit() {
-  }
+    ngOnInit() {
+        console.log('Job', this.job);
+    }
 
 }

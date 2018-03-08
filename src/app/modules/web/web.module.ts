@@ -95,6 +95,7 @@ import { AgmCoreModule } from '@agm/core';
 import { CardDetailsComponent } from './resources/pages/carer/carer-my-profile/card-details/card-details.component';
 import { NgxStripeModule } from 'ngx-stripe';
 import { UpcomingJobsTabComponent } from './resources/pages/carer/upcoming-jobs-tab/upcoming-jobs-tab.component';
+import { CarerJobListComponent } from './resources/pages/carer/apply-for-job/carer-calendar/carer-calendar-cell/carer-calendar-day/carer-job-list/carer-job-list.component';
 
 @NgModule({
     declarations: [
@@ -159,7 +160,8 @@ import { UpcomingJobsTabComponent } from './resources/pages/carer/upcoming-jobs-
         ConfirmationPopupComponent,
         OtherJobsComponent,
         CardDetailsComponent,
-        UpcomingJobsTabComponent
+        UpcomingJobsTabComponent,
+        CarerJobListComponent
     ],
     imports: [
         CommonModule,
