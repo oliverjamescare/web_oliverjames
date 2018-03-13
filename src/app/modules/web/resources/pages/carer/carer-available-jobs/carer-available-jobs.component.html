@@ -53,8 +53,8 @@
                     <th>Notes</th>
                 </tr>
             </thead>
-            <p *ngIf="!loading && availableJobs.length === 0">No jobs available</p>
-            <tbody *ngIf="!loading && availableJobs.length !==0">
+            <p *ngIf="availableJobs.length === 0">No jobs available</p>
+            <tbody *ngIf="availableJobs.length !==0">
                 <tr *ngFor="let job of availableJobs">
                     <td>{{ job._id }}</td>
                     <td>{{ job.getStartDate() | date }}</td>
@@ -120,8 +120,8 @@
                 <th>Notes</th>
             </tr>
             </thead>
-            <p *ngIf="!loading && availableJobsWithoutCriteria.length === 0">No jobs available</p>
-            <tbody *ngIf="!loading && availableJobsWithoutCriteria.length !==0">
+            <p *ngIf="availableJobsWithoutCriteria.length === 0">No jobs available</p>
+            <tbody *ngIf="availableJobsWithoutCriteria.length !==0">
             <tr *ngFor="let job of availableJobsWithoutCriteria">
                 <td>{{ job?._id }}</td>
                 <td>{{ job?.getStartDate() | date }}</td>

@@ -28,7 +28,18 @@
             </tr>
             <tr>
                 <th>Your phone number</th>
-                <td><input formControlName="phone_number" type="text" class="form-control"></td>
+                <td>
+                    <input formControlName="phone_number" type="text" class="form-control">
+                    <span *ngIf="form.get('phone_number').errors?.numbers" class="red">
+                        Phone number can contain numbers only
+                    </span>
+                    <span *ngIf="form.get('phone_number').errors?.required" class="red">
+                        This field is required
+                    </span>
+                    <span *ngIf="form.get('phone_number').errors?.minlength || form.get('phone_number').errors?.maxlength" class="red">
+                        Phone number must contain between 6 and 9 numbers
+                    </span>
+                </td>
             </tr>
             <tr>
                 <th>Your First Name</th>
@@ -65,7 +76,12 @@
             </tr>
             <tr>
                 <th>Address line 1</th>
-                <td><input formControlName="address_line_1" type="text" class="form-control"></td>
+                <td>
+                    <input formControlName="address_line_1" type="text" class="form-control">
+                    <span *ngIf="form.get('address_line_1').errors?.required" class="red">
+                        This field is required
+                    </span>
+                </td>
             </tr>
             <tr>
                 <th>Address line 2</th>
@@ -73,11 +89,21 @@
             </tr>
             <tr>
                 <th>City</th>
-                <td><input formControlName="city" type="text" class="form-control"></td>
+                <td>
+                    <input formControlName="city" type="text" class="form-control">
+                    <span *ngIf="form.get('city').errors?.required" class="red">
+                        This field is required
+                    </span>
+                </td>
             </tr>
             <tr>
                 <th>Postcode</th>
-                <td><input formControlName="postal_code" type="text" class="form-control"></td>
+                <td>
+                    <input formControlName="postal_code" type="text" class="form-control">
+                    <span *ngIf="form.get('postal_code').errors?.required" class="red">
+                        This field is required
+                    </span>
+                </td>
             </tr>
             <tr>
                 <th>Password</th>
@@ -105,20 +131,32 @@
             </tr>
             <tr>
                 <th>Max job distance in miles</th>
-                <td><input formControlName="max_job_distance" type="text" class="form-control"></td>
+                <td>
+                    <input formControlName="max_job_distance" type="text" class="form-control">
+                    <span *ngIf="form.get('max_job_distance').errors?.required" class="red">
+                        This field is required
+                    </span>
+                    <span *ngIf="form.get('max_job_distance').errors?.min" class="red">
+                        Value cannot be negative
+                    </span>
+                </td>
             </tr>
             <tr>
                 <th>Eligible roles</th>
                 <td>
                     <span
                             *ngFor="let role of carerProfileService?.carerProfile?.carer.eligible_roles"
+                            class="separate-right"
                     >{{ role }}</span>
                      <span (click)="onRoleChange()" class="request">Request for change</span>
                 </td>
             </tr>
         </table>
         <br>
-        <button (click)="onUpdateProfile()" class="btn-success">Update profile</button>
+        <button
+                (click)="onUpdateProfile()"
+                class="btn-success">Update profile
+            <span *ngIf="buttonLoading"><i *ngIf="buttonLoading" class="fa fa-spinner fa-spin"></i></span></button>
     </div>
 </div>
 

@@ -38,6 +38,8 @@ export class CalendarPopupComponent implements OnInit {
             this.errorMessage = 'One or many fields are incomplete';
         } else if (!this.isValidFromTill(this.form.get('from').value, this.form.get('till').value)) {
             this.errorMessage = 'Job end date must be at least 15 min later';
+        } else if (!this.validDate(new Date(this.form.controls['from'].value))) {
+            this.errorMessage = 'Job must start at least 1 hour from now';
         } else {
             this.bookingService.bookJob(this.form.value, +this.form.controls['start_date'].value);
             this.closePopup.emit();
@@ -85,6 +87,11 @@ export class CalendarPopupComponent implements OnInit {
 
     private isValidFromTill(start: string, end: string): boolean {
         return new Date(end).getTime() - new Date(start).getTime() >= TIMESTAMP_INTERVAL;
+    }
+
+    private validDate(startDate: Date): boolean {
+        const now = new Date();
+        return startDate.getTime() - now.getTime() > 3600000;
     }
 
 }

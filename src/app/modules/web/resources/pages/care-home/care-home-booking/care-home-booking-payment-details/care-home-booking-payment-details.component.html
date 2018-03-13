@@ -16,7 +16,7 @@
     </div>
 </div>
 
-        <form novalidate (ngSubmit)="onCardDetailsSave($event)" [formGroup]="stripeTest">
+        <form novalidate (ngSubmit)="onCardDetailsSave()" [formGroup]="stripeTest">
             <div class="form group text-center">
                     <span
                             *ngIf="apiError"

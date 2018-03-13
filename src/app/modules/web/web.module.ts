@@ -96,6 +96,8 @@ import { CardDetailsComponent } from './resources/pages/carer/carer-my-profile/c
 import { NgxStripeModule } from 'ngx-stripe';
 import { UpcomingJobsTabComponent } from './resources/pages/carer/upcoming-jobs-tab/upcoming-jobs-tab.component';
 import { CarerJobListComponent } from './resources/pages/carer/apply-for-job/carer-calendar/carer-calendar-cell/carer-calendar-day/carer-job-list/carer-job-list.component';
+import {LoadingService} from './services/loading.service';
+import {GoogleService} from './services/google.service';
 
 @NgModule({
     declarations: [
@@ -193,7 +195,9 @@ import { CarerJobListComponent } from './resources/pages/carer/apply-for-job/car
         DatesService,
         FakeApiService,
         CarerJobService,
-        CarerProfileService
+        CarerProfileService,
+        LoadingService,
+        GoogleService
     ]
 })
 export class WebModule {

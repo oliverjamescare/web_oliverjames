@@ -1,0 +1,15 @@
+.loading-wrapper {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 116px;
+  background-color: white;
+  z-index: 10000;
+  .loading-spinner {
+    font-size: 90px;
+    position: absolute;
+    left: 45%;
+    top: 40%;
+  }
+}

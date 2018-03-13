@@ -249,7 +249,7 @@ export class RegisterCarerPersonalDetailsComponent implements OnInit, OnDestroy
                 handleUniqueValidator(this.userService.checkPhoneNumberUniqueness.bind(this.userService))
             ),
             first_name: new FormControl(null,[ Validators.required, Validators.maxLength(100), alpha ]),
-            middle_name: new FormControl(null,[ Validators.maxLength(100), alpha ]),
+            middle_name: new FormControl('',[ Validators.maxLength(100), alpha ]),
             surname: new FormControl(null,[ Validators.required, Validators.maxLength(100), alpha ]),
             password: new FormControl(null, [ Validators.required, Validators.minLength(8), password ] ),
             password_confirm: new FormControl(null, [ Validators.required ]),
@@ -316,7 +316,7 @@ export class RegisterCarerPersonalDetailsComponent implements OnInit, OnDestroy
             this.pcaControl.destroy();
 
         console.log(this.pcaControl)
-        console.log("ssss")
+        console.log("ssss");
     }
 
     previousStep()
@@ -329,9 +329,10 @@ export class RegisterCarerPersonalDetailsComponent implements OnInit, OnDestroy
         if(this.form.valid)
         {
             this.carerService.personalDetailsFormValues = this.form.value;
+            console.log('Carer service personal steps', this.form.value);
             this.carerService.registerStep = this.carerService.availableSteps.CV;
 
-            this.router.navigate(['/carer/register/cv'])
+            this.router.navigate(['/carer/register/cv']);
         }
     }
 }

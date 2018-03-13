@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
+import {LoadingService} from './services/loading.service';
 
 @Component({
     selector: 'app-web',
@@ -11,7 +12,7 @@ export class WebComponent implements OnInit {
     careHomeLogin = false;
     forgotPassword = false;
 
-    constructor(private router: Router) {
+    constructor(private router: Router, public loadingService: LoadingService) {
     }
 
     ngOnInit() {

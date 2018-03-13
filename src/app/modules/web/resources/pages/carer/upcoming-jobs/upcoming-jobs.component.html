@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-sm">
-        <p *ngIf="!loading && upcomingJobs.length === 0">No jobs available</p>
-        <table *ngIf="!loading && upcomingJobs.length !==0" class="custom-table text-center">
+        <p *ngIf="upcomingJobs.length === 0">No jobs available</p>
+        <table *ngIf="upcomingJobs.length !==0" class="custom-table text-center">
             <thead>
             <tr>
                 <th>Job ID</th>
