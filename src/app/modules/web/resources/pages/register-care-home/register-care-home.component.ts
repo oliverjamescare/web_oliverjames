@@ -207,6 +207,25 @@ export class RegisterCareHomeComponent implements OnInit {
             .valueChanges
             .subscribe(
                 (pass: string) => this.form.get('password').setValidators([Validators.required, equalToFieldValue(pass)]));
+
+        // choosing address event from PCA
+        if (pca.load) {
+            pca.load();
+        }
+
+        pca.on('load', (type, id, control) => {
+
+            control.listen('populate', (address) => {
+                console.log(address);
+                this.form.patchValue({
+                    postal_code: address['PostalCode'],
+                    company: address['Company'],
+                    address_line_1: address['Line1'],
+                    address_line_2: address['Line2'],
+                    city: address['City']
+                });
+            });
+        });
     }
 
     onSubmit() {
