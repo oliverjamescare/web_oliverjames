@@ -15,6 +15,7 @@ export class ChangeEmailComponent implements OnInit, AfterViewInit {
     form: FormGroup;
     title = 'Change email';
     apiError: string;
+    buttonLoading = false;
 
     constructor(private apiService: ApiService,
                 private notificationService: NotificationsService) {
@@ -30,17 +31,21 @@ export class ChangeEmailComponent implements OnInit, AfterViewInit {
     }
 
     onEmailChange(): void {
+        this.buttonLoading = true;
         this.apiService.changeEmail(this.form.controls['email'].value)
             .subscribe(
                 response => {
+                    this.buttonLoading = false;
                     console.log('Change email success response', response);
                     this.notificationService.success(
                         'Success',
-                        'Your email will change once you tap the link we’ve emailed to that address');
+                        'Your email will change once you tap the link we’ve emailed to that address'
+                    );
                     this.update.emit();
                     $('#' + this.type + '_id').modal('hide');
                 },
                 error => {
+                    this.buttonLoading = false;
                     console.log('Change email error response', error);
                     this.handleErrorResponse(error.error.errors);
                 }
@@ -49,7 +54,7 @@ export class ChangeEmailComponent implements OnInit, AfterViewInit {
 
     private createForm(): void {
         this.form = new FormGroup({
-            'email': new FormControl(null, Validators.required)
+            'email': new FormControl(null, [Validators.required, Validators.email])
         });
     }
 

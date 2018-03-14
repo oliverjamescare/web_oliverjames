@@ -14,6 +14,8 @@ export class ChangeProfileImageComponent implements OnInit, AfterViewInit {
     @Output() update = new EventEmitter();
     title = 'Change profile image';
     profilePicture: File;
+    errors: string[] = [];
+    buttonLoading = false;
 
     constructor(private apiService: ApiService,
                 private notificationService: NotificationsService) {
@@ -28,7 +30,21 @@ export class ChangeProfileImageComponent implements OnInit, AfterViewInit {
     }
 
     handleFileInput(files: FileList) {
+        console.log('File to upload', files.item(0).size);
+        this.errors = [];
+        if (files.item(0).size > 5000000) {
+            this.errors.push('Max file size exceed');
+        }
+        if (!this.isValidImageExtension(files.item(0).name)) {
+            this.errors.push('Only files with .jpeg and .gif extensions can be uploaded');
+        }
+        console.log('Errors table', this.errors);
         this.profilePicture = files.item(0);
+    }
+
+    private isValidImageExtension(filename: string): boolean {
+        const splited = filename.split('.');
+        return splited[1] === 'jpg' || splited[1] === 'png';
     }
 
     getPictureUrl(): string {
@@ -36,16 +52,20 @@ export class ChangeProfileImageComponent implements OnInit, AfterViewInit {
     }
 
     onPictureChange(): void {
+        this.buttonLoading = true;
         this.apiService.changeProfileImage(this.getRequestData())
             .subscribe(
                 response => {
+                    this.buttonLoading = false;
                     console.log('Update profile picture success response', response);
                     this.notificationService.success('Success', 'Profile image updated');
                     this.update.emit();
                     $('#' + this.type + '_id').modal('hide');
                 },
                 error => {
-                    console.log('Updte profile picture error respone', error);
+                    this.buttonLoading = false;
+                    this.notificationService.warn('Update profile picture failed');
+                    console.log('Update profile picture error response', error);
                 }
             );
     }

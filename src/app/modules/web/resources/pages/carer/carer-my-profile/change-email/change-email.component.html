@@ -11,15 +11,20 @@
           <input formControlName="email" type="email" placeholder="Email"
                  class="form-control">
           <span
-                  *ngIf="!form.controls['email'].valid && form.controls['email'].touched"
+                  *ngIf="form.get('email').errors?.required && form.controls['email'].touched"
                   class="invalid-feedback"
           >This field is required</span>
+            <span
+                    *ngIf="form.get('email').errors?.email && form.controls['email'].dirty"
+                    class="invalid-feedback"
+            >This is not valid email</span>
         </div>
+
         <br>
         <div class="buttons-container">
           <button (click)="onEmailChange()" type="submit" class="btn btn-success"
                   [disabled]="!form.valid">
-            Change email
+            Change email <span *ngIf="buttonLoading"><i class="fa fa-spinner fa-spin"></i></span>
           </button>
         </div>
       </form>

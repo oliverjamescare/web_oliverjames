@@ -11,16 +11,7 @@ import {} from 'googlemaps';
 import {MapsAPILoader} from '@agm/core';
 import {} from '@types/googlemaps';
 import {GoogleService} from '../../../../services/google.service';
-import {
-    alpha,
-    numbers,
-    equalToFieldValue,
-    invalidDate,
-    adult,
-    password,
-    equalTo,
-    greaterThan
-} from '../../../../../../utilities/validators';
+import {numbers} from '../../../../../../utilities/validators';
 
 @Component({
     selector: 'app-carer-my-profile',
@@ -131,6 +122,11 @@ export class CarerMyProfileComponent implements OnInit, OnDestroy, AfterViewInit
             );
     }
 
+    passProfileUrl(): string {
+        return this.carerProfileService.carerProfile.carer.profile_image ?
+            this.carerProfileService.carerProfile.carer.profile_image + '?access-token=' + this.authService.getAccessToken().token : null;
+    }
+
     private createDetailsForm(): void {
         this.form = new FormGroup({
             'max_job_distance': new FormControl(null, [Validators.required, Validators.min(0)]),
@@ -165,10 +161,6 @@ export class CarerMyProfileComponent implements OnInit, OnDestroy, AfterViewInit
                     console.log('Get carer profile error response', error);
                 }
             );
-    }
-
-    logProperty(control: FormControl) {
-        console.log('Logged control', control);
     }
 
 }

@@ -17,6 +17,7 @@ export class ChangePasswordComponent implements OnInit, AfterViewInit {
     form: FormGroup;
     passwordsMatch = true;
     apiError: string;
+    buttonLoading = false;
 
     constructor(private apiService: ApiService,
                 private notificationService: NotificationsService) {
@@ -33,13 +34,16 @@ export class ChangePasswordComponent implements OnInit, AfterViewInit {
     }
 
     onPasswordChange(): void {
+        this.buttonLoading = true;
         this.apiService.changePassword(this.form.controls['oldPassword'].value, this.form.controls['newPassword'].value)
             .subscribe(
                 response => {
+                    this.buttonLoading = false;
                     console.log('Change carer password success response', response);
                     this.notificationService.success('Success', 'Password changed');
                     $('#' + this.type + '_id').modal('hide');
                 }, error => {
+                    this.buttonLoading = false;
                     console.log('Change carer password error respomse', error);
                     this.handleErrorResponse(error.error.errors);
                 }

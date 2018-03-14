@@ -11,12 +11,13 @@
                        id="file"
                        class="form-control floor-plan"
                        (change)="handleFileInput($event.target.files)">
+                <span *ngFor="let error of errors" class="red full-width">{{ error }}</span>
             </div>
             <br>
             <div class="buttons-container">
                 <button (click)="onPictureChange()" type="submit" class="btn btn-success"
-                        [disabled]="!profilePicture">
-                    Change profile image
+                        [disabled]="!profilePicture || errors.length !== 0">
+                    Change profile image <span *ngIf="buttonLoading"><i class="fa fa-spinner fa-spin"></i></span>
                 </button>
             </div>
         </div>
