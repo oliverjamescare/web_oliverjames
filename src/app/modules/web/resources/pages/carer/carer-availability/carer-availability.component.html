@@ -28,7 +28,7 @@
     <div class="col-sm-12 col-md-12 col-lg-9">
         <p *ngIf="currentWeek === 0">Set your availability for all weeks</p>
         <p *ngIf="currentWeek !== 0">Set your availability for week commencing {{ weeks[currentWeek] | date }}</p>
-        <table *ngIf="!loading" class="availability-table text-center">
+        <table class="availability-table text-center">
             <thead>
             <tr>
                 <th class="main-label"></th>
@@ -49,24 +49,24 @@
                 <tr *ngFor="let day of weekDaysArray">
                     <th>{{ day }}</th>
                     <th (click)="onAllClick(day)" class="toggle-label">All</th>
-                    <td *ngIf="availability.availability[day].am_shift" (click)="onSingleClick(day, 'am_shift')" class="available">
+                    <td *ngIf="availability?.availability[day].am_shift" (click)="onSingleClick(day, 'am_shift')" class="available">
                         <span >Available</span>
                     </td>
-                    <td *ngIf="!availability.availability[day].am_shift" (click)="onSingleClick(day, 'am_shift')" class="not-available">
+                    <td *ngIf="!availability?.availability[day].am_shift" (click)="onSingleClick(day, 'am_shift')" class="not-available">
                         <span>Not available</span>
                     </td>
 
-                    <td *ngIf="availability.availability[day].pm_shift" (click)="onSingleClick(day, 'pm_shift')" class="available">
+                    <td *ngIf="availability?.availability[day].pm_shift" (click)="onSingleClick(day, 'pm_shift')" class="available">
                         <span >Available</span>
                     </td>
-                    <td *ngIf="!availability.availability[day].pm_shift" (click)="onSingleClick(day, 'pm_shift')" class="not-available">
+                    <td *ngIf="!availability?.availability[day].pm_shift" (click)="onSingleClick(day, 'pm_shift')" class="not-available">
                         <span>Not available</span>
                     </td>
 
-                    <td *ngIf="availability.availability[day].night_shift" (click)="onSingleClick(day, 'night_shift')" class="available">
+                    <td *ngIf="availability?.availability[day].night_shift" (click)="onSingleClick(day, 'night_shift')" class="available">
                         <span >Available</span>
                     </td>
-                    <td *ngIf="!availability.availability[day].night_shift" (click)="onSingleClick(day, 'night_shift')" class="not-available">
+                    <td *ngIf="!availability?.availability[day].night_shift" (click)="onSingleClick(day, 'night_shift')" class="not-available">
                         <span>Not available</span>
                     </td>
                 </tr>
@@ -77,6 +77,6 @@
 <br>
 <div class="row">
     <div class="col-sm-12 col-md-12 col-lg-9">
-        <button (click)="onAvailabilitySave()" class="btn-success">Save availability</button>
+        <button (click)="onAvailabilitySave()" class="btn-success">Save availability <span *ngIf="buttonLoading"><i class="fa fa-spinner fa-spin"></i></span></button>
     </div>
 </div>

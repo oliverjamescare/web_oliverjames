@@ -91,7 +91,11 @@ export class RegisterCareHomeComponent implements OnInit {
                 {
                     error: 'password',
                     message: 'Password must have at least one letter and number'
-                }
+                },
+                {
+                    error: 'equalToFieldValue',
+                    message: 'Passwords don\'t match'
+                },
             ]
         },
         {
@@ -103,7 +107,7 @@ export class RegisterCareHomeComponent implements OnInit {
                 },
                 {
                     error: 'equalToFieldValue',
-                    message: "Passwords don't match"
+                    message: 'Passwords don\'t match'
                 },
             ]
         },
@@ -177,7 +181,7 @@ export class RegisterCareHomeComponent implements OnInit {
                 handleUniqueValidator(this.userService.checkPhoneNumberUniqueness.bind(this.userService))
             ),
             name: new FormControl(null, [Validators.required, Validators.maxLength(100), alpha]),
-            password: new FormControl(null, [Validators.required, Validators.minLength(8), password]),
+            password: new FormControl(null, [Validators.required, Validators.minLength(6), password]),
             password_confirm: new FormControl(null, [Validators.required]),
             postal_code: new FormControl(null, Validators.required),
             company: new FormControl(''),
@@ -198,6 +202,11 @@ export class RegisterCareHomeComponent implements OnInit {
             .valueChanges
             .subscribe(
                 (pass: string) => this.form.get('password_confirm').setValidators([Validators.required, equalToFieldValue(pass)]));
+
+        this.form.get('password_confirm')
+            .valueChanges
+            .subscribe(
+                (pass: string) => this.form.get('password').setValidators([Validators.required, equalToFieldValue(pass)]));
     }
 
     onSubmit() {

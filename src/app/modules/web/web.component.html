@@ -8,6 +8,10 @@
     </div>
 </section>
 
+<div *ngIf="loadingService?.showMainSpinner === true" class="loading-wrapper">
+    <i class="fa fa-spinner fa-spin loading-spinner"></i>
+</div>
+
 <app-login [type]="'carer'" *ngIf="carerLogin" (closed)="onCarerClosed()" (forgotPasswordTriggered)="onForgotPasswordOpen()"></app-login>
 <app-login [type]="'careHome'" *ngIf="careHomeLogin" (closed)="onCareHomeClosed()" (forgotPasswordTriggered)="onForgotPasswordOpen()"></app-login>
 <app-forgot-password *ngIf="forgotPassword" (closed)="onForgotPasswordClosed()"></app-forgot-password>
@@ -35,7 +39,3 @@
 </app-popup>
 
 <simple-notifications [options]="options"></simple-notifications>
-
-<div *ngIf="loadingService.showMainSpinner" class="loading-wrapper">
-    <i class="fa fa-spinner fa-spin loading-spinner"></i>
-</div>

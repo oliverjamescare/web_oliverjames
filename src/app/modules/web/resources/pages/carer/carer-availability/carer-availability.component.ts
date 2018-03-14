@@ -15,9 +15,7 @@ export class CarerAvailabilityComponent implements OnInit, OnDestroy {
     weeks: Date[];
     currentWeek = 0;
     weekDaysArray = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-    loading: boolean;
-    all = true;
-    toggle = true;
+    buttonLoading = false;
 
     getCalendarSub: Subscription;
 
@@ -45,28 +43,29 @@ export class CarerAvailabilityComponent implements OnInit, OnDestroy {
     }
 
     onAllClick(day: string): void {
-        this.availability.availability[day].am_shift = this.all;
-        this.availability.availability[day].pm_shift = this.all;
-        this.availability.availability[day].night_shift = this.all;
-        this.all = !this.all;
+        this.availability.availability[day].am_shift = !this.availability.availability[day].am_shift;
+        this.availability.availability[day].pm_shift = !this.availability.availability[day].pm_shift;
+        this.availability.availability[day].night_shift = !this.availability.availability[day].night_shift;
     }
 
     onToggleClick(shift: string): void {
         this.weekDaysArray.forEach((day) => {
-            this.availability.availability[day][shift] = this.toggle;
+            this.availability.availability[day][shift] = !this.availability.availability[day][shift];
         });
-        this.toggle = !this.toggle;
     }
 
     onAvailabilitySave(): void {
+        this.buttonLoading = true;
         this.carerService.updateAvailabilityCalendar(this.currentWeek, this.availability)
             .subscribe(
                 (response: Availability) => {
+                    this.buttonLoading = false;
                     this.getCalendar();
                     this.notificationService.success('Success', 'Calendar updated');
                     console.log('updateAvailabilityCalendar success response', response);
                 },
                 error => {
+                    this.buttonLoading = false;
                     console.log('updateAvailabilityCalendar error response', error);
                     this.notificationService.error('Error', 'Calendar update failed');
                 }
@@ -74,17 +73,15 @@ export class CarerAvailabilityComponent implements OnInit, OnDestroy {
     }
 
     private getCalendar(): void {
-        this.loading = true;
         this.getCalendarSub = this.carerService.getAvailabilityCalendar(this.currentWeek)
             .subscribe(
                 (response: Availability) => {
-                    this.loading = false;
                     console.log('Get availability calendar success response', response);
                     this.availability = response;
                     this.carerService.availability = response;
                 },
                 error => {
-                    this.loading = false;
+                    this.notificationService.warn('Unable to load data from api, try again');
                     console.log('Get availability calendar error response', error);
                 }
             );
