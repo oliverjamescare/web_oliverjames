@@ -17,7 +17,7 @@
                             <input type="text" class="form-control" readonly formControlName="cv">
                             <input type="file" (change)="onFileChange($event)" class="d-none" #fileInput>
                             <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'cv', messages) }} </span>
-                            <small class="form-text text-muted">Only word processing doctypes (word / pdf) and images (no exe, zip files, etc). At least 125kb</small>
+                            <small class="form-text text-muted">Only word processing doctypes (word / pdf) and images (no exe, zip files, etc). At least 125kb. Max 10MB</small>
                         </div>
                         <button class="btn btn-success choose-file" type="button" (click)="triggerFileBrowser(fileInput)">Choose file</button>
                     </div>

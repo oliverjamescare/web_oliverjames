@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {CareHomeBookingService} from '../../../../../services/care-home-booking.service';
 import {CalendarCell} from './calendar-cell';
 import {CalendarDay} from '../../../../../models/care-home-booking/calendar-day';
@@ -14,6 +14,8 @@ export class BookingCalendarComponent implements OnInit {
     monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
         'July', 'August', 'September', 'October', 'November', 'December'
     ];
+
+    @Input() bookingServiceStr: string;
 
     constructor(public bookingService: CareHomeBookingService,
                 public popupService: CalendarPopupService) {
@@ -36,7 +38,7 @@ export class BookingCalendarComponent implements OnInit {
     }
 
     private setCalendar(): void {
-        this.addLabel(this.monthNames[this.bookingService.calendar[0].day.getMonth()], false);
+        this.addLabel(this.monthNames[this[this.bookingServiceStr].calendar[0].day.getMonth()], false);
         let count = 0;
         this.bookingService.calendar.forEach((day, index) => {
                 count++;

@@ -48,6 +48,15 @@ export function fileSize(file: File, max: number)
         return !file || file.size > (1024 * 1024 * max) ? { 'fileSize': true } : null;
     }
 }
+
+export function minFileSize(file: File, min: number)
+{
+    return (control: FormControl): { [ key: string ]: boolean } => {
+
+        return !file || file.size < min ? { 'minFileSize': true } : null;
+    }
+}
+
 export function fileType(file: File, mimeTypes: Array<string>)
 {
     return (control: FormControl): { [ key: string ]: boolean } =>  !file || mimeTypes.indexOf(file.type) == -1 ? { 'fileType': true } : null;

@@ -238,9 +238,9 @@ export class RegisterCarerPersonalDetailsComponent implements OnInit, OnDestroy
 
     ngOnInit() {
         // protection against missing steps
-        if (this.carerService.registerStep < this.carerService.availableSteps.PERSONAL_DETAILS) {
-            this.router.navigate(['/carer/register/terms']);
-        }
+        // if (this.carerService.registerStep < this.carerService.availableSteps.PERSONAL_DETAILS) {
+        //     this.router.navigate(['/carer/register/terms']);
+        // }
 
         // form config
         this.form = new FormGroup({
