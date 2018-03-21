@@ -1,0 +1,10 @@
+.pagination {
+  float: right;
+}
+
+.active {
+  .page-link {
+    background-color: #03c88b !important;
+    border-color: #03c88b !important;
+  }
+}

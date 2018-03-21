@@ -1,0 +1,55 @@
+<div class="row">
+    <div class="col-sm">
+        <p *ngIf="carers.length === 0">No results</p>
+        <table *ngIf="carers.length !==0" class="custom-table text-center">
+            <thead>
+            <tr>
+                <th>Oliver James ID</th>
+                <th>Carer Name</th>
+                <th>Carer DoB</th>
+                <th>Date when active</th>
+                <th>Carer rating</th>
+                <th>Profile status</th>
+                <th>Banned dedline</th>
+                <th>Total still to deduct</th>
+                <th>Notes</th>
+                <th>Carer details</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let carer of carers">
+                <td>{{ carer._id }}</td>
+                <td>{{ carer.carer.first_name }} {{ carer.carer.surname }}</td>
+                <td>{{ carer.carer.date_of_birth }}</td>
+                <td>{{ carer.activation_date }}</td>
+                <td>{{ carer.carer.reviews.average }}</td>
+                <td>{{ carer.status }}</td>
+                <td>{{ carer.banned_until }}</td>
+                <td>Mocked</td>
+                <td>{{ carer.notes }}</td>
+                <td>
+                    <div class="text-center">
+                            <span
+                                    class="actions"
+                            >Carer details</span>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <div *ngIf="pages.length > 1" class="text-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li
+                            *ngFor="let p of pages"
+                            [ngClass]="{'active': page === p + 1}"
+                            class="page-item">
+                        <a
+                                (click)="onPageChange(p + 1)"
+                                class="page-link">{{ p + 1 }}</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
