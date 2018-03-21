@@ -30,6 +30,13 @@ export class ApiService {
         );
     }
 
+    getCarerDetails(id: string): Observable<any> {
+        return this.httpClient.get(
+            `${this.endpoint}/carers/${id}`,
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
     private getAuthorizationHeaders(): HttpHeaders {
         return new HttpHeaders({
             'X-access-token': this.authService.getAccessToken()
