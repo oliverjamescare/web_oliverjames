@@ -3,7 +3,8 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {CareHomeBookingService} from '../../../../../../services/care-home-booking.service';
 
 const TIMESTAMP_INTERVAL = 900000; // 15 min in milliseconds
-const NUMBER_OF_INTERVALS = 50; // number of 15 min intervals in select list hour from 7:00, 19:00
+const MIN_IN_MILLISECONDS = 60000;
+const NUMBER_OF_INTERVALS = 98; // number of 15 min intervals in select list hour from 7:00, 19:00
 
 @Component({
     selector: 'app-calendar-popup',
@@ -37,7 +38,7 @@ export class CalendarPopupComponent implements OnInit {
         if (!this.form.valid) {
             this.errorMessage = 'One or many fields are incomplete';
         } else if (!this.isValidFromTill(this.form.get('from').value, this.form.get('till').value)) {
-            this.errorMessage = 'Job end date must be at least 15 min later';
+            this.errorMessage = 'Please check the start and end times';
         } else if (!this.validDate(new Date(this.form.controls['from'].value))) {
             this.errorMessage = 'Job must start at least 1 hour from now';
         } else {
@@ -49,8 +50,8 @@ export class CalendarPopupComponent implements OnInit {
     private createForm(): void {
         this.form = new FormGroup({
             'start_date': new FormControl(this.getBookingCalendarIndex(), Validators.required),
-            'from': new FormControl(null, Validators.required),
-            'till': new FormControl(null, Validators.required),
+            'from': new FormControl(this.timeFromArr[0], Validators.required),
+            'till': new FormControl(this.timeTillArr[0], Validators.required),
             'role': new FormControl(null, Validators.required),
             'number': new FormControl(1, [Validators.min(1), Validators.max(5)])
         });
@@ -58,7 +59,7 @@ export class CalendarPopupComponent implements OnInit {
 
     private getStartTime(): Date {
         const date = this.date;
-        date.setHours(7, 0, 0, 0);
+        date.setHours(0, 0, 0, 0);
         return date;
     }
 
@@ -66,9 +67,13 @@ export class CalendarPopupComponent implements OnInit {
         this.timeFromArr.push(this.getStartTime());
         for (let i = 1; i < NUMBER_OF_INTERVALS; i++) {
             if (i > 1) {
-                this.timeTillArr.push(new Date(this.timeFromArr[i - 1].getTime()));
+                if (i === NUMBER_OF_INTERVALS - 1) {
+                    this.timeTillArr.push(new Date(this.timeFromArr[i - 1].getTime() - MIN_IN_MILLISECONDS));
+                } else {
+                    this.timeTillArr.push(new Date(this.timeFromArr[i - 1].getTime()));
+                }
             }
-            if (i < 49) {
+            if (i < NUMBER_OF_INTERVALS - 1) {
                 this.timeFromArr.push(new Date(this.timeFromArr[i - 1].getTime() + TIMESTAMP_INTERVAL));
             }
         }

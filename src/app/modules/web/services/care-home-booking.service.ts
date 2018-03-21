@@ -17,7 +17,7 @@ export class CareHomeBookingService {
     addedBooking = new Subject<PreBookedJob>();
     priorityCarers: Carer[] = [];
     generalGuidance: GeneralGuidance;
-    generalGuidanceForm: GeneralGuidance;
+    generalGuidanceForm: GeneralGuidance = null;
     florPlanFile: File = null;
 
     card_number: any;
@@ -49,7 +49,7 @@ export class CareHomeBookingService {
     }
 
     searchForPriority(searchString: string): Observable<any> {
-        return this.apiService.searchForPriorityUsers(searchString)
+        return this.fakeApiService.searchForPriorityUsersFake(searchString)
             .map(
                 (response: SearchForPriorityResponse) => {
                     return response.carers;
@@ -64,7 +64,6 @@ export class CareHomeBookingService {
     }
 
     cheekCarersToContact(): Observable<any> {
-        console.log('Parse pre booked jobs', this.parsePreBookedJobs());
         return this.apiService.checkCarersToContact(this.parsePreBookedJobs())
             .map((response: CheckCarersToContactResponse) => {
                 const preBookedJobs: PreBookedJob[] = [];
@@ -86,7 +85,6 @@ export class CareHomeBookingService {
                 userProfile => {
                     // fake until api passs stripe token
                     this.card_number = this.checked ? 223334 : userProfile.care_home.payment_system.card_number;
-                    console.log('Card number', this.card_number);
                     return GeneralGuidance.getInstanceFromResponse(userProfile.care_home.general_guidance);
                 }
             );
@@ -116,8 +114,6 @@ export class CareHomeBookingService {
     }
 
     private getAddBookBodyForRequest(): FormData {
-        console.log('guidance form', this.generalGuidanceForm);
-        console.log('file', this.florPlanFile);
         const formData: FormData = new FormData();
         if (this.florPlanFile !== null) {
             formData.append('floor_plan', this.florPlanFile);
@@ -128,6 +124,7 @@ export class CareHomeBookingService {
         formData.append('emergency_guidance', this.generalGuidanceForm.emergency_guidance);
         formData.append('report_contact', this.generalGuidanceForm.report_contact);
         formData.append('superior_contact', this.generalGuidanceForm.superior_contact);
+        console.log('general guidance data',  this.generalGuidanceForm);
         return formData;
     }
 }

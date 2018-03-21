@@ -8,6 +8,7 @@ export class CalendarDay {
 
     constructor(day: string, jobs: Job[]) {
         this.day = new Date(day);
+        // this.day = new Date(new Date(day).getTime() - 86400000 * 2);
         this.jobs = jobs;
     }
 }

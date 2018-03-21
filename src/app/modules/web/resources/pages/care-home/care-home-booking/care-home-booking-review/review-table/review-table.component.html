@@ -3,7 +3,7 @@
         <h5>Jobs to book</h5>
     </div>
     <div class="col-sm">
-        <table *ngIf="showTable && bookingService.preBookedJobs.length !== 0" class="custom-table text-center">
+        <table *ngIf="showTable && bookingService.preBookedJobs.length !== 0" class="custom-table text-center" [formGroup]="form">
             <thead>
             <tr>
                 <th>Start date</th>
@@ -12,12 +12,12 @@
                 <th>Carers required</th>
                 <th>Total hours</th>
                 <th>Role</th>
-                <th>Special notes for carers taking a practicular shift</th>
+                <th>Notes for carers taking particular shifts</th>
                 <th>Carers to contact</th>
                 <th></th>
             </tr>
             </thead>
-            <tbody>
+            <tbody formArrayName="arr">
             <tr *ngFor="let job of bookingService.preBookedJobs; let i = index">
                 <td>{{ job.getStartDate() | date }}</td>
                 <td>{{ job.getStartDate() | hourPipe }}</td>
@@ -25,7 +25,9 @@
                 <td>{{ job.amount }}</td>
                 <td>{{ job.getEndDate().getHours() - job.getStartDate().getHours() }}</td>
                 <td>{{ job.role }}</td>
-                <td>{{ job?.notes }}</td>
+                <td>
+                    <textarea formControlName="{{ i }}" class="array-input"></textarea>
+                </td>
                 <td>{{ job.carersToContact }}</td>
                 <td>
                     <div (click)="onJobRemove(i)" class="text-center">

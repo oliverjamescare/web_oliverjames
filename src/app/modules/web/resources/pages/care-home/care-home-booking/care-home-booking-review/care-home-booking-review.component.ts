@@ -22,7 +22,6 @@ export class CareHomeBookingReviewComponent implements OnInit {
     }
 
     onSubmitBookings(): void {
-        console.log('Card number', this.bookingService.card_number);
         if (this.bookingService.card_number !== null) {
             this.bookingService.bookJobs()
                 .subscribe(
@@ -31,7 +30,9 @@ export class CareHomeBookingReviewComponent implements OnInit {
                         this.router.navigate(['care-home-dashboard']);
                         this.notificationService.success('Success', 'Jobs booked');
                     },
-                    error => console.log('Book jobs error', error)
+                    error => {
+                        console.log('Book jobs error', error);
+                    }
                 );
         } else {
             this.router.navigate(['/care-home-booking', 'payment-details']);
@@ -45,13 +46,19 @@ export class CareHomeBookingReviewComponent implements OnInit {
             .subscribe(
                 (response: GeneralGuidance) => {
                     this.bookingService.generalGuidance = response;
-                    this.bookingService.generalGuidanceForm = response;
-                    console.log('Get general guidance response', response);
+                    console.log('Guidance info mapped response', response);
+                    this.setGuidanceFormValue(response);
                     this.showGuidanceForm = true;
                     this.showPreferenceTab = true;
                 },
                 error => console.log('Get guidance error response', error)
             );
+    }
+
+    private setGuidanceFormValue(generalGuidance: GeneralGuidance): void {
+        if (this.bookingService.generalGuidanceForm === null) {
+            this.bookingService.generalGuidanceForm = generalGuidance;
+        }
     }
 
 }

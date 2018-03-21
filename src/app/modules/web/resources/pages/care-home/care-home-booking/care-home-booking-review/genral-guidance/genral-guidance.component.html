@@ -6,37 +6,57 @@
     <div [formGroup]="form" class="col-md-12 col-lg-7">
         <div class="guidance-row">
             <div class="guidance-left-tab text-center">
-                If our carer needs to call your service, who should they speak to
+                When our carer calls your service to confirm the job, who should they speak to
             </div>
-            <textarea formControlName="superior_contact" class="guidance-right-tab"></textarea>
+            <textarea
+                    formControlName="superior_contact"
+                    class="guidance-right-tab"
+                    placeholder="e.g senior carer, manager"
+            ></textarea>
         </div>
 
         <div class="guidance-row">
             <div class="guidance-left-tab text-center">
-                Where should carer report to upon arrival
+                Where should the carer report to upon arrival
             </div>
-            <textarea formControlName="report_contact" class="guidance-right-tab"></textarea>
+            <textarea
+                    formControlName="report_contact"
+                    class="guidance-right-tab"
+                    placeholder="e.g ask to speak to the senior carer or manager"
+            ></textarea>
         </div>
 
         <div class="guidance-row">
             <div class="guidance-left-tab text-center">
                 Carer guidance in event of fire alarm sounding:
             </div>
-            <textarea formControlName="emergency_guidance" class="guidance-right-tab"></textarea>
+            <textarea
+                    formControlName="emergency_guidance"
+                    class="guidance-right-tab"
+                    placeholder="e.g. report to fire panel at main entrance"
+            ></textarea>
         </div>
 
         <div class="guidance-row">
             <div class="guidance-left-tab text-center">
                 Notes on High risk / complexity residents / any other requests for our carers:
             </div>
-            <textarea formControlName="notes_for_carers" class="guidance-right-tab"></textarea>
+            <textarea
+                    formControlName="notes_for_carers"
+                    class="guidance-right-tab"
+                    placeholder="e.g. Room 1 has swallowing difficulties. Please take written notes during handover"
+            ></textarea>
         </div>
 
         <div class="guidance-row">
             <div class="guidance-left-tab text-center">
-                Where to park your car
+                What parking availability is there for the carer
             </div>
-            <textarea formControlName="parking" class="guidance-right-tab"></textarea>
+            <textarea
+                    formControlName="parking"
+                    class="guidance-right-tab"
+                    placeholder="Describe where and if it's free parking / how to pay"
+            ></textarea>
         </div>
 
         <div class="guidance-row">
@@ -44,12 +64,13 @@
                 Upload a floorplan of your care home
             </div>
             <div class="guidance-right-tab text-center">
-                <span *ngIf="form.get('floor_plan').value !== ''" class="file-link"><a [href]="" target="_blank">Floor plan</a></span>
+                <span *ngIf="form.get('floor_plan').value !== ''" class="file-link"><a class="gj-cursor-pointer" [href]="getFloorPlan()" target="_blank">Floor plan</a></span>
                 <span *ngIf="form.get('floor_plan').value === ''" class="file-link">No floor plan updated so far</span>
                 <input type="file"
                        id="file"
                        class="form-control floor-plan"
                        (change)="handleFileInput($event.target.files)">
+                <span class="red">{{ floorPlanError }}</span>
             </div>
         </div>
     </div>

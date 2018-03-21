@@ -15,7 +15,7 @@
                     <th>Start Date</th>
                     <th>From</th>
                     <th>Till</th>
-                    <th>Projected income for you</th>
+                    <th>Projected income</th>
                     <th>Care home</th>
                     <th>Role</th>
                     <th>Address</th>
@@ -84,7 +84,7 @@
             </tbody>
         </table>
         <br>
-        <div class="text-center">
+        <div *ngIf="pages.length > 1" class="text-center">
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <li
@@ -111,7 +111,7 @@
                 <th>Start Date</th>
                 <th>From</th>
                 <th>Till</th>
-                <th>Projected income for you</th>
+                <th>Projected income</th>
                 <th>Care home</th>
                 <th>Role</th>
                 <th>Address</th>
@@ -151,7 +151,7 @@
             </tbody>
         </table>
         <br>
-        <div class="text-center">
+        <div *ngIf="pagesWithoutCriteria.length > 1" class="text-center">
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <li

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {CareHomeBookingService} from '../../../../../../services/care-home-booking.service';
-import {GeneralGuidance} from '../../../../../../models/care-home-booking/general-guidance';
+import {AuthService} from '../../../../../../services/auth.service';
 
 @Component({
     selector: 'app-general-guidance',
@@ -10,8 +10,19 @@ import {GeneralGuidance} from '../../../../../../models/care-home-booking/genera
 })
 export class GeneralGuidanceComponent implements OnInit {
     form: FormGroup;
+    floorPlanError: string;
 
-    constructor(public bookingService: CareHomeBookingService) {
+    private validMimeTypes = [
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'application/pdf',
+        'image/png',
+        'image/jpg',
+        'image/jpeg'
+    ];
+
+    constructor(public bookingService: CareHomeBookingService,
+                private authService: AuthService) {
     }
 
     ngOnInit() {
@@ -21,7 +32,17 @@ export class GeneralGuidanceComponent implements OnInit {
     }
 
     handleFileInput(files: FileList) {
-        this.bookingService.florPlanFile = files.item(0);
+        const file = files.item(0);
+        if (this.validMimeTypes.indexOf(file.type) !== -1) {
+            this.floorPlanError = null;
+            this.bookingService.florPlanFile = file;
+        } else {
+            this.floorPlanError = 'Invalid file type';
+        }
+    }
+
+    getFloorPlan(): string {
+        return `${this.bookingService.generalGuidance.floor_plan}?access-token=${this.authService.getAccessToken().token}`;
     }
 
     private createGuidanceForm(): void {
@@ -36,8 +57,7 @@ export class GeneralGuidanceComponent implements OnInit {
     }
 
     private setUpForm(): void {
-        console.log('Setting form', this.bookingService.generalGuidance);
-        this.form.setValue(this.bookingService.generalGuidance);
+        this.form.setValue(this.bookingService.generalGuidanceForm);
     }
 
     private listenToFormChanges(): void {

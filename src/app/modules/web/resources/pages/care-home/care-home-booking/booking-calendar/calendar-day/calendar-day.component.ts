@@ -17,7 +17,7 @@ export class CalendarDayComponent implements OnInit, OnChanges, OnDestroy {
     @Input() direction: string;
     @Input() index: number;
 
-    validDay: boolean;
+    pastDay: boolean;
     allJobs: { start: Date, end: Date, preBooked: boolean }[] = [];
     preBookedJobs: PreBookedJob[] = [];
 
@@ -68,10 +68,11 @@ export class CalendarDayComponent implements OnInit, OnChanges, OnDestroy {
 
     validateDay(): boolean {
         const today = new Date();
+        today.setHours(0, 0, 0, 0);
         if (isUndefined(this.date)) {
             return false;
         }
-        return this.validDay = today.getTime() > this.date.getTime();
+        return this.pastDay = today.getTime() > this.date.getTime();
     }
 
     private getBookedJob(): void {

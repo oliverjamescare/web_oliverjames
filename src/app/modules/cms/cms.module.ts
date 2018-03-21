@@ -17,6 +17,7 @@ import { CmsComponent } from './cms.component';
 import { LoginComponent } from './resources/pages/login/login.component';
 import { DashboardComponent } from './resources/pages/dashboard/dashboard.component';
 import { HomeComponent } from './resources/pages/home/home.component';
+import { CarersComponent } from './resources/pages/carers/carers.component';
 
 @NgModule({
     imports: [
@@ -29,7 +30,8 @@ import { HomeComponent } from './resources/pages/home/home.component';
         CmsComponent,
         LoginComponent,
         DashboardComponent,
-        HomeComponent
+        HomeComponent,
+        CarersComponent
     ],
     providers: [
         ApiService,

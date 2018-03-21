@@ -3,6 +3,7 @@ import {CarerJobService} from '../../../../../services/carer-job.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Job} from '../../../../../models/care-home-booking/job';
 import {NotificationsService} from 'angular2-notifications';
+import {isUndefined} from 'util';
 
 @Component({
     selector: 'app-job-details',
@@ -39,6 +40,9 @@ export class JobDetailsComponent implements OnInit {
                 },
                 error => {
                     console.log('Accept job error response', error);
+                    if (!isUndefined(error.error.errors[0])) {
+                        this.notificationService.warn( error.error.errors[0].message);
+                    }
                 }
             );
     }

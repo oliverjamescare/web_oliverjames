@@ -27,7 +27,7 @@
 <div class="row">
     <div class="col-sm-12 col-md-12 col-lg-9">
         <p *ngIf="currentWeek === 0">Set your availability for all weeks</p>
-        <p *ngIf="currentWeek !== 0">Set your availability for week commencing {{ weeks[currentWeek] | date }}</p>
+        <p *ngIf="currentWeek !== 0">Set your availability for week commencing {{ weeks[currentWeek - 1] | date }}</p>
         <table class="availability-table text-center">
             <thead>
             <tr>

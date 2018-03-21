@@ -1,9 +1,15 @@
 <div class="wrapper-container">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm">
+                <div *ngIf="activatedModule == 'slim'" class="text-left">
+                    <img src="./assets/images/oliver-james-slim-logo.png" class="img-fluid logo-picture" alt="oliver-james-slim-logo">
+                </div>
+                <div *ngIf="activatedModule != 'slim'"class="text-right">
+                    <img src="./assets/images/landing-lead-picture.png" class="img-fluid lead-picture" alt="oliver-james-landing-picture">
+                </div>
             </div>
-            <div class="col-sm-8">
+            <div class="col-sm">
                 <nav class="navbar navbar-expand-lg navbar-light right">
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main_menu">
                         <span class="navbar-toggler-icon"></span>
@@ -13,20 +19,17 @@
                         <ul class="nav navbar-nav">
                             <ng-template [ngIf]="loggedUser && loggedUser.carer">
                                 <li class="nav-item">
-                                    <a class="nav-link" routerLink="/carer-dashboard" routerLinkActive="active"
-                                       [routerLinkActiveOptions]="{ exact: true }">Home
+                                    <a class="nav-link" routerLink="/carer-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home
                                         <div class="bottom-line"></div>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" [routerLink]="['','carer-dashboard','my-profile']"
-                                       routerLinkActive="active">My profile
+                                    <a class="nav-link" [routerLink]="['','carer-dashboard','my-profile']" routerLinkActive="active">My profile
                                         <div class="bottom-line"></div>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" [routerLink]="['','carer-dashboard','contact']"
-                                       routerLinkActive="active">Contact us
+                                    <a class="nav-link" [routerLink]="['','carer-dashboard','contact']" routerLinkActive="active">Contact us
                                         <div class="bottom-line"></div>
                                     </a>
                                 </li>
@@ -34,20 +37,17 @@
 
                             <ng-template [ngIf]="loggedUser && loggedUser.care_home">
                                 <li class="nav-item">
-                                    <a class="nav-link" routerLink="/care-home-dashboard" routerLinkActive="active"
-                                       [routerLinkActiveOptions]="{ exact: true }">Home
+                                    <a class="nav-link" routerLink="/care-home-dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home
                                         <div class="bottom-line"></div>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" [routerLink]="['','care-home-dashboard','my-profile']"
-                                       routerLinkActive="active">My profile
+                                    <a class="nav-link" [routerLink]="['','care-home-dashboard','my-profile']" routerLinkActive="active">My profile
                                         <div class="bottom-line"></div>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" [routerLink]="['','care-home-dashboard','contact']"
-                                       routerLinkActive="active">Contact us
+                                    <a class="nav-link" [routerLink]="['','care-home-dashboard','contact']" routerLinkActive="active">Contact us
                                         <div class="bottom-line"></div>
                                     </a>
                                 </li>
@@ -55,8 +55,7 @@
 
                             <ng-template [ngIf]="!loggedUser">
                                 <li class="nav-item">
-                                    <a class="nav-link" routerLink="/" routerLinkActive="active"
-                                       [routerLinkActiveOptions]="{ exact: true }">Home
+                                    <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home
                                         <div class="bottom-line"></div>
                                     </a>
                                 </li>
@@ -66,8 +65,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" routerLink="/carer" routerLinkActive="active">Carer Login /
-                                        Register
+                                    <a class="nav-link" routerLink="/carer" routerLinkActive="active">Carer Login / Register
                                         <div class="bottom-line"></div>
                                     </a>
                                 </li>
@@ -80,32 +78,16 @@
                         </ul>
                     </div>
                 </nav>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-6">
-                <div *ngIf="activatedModule == 'slim'" class="text-left">
-                    <img src="./assets/images/oliver-james-slim-logo.png" class="img-fluid logo-picture"
-                         alt="oliver-james-slim-logo">
-                </div>
-                <div *ngIf="activatedModule != 'slim'" class="text-right">
-                    <img src="./assets/images/landing-lead-picture.png" class="img-fluid lead-picture"
-                         alt="oliver-james-landing-picture">
-                </div>
-            </div>
-            <div class="col-sm-6">
+
                 <div [ngClass]="{'d-none': activatedModule == 'slim'}" class="static-content-container text-center">
-                    <img src="./assets/images/oliver-james-large-logo.png" class="img-fluid large-logo"
-                         alt="oliver-james-logo">
+                    <img src="./assets/images/oliver-james-large-logo.png" class="img-fluid large-logo" alt="oliver-james-logo">
 
                     <!-- modules -->
                     <div [ngClass]="{'d-none': activatedModule != 'careHomeRegister'}" class="care-home-module">
                         <p class="section-desctiption">Quality temporary carers at affordable prices</p>
-                        <form [formGroup]="form" (ngSubmit)="onCheckCarersNearby()">
+                        <form  [formGroup]="form" (ngSubmit)="onCheckCarersNearby()">
                             <div class="form-group">
-                                <input type="text" placeholder="Enter your postcode" class="form-control"
-                                       name="postal_code" formControlName="postal_code"
-                                       [ngClass]="{'is-invalid': !form.valid && form.get('postal_code').touched, 'is-valid': form.valid && form.get('postal_code').touched }">
+                                <input type="text" placeholder="Enter your postcode" class="form-control" name="postal_code" formControlName="postal_code" [ngClass]="{'is-invalid': !form.valid && form.get('postal_code').touched, 'is-valid': form.valid && form.get('postal_code').touched }">
                                 <input type="text" name="company" formControlName="company" class="d-none">
                                 <input type="text" name="line_one" formControlName="address_line_1" class="d-none">
                                 <input type="text" name="line_two" formControlName="address_line_2" class="d-none">
@@ -117,37 +99,28 @@
                     </div>
 
                     <div *ngIf="activatedModule == 'careHomeAddToWaitingList'" class="care-home-module">
-                        <p class="section-desctiption error">Sorry, we aren’t yet covering your area. Please enter your
-                            details below so you don’t miss out when we come to your area</p>
-                        <form [formGroup]="waitingForm" (ngSubmit)="onAddToWaitingList()">
+                        <p class="section-desctiption error">Sorry, we aren’t yet covering your area. Please enter your details below so you don’t miss out when we come to your area</p>
+                        <form  [formGroup]="waitingForm" (ngSubmit)="onAddToWaitingList()">
                             <div class="row">
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <input type="text" placeholder="Your name" class="form-control"
-                                               formControlName="name"
-                                               [ngClass]="formUtils.handleValidationStateClass(waitingForm, 'name')">
+                                        <input type="text" placeholder="Your name" class="form-control" formControlName="name" [ngClass]="formUtils.handleValidationStateClass(waitingForm, 'name')">
                                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(waitingForm, 'name', waitingFormMessages) }} </span>
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <input type="email" placeholder="E-mail" class="form-control"
-                                               formControlName="email"
-                                               [ngClass]="formUtils.handleValidationStateClass(waitingForm, 'email')">
+                                        <input type="email" placeholder="E-mail" class="form-control" formControlName="email" [ngClass]="formUtils.handleValidationStateClass(waitingForm, 'email')">
                                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(waitingForm, 'email', waitingFormMessages) }} </span>
                                     </div>
                                 </div>
                                 <div class="col-4">
                                     <div class="form-group">
-                                        <input type="text" placeholder="Enter your postcode" class="form-control"
-                                               name="postal_code" formControlName="postal_code"
-                                               [ngClass]="formUtils.handleValidationStateClass(waitingForm, 'postal_code')">
+                                        <input type="text" placeholder="Enter your postcode" class="form-control" name="postal_code" formControlName="postal_code" [ngClass]="formUtils.handleValidationStateClass(waitingForm, 'postal_code')">
                                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(waitingForm, 'postal_code', waitingFormMessages) }} </span>
                                         <input type="text" name="company" formControlName="company" class="d-none">
-                                        <input type="text" name="line_one" formControlName="address_line_1"
-                                               class="d-none">
-                                        <input type="text" name="line_two" formControlName="address_line_2"
-                                               class="d-none">
+                                        <input type="text" name="line_one" formControlName="address_line_1" class="d-none">
+                                        <input type="text" name="line_two" formControlName="address_line_2" class="d-none">
                                         <input type="text" name="city" formControlName="city" class="d-none">
                                     </div>
                                 </div>
@@ -159,8 +132,7 @@
                     </div>
 
                     <div *ngIf="activatedModule == 'carer'" class="carer-module">
-                        <p class="section-desctiption">Get recognised for your hard work and take control of your
-                            career</p>
+                        <p class="section-desctiption">Get recognised for your hard work and take control of your career</p>
                         <div class="carer-buttons">
                             <button class="btn btn-success" (click)="openCarerLogin()">Login</button>
                             <a class="btn btn-success" routerLink="/carer/register/terms">Register</a>

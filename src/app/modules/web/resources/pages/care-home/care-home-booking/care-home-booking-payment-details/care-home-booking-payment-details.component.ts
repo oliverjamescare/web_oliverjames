@@ -26,6 +26,7 @@ export class CareHomeBookingPaymentDetailsComponent implements OnInit {
 
     apiError: string;
     formError: string;
+    buttonLoading = false;
 
     constructor(private fb: FormBuilder,
                 private stripeService: StripeService,
@@ -66,6 +67,7 @@ export class CareHomeBookingPaymentDetailsComponent implements OnInit {
     }
 
     onCardDetailsSave() {
+        this.buttonLoading = true;
         if (!this.stripeTest.valid) {
             this.formError = 'Name is required';
         }
@@ -82,6 +84,7 @@ export class CareHomeBookingPaymentDetailsComponent implements OnInit {
                     // Error creating the token
                     console.log(result.error.message);
                     this.apiError = result.error.message;
+                    this.buttonLoading = false;
                 }
             });
     }
@@ -90,11 +93,13 @@ export class CareHomeBookingPaymentDetailsComponent implements OnInit {
         this.apiService.updateCardDetails(token)
             .subscribe(
                 response => {
+                    this.buttonLoading = false;
                     console.log('update card details success response', response);
                     this.notificationService.success('Card details saved');
                     this.router.navigate(['/care-home-booking', 'review']);
                 },
                 error => {
+                    this.buttonLoading = false;
                     console.log('update card details error response', error);
                     this.notificationService.warn('Enable to store card data to api', 'Submit bookings without adding card');
                     this.bookingService.checked = true;

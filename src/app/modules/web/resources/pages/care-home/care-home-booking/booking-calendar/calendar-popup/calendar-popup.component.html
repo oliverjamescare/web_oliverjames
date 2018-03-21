@@ -21,7 +21,7 @@
             <div class="inline-input padding-left5">
                 <label class="small-label">Till</label>
                 <select formControlName="till" class="form-control">
-                    <option *ngFor="let hour of timeTillArr" [value]="hour">{{ hour | hourPipe }}</option>
+                    <option *ngFor="let hour of timeTillArr" [selected]="false" [value]="hour">{{ hour | hourPipe }}</option>
                 </select>
             </div>
             <div class="inline-input padding-right5">
@@ -36,6 +36,6 @@
                 <input formControlName="number" class="form-control" type="number" min="1" max="5">
             </div>
         </div>
-        <button (click)="onAddBooking(); $event.stopPropagation()" type="button" class="btn-success btn-popup">Book one-off</button>
+        <button (click)="onAddBooking(); $event.stopPropagation()" type="button" class="btn-success btn-popup">Add job</button>
     </div>
 </div>

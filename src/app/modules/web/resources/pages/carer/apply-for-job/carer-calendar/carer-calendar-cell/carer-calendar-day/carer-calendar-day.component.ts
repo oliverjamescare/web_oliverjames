@@ -70,6 +70,7 @@ export class CarerCalendarDayComponent implements OnInit, OnChanges, OnDestroy {
 
     private validateDay(): boolean {
         const today = new Date();
+        today.setHours(0, 0, 0, 0);
         if (isUndefined(this.date)) {
             return false;
         }

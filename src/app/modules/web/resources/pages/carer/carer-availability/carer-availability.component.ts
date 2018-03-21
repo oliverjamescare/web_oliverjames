@@ -76,7 +76,6 @@ export class CarerAvailabilityComponent implements OnInit, OnDestroy {
         this.getCalendarSub = this.carerService.getAvailabilityCalendar(this.currentWeek)
             .subscribe(
                 (response: Availability) => {
-                    console.log('Get availability calendar success response', response);
                     this.availability = response;
                     this.carerService.availability = response;
                 },

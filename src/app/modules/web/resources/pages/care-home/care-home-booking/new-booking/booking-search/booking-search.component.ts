@@ -28,7 +28,7 @@ export class BookingSearchComponent implements OnInit {
 
     onSelect(carer: Carer): void {
         this.searchResult = [];
-        this.bookingService.priorityCarers.push(carer);
+        this.addPriorityCarer(carer);
         this.searchTerm.setValue('');
         console.log('Selected carers', this.bookingService.priorityCarers);
     }
@@ -61,6 +61,16 @@ export class BookingSearchComponent implements OnInit {
                     this.searchResult = [];
                 }
             });
+    }
+
+    private addPriorityCarer(carer: Carer): void {
+        let repeated = false;
+        this.bookingService.priorityCarers.forEach((listedCarer) => {
+            if (listedCarer._id === carer._id) {
+                repeated = true;
+            }
+        });
+        !repeated ? this.bookingService.priorityCarers.push(carer) : this.notificationService.warn('This carer was already added');
     }
 
 }

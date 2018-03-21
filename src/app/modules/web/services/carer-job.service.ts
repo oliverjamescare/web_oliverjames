@@ -76,6 +76,7 @@ export class CarerJobService {
         return this.apiService.getJobDetails(jobId)
             .map(
                 response => {
+                    console.log('Job details from api', response);
                     this.consideredJob.next(Job.getInstance(response));
                     return Job.getInstance(response);
                 }
@@ -108,7 +109,8 @@ export class CarerJobService {
         return new HttpParams()
             .set('distance', par.distance)
             .set('page', par.page)
-            .set('sort', par.sort);
+            .set('sort', par.sort)
+            .set('dont_meet_criteria', par.dont_meet_criteria);
     }
 
 }

@@ -7,7 +7,7 @@
         <ul class="books-list">
             <li
                     *ngFor="let job of allJobs; let i = index"
-            >{{ i + 1 }}. {{ job.start | hourPipe }}-{{ job.end | hourPipe }} <span *ngIf="i < 5"></span></li>
+            >{{ i + 1 }}. {{ job.start | hourPipe }}-{{ job.end | hourPipe }} </li>
         </ul>
         <br>
         <button (click)="onOpenAddPopup(); $event.stopPropagation()" type="button" class="btn-success btn-popup">Book another job</button>

@@ -8,6 +8,7 @@ import { CmsComponent } from './cms.component';
 import { LoginComponent } from './resources/pages/login/login.component';
 import { DashboardComponent } from './resources/pages/dashboard/dashboard.component';
 import { HomeComponent } from './resources/pages/home/home.component';
+import {CarersComponent} from './resources/pages/carers/carers.component';
 
 const routes: Routes = [
     {
@@ -19,7 +20,8 @@ const routes: Routes = [
                 component: DashboardComponent,
                 canActivate: [ AuthGuardService ],
                 children: [
-                    { path: '', component: HomeComponent }
+                    { path: '', component: HomeComponent },
+                    { path: 'carers', component: CarersComponent }
                 ]
             },
         ]

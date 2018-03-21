@@ -19,6 +19,7 @@ export class PreBookedJob {
         preBookedJob.role = job.role;
         preBookedJob.carersToContact = job.carersToContact;
         preBookedJob.priority_carers = job.priority_carers;
+        preBookedJob.notes = job.notes;
         return preBookedJob;
     }
 

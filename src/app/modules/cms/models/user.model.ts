@@ -1,4 +1,4 @@
-import { Model } from "../../../models/model.model";
+import { Model } from '../../../models/model.model';
 
 export class User extends Model
 {
@@ -11,6 +11,6 @@ export class User extends Model
     constructor(object: Object = {})
     {
         super();
-        this.assignProperties(this, object, {"id": "_id"});
+        this.assignProperties(this, object, {'id': '_id'});
     }
 }

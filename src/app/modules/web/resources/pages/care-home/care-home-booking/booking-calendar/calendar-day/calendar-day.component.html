@@ -1,6 +1,6 @@
 <div
         (click)="onOpenPopup()"
-        [ngClass]="{'past-day': validDay}"
+        [ngClass]="{'past-day': pastDay}"
         class="calendar-day"
 >
     <app-day-jobs-list
@@ -11,7 +11,7 @@
     ></app-day-jobs-list>
     <span class="day-number">{{ getDay(empty, date) }}</span>
     <app-calendar-popup
-            *ngIf="isAddPopupOpen() && getDay(empty, date)"
+            *ngIf="isAddPopupOpen() && getDay(empty, date) && !pastDay"
             [date]="date"
             [index]="index"
             [direction]="direction"
