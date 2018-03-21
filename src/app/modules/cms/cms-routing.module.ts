@@ -1,9 +1,9 @@
-//core
+// core
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuardService } from './guards/auth-guard.service';
 
-//components
+// components
 import { CmsComponent } from './cms.component';
 import { LoginComponent } from './resources/pages/login/login.component';
 import { DashboardComponent } from './resources/pages/dashboard/dashboard.component';
