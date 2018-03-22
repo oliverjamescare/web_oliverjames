@@ -143,8 +143,15 @@
 
 .carer-details-table {
   width: 100%;
-
-  th {
-
+  td, th {
+    padding: 5px;
+    border-bottom: 1px solid $ultra-light-grey;
+    border-right: 1px solid $ultra-light-grey;
+  }
+  .green-cell {
+    background-color: $green-color;
+  }
+  .white-color {
+    color: $white-color;
   }
 }

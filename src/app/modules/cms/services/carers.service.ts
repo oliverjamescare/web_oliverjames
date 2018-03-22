@@ -16,4 +16,8 @@ export class CarersService {
     getCarerDetails(id: string): Observable<CarerDetailsResponse> {
         return this.apiService.getCarerDetails(id);
     }
+
+    updateCarerDetails(id: string, details: CarerDetailsResponse): Observable<any> {
+        return this.apiService.updateCarerDetails(id, details);
+    }
 }

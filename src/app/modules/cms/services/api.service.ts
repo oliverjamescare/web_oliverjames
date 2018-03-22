@@ -4,6 +4,7 @@ import {environment} from '../../../../environments/environment';
 import {CarersListResponse} from '../models/response/carers-list-response';
 import {Observable} from 'rxjs/Observable';
 import {AuthService} from './auth.service';
+import {CarerDetailsResponse} from '../models/response/carer-details-response';
 
 @Injectable()
 export class ApiService {
@@ -33,6 +34,14 @@ export class ApiService {
     getCarerDetails(id: string): Observable<any> {
         return this.httpClient.get(
             `${this.endpoint}/carers/${id}`,
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
+    updateCarerDetails(carerId: string, carerDetails: CarerDetailsResponse): Observable<any> {
+        return this.httpClient.put(
+            `${this.endpoint}/carers/${carerId}`,
+            carerDetails,
             {headers: this.getAuthorizationHeaders()}
         );
     }

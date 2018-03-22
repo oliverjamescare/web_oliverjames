@@ -21,6 +21,8 @@ import {HomeComponent} from './resources/pages/home/home.component';
 import {CarersComponent} from './resources/pages/carers/carers.component';
 import { CarersListComponent } from './resources/pages/carers/carers-list/carers-list.component';
 import { CarerDetailsComponent } from './resources/pages/carers/carer-details/carer-details.component';
+import {DatesService} from './services/dates.service';
+import {TimestampPipe} from './pipes/timestamp.pipe';
 
 @NgModule({
     imports: [
@@ -36,14 +38,16 @@ import { CarerDetailsComponent } from './resources/pages/carers/carer-details/ca
         HomeComponent,
         CarersComponent,
         CarersListComponent,
-        CarerDetailsComponent
+        CarerDetailsComponent,
+        TimestampPipe
     ],
     providers: [
         ApiService,
         AuthService,
         UserService,
         AuthGuardService,
-        CarersService
+        CarersService,
+        DatesService
     ]
 
 })

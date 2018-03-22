@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-sm">
-        <table *ngIf="carerDetails" class="carer-details-table">
+        <table *ngIf="carerDetails" [formGroup]="form" class="carer-details-table">
             <tr>
                 <th>Oliver James ID</th>
                 <td>{{ carerDetails._id }}</td>
@@ -10,8 +10,12 @@
                 <td>{{ carerDetails.carer.first_name }} {{ carerDetails.carer.surname }}</td>
             </tr>
             <tr>
-                <th>Training record</th>
-                <td></td>
+                <th>Carer Dob</th>
+                <td>{{ carerDetails.carer.date_of_birth }}</td>
+            </tr>
+            <tr>
+                <th class="green-cell white-color">Training record</th>
+                <td class="green-cell"></td>
             </tr>
             <tr>
                 <th>Qualifications</th>
@@ -25,43 +29,47 @@
             </tr>
             <tr>
                 <th>Safeguarding</th>
-                <td>{{ carerDetails.carer.training_record.safeguarding }}</td>
+                <td>{{ carerDetails.carer.training_record.safeguarding | timestamp }}</td>
             </tr>
             <tr>
                 <th>Manual handling - people</th>
-                <td>{{ carerDetails.carer.training_record.manual_handling_people }}</td>
+                <td>{{ carerDetails.carer.training_record.manual_handling_people | timestamp }}</td>
             </tr>
             <tr>
                 <th>First Aid & basic life support</th>
-                <td>{{ carerDetails.carer.training_record.first_aid_and_basic_life_support }}</td>
+                <td>{{ carerDetails.carer.training_record.first_aid_and_basic_life_support | timestamp }}</td>
             </tr>
             <tr>
                 <th>Infection control</th>
-                <td>{{ carerDetails.carer.training_record.infection_control }}</td>
+                <td>{{ carerDetails.carer.training_record.infection_control | timestamp }}</td>
             </tr>
             <tr>
                 <th>H&S</th>
-                <td>{{ carerDetails.carer.training_record.fire_safety }}</td>
+                <td>{{ carerDetails.carer.training_record.h_and_s | timestamp }}</td>
+            </tr>
+            <tr>
+                <th>Fire safety</th>
+                <td>{{ carerDetails.carer.training_record.fire_safety | timestamp }}</td>
             </tr>
             <tr>
                 <th>Dementia</th>
-                <td>{{ carerDetails.carer.training_record.dementia }}</td>
+                <td>{{ carerDetails.carer.training_record.dementia | timestamp }}</td>
             </tr>
             <tr>
                 <th>Medication Managment & administration (not awarness)</th>
-                <td>{{ carerDetails.carer.training_record.medication_management }}</td>
+                <td>{{ carerDetails.carer.training_record.medication_management | timestamp }}</td>
             </tr>
             <tr>
                 <th>Other</th>
-                <td>Input</td>
+                <td><input formControlName="training_other" type="text" class="form-control"></td>
             </tr>
             <tr>
                 <th>Photographic evidence</th>
-                <td>{{ carerDetails.carer.training_record.files.length }} files uploaded <span class="green">Upload / edit</span></td>
+                <td>{{ carerDetails.carer.training_record.files.length }} files uploaded <span class="green right gj-cursor-pointer">Upload / edit</span></td>
             </tr>
             <tr>
-                <th>Care experience</th>
-                <td></td>
+                <th class="green-cell white-color">Care experience</th>
+                <td class="green-cell"></td>
             </tr>
             <tr>
                 <th>Total care experience before starting work at Oliver James (according to CV)</th>
@@ -69,63 +77,105 @@
             </tr>
             <tr>
                 <th>CV / equivalent upload</th>
-                <td>{{ carerDetails.carer.cv_uploads.length }} files uploaded <span class="green">Upload / edit</span></td>
+                <td>{{ carerDetails.carer.cv_uploads.length }} files uploaded <span class="green right gj-cursor-pointer">Upload / edit</span></td>
             </tr>
             <tr>
-                <th>DBS</th>
-                <td></td>
+                <th class="green-cell white-color">DBS</th>
+                <td class="green-cell"></td>
             </tr>
             <tr>
                 <th>Date of DBS</th>
-                <td>{{ carerDetails.carer.dbs.dbs_date }}</td>
+                <td><input formControlName="dbs_date" type="text" class="form-control" placeholder="yyyy-mm-dd"></td>
             </tr>
             <tr>
-                <th>DBS red NUmber</th>
-                <td>{{ carerDetails.carer.dbs.ref_number }}</td>
+                <th>DBS ref Number</th>
+                <td><input formControlName="dbs_ref_number" type="text" class="form-control"></td>
             </tr>
             <tr>
                 <th>DBS status</th>
-                <td>{{ carerDetails.carer.dbs.status }}</td>
+                <td>
+                    <select formControlName="dbs_status" class="form-control">
+                        <option value="Clear">Clear</option>
+                    </select>
+                </td>
             </tr>
             <tr>
                 <th>DBS photo record</th>
-                <td>{{ carerDetails.carer.dbs.files.length }} files uploaded <span class="green">Upload / edit</span></td>
+                <td>{{ carerDetails.carer.dbs.files.length }} files uploaded <span class="green right gj-cursor-pointer">Upload / edit</span></td>
             </tr>
             <tr>
-                <th>References</th>
-                <td></td>
+                <th class="green-cell white-color">References</th>
+                <td class="green-cell white-color gj-cursor-pointer"> <span (click)="onAddReference()">Add reference</span></td>
             </tr>
-            <tr>
-                <th>Reference 1</th>
-                <td>Dropdown</td>
+            <tbody formArrayName="reference">
+            <tr *ngFor="let reference of form.get('reference').controls; let i = index" [formGroupName]="i">
+                <td><input formControlName="name" class="form-control"></td>
+                <td>
+                    <select formControlName="type" class="form-control array-control">
+                        <option value="Professional">Professional</option>
+                        <option value="Personal">Personal</option>
+                    </select>
+                    <span (click)="onRemoveReference(i)" class="trash-control"><i class="fas fa-trash gj-cursor-pointer"></i></span>
+                </td>
             </tr>
-            <tr>
-                <th>Reference 2</th>
-                <td>Dropdown</td>
-            </tr>
+            </tbody>
             <tr>
                 <th>Photo evidence</th>
-                <td>{{ carerDetails.carer.reference.files.length }} files uploaded <span class="green">Upload / edit</span></td>
+                <td>{{ carerDetails.carer.reference.files.length }} files uploaded <span class="green right gj-cursor-pointer">Upload / edit</span></td>
             </tr>
             <tr>
-                <th>Eligible job roles / wrap-up</th>
-                <td></td>
+                <th class="green-cell white-color">Eligible job roles / wrap-up</th>
+                <td class="green-cell"></td>
             </tr>
             <tr>
-                <th>Job roles</th>
+                <th>Job role 1</th>
                 <td>
-                    <span *ngFor="let role of carerDetails.carer.eligible_roles; let i = index">{{ role }}
-                        <span *ngIf="carerDetails.carer.eligible_roles.length > 1">, </span></span>
+                    <select formControlName="job_role1" class="form-control">
+                        <option value="Carer">Carer</option>
+                        <option value="Senior Carer">Senior Carer</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>Job role 2</th>
+                <td>
+                    <select formControlName="job_role2" class="form-control">
+                        <option value=""></option>
+                        <option value="Carer">Carer</option>
+                        <option value="Senior Carer">Senior Carer</option>
+                    </select>
                 </td>
             </tr>
             <tr>
                 <th>Notes</th>
-                <td>{{ carerDetails.notes }}</td>
+                <td>
+                    <textarea formControlName="notes" class="form-control" rows="10"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <th class="green-cell white-color">Account</th>
+                <td class="green-cell"></td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>
+                    <select formControlName="status" class="form-control">
+                        <option value="CREATED">Created</option>
+                        <option value="ACTIVE">Active</option>
+                        <option value="BANNED">Baned</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>Ban carer till</th>
+                <td><input formControlName="banned_until" class="form-control" placeholder="yyyy-mm-dd"></td>
             </tr>
         </table>
+        <br>
         <div class="carer-actions">
-            <button>Go back (do not save)</button>
-            <button>Confirm changes</button>
+            <button class="btn-success btn-actions btn-right">Go back (do not save)</button>
+            <button (click)="onUpdateCarerDetails()" class="btn-success btn-actions">Confirm changes</button>
         </div>
     </div>
 </div>
+<br>
