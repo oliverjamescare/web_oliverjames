@@ -4,6 +4,7 @@
 /*      (C) 2017 www.mvpdoers.com      */
 /*-------------------------------------*/
 @import "scss/variables";
+@import "scss/placeholders";
 @import "scss/modules/controls";
 @import "scss/modules/buttons";
 @import "scss/modules/datepicker";
@@ -14,6 +15,7 @@
 @import "scss/modules/data-loading";
 @import "scss/modules/cms-main";
 @import "scss/modules/pagination";
+@import "scss/modules/popup";
 @import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 @import "../node_modules/gijgo/combined/css/gijgo.min.css";
 

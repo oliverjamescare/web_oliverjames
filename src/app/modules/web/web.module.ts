@@ -113,7 +113,6 @@ import {GoogleService} from './services/google.service';
         RegisterCarerSummaryComponent,
         RegisterCarerComponent,
         StepperComponent,
-        PopupComponent,
         LoginComponent,
         ForgotPasswordComponent,
         RegisterCareHomeComponent,
@@ -163,7 +162,8 @@ import {GoogleService} from './services/google.service';
         OtherJobsComponent,
         CardDetailsComponent,
         UpcomingJobsTabComponent,
-        CarerJobListComponent
+        CarerJobListComponent,
+        PopupComponent
     ],
     imports: [
         CommonModule,
@@ -173,7 +173,6 @@ import {GoogleService} from './services/google.service';
         NgbModule.forRoot(),
         MatInputModule,
         ClickOutsideModule,
-        SimpleNotificationsModule.forRoot(),
         NgxStripeModule.forRoot('pk_test_nNzWK5F1sMRLXASCYDBtV7eL'),
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyBWoEhh2-9yp52XVTtfTaLIPcxcmTkt_Ms',

@@ -1,0 +1,40 @@
+.modal-content
+{
+  border-radius: 0;
+  border: none;
+}
+.modal-header
+{
+  background: $green-color;
+  color: $white-color;
+  border-radius: 0;
+  text-align: center;
+  padding: 12px 25px;
+  .modal-title
+  {
+    text-align: center;
+    display: block;
+    width: 100%;
+    font-size: 18px;
+    margin-top: 2px;
+  }
+  .close
+  {
+    font-size: 30px;
+    color: $white-color;
+    opacity: 1;
+    @extend %main-transition;
+    &:hover
+    {
+      opacity: 0.9;
+    }
+  }
+}
+.modal-body
+{
+  padding: 1rem 35px 35px;
+}
+.logo-picture
+{
+  padding: 25px 30px 35px;
+}

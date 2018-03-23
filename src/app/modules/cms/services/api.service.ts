@@ -46,6 +46,21 @@ export class ApiService {
         );
     }
 
+    uploadCarerResources(carerId: string, resourceName: string, files: FormData): Observable<any> {
+        return this.httpClient.post(
+            `${this.endpoint}/carers/${carerId}/${resourceName}/upload`,
+            files,
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
+    deleteResourceFile(carerId: string, resourceName: string, fileUrl: string): Observable<any> {
+        return this.httpClient.delete(
+            `${this.endpoint}/carers/${carerId}/${resourceName}/upload`,
+            {headers: this.getAuthorizationHeaders(), params: new HttpParams().set('file', fileUrl)}
+        );
+    }
+
     private getAuthorizationHeaders(): HttpHeaders {
         return new HttpHeaders({
             'X-access-token': this.authService.getAccessToken()

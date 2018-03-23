@@ -11,20 +11,22 @@ import { CmsModule } from './modules/cms/cms.module';
 
 //components
 import { AppComponent } from './app.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {SimpleNotificationsModule} from 'angular2-notifications';
+import {SharedModule} from './modules/shared/shared.module';
 
 @NgModule({
     declarations: [
         AppComponent
     ],
     imports: [
-        BrowserAnimationsModule,
+        SharedModule,
         AppRoutingModule,
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
         WebModule,
-        CmsModule
+        CmsModule,
+        SimpleNotificationsModule.forRoot(),
     ],
     providers: [],
     bootstrap: [ AppComponent ]

@@ -1,0 +1,16 @@
+.books-list {
+  list-style-type: none;
+  padding: 0;
+  li {
+    border-bottom: 1px solid #d3d3d3;
+    height: 35px;
+    padding: 6px;
+    a {
+      color: black;
+    }
+  }
+}
+
+.inp {
+  margin-top: 3px;
+}

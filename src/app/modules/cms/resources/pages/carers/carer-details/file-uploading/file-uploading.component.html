@@ -1,0 +1,28 @@
+<app-cms-popup [title]="title" [id]="type + '_id'" [showLogo]="false">
+    <div class="row">
+        <div class="col-12">
+            <ul class="books-list">
+                <li *ngFor="let file of files; let i = index">
+                    <a [href]="file + getTokenParameter()" target="_blank">File {{ i + 1 }}</a>
+                    <span (click)="onOpenPopup(file, i)" class="right"><i class="fas fa-trash gj-cursor-pointer"></i></span>
+                </li>
+            </ul>
+            <input type="file"
+                   id="file"
+                   multiple
+                   class="form-control floor-plan"
+                   (change)="handleFileInput($event.target.files)">
+            <span *ngFor="let error of uploadErros" class="input-error">{{ error }}</span>
+            <br>
+                <button (click)="onFilesUpload()" class="btn-success">
+                    Upload files <span *ngIf="buttonLoading"><i class="fa fa-spinner fa-spin"></i></span></button>
+        </div>
+    </div>
+</app-cms-popup>
+
+<app-delete-file
+        *ngIf="showConfirmationPopup"
+        (deleteFile)="onDeleteFile()"
+        (closed)="showConfirmationPopup = false"
+>
+</app-delete-file>

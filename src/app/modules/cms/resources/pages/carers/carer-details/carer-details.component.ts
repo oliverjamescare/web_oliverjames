@@ -18,6 +18,10 @@ export class CarerDetailsComponent implements OnInit {
     form: FormGroup;
 
     buttonLoading = false;
+    showFileUploader = false;
+    resourceName: string;
+    uploadTitle: string;
+    files: string[] = [];
 
     constructor(private carersService: CarersService,
                 private route: ActivatedRoute,
@@ -67,6 +71,41 @@ export class CarerDetailsComponent implements OnInit {
         (<FormArray>this.form.get('reference')).removeAt(index);
     }
 
+    onPopupOpen(resourceName: string): void {
+        this.resourceName = resourceName;
+        this.showFileUploader = true;
+        this.setUpFilesProperty();
+    }
+
+    onReload(): void {
+        this.getCarerDetails();
+    }
+
+    setUpFilesProperty(): void {
+        switch (this.resourceName) {
+            case 'training_record': {
+                this.files = this.carerDetails.carer.training_record.files;
+                this.uploadTitle = 'Photographic evidence';
+                break;
+            }
+            case 'cv': {
+                this.files = this.carerDetails.carer.cv_uploads;
+                this.uploadTitle = 'CV uploads';
+                break;
+            }
+            case 'dbs': {
+                this.files = this.carerDetails.carer.dbs.files;
+                this.uploadTitle = 'Dbs photo record';
+                break;
+            }
+            case 'reference': {
+                this.files = this.carerDetails.carer.reference.files;
+                this.uploadTitle = 'Photo ewidence';
+                break;
+            }
+        }
+    }
+
     private getCarerDetails(): void {
         this.carersService.getCarerDetails(this.carerId)
             .subscribe(
@@ -80,7 +119,7 @@ export class CarerDetailsComponent implements OnInit {
     private handleDetailsResponse(response: CarerDetailsResponse): void {
         console.log('Get carer details response', response);
         this.carerDetails = response;
-        this.carerDetails.carer.training_record.fire_safety = 1440979200000;
+        this.setUpFilesProperty();
         this.createForm();
         this.setUpForm();
     }

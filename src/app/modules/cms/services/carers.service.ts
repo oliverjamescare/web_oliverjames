@@ -20,4 +20,13 @@ export class CarersService {
     updateCarerDetails(id: string, details: CarerDetailsResponse): Observable<any> {
         return this.apiService.updateCarerDetails(id, details);
     }
+
+    uploadCarerResources(carerId: string, resourceName: string, files: FormData): Observable<any> {
+        return this.apiService.uploadCarerResources(carerId, resourceName, files);
+    }
+
+    deleteResourceFile(carerId: string, resourceName: string, fileUrl: string): Observable<any> {
+        return this.apiService.deleteResourceFile(carerId, resourceName, fileUrl);
+    }
+
 }

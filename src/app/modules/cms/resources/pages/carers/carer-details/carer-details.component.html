@@ -65,7 +65,8 @@
             </tr>
             <tr>
                 <th>Photographic evidence</th>
-                <td>{{ carerDetails.carer.training_record.files.length }} files uploaded <span class="green right gj-cursor-pointer">Upload / edit</span></td>
+                <td>{{ carerDetails.carer.training_record.files.length }} files uploaded
+                    <span (click)="onPopupOpen('training_record')" class="green right gj-cursor-pointer">Upload / edit</span></td>
             </tr>
             <tr>
                 <th class="green-cell white-color">Care experience</th>
@@ -77,7 +78,8 @@
             </tr>
             <tr>
                 <th>CV / equivalent upload</th>
-                <td>{{ carerDetails.carer.cv_uploads.length }} files uploaded <span class="green right gj-cursor-pointer">Upload / edit</span></td>
+                <td>{{ carerDetails.carer.cv_uploads.length }} files uploaded
+                    <span (click)="onPopupOpen('cv')" class="green right gj-cursor-pointer">Upload / edit</span></td>
             </tr>
             <tr>
                 <th class="green-cell white-color">DBS</th>
@@ -101,7 +103,8 @@
             </tr>
             <tr>
                 <th>DBS photo record</th>
-                <td>{{ carerDetails.carer.dbs.files.length }} files uploaded <span class="green right gj-cursor-pointer">Upload / edit</span></td>
+                <td>{{ carerDetails.carer.dbs.files.length }} files uploaded
+                    <span (click)="onPopupOpen('dbs')" class="green right gj-cursor-pointer">Upload / edit</span></td>
             </tr>
             <tr>
                 <th class="green-cell white-color">References</th>
@@ -121,7 +124,8 @@
             </tbody>
             <tr>
                 <th>Photo evidence</th>
-                <td>{{ carerDetails.carer.reference.files.length }} files uploaded <span class="green right gj-cursor-pointer">Upload / edit</span></td>
+                <td>{{ carerDetails.carer.reference.files.length }} files uploaded
+                    <span (click)="onPopupOpen('reference')" class="green right gj-cursor-pointer">Upload / edit</span></td>
             </tr>
             <tr>
                 <th class="green-cell white-color">Eligible job roles / wrap-up</th>
@@ -174,8 +178,20 @@
         <br>
         <div class="carer-actions">
             <button class="btn-success btn-actions btn-right">Go back (do not save)</button>
-            <button (click)="onUpdateCarerDetails()" class="btn-success btn-actions">Confirm changes</button>
+            <button (click)="onUpdateCarerDetails()" class="btn-success btn-actions">
+                Confirm changes <span *ngIf="buttonLoading"><i class="fa fa-spinner fa-spin"></i></span></button>
         </div>
     </div>
 </div>
 <br>
+
+<app-file-uploading
+        *ngIf="showFileUploader"
+        [title]="uploadTitle"
+        [resourceName]="resourceName"
+        [carerId]="carerId"
+        [files]="files"
+        (closed)="showFileUploader = false"
+        (reload)="onReload()"
+>
+</app-file-uploading>

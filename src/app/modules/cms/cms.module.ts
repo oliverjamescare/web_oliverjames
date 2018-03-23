@@ -23,13 +23,17 @@ import { CarersListComponent } from './resources/pages/carers/carers-list/carers
 import { CarerDetailsComponent } from './resources/pages/carers/carer-details/carer-details.component';
 import {DatesService} from './services/dates.service';
 import {TimestampPipe} from './pipes/timestamp.pipe';
+import {SharedModule} from '../shared/shared.module';
+import { CmsPopupComponent } from './resources/partials/cms-popup/cms-popup.component';
+import {FileUploadingComponent} from './resources/pages/carers/carer-details/file-uploading/file-uploading.component';
+import { DeleteFileComponent } from './resources/pages/carers/carer-details/file-uploading/delete-file/delete-file.component';
 
 @NgModule({
     imports: [
         CommonModule,
         CmsRoutingModule,
         ReactiveFormsModule,
-        FormsModule
+        FormsModule,
     ],
     declarations: [
         CmsComponent,
@@ -39,7 +43,10 @@ import {TimestampPipe} from './pipes/timestamp.pipe';
         CarersComponent,
         CarersListComponent,
         CarerDetailsComponent,
-        TimestampPipe
+        TimestampPipe,
+        CmsPopupComponent,
+        FileUploadingComponent,
+        DeleteFileComponent
     ],
     providers: [
         ApiService,

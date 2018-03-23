@@ -12,11 +12,6 @@ export class WebComponent implements OnInit {
     careHomeLogin = false;
     forgotPassword = false;
 
-    options = {
-        timeOut: 2500,
-        showProgressBar: false
-    };
-
     constructor(private router: Router, public loadingService: LoadingService) {
     }
 

@@ -4,4 +4,9 @@ import { Component } from '@angular/core';
     selector: 'app-root',
     templateUrl: './app.component.html'
 })
-export class AppComponent {}
+export class AppComponent {
+    options = {
+        timeOut: 2500,
+        showProgressBar: false
+    };
+}
