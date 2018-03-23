@@ -1,0 +1,323 @@
+<div class="row">
+    <div class="col-sm">
+        <h2>Add carer</h2>
+        <button routerLink="/admin/carers/list" class="btn-success right btn-nav">Back</button>
+    </div>
+</div>
+<br>
+
+<div class="row">
+    <div class="col-12">
+        <form [formGroup]="form">
+            <div class="row">
+                <div class="col-12"><h3>Carer personal details</h3></div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="Email" formControlName="email"
+                               [ngClass]="formUtils.handleValidationStateClass(form, 'email')">
+                        <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'email', messages) }} </span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Phone number"
+                               formControlName="phone_number"
+                               [ngClass]="formUtils.handleValidationStateClass(form, 'phone_number')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'phone_number', messages) }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Password" formControlName="password"
+                               [ngClass]="formUtils.handleValidationStateClass(form, 'password')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'password', messages) }} </span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Confirm password"
+                               formControlName="password_confirm"
+                               [ngClass]="formUtils.handleValidationStateClass(form, 'password_confirm')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'password_confirm', messages) }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                        <input type="text" class="form-control"
+                               placeholder="First name (as it appears on your passport)" formControlName="first_name"
+                               [ngClass]="formUtils.handleValidationStateClass(form, 'first_name')">
+                        <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'first_name', messages) }} </span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <input type="text" class="form-control"
+                               placeholder="Middle names (as it appears on your passport)" formControlName="middle_name"
+                               [ngClass]="formUtils.handleValidationStateClass(form, 'middle_name')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'middle_name', messages) }} </span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Surname (as it appears on your passport)"
+                               formControlName="surname"
+                               [ngClass]="formUtils.handleValidationStateClass(form, 'surname')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'surname', messages) }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Your postcode" id="postcode"
+                               name="postcode" formControlName="postal_code"
+                               [ngClass]="formUtils.handleValidationStateClass(form, 'postal_code')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'postal_code', messages) }} </span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Date of birth yyyy-mm-dd" id="datepicker"
+                               formControlName="date_of_birth"
+                               [ngClass]="formUtils.handleValidationStateClass(form, 'date_of_birth')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'date_of_birth', messages) }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Your name / Company name" id="company"
+                               name="company" formControlName="company"
+                               [ngClass]="formUtils.handleValidationStateClass(form, 'company')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'company', messages) }} </span>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Address line 1" id="line_one"
+                               name="line_one" formControlName="address_line_1"
+                               [ngClass]="formUtils.handleValidationStateClass(form, 'address_line_1')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'address_line_1', messages) }} </span>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Address line 2" id="line_two"
+                               name="line_two" formControlName="address_line_2"
+                               [ngClass]="formUtils.handleValidationStateClass(form, 'address_line_2')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'address_line_2', messages) }} </span>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Town / City" id="city" name="city"
+                               formControlName="city" [ngClass]="formUtils.handleValidationStateClass(form, 'city')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'city', messages) }} </span>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group">
+                        <label>Carer jobs</label>
+                        <br>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="jobRoleCarer" name="jobRoleCarer" value="Carer" formControlName="jobRoleCarer">
+                            <label class="custom-control-label" for="jobRoleCarer">Carer</label>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="jobRoleSeniorCarer" name="jobRoleSeniorCarer" value="Senior Carer" formControlName="jobRoleSeniorCarer">
+                            <label class="custom-control-label" for="jobRoleSeniorCarer">Senior Carer</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+
+            <div class="row">
+                <div class="col-6">
+                    <h3>Carer references
+                        <span (click)="onReferenceControlAdd()" class="gj-cursor-pointer"><i
+                                class="fa fa-plus"></i></span></h3>
+                </div>
+            </div>
+            <div formArrayName="references">
+                <div *ngFor="let control of form.get('references').controls; let i = index" [formGroupName]="i" class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <input formControlName="name" type="text" class="form-control" placeholder="reference">
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <select formControlName="type" class="form-control">
+                                <option value="Professional">Professional</option>
+                                <option value="Personal">Personal</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <span (click)="onRemoveReferenceControl(i)" class="big-icon gj-cursor-pointer"><i class="fa fa-trash-alt"></i></span>
+                    </div>
+                </div>
+            </div>
+            <br>
+
+            <div class="row">
+                <div class="col-4">
+                    <h3>Carer Dbs</h3>
+                    <div class="form-group">
+                        <select formControlName="dbs_status" placeholder="Status" class="form-control"
+                                [ngClass]="formUtils.handleValidationStateClass(form, 'dbs_status')">
+                            <option value="Minor issues - approved">Minor issues - approved</option>
+                        </select>
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'dbs_status', messages) }} </span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Reference number"
+                               formControlName="dbs_ref_number"
+                               [ngClass]="formUtils.handleValidationStateClass(form, 'dbs_ref_number')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'dbs_ref_number', messages) }} </span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Dbs date yyyy-mm-dd" id="dbs_date"
+                               formControlName="dbs_date"
+                               [ngClass]="formUtils.handleValidationStateClass(form, 'dbs_date')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'dbs_date', messages) }} </span>
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <h3>Carer experience</h3>
+                    <div class="form-group">
+                        <input type="number" class="form-control" placeholder="Eperience in years"
+                               formControlName="experience_years"
+                               [ngClass]="formUtils.handleValidationStateClass(form, 'experience_years')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'experience_years', messages) }} </span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="number" class="form-control" placeholder="Experience in months"
+                               formControlName="experience_months"
+                               [ngClass]="formUtils.handleValidationStateClass(form, 'experience_months')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'experience_months', messages) }} </span>
+                    </div>
+                </div>
+            </div>
+            <br>
+
+            <div class="row">
+                <div class="col-12"><h3>Training record</h3></div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Other" formControlName="other"
+                               [ngClass]="formUtils.handleValidationStateClass(form, 'other')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'other', messages) }} </span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Fire safety yyyy-mm-dd" id="fire_safety"
+                               formControlName="fire_safety"
+                               [ngClass]="formUtils.handleValidationStateClass(form, 'fire_safety')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'fire_safety', messages) }} </span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Dementia yyyy-mm-dd" id="dementia"
+                               formControlName="dementia"
+                               [ngClass]="formUtils.handleValidationStateClass(form, 'dementia')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'dementia', messages) }} </span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="H&S yyyy-mm-dd" id="h_and_s"
+                               formControlName="h_and_s"
+                               [ngClass]="formUtils.handleValidationStateClass(form, 'h_and_s')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'h_and_s', messages) }} </span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="First aid awarness yyyy-mm-dd"
+                               id="first_aid_awareness" formControlName="first_aid_awareness"
+                               [ngClass]="formUtils.handleValidationStateClass(form, 'first_aid_awareness')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'first_aid_awareness', messages) }} </span>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <input type="text" class="form-control"
+                               placeholder="First aid awarness nad basic life support yyyy-mm-dd"
+                               id="first_aid_and_basic_life_support" formControlName="first_aid_and_basic_life_support"
+                               [ngClass]="formUtils.handleValidationStateClass(form, 'first_aid_and_basic_life_support')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'first_aid_and_basic_life_support', messages) }} </span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Infection control yyyy-mm-dd"
+                               id="infection_control"
+                               formControlName="infection_control"
+                               [ngClass]="formUtils.handleValidationStateClass(form, 'infection_control')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'infection_control', messages) }} </span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Medication managment yyyy-mm-dd"
+                               id="medication_management" formControlName="medication_management"
+                               [ngClass]="formUtils.handleValidationStateClass(form, 'medication_management')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'medication_management', messages) }} </span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Manual handling people yyyy-mm-dd"
+                               id="manual_handling_people" formControlName="manual_handling_people"
+                               [ngClass]="formUtils.handleValidationStateClass(form, 'manual_handling_people')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'manual_handling_people', messages) }} </span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Safeguarding yyyy-mm-dd" id="safeguarding"
+                               formControlName="safeguarding"
+                               [ngClass]="formUtils.handleValidationStateClass(form, 'safeguarding')">
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'safeguarding', messages) }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6"><h5>Qualifications <span (click)="onQualificationsControlAdd()" class="add-icon gj-cursor-pointer"><i
+                        class="fa fa-plus"></i></span></h5></div>
+            </div>
+            <div *ngFor="let control of form.get('qualifications').controls; let i = index" formArrayName="qualifications" class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                        <select [formControlName]="i" class="form-control">
+                            <option value="Nursing qualification (elsewhere)">Nursing qualification (elsewhere)</option>
+                            <option value="QCF / NVQ level 5 in Health & Social Care">QCF / NVQ level 5 in Health & Social Care</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <span (click)="onRemoveQualificationsControl(i)" class="big-icon gj-cursor-pointer"><i class="fa fa-trash-alt"></i></span>
+                </div>
+            </div>
+
+            <br><br>
+            <div class="row">
+                <div class="col-6">
+                    <div class="text-center">
+                        <button (click)="onCreateCarer()" [disabled]="!form.valid" class="btn btn-success">Create carer</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<button (click)="onCheckForm()">Check</button>

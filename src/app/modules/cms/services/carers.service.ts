@@ -17,6 +17,10 @@ export class CarersService {
         return this.apiService.getCarerDetails(id);
     }
 
+    addCarer(carerData: any): Observable<any> {
+        return this.apiService.addCarer(carerData);
+    }
+
     updateCarerDetails(id: string, details: CarerDetailsResponse): Observable<any> {
         return this.apiService.updateCarerDetails(id, details);
     }
@@ -27,6 +31,14 @@ export class CarersService {
 
     deleteResourceFile(carerId: string, resourceName: string, fileUrl: string): Observable<any> {
         return this.apiService.deleteResourceFile(carerId, resourceName, fileUrl);
+    }
+
+    checkPhoneNumberUniqueness(phoneNumber: string) {
+        return this.apiService.checkUniqueness('phone_number', phoneNumber);
+    }
+
+    checkEmailUniqueness(email: string) {
+        return this.apiService.checkUniqueness('email', email);
     }
 
 }

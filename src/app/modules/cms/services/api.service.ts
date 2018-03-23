@@ -9,10 +9,12 @@ import {CarerDetailsResponse} from '../models/response/carer-details-response';
 @Injectable()
 export class ApiService {
     private endpoint: string;
+    private webEndpoint: string;
 
     constructor(private httpClient: HttpClient,
                 private authService: AuthService) {
         this.endpoint = environment.admin;
+        this.webEndpoint = environment.api;
     }
 
     // auth
@@ -38,6 +40,14 @@ export class ApiService {
         );
     }
 
+    addCarer(carerData: any): Observable<any> {
+        return this.httpClient.post(
+            `${this.endpoint}/carers`,
+            carerData,
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
     updateCarerDetails(carerId: string, carerDetails: CarerDetailsResponse): Observable<any> {
         return this.httpClient.put(
             `${this.endpoint}/carers/${carerId}`,
@@ -59,6 +69,10 @@ export class ApiService {
             `${this.endpoint}/carers/${carerId}/${resourceName}/upload`,
             {headers: this.getAuthorizationHeaders(), params: new HttpParams().set('file', fileUrl)}
         );
+    }
+
+    checkUniqueness(param: string, value: string) {
+        return this.httpClient.get(this.webEndpoint + '/user/uniqueness', {params: new HttpParams().set(param, value)});
     }
 
     private getAuthorizationHeaders(): HttpHeaders {

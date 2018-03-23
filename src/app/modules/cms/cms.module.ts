@@ -27,6 +27,7 @@ import {SharedModule} from '../shared/shared.module';
 import { CmsPopupComponent } from './resources/partials/cms-popup/cms-popup.component';
 import {FileUploadingComponent} from './resources/pages/carers/carer-details/file-uploading/file-uploading.component';
 import { DeleteFileComponent } from './resources/pages/carers/carer-details/file-uploading/delete-file/delete-file.component';
+import { AddCarerComponent } from './resources/pages/carers/add-carer/add-carer.component';
 
 @NgModule({
     imports: [
@@ -46,7 +47,8 @@ import { DeleteFileComponent } from './resources/pages/carers/carer-details/file
         TimestampPipe,
         CmsPopupComponent,
         FileUploadingComponent,
-        DeleteFileComponent
+        DeleteFileComponent,
+        AddCarerComponent
     ],
     providers: [
         ApiService,
