@@ -44,8 +44,6 @@ export class CarersListComponent implements OnInit {
     }
 
     onSearch(): void {
-        // this.searchString = this.form.get('search').value;
-        // this.getCarersList();
         this.form.get('search').valueChanges
             .debounceTime(400)
             .subscribe(data => {

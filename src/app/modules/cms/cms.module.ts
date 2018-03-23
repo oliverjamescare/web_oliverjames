@@ -28,6 +28,10 @@ import { CmsPopupComponent } from './resources/partials/cms-popup/cms-popup.comp
 import {FileUploadingComponent} from './resources/pages/carers/carer-details/file-uploading/file-uploading.component';
 import { DeleteFileComponent } from './resources/pages/carers/carer-details/file-uploading/delete-file/delete-file.component';
 import { AddCarerComponent } from './resources/pages/carers/add-carer/add-carer.component';
+import { JobsComponent } from './resources/pages/jobs/jobs.component';
+import { JobsListComponent } from './resources/pages/jobs/jobs-list/jobs-list.component';
+import {JobsService} from './services/jobs.service';
+import {TimestampHourPipe} from './pipes/timestampHour.pipe';
 
 @NgModule({
     imports: [
@@ -48,7 +52,10 @@ import { AddCarerComponent } from './resources/pages/carers/add-carer/add-carer.
         CmsPopupComponent,
         FileUploadingComponent,
         DeleteFileComponent,
-        AddCarerComponent
+        AddCarerComponent,
+        JobsComponent,
+        JobsListComponent,
+        TimestampHourPipe
     ],
     providers: [
         ApiService,
@@ -56,7 +63,8 @@ import { AddCarerComponent } from './resources/pages/carers/add-carer/add-carer.
         UserService,
         AuthGuardService,
         CarersService,
-        DatesService
+        DatesService,
+        JobsService
     ]
 
 })

@@ -12,6 +12,8 @@ import {CarersComponent} from './resources/pages/carers/carers.component';
 import {CarersListComponent} from './resources/pages/carers/carers-list/carers-list.component';
 import {CarerDetailsComponent} from './resources/pages/carers/carer-details/carer-details.component';
 import {AddCarerComponent} from './resources/pages/carers/add-carer/add-carer.component';
+import {JobsComponent} from './resources/pages/jobs/jobs.component';
+import {JobsListComponent} from './resources/pages/jobs/jobs-list/jobs-list.component';
 
 const routes: Routes = [
     {
@@ -29,6 +31,13 @@ const routes: Routes = [
                             {path: 'list', component: CarersListComponent},
                             {path: 'details/:id', component: CarerDetailsComponent},
                             {path: 'add', component: AddCarerComponent}
+                        ]
+                    },
+                    {
+                        path: 'jobs', component: JobsComponent, children: [
+                            {path: 'list', component: JobsListComponent}
+                            // {path: 'details/:id', component: CarerDetailsComponent},
+                            // {path: 'add', component: AddCarerComponent}
                         ]
                     }
                 ]

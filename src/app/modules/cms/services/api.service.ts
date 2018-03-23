@@ -71,6 +71,18 @@ export class ApiService {
         );
     }
 
+    // jobs
+    getJobs(search: string, jobStatus: string, reviewStatus: string, manualBooking: string, page: number): Observable<any> {
+        return this.httpClient.get(
+            `${this.endpoint}/jobs`,
+            {
+                headers: this.getAuthorizationHeaders(),
+                params: new HttpParams().set('search', search).set('job_status_filter', jobStatus).set('review_status_filter', reviewStatus)
+                    .set('manual_booking_filter', manualBooking).set('page', `${page}`)
+            }
+        );
+    }
+
     checkUniqueness(param: string, value: string) {
         return this.httpClient.get(this.webEndpoint + '/user/uniqueness', {params: new HttpParams().set(param, value)});
     }
