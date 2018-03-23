@@ -30,13 +30,132 @@
         <table *ngIf="carers.length !==0" class="custom-table text-center">
             <thead>
             <tr>
-                <th>Oliver James ID</th>
-                <th>Carer Name</th>
-                <th>Carer DoB</th>
-                <th>Date when active</th>
-                <th>Carer rating</th>
-                <th>Profile status</th>
-                <th>Banned dedline</th>
+                <th class="sort-cell" (clickOutside)="showIdSorters = false">
+                    Distance from home
+                    <span (click)="onShowSorters('showIdSorters')" class="sort-icon">
+                            <i class="fas fa-sort"></i>
+                        </span>
+                    <div
+                            *ngIf="showIdSorters"
+                            class="suggestions text-left">
+                        <ul>
+                            <li (click)="onSelectSorter('id_asc', 'showIdSorters')">
+                                ASC
+                            </li>
+                            <li (click)="onSelectSorter('id_desc', 'showIdSorters')">
+                                DESC
+                            </li>
+                        </ul>
+                    </div>
+                </th>
+                <th class="sort-cell" (clickOutside)="showNameSorters = false">
+                    Name
+                    <span (click)="onShowSorters('showNameSorters')" class="sort-icon">
+                            <i class="fas fa-sort"></i>
+                        </span>
+                    <div
+                            *ngIf="showNameSorters"
+                            class="suggestions text-left">
+                        <ul>
+                            <li (click)="onSelectSorter('name_asc', 'showNameSorters')">
+                                ASC
+                            </li>
+                            <li (click)="onSelectSorter('name_desc', 'showNameSorters')">
+                                DESC
+                            </li>
+                        </ul>
+                    </div>
+                </th>
+                <th class="sort-cell" (clickOutside)="showDobSorters = false">
+                    Dob
+                    <span (click)="onShowSorters('showDobSorters')" class="sort-icon">
+                            <i class="fas fa-sort"></i>
+                        </span>
+                    <div
+                            *ngIf="showDobSorters"
+                            class="suggestions text-left">
+                        <ul>
+                            <li (click)="onSelectSorter('date_of_birth_asc', 'showDobSorters')">
+                                ASC
+                            </li>
+                            <li (click)="onSelectSorter('date_of_birth_desc', 'showDobSorters')">
+                                DESC
+                            </li>
+                        </ul>
+                    </div>
+                </th>
+                <th class="sort-cell" (clickOutside)="showActivationDateSorters = false">
+                    Date went active
+                    <span (click)="onShowSorters('showActivationDateSorters')" class="sort-icon">
+                            <i class="fas fa-sort"></i>
+                        </span>
+                    <div
+                            *ngIf="showActivationDateSorters"
+                            class="suggestions text-left">
+                        <ul>
+                            <li (click)="onSelectSorter('activation_date_asc', 'showActivationDateSorters')">
+                                ASC
+                            </li>
+                            <li (click)="onSelectSorter('activation_date_desc', 'showActivationDateSorters')">
+                                DESC
+                            </li>
+                        </ul>
+                    </div>
+                </th>
+                <th class="sort-cell" (clickOutside)="showRatingSorters = false">
+                    Rating
+                    <span (click)="onShowSorters('showRatingSorters')" class="sort-icon">
+                            <i class="fas fa-sort"></i>
+                        </span>
+                    <div
+                            *ngIf="showRatingSorters"
+                            class="suggestions text-left">
+                        <ul>
+                            <li (click)="onSelectSorter('rating_asc', 'showRatingSorters')">
+                                ASC
+                            </li>
+                            <li (click)="onSelectSorter('rating_desc', 'showRatingSorters')">
+                                DESC
+                            </li>
+                        </ul>
+                    </div>
+                </th>
+                <th class="sort-cell" (clickOutside)="showStatusSorters = false">
+                    Status
+                    <span (click)="onShowSorters('showStatusSorters')" class="sort-icon">
+                            <i class="fas fa-sort"></i>
+                        </span>
+                    <div
+                            *ngIf="showStatusSorters"
+                            class="suggestions text-left">
+                        <ul>
+                            <li (click)="onSelectSorter('status_asc', 'showStatusSorters')">
+                                ASC
+                            </li>
+                            <li (click)="onSelectSorter('status_desc', 'showStatusSorters')">
+                                DESC
+                            </li>
+                        </ul>
+                    </div>
+                </th>
+                <th class="sort-cell" (clickOutside)="showBannedUntilSorters = false">
+                    Banned dedline
+                    <span (click)="onShowSorters('showBannedUntilSorters')" class="sort-icon">
+                            <i class="fas fa-sort"></i>
+                        </span>
+                    <div
+                            *ngIf="showBannedUntilSorters"
+                            class="suggestions text-left">
+                        <ul>
+                            <li (click)="onSelectSorter('banned_until_asc', 'showBannedUntilSorters')">
+                                ASC
+                            </li>
+                            <li (click)="onSelectSorter('banned_until_desc', 'showBannedUntilSorters')">
+                                DESC
+                            </li>
+                        </ul>
+                    </div>
+                </th>
                 <th>Total still to deduct</th>
                 <th>Notes</th>
                 <th>Carer details</th>
@@ -47,10 +166,10 @@
                 <td>{{ carer._id }}</td>
                 <td>{{ carer.carer.first_name }} {{ carer.carer.surname }}</td>
                 <td>{{ carer.carer.date_of_birth }}</td>
-                <td>{{ carer.activation_date }}</td>
+                <td>{{ carer.activation_date | timestamp }}</td>
                 <td>{{ carer.carer.reviews.average }}</td>
                 <td>{{ carer.status }}</td>
-                <td>{{ carer.banned_until }}</td>
+                <td>{{ carer.banned_until | timestamp }}</td>
                 <td>Mocked</td>
                 <td>{{ carer.notes }}</td>
                 <td>

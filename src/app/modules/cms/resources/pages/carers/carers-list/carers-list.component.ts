@@ -20,6 +20,15 @@ export class CarersListComponent implements OnInit {
     pages: number[] = [];
     form: FormGroup;
 
+    // sorters
+    showIdSorters = false;
+    showNameSorters = false;
+    showDobSorters = false;
+    showActivationDateSorters = false;
+    showRatingSorters = false;
+    showStatusSorters = false;
+    showBannedUntilSorters = false;
+
     constructor(private carersService: CarersService) {
     }
 
@@ -47,6 +56,16 @@ export class CarersListComponent implements OnInit {
 
     onFilter(): void {
         this.statusFilter = this.form.get('status_filter').value;
+        this.getCarersList();
+    }
+
+    onShowSorters(sorterName: string): void {
+        this[sorterName] = !this[sorterName];
+    }
+
+    onSelectSorter(sortString: string, sorter: string): void {
+        this.sort = sortString;
+        this[sorter] = false;
         this.getCarersList();
     }
 
