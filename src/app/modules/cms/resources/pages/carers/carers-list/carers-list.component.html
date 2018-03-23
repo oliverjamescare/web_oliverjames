@@ -4,6 +4,25 @@
         <button routerLink="/admin/carers/add" class="btn-success right btn-nav">Add carer</button>
     </div>
 </div>
+<br><br>
+<div [formGroup]="form" class="row">
+    <div class="col-4">
+        <label>Search</label>
+        <input formControlName="search" type="text" placeholder="Search" class="form-control">
+    </div>
+    <div class="col-4">
+        <label>Status filter</label>
+        <select formControlName="status_filter" class="form-control">
+            <option value="ALL">All</option>
+            <option value="CREATED">Created</option>
+            <option value="ACTIVE">Active</option>
+            <option value="BANNED">Banned</option>
+        </select>
+    </div>
+    <div class="col-2">
+        <button (click)="onFilter()" class="btn-success btn-small">Go</button>
+    </div>
+</div>
 <br>
 <div class="row">
     <div class="col-sm">

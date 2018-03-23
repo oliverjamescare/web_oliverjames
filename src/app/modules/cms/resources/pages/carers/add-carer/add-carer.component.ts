@@ -286,7 +286,7 @@ export class AddCarerComponent implements OnInit {
             safeguarding: new FormControl(null),
 
             references: new FormArray([]),
-            qualifications: new FormArray([]),
+            qualifications: new FormArray([])
         });
 
         this.form.get('password')
@@ -444,6 +444,10 @@ export class AddCarerComponent implements OnInit {
     onCheckForm(): void {
         console.log('Date object', new Date(this.form.get('fire_safety').value));
         console.log('Date timestamp', new Date(this.form.get('fire_safety').value).getTime());
+    }
+
+    getFormArray(field: string): FormArray {
+        return (<FormArray>this.form.get(field));
     }
 
     private prepareDataToCreate(): any {

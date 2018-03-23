@@ -148,7 +148,7 @@
                 </div>
             </div>
             <div formArrayName="references">
-                <div *ngFor="let control of form.get('references').controls; let i = index" [formGroupName]="i" class="row">
+                <div *ngFor="let control of getFormArray('references').controls; let i = index" [formGroupName]="i" class="row">
                     <div class="col-4">
                         <div class="form-group">
                             <input formControlName="name" type="text" class="form-control" placeholder="reference">
@@ -294,17 +294,19 @@
                 <div class="col-6"><h5>Qualifications <span (click)="onQualificationsControlAdd()" class="add-icon gj-cursor-pointer"><i
                         class="fa fa-plus"></i></span></h5></div>
             </div>
-            <div *ngFor="let control of form.get('qualifications').controls; let i = index" formArrayName="qualifications" class="row">
-                <div class="col-4">
-                    <div class="form-group">
-                        <select [formControlName]="i" class="form-control">
-                            <option value="Nursing qualification (elsewhere)">Nursing qualification (elsewhere)</option>
-                            <option value="QCF / NVQ level 5 in Health & Social Care">QCF / NVQ level 5 in Health & Social Care</option>
-                        </select>
+            <div formArrayName="qualifications">
+                <div *ngFor="let control of getFormArray('qualifications').controls; let i = index" class="row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <select [formControlName]="i" class="form-control">
+                                <option value="Nursing qualification (elsewhere)">Nursing qualification (elsewhere)</option>
+                                <option value="QCF / NVQ level 5 in Health & Social Care">QCF / NVQ level 5 in Health & Social Care</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-                <div class="col-1">
-                    <span (click)="onRemoveQualificationsControl(i)" class="big-icon gj-cursor-pointer"><i class="fa fa-trash-alt"></i></span>
+                    <div class="col-1">
+                        <span (click)="onRemoveQualificationsControl(i)" class="big-icon gj-cursor-pointer"><i class="fa fa-trash-alt"></i></span>
+                    </div>
                 </div>
             </div>
 

@@ -9,8 +9,8 @@ export class CarersService {
     constructor(private apiService: ApiService) {
     }
 
-    getCarersList(search: string = '', sort: string, page: number): Observable<CarersListResponse> {
-        return this.apiService.getCarersList(search, sort, page);
+    getCarersList(search: string = '', sort: string, statusFilter: string, page: number): Observable<CarersListResponse> {
+        return this.apiService.getCarersList(search, sort, statusFilter, page);
     }
 
     getCarerDetails(id: string): Observable<CarerDetailsResponse> {

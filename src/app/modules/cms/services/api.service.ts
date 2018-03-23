@@ -23,12 +23,12 @@ export class ApiService {
     }
 
     // carers
-    getCarersList(search: string, sort: string, page: number): Observable<any> {
+    getCarersList(search: string, sort: string, statusFilter: string, page: number): Observable<any> {
         return this.httpClient.get(
             `${this.endpoint}/carers`,
             {
                 headers: this.getAuthorizationHeaders(),
-                params: new HttpParams().set('search', search).set('sort', sort).set('page', `${page}`)
+                params: new HttpParams().set('search', search).set('sort', sort).set('page', `${page}`).set('status_filter', statusFilter)
             }
         );
     }

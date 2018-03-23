@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CarersService} from '../../../../services/carers.service';
 import {CarersListResponse} from '../../../../models/response/carers-list-response';
 import {CarerListObject} from '../../../../models/response/carer-list-object';
+import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
     selector: 'app-carers-list',
@@ -13,16 +14,19 @@ export class CarersListComponent implements OnInit {
     carers: CarerListObject[] = [];
 
     searchString: string;
-    searchField: string;
+    statusFilter = 'ALL';
     sort: string;
     page = 1;
     pages: number[] = [];
+    form: FormGroup;
 
     constructor(private carersService: CarersService) {
     }
 
     ngOnInit() {
+        this.createForm();
         this.getCarersList();
+        this.onSearch();
     }
 
     onPageChange(page: number): void {
@@ -30,14 +34,24 @@ export class CarersListComponent implements OnInit {
         this.getCarersList();
     }
 
-    onSearch(searchField: string, searchString: string): void {
-        this.searchField = searchField;
-        this.searchString = searchString;
+    onSearch(): void {
+        // this.searchString = this.form.get('search').value;
+        // this.getCarersList();
+        this.form.get('search').valueChanges
+            .debounceTime(400)
+            .subscribe(data => {
+                this.searchString = data;
+                this.getCarersList();
+            });
+    }
+
+    onFilter(): void {
+        this.statusFilter = this.form.get('status_filter').value;
         this.getCarersList();
     }
 
     private getCarersList(): void {
-        this.carersService.getCarersList(this.searchString, this.sort, this.page)
+        this.carersService.getCarersList(this.searchString, this.sort, this.statusFilter, this.page)
             .subscribe(
                 (response: CarersListResponse) => {
                     this.handleCarersListResponse(response);
@@ -48,7 +62,7 @@ export class CarersListComponent implements OnInit {
 
     private handleCarersListResponse(response: CarersListResponse): void {
         console.log('Get carers list response', response);
-        this.pages = this.setPaginationArray(response.pages)
+        this.pages = this.setPaginationArray(response.pages);
         this.carers = response.results;
     }
 
@@ -58,6 +72,13 @@ export class CarersListComponent implements OnInit {
             arr.push(i);
         }
         return arr;
+    }
+
+    private createForm(): void {
+        this.form = new FormGroup({
+            'search': new FormControl(''),
+            'status_filter': new FormControl('ALL')
+        });
     }
 
 }
