@@ -5,6 +5,35 @@
     </div>
 </div>
 <br>
+<div class="row">
+    <div class="col-sm-4">
+        <button
+                (click)="openCancelJobPopup(true)" class="btn btn-success"
+                [disabled]="jobDetails?.status === 'CANCELLED'"
+        >Cancel job</button>
+    </div>
+    <div class="col-sm-4">
+        <button (click)="openCancelJobPopup(false)" class="btn btn-success"
+                [disabled]="jobDetails?.status === 'CANCELLED'"
+        >Cancel job - waive charges</button>
+    </div>
+    <div class="col-sm-4">
+        <button class="btn-success">Decide on challenged job</button>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-sm-4">
+        <button class="btn-success">Se review</button>
+    </div>
+    <div class="col-sm-4">
+        <button class="btn-success">Add manual booking charge</button>
+    </div>
+    <div class="col-sm-4">
+        <button class="btn-success">Retry payment</button>
+    </div>
+</div>
+<br>
 <div class="row text-center">
     <div class="col sm">
         <span *ngFor="let error of errors" class="input-error">{{ error.message }}</span>
@@ -168,3 +197,14 @@
     </div>
 </div>
 <br>
+
+<app-cancel-job
+        *ngIf="showCancelJobDialog"
+        type="cancel_job"
+        [title]="'Cancel job'"
+        [jobId]="jobId"
+        [waiveCharges]="waiveCharges"
+        (reload)="onReload()"
+        (closed)="showCancelJobDialog = false"
+>
+</app-cancel-job>

@@ -1,0 +1,12 @@
+<app-cms-popup [title]="title" [id]="type + '_id'" [showLogo]="false">
+    <div class="row">
+        <div class="col-12 text-center">
+            <p>{{ message }}</p>
+        </div>
+        <br>
+        <div class="div-actions">
+            <button (click)="onCancelJob()" class="btn-success btn-actions">Yes</button>
+            <button (click)="onClose()" class="btn-success btn-actions">No</button>
+        </div>
+    </div>
+</app-cms-popup>

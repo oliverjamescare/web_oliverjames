@@ -19,4 +19,8 @@ export class JobsService {
     updateJob(jobId: string, body: FormData): Observable<any> {
         return this.apiService.updateJob(jobId, body);
     }
+
+    cancelJob(jobId: string, waiveCharges: string): Observable<any> {
+        return this.apiService.cancelJob(jobId, waiveCharges);
+    }
 }

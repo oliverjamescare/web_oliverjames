@@ -98,6 +98,15 @@ export class ApiService {
         );
     }
 
+    cancelJob(jobId: string, waiveCharges: string): Observable<any> {
+        return this.httpClient.put(
+            `${this.endpoint}/jobs/${jobId}/cancel`,
+            {waive_charges: waiveCharges},
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
+
     checkUniqueness(param: string, value: string) {
         return this.httpClient.get(this.webEndpoint + '/user/uniqueness', {params: new HttpParams().set(param, value)});
     }

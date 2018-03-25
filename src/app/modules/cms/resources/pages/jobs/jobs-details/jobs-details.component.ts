@@ -29,6 +29,10 @@ export class JobsDetailsComponent implements OnInit {
 
     timeArr: { timestamp: number, formatedDate: string }[] = [];
 
+    // dialogs
+    showCancelJobDialog = false;
+    waiveCharges: boolean;
+
     messages = [
         {
             field: 'parking',
@@ -109,6 +113,16 @@ export class JobsDetailsComponent implements OnInit {
                 this.getJobDetails();
             }
         );
+    }
+
+    openCancelJobPopup(waiveCharges: boolean): void {
+        this.waiveCharges = waiveCharges;
+        this.showCancelJobDialog = true;
+    }
+
+    onReload(): void {
+        console.log('On reload');
+        this.getJobDetails();
     }
 
     handleFileInput(files: FileList) {

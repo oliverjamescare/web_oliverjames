@@ -33,6 +33,7 @@ import { JobsListComponent } from './resources/pages/jobs/jobs-list/jobs-list.co
 import {JobsService} from './services/jobs.service';
 import {TimestampHourPipe} from './pipes/timestampHour.pipe';
 import { JobsDetailsComponent } from './resources/pages/jobs/jobs-details/jobs-details.component';
+import { CancelJobComponent } from './resources/pages/jobs/jobs-details/cancel-job/cancel-job.component';
 
 @NgModule({
     imports: [
@@ -57,7 +58,8 @@ import { JobsDetailsComponent } from './resources/pages/jobs/jobs-details/jobs-d
         JobsComponent,
         JobsListComponent,
         TimestampHourPipe,
-        JobsDetailsComponent
+        JobsDetailsComponent,
+        CancelJobComponent
     ],
     providers: [
         ApiService,
