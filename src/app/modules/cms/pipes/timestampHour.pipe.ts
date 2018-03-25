@@ -5,6 +5,6 @@ import * as dateformat from 'dateformat';
 export class TimestampHourPipe implements PipeTransform {
     transform(value: number): string {
         const date = new Date(value);
-        return value !== null ? dateformat('shortTime') : null;
+        return value !== null ? dateformat(date, 'shortTime') : null;
     }
 }

@@ -83,6 +83,21 @@ export class ApiService {
         );
     }
 
+    getJobDetails(jobId: string): Observable<any> {
+        return this.httpClient.get(
+            `${this.endpoint}/jobs/${jobId}`,
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
+    updateJob(jobId: string, body: FormData): Observable<any> {
+        return this.httpClient.put(
+            `${this.endpoint}/jobs/${jobId}`,
+            body,
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
     checkUniqueness(param: string, value: string) {
         return this.httpClient.get(this.webEndpoint + '/user/uniqueness', {params: new HttpParams().set(param, value)});
     }

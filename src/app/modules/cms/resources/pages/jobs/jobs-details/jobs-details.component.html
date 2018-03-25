@@ -1,0 +1,170 @@
+<div class="row">
+    <div class="col-sm">
+        <h2>Job details</h2>
+        <button routerLink="/admin/carers/list" class="btn-success right btn-nav">Back</button>
+    </div>
+</div>
+<br>
+<div class="row text-center">
+    <div class="col sm">
+        <span *ngFor="let error of errors" class="input-error">{{ error.message }}</span>
+    </div>
+</div>
+<div class="row" class="text-center">
+    <div class="col-sm">
+        <table *ngIf="jobDetails" [formGroup]="form" class="carer-details-table">
+            <tr>
+                <th>Job ID</th>
+                <td>{{ jobDetails._id }}</td>
+            </tr>
+            <tr>
+                <th>Start Date</th>
+                <td>
+                    <input formControlName="start" type="text" class="form-control" placeholder="yyyy-mm-dd">
+                </td>
+            </tr>
+            <tr>
+                <th>From</th>
+                <td>
+                    <select formControlName="start_date" class="form-control">
+                        <option *ngFor="let hour of timeArr" [value]="hour.formatedDate">{{ hour.formatedDate }}</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>Till</th>
+                <td>
+                    <select formControlName="end_date" class="form-control">
+                        <option *ngFor="let hour of timeArr" [value]="hour.formatedDate">{{ hour.formatedDate }}</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>Role</th>
+                <td>
+                    <select formControlName="role" class="form-control">
+                        <option value="Carer">Carer</option>
+                        <option value="Senior Carer">Senior Carer</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>Notes</th>
+                <td><textarea formControlName="notes" class="form-control"></textarea></td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ jobDetails.status }}</td>
+            </tr>
+            <tr>
+                <th class="green-cell white-color">General Guidance</th>
+                <td class="green-cell"></td>
+            </tr>
+            <tr>
+                <th>Floor plan</th>
+                <td>
+                    <span *ngIf="jobDetails.general_guidance.floor_plan">
+                        <a [href]="jobDetails.general_guidance.floor_plan + getTokenParameter()" target="_blank">Floor plan</a>
+                    </span>
+                    <input type="file"
+                           id="file"
+                           class="form-control floor-plan"
+                           (change)="handleFileInput($event.target.files)">
+                    <span class="red">{{ floorPlanError }}</span>
+                </td>
+            </tr>
+            <tr>
+                <th>Parking</th>
+                <td>
+                    <textarea formControlName="parking" class="form-control"
+                              [ngClass]="formUtils.handleValidationStateClass(form, 'parking')"></textarea>
+                    <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'parking', messages) }} </span>
+                </td>
+            </tr>
+            <tr>
+                <th>Notes for carers</th>
+                <td>
+                    <textarea formControlName="notes_for_carers" class="form-control"
+                              [ngClass]="formUtils.handleValidationStateClass(form, 'notes_for_carers')"></textarea>
+                    <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'notes_for_carers', messages) }} </span>
+                </td>
+            </tr>
+            <tr>
+                <th>Emergency guidance</th>
+                <td>
+                    <textarea formControlName="emergency_guidance" class="form-control"
+                              [ngClass]="formUtils.handleValidationStateClass(form, 'emergency_guidance')"></textarea>
+                    <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'emergency_guidance', messages) }} </span>
+                </td>
+            </tr>
+            <tr>
+                <th>Report contact</th>
+                <td>
+                    <textarea formControlName="report_contact" class="form-control"
+                              [ngClass]="formUtils.handleValidationStateClass(form, 'report_contact')"></textarea>
+                    <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'report_contact', messages) }} </span>
+                </td>
+            </tr>
+            <tr>
+                <th>Superior contact</th>
+                <td>
+                    <textarea formControlName="superior_contact" class="form-control"
+                              [ngClass]="formUtils.handleValidationStateClass(form, 'superior_contact')"></textarea>
+                    <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'superior_contact', messages) }} </span>
+                </td>
+            </tr>
+            <tr>
+                <th class="green-cell white-color">Preferences</th>
+                <td class="green-cell"></td>
+            </tr>
+            <tr>
+                <th>Gender preference</th>
+                <td>
+                    <select formControlName="gender_preference" class="form-control">
+                        <option value="No preference">No preference</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>Manual booking</th>
+                <td>
+                    <select formControlName="manual_booking" class="form-control">
+                        <option value="false">Disabled</option>
+                        <option value="true">Enabled</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th class="green-cell white-color">Summary sheet</th>
+                <td class="green-cell"></td>
+            </tr>
+            <tr>
+                <th>Start date</th>
+                <td>
+                    <input *ngIf="jobDetails?.summary_sheet" formControlName="summary_sheet_start_date" placeholder="yyyy-mm-dd" type="text"
+                           class="form-control">
+                </td>
+            </tr>
+            <tr>
+                <th>End date</th>
+                <td>
+                    <input *ngIf="jobDetails?.summary_sheet" formControlName="summary_sheet_end_date" placeholder="yyyy-mm-dd" type="text"
+                           class="form-control">
+                </td>
+            </tr>
+            <tr>
+                <th>Voluntary deduction</th>
+                <td>
+                    <input *ngIf="jobDetails?.summary_sheet" formControlName="voluntary_deduction" type="number" class="form-control"
+                           [ngClass]="formUtils.handleValidationStateClass(form, 'voluntary_deduction')">
+                    <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'voluntary_deduction', messages) }} </span>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <button (click)="onUpdateJob()" class="btn-success">Edit job</button>
+    </div>
+</div>
+<br>

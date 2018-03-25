@@ -275,7 +275,7 @@ export class AddCarerComponent implements OnInit {
             experience_years: new FormControl(null, [Validators.required, Validators.min(0), numbers]),
 
             other: new FormControl(null),
-            fire_safety: new FormControl(null),
+            fire_safety: new FormControl(),
             dementia: new FormControl(null),
             h_and_s: new FormControl(null),
             first_aid_awareness: new FormControl(null),

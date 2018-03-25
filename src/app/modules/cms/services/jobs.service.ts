@@ -11,4 +11,12 @@ export class JobsService {
     getJobsList(search: string, jobStatus: string, reviewStatus: string, manualBooking: string, page: number): Observable<JobListResponse> {
         return this.apiService.getJobs(search, jobStatus, reviewStatus, manualBooking, page);
     }
+
+    getJobDetails(jobId: string): Observable<any> {
+        return this.apiService.getJobDetails(jobId);
+    }
+
+    updateJob(jobId: string, body: FormData): Observable<any> {
+        return this.apiService.updateJob(jobId, body);
+    }
 }

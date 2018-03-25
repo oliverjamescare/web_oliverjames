@@ -97,7 +97,10 @@
                 <td>{{ job.manual_booking }}</td>
                 <td>{{ job?.review?.status }}</td>
                 <td>
-                    <span class="actions">Details</span>
+                    <span
+                            [routerLink]="['/admin', 'jobs', 'details', job._id]"
+                            class="actions"
+                    >Details</span>
                 </td>
             </tr>
             </tbody>
