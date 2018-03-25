@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-sm">
         <h2>Job details</h2>
-        <button routerLink="/admin/carers/list" class="btn-success right btn-nav">Back</button>
+        <button routerLink="/admin/jobs/list" class="btn-success right btn-nav">Back</button>
     </div>
 </div>
 <br>
@@ -18,19 +18,20 @@
         >Cancel job - waive charges</button>
     </div>
     <div class="col-sm-4">
-        <button class="btn-success">Decide on challenged job</button>
+        <button (click)="showResolveChallengeDialog = true" [disabled]="jobDetails?.status !== 'CHALLENGED'" class="btn btn-success"
+        >Decide on challenged job</button>
     </div>
 </div>
 <br>
 <div class="row">
     <div class="col-sm-4">
-        <button class="btn-success">Se review</button>
+        <button class="btn btn-success" [disabled]="!jobDetails?.review">See review</button>
     </div>
     <div class="col-sm-4">
-        <button class="btn-success">Add manual booking charge</button>
+        <button class="btn btn-success" [disabled]="true">Add manual booking charge</button>
     </div>
     <div class="col-sm-4">
-        <button class="btn-success">Retry payment</button>
+        <button class="btn btn-success" [disabled]="true">Retry payment</button>
     </div>
 </div>
 <br>
@@ -39,7 +40,7 @@
         <span *ngFor="let error of errors" class="input-error">{{ error.message }}</span>
     </div>
 </div>
-<div class="row" class="text-center">
+<div class="row">
     <div class="col-sm">
         <table *ngIf="jobDetails" [formGroup]="form" class="carer-details-table">
             <tr>
@@ -173,14 +174,18 @@
                 <th>Start date</th>
                 <td>
                     <input *ngIf="jobDetails?.summary_sheet" formControlName="summary_sheet_start_date" placeholder="yyyy-mm-dd" type="text"
+                           [ngClass]="formUtils.handleValidationStateClass(form, 'summary_sheet_start_date')"
                            class="form-control">
+                    <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'summary_sheet_start_date', messages) }} </span>
                 </td>
             </tr>
             <tr>
                 <th>End date</th>
                 <td>
                     <input *ngIf="jobDetails?.summary_sheet" formControlName="summary_sheet_end_date" placeholder="yyyy-mm-dd" type="text"
+                           [ngClass]="formUtils.handleValidationStateClass(form, 'summary_sheet_end_date')"
                            class="form-control">
+                    <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'summary_sheet_end_date', messages) }} </span>
                 </td>
             </tr>
             <tr>
@@ -193,7 +198,7 @@
             </tr>
         </table>
         <br>
-        <button (click)="onUpdateJob()" class="btn-success">Edit job</button>
+        <button (click)="onUpdateJob()" [disabled]="jobDetails?.status === 'CANCELLED'" class="btn btn-success">Edit job</button>
     </div>
 </div>
 <br>
@@ -208,3 +213,11 @@
         (closed)="showCancelJobDialog = false"
 >
 </app-cancel-job>
+
+<app-resolve-challenge
+        *ngIf="showResolveChallengeDialog"
+        [title]="'Decide on challenged job'"
+        type="resolve_challenge"
+        [jobId]="jobId"
+        (closed)="showResolveChallengeDialog = false"
+></app-resolve-challenge>

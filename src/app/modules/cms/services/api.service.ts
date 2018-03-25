@@ -106,6 +106,14 @@ export class ApiService {
         );
     }
 
+    resolveChallange(jobId: string, status: string, reason: string): Observable<any> {
+        return this.httpClient.put(
+            `${this.endpoint}/jobs/${jobId}/challenge`,
+            {status: status, response: reason},
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
 
     checkUniqueness(param: string, value: string) {
         return this.httpClient.get(this.webEndpoint + '/user/uniqueness', {params: new HttpParams().set(param, value)});

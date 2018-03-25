@@ -34,6 +34,7 @@ import {JobsService} from './services/jobs.service';
 import {TimestampHourPipe} from './pipes/timestampHour.pipe';
 import { JobsDetailsComponent } from './resources/pages/jobs/jobs-details/jobs-details.component';
 import { CancelJobComponent } from './resources/pages/jobs/jobs-details/cancel-job/cancel-job.component';
+import { ResolveChallengeComponent } from './resources/pages/jobs/jobs-details/resolve-challenge/resolve-challenge.component';
 
 @NgModule({
     imports: [
@@ -59,7 +60,8 @@ import { CancelJobComponent } from './resources/pages/jobs/jobs-details/cancel-j
         JobsListComponent,
         TimestampHourPipe,
         JobsDetailsComponent,
-        CancelJobComponent
+        CancelJobComponent,
+        ResolveChallengeComponent
     ],
     providers: [
         ApiService,

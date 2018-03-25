@@ -32,6 +32,7 @@ export class JobsDetailsComponent implements OnInit {
     // dialogs
     showCancelJobDialog = false;
     waiveCharges: boolean;
+    showResolveChallengeDialog = false;
 
     messages = [
         {
@@ -80,6 +81,24 @@ export class JobsDetailsComponent implements OnInit {
             ]
         },
         {
+            field: 'summary_sheet_start_date',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'This field ids required'
+                }
+            ]
+        },
+        {
+            field: 'summary_sheet_end_date',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'This field ids required'
+                }
+            ]
+        },
+        {
             field: 'voluntary_deduction',
             errors: [
                 {
@@ -107,6 +126,7 @@ export class JobsDetailsComponent implements OnInit {
 
     ngOnInit() {
         this.createForm();
+        this.setHoursIntervals();
         this.route.params.subscribe(
             params => {
                 this.jobId = params['id'];
@@ -169,7 +189,6 @@ export class JobsDetailsComponent implements OnInit {
         formData.append('notes_for_carers', this.form.get('notes_for_carers').value);
         formData.append('emergency_guidance', this.form.get('emergency_guidance').value);
         formData.append('report_contact', this.form.get('report_contact').value);
-        console.log('report contact', this.form.get('report_contact').value);
         formData.append('superior_contact', this.form.get('superior_contact').value);
         formData.append('notes', this.form.get('notes').value);
         formData.append('gender_preference', this.form.get('gender_preference').value);
@@ -238,8 +257,8 @@ export class JobsDetailsComponent implements OnInit {
             notes: new FormControl(''),
             gender_preference: new FormControl(null),
             manual_booking: new FormControl(null),
-            summary_sheet_start_date: new FormControl(null),
-            summary_sheet_end_date: new FormControl(null),
+            summary_sheet_start_date: new FormControl(null, Validators.required),
+            summary_sheet_end_date: new FormControl(null, Validators.required),
             voluntary_deduction: new FormControl(null, [Validators.min(0)]),
         });
     }
@@ -258,11 +277,16 @@ export class JobsDetailsComponent implements OnInit {
         this.form.get('gender_preference').setValue(this.jobDetails.gender_preference);
         this.form.get('manual_booking').setValue(this.jobDetails.manual_booking);
         if (!isUndefined(this.jobDetails.summary_sheet)) {
-            this.form.get('summary_sheet_start_date').setValue(dateformat(this.jobDetails.summary_sheet.start_date, 'yyyy-mm-dd'));
-            this.form.get('summary_sheet_end_date').setValue(dateformat(this.jobDetails.summary_sheet.end_date, 'yyyy-mm-dd'));
-            this.form.get('voluntary_deduction').setValue(this.jobDetails.summary_sheet.voluntary_deduction);
+            if (!isUndefined(this.jobDetails.summary_sheet.start_date)) {
+                this.form.get('summary_sheet_start_date').setValue(dateformat(this.jobDetails.summary_sheet.start_date, 'yyyy-mm-dd'));
+            }
+            if (!isUndefined(this.jobDetails.summary_sheet.end_date)) {
+                this.form.get('summary_sheet_end_date').setValue(dateformat(this.jobDetails.summary_sheet.end_date, 'yyyy-mm-dd'));
+            }
+            if (!isUndefined(this.jobDetails.summary_sheet.voluntary_deduction)) {
+                this.form.get('voluntary_deduction').setValue(this.jobDetails.summary_sheet.voluntary_deduction);
+            }
         }
-        this.setHoursIntervals();
     }
 
     private getStartTime(): Date {

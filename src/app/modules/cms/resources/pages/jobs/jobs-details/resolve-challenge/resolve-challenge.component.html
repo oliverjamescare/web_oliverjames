@@ -1,0 +1,21 @@
+<app-cms-popup [title]="title" [id]="type + '_id'" [showLogo]="false">
+    <div class="row">
+        <div [formGroup]="form" class="col-12 text-center">
+            <label>Whats your conclusion</label>
+            <select formControlName="conclusion" class="form-control">
+                <option value="UPHELD">Upheld</option>
+                <option value="CANCELLED">Cancel</option>
+            </select>
+            <br>
+            <div *ngIf="form.get('conclusion').value === 'CANCELLED'">
+                <label >Explain your decision</label>
+                <textarea formControlName="reason" class="form-control"></textarea>
+            </div>
+        </div>
+        <br>
+        <div class="div-actions">
+            <button (click)="onResolveChallenge()" class="btn-success btn-actions">Confirm</button>
+            <button (click)="onClose()" class="btn-success btn-actions">Exit</button>
+        </div>
+    </div>
+</app-cms-popup>
