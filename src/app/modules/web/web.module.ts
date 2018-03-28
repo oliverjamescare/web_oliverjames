@@ -111,6 +111,8 @@ import { CancelationPopupComponent } from './resources/pages/care-home/care-home
 import { CareHomeCarerDetailsComponent } from './resources/pages/care-home/care-home-job-actions/care-home-carer-details/care-home-carer-details.component';
 import { CarerNotificationsComponent } from './resources/pages/carer/carer-notifications/carer-notifications.component';
 import {CarerService} from './services/carer.service';
+import { CarerPaidSubmittedComponent } from './resources/pages/carer/carer-paid-submitted/carer-paid-submitted.component';
+import { PaymentDetailsComponent } from './resources/pages/carer/carer-paid-submitted/payment-details/payment-details.component';
 
 @NgModule({
     declarations: [
@@ -188,7 +190,9 @@ import {CarerService} from './services/carer.service';
         WarningPopupComponent,
         CancelationPopupComponent,
         CareHomeCarerDetailsComponent,
-        CarerNotificationsComponent
+        CarerNotificationsComponent,
+        CarerPaidSubmittedComponent,
+        PaymentDetailsComponent
     ],
     imports: [
         CommonModule,
