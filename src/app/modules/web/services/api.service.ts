@@ -152,6 +152,44 @@ export class ApiService {
             {headers: this.getAuthorizationHeaders()});
     }
 
+    getCareHomeJobs(page: number, results = 10): Observable<any> {
+        return this.httpClient.get(
+            `${this.endpoint}/care-home/my-jobs`,
+            {headers: this.getAuthorizationHeaders(), params: new HttpParams().set('page', `${page}`).set('results', `${results}`)}
+        );
+    }
+
+    updateCareHomeProfile(formData: FormData): Observable<any> {
+        return this.httpClient.put(
+            `${this.endpoint}/user/care-home`,
+            formData,
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
+    removeCarerFromBlocked(carerId: string): Observable<any> {
+        return this.httpClient.delete(
+            `${this.endpoint}/care-home/carers/${carerId}/block`,
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
+    editJob(jobId: string, formData: FormData): Observable<any> {
+        return this.httpClient.put(
+            `${this.endpoint}/jobs/${jobId}`,
+            formData,
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
+    cancelJob(jobId: string): Observable<any> {
+        return this.httpClient.put(
+            `${this.endpoint}/jobs/${jobId}/cancel`,
+            {id: jobId},
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
 // care home & carer
 
     getUserProfile(): Observable<any> {
@@ -208,7 +246,6 @@ export class ApiService {
             {headers: this.getAuthorizationHeaders()}
         );
     }
-
 
     private getAuthorizationHeaders(): HttpHeaders {
         return new HttpHeaders({

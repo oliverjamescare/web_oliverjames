@@ -173,27 +173,30 @@
             <tr>
                 <th>Start date</th>
                 <td>
-                    <input *ngIf="jobDetails?.summary_sheet" formControlName="summary_sheet_start_date" placeholder="yyyy-mm-dd" type="text"
-                           [ngClass]="formUtils.handleValidationStateClass(form, 'summary_sheet_start_date')"
-                           class="form-control">
-                    <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'summary_sheet_start_date', messages) }} </span>
+                    {{ jobDetails?.summary_sheet?.start_date | timestamp }}, {{ jobDetails?.summary_sheet?.start_date | timestampHour }}
+                    <!--<input *ngIf="jobDetails?.summary_sheet" formControlName="summary_sheet_start_date" placeholder="yyyy-mm-dd" type="text"-->
+                           <!--[ngClass]="formUtils.handleValidationStateClass(form, 'summary_sheet_start_date')"-->
+                           <!--class="form-control">-->
+                    <!--<span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'summary_sheet_start_date', messages) }} </span>-->
                 </td>
             </tr>
             <tr>
                 <th>End date</th>
                 <td>
-                    <input *ngIf="jobDetails?.summary_sheet" formControlName="summary_sheet_end_date" placeholder="yyyy-mm-dd" type="text"
-                           [ngClass]="formUtils.handleValidationStateClass(form, 'summary_sheet_end_date')"
-                           class="form-control">
-                    <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'summary_sheet_end_date', messages) }} </span>
+                    {{ jobDetails?.summary_sheet?.end_date | timestamp }}, {{ jobDetails?.summary_sheet?.end_date | timestampHour }}
+                    <!--<input *ngIf="jobDetails?.summary_sheet" formControlName="summary_sheet_end_date" placeholder="yyyy-mm-dd" type="text"-->
+                           <!--[ngClass]="formUtils.handleValidationStateClass(form, 'summary_sheet_end_date')"-->
+                           <!--class="form-control">-->
+                    <!--<span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'summary_sheet_end_date', messages) }} </span>-->
                 </td>
             </tr>
             <tr>
                 <th>Voluntary deduction</th>
                 <td>
-                    <input *ngIf="jobDetails?.summary_sheet" formControlName="voluntary_deduction" type="number" class="form-control"
-                           [ngClass]="formUtils.handleValidationStateClass(form, 'voluntary_deduction')">
-                    <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'voluntary_deduction', messages) }} </span>
+                    {{ jobDetails?.summary_sheet?.voluntary_deduction }}
+                    <!--<input *ngIf="jobDetails?.summary_sheet" formControlName="voluntary_deduction" type="number" class="form-control"-->
+                           <!--[ngClass]="formUtils.handleValidationStateClass(form, 'voluntary_deduction')">-->
+                    <!--<span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'voluntary_deduction', messages) }} </span>-->
                 </td>
             </tr>
         </table>

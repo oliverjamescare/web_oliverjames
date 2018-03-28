@@ -6,11 +6,17 @@ import {AuthService} from './auth.service';
 import {FormGroup} from '@angular/forms';
 import {HttpParams} from '@angular/common/http';
 import {User} from '../models/user.model';
+import {Observable} from 'rxjs/Observable';
+import {Subject} from 'rxjs/Subject';
 
 @Injectable()
 export class CareHomeService {
     public address;
     public addressForm: FormGroup;
+
+    // job
+    jobDetails: any;
+    detailsLoaded = new Subject();
 
     constructor(private apiService: ApiService, private authService: AuthService) {
     }
@@ -45,6 +51,29 @@ export class CareHomeService {
 
     addCareHomeToWaitingList(waitingFormObject: Object) {
         return this.apiService.addCareHomeToWaitingList(waitingFormObject);
+    }
+
+    getJobs(page): Observable<any> {
+        return this.apiService.getCareHomeJobs(page);
+    }
+
+    getJobDetails(jobId: string): Observable<any> {
+        return this.apiService.getJobDetails(jobId)
+            .map(
+                response => {
+                    this.jobDetails = response;
+                    this.detailsLoaded.next();
+                    return response;
+                }
+            );
+    }
+
+    editJob(jobId: string, formData: FormData): Observable<any> {
+        return this.apiService.editJob(jobId, formData);
+    }
+
+    cancelJob(jobId: string): Observable<any> {
+        return this.apiService.cancelJob(jobId);
     }
 
 }

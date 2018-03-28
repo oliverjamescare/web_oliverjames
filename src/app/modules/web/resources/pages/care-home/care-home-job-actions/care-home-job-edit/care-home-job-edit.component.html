@@ -1,0 +1,99 @@
+<div *ngIf="careHomeService?.jobDetails" [formGroup]="form" class="job-details">
+    <span class="details-header">Job details</span>
+    <div class="details-row">
+        <span class="details-label">Job ID:</span>
+        <span class="details-info">
+            {{ careHomeService.jobDetails._id }}
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Start:</span>
+        <span class="details-info">
+            <input formControlName="start" class="form-control" type="text">
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">From:</span>
+        <span class="details-info">
+            <select formControlName="start_date" class="form-control">
+                <option *ngFor="let hour of timeArr"
+                        [value]="hour.formatedDate">{{ hour.formatedDate }}</option>
+            </select>
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Till:</span>
+        <span class="details-info">
+            <select formControlName="end_date" class="form-control">
+                <option *ngFor="let hour of timeArr"
+                        [value]="hour.formatedDate">{{ hour.formatedDate }}</option>
+            </select>
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Job guidance:</span>
+        <span class="details-info">
+            <textarea formControlName="notes" class="form-control"></textarea>
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Floor plan:</span>
+        <span class="details-info">
+                                <input type="file"
+                                       id="file"
+                                       class="form-control floor-plan"
+                                       (change)="handleFileInput($event.target.files)">
+                    <span class="red">{{ floorPlanError }}</span>
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Contact on arrival:</span>
+        <span class="details-info">
+            <input formControlName="report_contact" class="form-control" type="text">
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Suprior contact:</span>
+        <span class="details-info">
+            <input formControlName="superior_contact" class="form-control" type="text">
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Parking:</span>
+        <span class="details-info">
+            <input formControlName="parking" class="form-control" type="text">
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Notes for carers:</span>
+        <span class="details-info">
+            <input formControlName="notes_for_carers" class="form-control" type="text">
+        </span>
+    </div>
+    <div class="details-row">
+        <span class="details-label">Emergency guidance:</span>
+        <span class="details-info">
+            <input formControlName="emergency_guidance" class="form-control" type="text">
+        </span>
+    </div>
+</div>
+<br>
+<div class="details-actions">
+    <button (click)="onBackToDetails()" class="btn-success margin-r btn-red">Back to details</button>
+    <button (click)="onEditJob()" class="btn-success right">Edit job <span *ngIf="buttonLoading"><i class="fa fa-spinner fa-spin"></i></span></button>
+</div>
+
+<app-warning-popup
+        *ngIf="showWarningPopup"
+        [type]="'warning-popup'"
+        (closed)="showWarningPopup = false"
+></app-warning-popup>

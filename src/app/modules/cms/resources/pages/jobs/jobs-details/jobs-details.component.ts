@@ -193,16 +193,16 @@ export class JobsDetailsComponent implements OnInit {
         formData.append('notes', this.form.get('notes').value);
         formData.append('gender_preference', this.form.get('gender_preference').value);
         formData.append('manual_booking', this.getManualBooking());
-        if (this.form.get('summary_sheet_start_date').value !== null) {
-            formData.append('summary_sheet_start_date', `${new Date(this.form.get('summary_sheet_start_date').value).getTime()}`);
-            console.log('summary start', `${new Date(this.form.get('summary_sheet_start_date').value).getTime()}`);
-        }
-        if (this.form.get('summary_sheet_end_date').value !== null) {
-            formData.append('summary_sheet_end_date', `${new Date(this.form.get('summary_sheet_end_date').value).getTime()}`);
-        }
-        if (this.form.get('voluntary_deduction').value !== null) {
-            formData.append('voluntary_deduction', `${new Date(this.form.get('voluntary_deduction').value).getTime()}`);
-        }
+        // if (this.form.get('summary_sheet_start_date').value !== null) {
+        //     formData.append('summary_sheet_start_date', `${new Date(this.form.get('summary_sheet_start_date').value).getTime()}`);
+        //     console.log('summary start', `${new Date(this.form.get('summary_sheet_start_date').value).getTime()}`);
+        // }
+        // if (this.form.get('summary_sheet_end_date').value !== null) {
+        //     formData.append('summary_sheet_end_date', `${new Date(this.form.get('summary_sheet_end_date').value).getTime()}`);
+        // }
+        // if (this.form.get('voluntary_deduction').value !== null) {
+        //     formData.append('voluntary_deduction', `${new Date(this.form.get('voluntary_deduction').value).getTime()}`);
+        // }
         return formData;
     }
 
@@ -257,9 +257,9 @@ export class JobsDetailsComponent implements OnInit {
             notes: new FormControl(''),
             gender_preference: new FormControl(null),
             manual_booking: new FormControl(null),
-            summary_sheet_start_date: new FormControl(null, Validators.required),
-            summary_sheet_end_date: new FormControl(null, Validators.required),
-            voluntary_deduction: new FormControl(null, [Validators.min(0)]),
+            // summary_sheet_start_date: new FormControl(null, Validators.required),
+            // summary_sheet_end_date: new FormControl(null, Validators.required),
+            // voluntary_deduction: new FormControl(null, [Validators.min(0)]),
         });
     }
 
@@ -276,17 +276,17 @@ export class JobsDetailsComponent implements OnInit {
         this.form.get('notes').setValue(this.jobDetails.notes);
         this.form.get('gender_preference').setValue(this.jobDetails.gender_preference);
         this.form.get('manual_booking').setValue(this.jobDetails.manual_booking);
-        if (!isUndefined(this.jobDetails.summary_sheet)) {
-            if (!isUndefined(this.jobDetails.summary_sheet.start_date)) {
-                this.form.get('summary_sheet_start_date').setValue(dateformat(this.jobDetails.summary_sheet.start_date, 'yyyy-mm-dd'));
-            }
-            if (!isUndefined(this.jobDetails.summary_sheet.end_date)) {
-                this.form.get('summary_sheet_end_date').setValue(dateformat(this.jobDetails.summary_sheet.end_date, 'yyyy-mm-dd'));
-            }
-            if (!isUndefined(this.jobDetails.summary_sheet.voluntary_deduction)) {
-                this.form.get('voluntary_deduction').setValue(this.jobDetails.summary_sheet.voluntary_deduction);
-            }
-        }
+        // if (!isUndefined(this.jobDetails.summary_sheet)) {
+        //     if (!isUndefined(this.jobDetails.summary_sheet.start_date)) {
+        //         this.form.get('summary_sheet_start_date').setValue(dateformat(this.jobDetails.summary_sheet.start_date, 'yyyy-mm-dd'));
+        //     }
+        //     if (!isUndefined(this.jobDetails.summary_sheet.end_date)) {
+        //         this.form.get('summary_sheet_end_date').setValue(dateformat(this.jobDetails.summary_sheet.end_date, 'yyyy-mm-dd'));
+        //     }
+        //     if (!isUndefined(this.jobDetails.summary_sheet.voluntary_deduction)) {
+        //         this.form.get('voluntary_deduction').setValue(this.jobDetails.summary_sheet.voluntary_deduction);
+        //     }
+        // }
     }
 
     private getStartTime(): Date {

@@ -1,3 +1,281 @@
-<p>
-  care-home-my-profile works!
-</p>
+<app-care-home-booking-header
+        navigationTitle="Back"
+        navigationRoute="/care-home-dashboard"
+        mainTitle="Profile details"
+></app-care-home-booking-header>
+<br>
+<div>
+    <div [formGroup]="form" class="row">
+        <div class="col-sm">
+            <table class="profile-table">
+                <tr>
+                    <th class="tall">Your email address</th>
+                    <td class="tall relative">
+                        <span class="first-row">{{ profileDetails?.email }}</span>
+                        <span class="action">
+                        <button (click)="showEditEmail = true" class="btn-success">Edit</button>
+                    </span>
+                        <span
+                                *ngIf="!profileDetails?.email_verified"
+                                (click)="onResendEmail()"
+                                class="red second-row gj-cursor-pointer">
+                        Not verified - tap to resend verification email
+                    </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Your Oliver James ID</th>
+                    <td>{{ profileDetails?._id }}</td>
+                </tr>
+                <tr>
+                    <th>Your phone number</th>
+                    <td>
+                        <input formControlName="phone_number" type="text" class="form-control">
+                        <span *ngIf="form.get('phone_number').errors?.numbers" class="red full-width">
+                        Phone number can contain numbers only
+                    </span>
+                        <span *ngIf="form.get('phone_number').errors?.required" class="red full-width">
+                        This field is required
+                    </span>
+                        <span *ngIf="form.get('phone_number').errors?.minlength || form.get('phone_number').errors?.maxlength"
+                              class="red full-width">
+                        Phone number must contain between 6 and 9 numbers
+                    </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Your Name</th>
+                    <td>
+                        <input formControlName="name" type="text" class="form-control">
+                        <span *ngIf="form.get('name').errors?.required" class="red full-width">
+                        This field is required
+                    </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Care Service Name</th>
+                    <td>
+                        <input formControlName="care_service_name" type="text" class="form-control">
+                        <span *ngIf="form.get('care_service_name').errors?.required" class="red full-width">
+                        This field is required
+                    </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Your address</th>
+                    <td>
+                        <input
+                                placeholder="Search for address"
+                                autocorrect="off"
+                                autocapitalize="off"
+                                spellcheck="off"
+                                type="text"
+                                class="form-control"
+                                id="searchControl" #search [formControl]="searchControl">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Address line 1</th>
+                    <td>
+                        <input formControlName="address_line_1" type="text" class="form-control">
+                        <span *ngIf="form.get('address_line_1').errors?.required" class="red full-width">
+                        This field is required
+                    </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Address line 2</th>
+                    <td><input formControlName="address_line_2" type="text" class="form-control"></td>
+                </tr>
+                <tr>
+                    <th>City</th>
+                    <td>
+                        <input formControlName="city" type="text" class="form-control">
+                        <span *ngIf="form.get('city').errors?.required" class="red full-width">
+                        This field is required
+                    </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Postcode</th>
+                    <td>
+                        <input formControlName="postal_code" type="text" class="form-control">
+                        <span *ngIf="form.get('postal_code').errors?.required" class="red full-width">
+                        This field is required
+                    </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Password</th>
+                    <td class="relative tall">
+                    <span class="action">
+                        <button (click)="showChangePassword = true" class="btn-success">Edit</button>
+                    </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Type of home</th>
+                    <td>
+                        <select formControlName="type_of_home" class="form-control">
+                            <option value="Residential">Residential</option>
+                            <option value="Nursing">Nursing</option>
+                            <option value="Learning disability">Learning disability</option>
+                            <option value="Supported living">Supported living</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Bank account details (to receive payment)</th>
+                    <td class="relative tall">
+                    <span
+                            *ngIf="profileDetails?.care_home.payment_system.card_number !== null"
+                            class="first-row"
+                    >Account set up</span>
+                        <span
+                                *ngIf="profileDetails?.care_home.payment_system.card_number === null"
+                                class="first-row"
+                        >Account not set up</span>
+                        <span class="action">
+                        <button class="btn-success">Edit</button>
+                    </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Blocked carers</th>
+                    <td>
+                        <span (click)="showBlockedCarers = true" class="green gj-cursor-pointer">See all blocked carers</span>
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <button
+                    [disabled]="!form.valid"
+                    (click)="onUpdateProfile()"
+                    class="btn-success">Update profile
+                <span *ngIf="buttonLoading"><i class="fa fa-spinner fa-spin"></i></span></button>
+        </div>
+    </div>
+    <br>
+
+    <div class="row">
+        <div class="col-sm">
+            <h2>Details for all jobs</h2>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-sm-12">
+            <h5>Gender preference</h5>
+        </div>
+        <div class="col-md-12 col-lg-7">
+            <div (click)="onTabChange(0)" [ngClass]="{'active-tab': selectedTab === 0}" class="preference-tab text-center ">No preference</div>
+            <div (click)="onTabChange(1)" [ngClass]="{'active-tab': selectedTab === 1}" class="preference-tab text-center no-left-border">Male</div>
+            <div (click)="onTabChange(2)" [ngClass]="{'active-tab': selectedTab === 2}" class="preference-tab text-center no-left-border">Female</div>
+        </div>
+    </div>
+    <br>
+    <div *ngIf="profileDetails" class="row">
+        <div class="col-sm-12">
+            <h5>General Guidance</h5>
+            <p>Complete optionally - this will be saved for all future jobs and seen by Oliver James carers coming to [CARE SERVICE NAME]</p>
+        </div>
+        <div [formGroup]="form" class="col-md-12 col-lg-7">
+            <div class="guidance-row">
+                <div class="guidance-left-tab text-center">
+                    When our carer calls your service to confirm the job, who should they speak to
+                </div>
+                <textarea
+                        formControlName="superior_contact"
+                        class="guidance-right-tab"
+                        placeholder="e.g senior carer, manager"
+                ></textarea>
+            </div>
+
+            <div class="guidance-row">
+                <div class="guidance-left-tab text-center">
+                    Where should the carer report to upon arrival
+                </div>
+                <textarea
+                        formControlName="report_contact"
+                        class="guidance-right-tab"
+                        placeholder="e.g ask to speak to the senior carer or manager"
+                ></textarea>
+            </div>
+
+            <div class="guidance-row">
+                <div class="guidance-left-tab text-center">
+                    Carer guidance in event of fire alarm sounding:
+                </div>
+                <textarea
+                        formControlName="emergency_guidance"
+                        class="guidance-right-tab"
+                        placeholder="e.g. report to fire panel at main entrance"
+                ></textarea>
+            </div>
+
+            <div class="guidance-row">
+                <div class="guidance-left-tab text-center">
+                    Notes on High risk / complexity residents / any other requests for our carers:
+                </div>
+                <textarea
+                        formControlName="notes_for_carers"
+                        class="guidance-right-tab"
+                        placeholder="e.g. Room 1 has swallowing difficulties. Please take written notes during handover"
+                ></textarea>
+            </div>
+
+            <div class="guidance-row">
+                <div class="guidance-left-tab text-center">
+                    What parking availability is there for the carer
+                </div>
+                <textarea
+                        formControlName="parking"
+                        class="guidance-right-tab"
+                        placeholder="Describe where and if it's free parking / how to pay"
+                ></textarea>
+            </div>
+
+            <div class="guidance-row">
+                <div class="guidance-left-tab text-center">
+                    Upload a floor plan of your care home
+                </div>
+                <div class="guidance-right-tab text-center">
+                    <span *ngIf="form.get('floor_plan').value !== ''" class="file-link"><a class="gj-cursor-pointer" [href]="getFloorPlan()" target="_blank">Floor plan</a></span>
+                    <span *ngIf="form.get('floor_plan').value === ''" class="file-link">No floor plan updated so far</span>
+                    <input type="file"
+                           id="file"
+                           class="form-control floor-plan"
+                           (change)="handleFileInput($event.target.files)">
+                    <span class="red">{{ floorPlanError }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-md-12 col-lg-7">
+        <button (click)="onUpdateProfile()" class="btn btn-success">Update details for all jobs</button>
+    </div>
+</div>
+
+<app-change-email
+        *ngIf="showEditEmail"
+        (closed)="showEditEmail = false"
+        (update)="onUpdateData()"
+></app-change-email>
+
+<app-change-password
+        *ngIf="showChangePassword"
+        (closed)="showChangePassword = false"
+></app-change-password>
+
+<app-blocked-carers
+        *ngIf="showBlockedCarers"
+        [carerId]="profileDetails._id"
+        [type]="blocked_carers"
+        [blockedCarers]="blockedCarers"
+        (closed)="showBlockedCarers = false"
+        (reload)="onUpdateData()"
+>
+</app-blocked-carers>

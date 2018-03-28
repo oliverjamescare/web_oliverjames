@@ -1,0 +1,112 @@
+<div *ngIf="careHomeService?.jobDetails" class="job-details">
+    <span class="details-header">Job details</span>
+    <div class="details-row">
+        <span class="details-label">Job ID:</span>
+        <span class="details-info">
+            {{ careHomeService.jobDetails._id }}
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Start:</span>
+        <span class="details-info">
+            {{ careHomeService.jobDetails.start_date | timestampDate}}
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Time:</span>
+        <span class="details-info">
+            {{ careHomeService.jobDetails.end_date | timestampHour}} till {{ careHomeService.jobDetails.end_date | timestampHour }}
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Due in:</span>
+        <span class="details-info">
+            XXXX hours
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Phone:</span>
+        <span class="details-info">
+            {{ careHomeService.jobDetails.author.phone_number }}
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Address:</span>
+        <span class="details-info">
+            {{ careHomeService.jobDetails.author.address.address_line_1 }},
+            {{ careHomeService.jobDetails.author.address.address_line_2 }}
+            {{ careHomeService.jobDetails.author.address.city }}
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Google maps:</span>
+        <span class="details-info">
+            Find service on <a [href]="" target="_blank">Google Maps</a>
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Job guidance:</span>
+        <span class="details-info">
+            {{ careHomeService.jobDetails.notes }}
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Floor plan:</span>
+        <span class="details-info">
+            <a [href]="getFloorPlanLink(careHomeService.jobDetails.general_guidance.floor_plan)" target="_blank">Floor plan</a>
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Contact on arrival:</span>
+        <span class="details-info">
+            {{ careHomeService.jobDetails.general_guidance.report_contact }}
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Suprior contact:</span>
+        <span class="details-info">
+            {{ careHomeService.jobDetails.general_guidance.superior_contact }}
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Parking:</span>
+        <span class="details-info">
+            {{ careHomeService.jobDetails.general_guidance.parking }}
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Notes for carers:</span>
+        <span class="details-info">
+            {{ careHomeService.jobDetails.general_guidance.notes_for_carers }}
+        </span>
+    </div>
+    <div class="details-row">
+        <span class="details-label">Emergency guidance:</span>
+        <span class="details-info">
+            {{ careHomeService.jobDetails.general_guidance.emergency_guidance}}
+        </span>
+    </div>
+</div>
+<br>
+<div class="details-actions">
+    <button (click)="onCancelJob()" class="btn-success margin-r btn-red">Cancel job</button>
+    <button (click)="onEditJob()" class="btn-success right">Edit job</button>
+</div>
+
+<app-cancelation-popup
+        *ngIf="showCancelationPopup"
+        [type]="'cancelation_popup'"
+        (closed)="showCancelationPopup = false"
+></app-cancelation-popup>

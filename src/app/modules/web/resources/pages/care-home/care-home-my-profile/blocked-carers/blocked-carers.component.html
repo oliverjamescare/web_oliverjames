@@ -1,0 +1,14 @@
+<app-popup [title]="title" [id]="type + '_id'" [showLogo]="false">
+    <div class="row">
+        <div class="col-12">
+            <p *ngIf="blockedCarers.length === 0">No carers blocked</p>
+            <ul class="books-list">
+                <li *ngFor="let carer of blockedCarers; let i = index">
+                    <span>{{ carer.carer.first_name }} {{ carer.carer.surname }}</span>
+                    <span (click)="onRemoveCarer(carer._id)" class="right green gj-cursor-pointer">
+                        Unblock<span *ngIf="buttonLoading"><i class="fa fa-spinner fa-spin"></i></span></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</app-popup>

@@ -37,6 +37,10 @@ import {CarerAvailabilityComponent} from './resources/pages/carer/carer-availabi
 import {CarerAvailableJobsComponent} from './resources/pages/carer/carer-available-jobs/carer-available-jobs.component';
 import {ApplyForJobComponent} from './resources/pages/carer/apply-for-job/apply-for-job.component';
 import {UpcomingJobsTabComponent} from './resources/pages/carer/upcoming-jobs-tab/upcoming-jobs-tab.component';
+import {CareHomeUpcomingJobsTabComponent} from './resources/pages/care-home/care-home-upcoming-jobs-tab/care-home-upcoming-jobs-tab.component';
+import {CareHomeJobActionsComponent} from './resources/pages/care-home/care-home-job-actions/care-home-job-actions.component';
+import {CareHomeJobDetailsComponent} from './resources/pages/care-home/care-home-job-actions/care-home-job-details/care-home-job-details.component';
+import {CareHomeJobEditComponent} from './resources/pages/care-home/care-home-job-actions/care-home-job-edit/care-home-job-edit.component';
 
 const routes: Routes = [
     {
@@ -91,6 +95,20 @@ const routes: Routes = [
                     { path: '', pathMatch: 'full', component: CareHomeHomeComponent },
                     { path: 'my-profile', component: CareHomeMyProfileComponent },
                     { path: 'contact', component: ContactComponent },
+                ]
+            },
+            {
+                path: 'care-home-upcoming-jobs',
+                component: CareHomeUpcomingJobsTabComponent,
+                canActivate: [ CareHomeAuthGuardService ]
+            },
+            {
+                path: 'care-home-job-actions/:id',
+                component: CareHomeJobActionsComponent,
+                canActivate: [ CareHomeAuthGuardService ],
+                children: [
+                    { path: 'details',  component: CareHomeJobDetailsComponent },
+                    { path: 'edit', component: CareHomeJobEditComponent },
                 ]
             },
             {

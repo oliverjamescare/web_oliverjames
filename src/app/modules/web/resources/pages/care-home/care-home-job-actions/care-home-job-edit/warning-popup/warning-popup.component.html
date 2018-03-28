@@ -1,0 +1,11 @@
+<app-popup [title]="title" [id]="type + '_id'" [showLogo]="false">
+    <div class="row">
+        <div class="col-12 text-center">
+            <p>This job has already been accepted. If you intend to change the date / time, please cancel this job and
+                place a new one or call the carer to see if they agree. They can then amend their worked hours when they
+                attend</p>
+            <br>
+            <button (click)="onClose()" class="btn btn-success">Ok</button>
+        </div>
+    </div>
+</app-popup>

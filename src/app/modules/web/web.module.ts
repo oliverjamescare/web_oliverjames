@@ -80,24 +80,35 @@ import {DatesService} from './services/dates.service';
 import {FakeApiService} from './services/fake-api.service';
 import {CarerAvailableJobsComponent} from './resources/pages/carer/carer-available-jobs/carer-available-jobs.component';
 import {CarerProfileService} from './services/carer-profile.service';
-import { ChangePasswordComponent } from './resources/pages/carer/carer-my-profile/change-password/change-password.component';
-import { ChangeEmailComponent } from './resources/pages/carer/carer-my-profile/change-email/change-email.component';
-import { ChangeProfileImageComponent } from './resources/pages/carer/carer-my-profile/change-profile-image/change-profile-image.component';
-import { ApplyForJobComponent } from './resources/pages/carer/apply-for-job/apply-for-job.component';
-import { CarerCalendarComponent } from './resources/pages/carer/apply-for-job/carer-calendar/carer-calendar.component';
-import { CarerCalendarCellComponent } from './resources/pages/carer/apply-for-job/carer-calendar/carer-calendar-cell/carer-calendar-cell.component';
-import { CarerCalendarDayComponent } from './resources/pages/carer/apply-for-job/carer-calendar/carer-calendar-cell/carer-calendar-day/carer-calendar-day.component';
-import { CarerCalendarPopupComponent } from './resources/pages/carer/apply-for-job/carer-calendar/carer-calendar-cell/carer-calendar-day/carer-calendar-popup/carer-calendar-popup.component';
-import { JobDetailsComponent } from './resources/pages/carer/apply-for-job/job-details/job-details.component';
-import { ConfirmationPopupComponent } from './resources/pages/carer/apply-for-job/job-details/confirmation-popup/confirmation-popup.component';
-import { OtherJobsComponent } from './resources/pages/carer/apply-for-job/other-jobs/other-jobs.component';
-import { AgmCoreModule } from '@agm/core';
-import { CardDetailsComponent } from './resources/pages/carer/carer-my-profile/card-details/card-details.component';
-import { NgxStripeModule } from 'ngx-stripe';
-import { UpcomingJobsTabComponent } from './resources/pages/carer/upcoming-jobs-tab/upcoming-jobs-tab.component';
-import { CarerJobListComponent } from './resources/pages/carer/apply-for-job/carer-calendar/carer-calendar-cell/carer-calendar-day/carer-job-list/carer-job-list.component';
+import {ChangePasswordComponent} from './resources/pages/carer/carer-my-profile/change-password/change-password.component';
+import {ChangeEmailComponent} from './resources/pages/carer/carer-my-profile/change-email/change-email.component';
+import {ChangeProfileImageComponent} from './resources/pages/carer/carer-my-profile/change-profile-image/change-profile-image.component';
+import {ApplyForJobComponent} from './resources/pages/carer/apply-for-job/apply-for-job.component';
+import {CarerCalendarComponent} from './resources/pages/carer/apply-for-job/carer-calendar/carer-calendar.component';
+import {CarerCalendarCellComponent} from './resources/pages/carer/apply-for-job/carer-calendar/carer-calendar-cell/carer-calendar-cell.component';
+import {CarerCalendarDayComponent} from './resources/pages/carer/apply-for-job/carer-calendar/carer-calendar-cell/carer-calendar-day/carer-calendar-day.component';
+import {CarerCalendarPopupComponent} from './resources/pages/carer/apply-for-job/carer-calendar/carer-calendar-cell/carer-calendar-day/carer-calendar-popup/carer-calendar-popup.component';
+import {JobDetailsComponent} from './resources/pages/carer/apply-for-job/job-details/job-details.component';
+import {ConfirmationPopupComponent} from './resources/pages/carer/apply-for-job/job-details/confirmation-popup/confirmation-popup.component';
+import {OtherJobsComponent} from './resources/pages/carer/apply-for-job/other-jobs/other-jobs.component';
+import {AgmCoreModule} from '@agm/core';
+import {CardDetailsComponent} from './resources/pages/carer/carer-my-profile/card-details/card-details.component';
+import {NgxStripeModule} from 'ngx-stripe';
+import {UpcomingJobsTabComponent} from './resources/pages/carer/upcoming-jobs-tab/upcoming-jobs-tab.component';
+import {CarerJobListComponent} from './resources/pages/carer/apply-for-job/carer-calendar/carer-calendar-cell/carer-calendar-day/carer-job-list/carer-job-list.component';
 import {LoadingService} from './services/loading.service';
 import {GoogleService} from './services/google.service';
+import {CareHomeUpcomingJobsComponent} from './resources/pages/care-home/care-home-upcoming-jobs/care-home-upcoming-jobs.component';
+import {TimestampHourPipe} from './pipes/timestampHour.pipe';
+import {TimestampDatePipe} from './pipes/timstampDate.pipe';
+import { BlockedCarersComponent } from './resources/pages/care-home/care-home-my-profile/blocked-carers/blocked-carers.component';
+import { CareHomeUpcomingJobsTabComponent } from './resources/pages/care-home/care-home-upcoming-jobs-tab/care-home-upcoming-jobs-tab.component';
+import { CareHomeJobActionsComponent } from './resources/pages/care-home/care-home-job-actions/care-home-job-actions.component';
+import { CareHomeJobDetailsComponent } from './resources/pages/care-home/care-home-job-actions/care-home-job-details/care-home-job-details.component';
+import { CareHomeJobEditComponent } from './resources/pages/care-home/care-home-job-actions/care-home-job-edit/care-home-job-edit.component';
+import { WarningPopupComponent } from './resources/pages/care-home/care-home-job-actions/care-home-job-edit/warning-popup/warning-popup.component';
+import { CancelationPopupComponent } from './resources/pages/care-home/care-home-job-actions/care-home-job-details/cancelation-popup/cancelation-popup.component';
+import { CareHomeCarerDetailsComponent } from './resources/pages/care-home/care-home-job-actions/care-home-carer-details/care-home-carer-details.component';
 
 @NgModule({
     declarations: [
@@ -163,7 +174,18 @@ import {GoogleService} from './services/google.service';
         CardDetailsComponent,
         UpcomingJobsTabComponent,
         CarerJobListComponent,
-        PopupComponent
+        PopupComponent,
+        CareHomeUpcomingJobsComponent,
+        TimestampHourPipe,
+        TimestampDatePipe,
+        BlockedCarersComponent,
+        CareHomeUpcomingJobsTabComponent,
+        CareHomeJobActionsComponent,
+        CareHomeJobDetailsComponent,
+        CareHomeJobEditComponent,
+        WarningPopupComponent,
+        CancelationPopupComponent,
+        CareHomeCarerDetailsComponent
     ],
     imports: [
         CommonModule,
@@ -173,7 +195,7 @@ import {GoogleService} from './services/google.service';
         NgbModule.forRoot(),
         MatInputModule,
         ClickOutsideModule,
-        NgxStripeModule.forRoot('pk_test_nNzWK5F1sMRLXASCYDBtV7eL'),
+        NgxStripeModule.forRoot('pk_test_sihAGUNVJG3EsvgRyh7IHDQo'),
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyBWoEhh2-9yp52XVTtfTaLIPcxcmTkt_Ms',
             libraries: ['places', 'geometry']

@@ -1,0 +1,58 @@
+<div class="row">
+    <div class="col-sm">
+        <h2>Current / upcoming jobs</h2>
+    </div>
+</div>
+<br>
+<div class="row">
+    <div class="col-sm">
+        <p *ngIf="upcomingJobs.length === 0">No jobs available</p>
+        <table *ngIf="upcomingJobs.length !==0" class="custom-table text-center">
+            <thead>
+            <tr>
+                <th>Job ID</th>
+                <th>Start Date</th>
+                <th>From</th>
+                <th>Till</th>
+                <th>Your carer</th>
+                <th>Current carer rating</th>
+                <th>Experience</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let job of upcomingJobs; let i = index">
+                <td>{{ job._id }}</td>
+                <td>{{ job.start_date | timestampDate }}</td>
+                <td>{{ job.start_date | timestampHour }}</td>
+                <td>{{ job.end_date | timestampHour}}</td>
+                <td [ngClass]="{'red-bg': getCarerOutput(i) === 'Pending'}">{{ getCarerOutput(i) }}</td>
+                <td></td>
+                <td></td>
+                <td>
+                    <div class="text-center">
+                            <span
+                                    [routerLink]="['/care-home-job-actions', job._id, 'details']"
+                                    class="actions"
+                            >Modify/ cancel</span>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <div *ngIf="pages.length > 1 && showPagination" class="text-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li
+                            *ngFor="let p of pages"
+                            [ngClass]="{'active': page === p + 1}"
+                            class="page-item">
+                        <a
+                                (click)="onPageChange(p + 1)"
+                                class="page-link">{{ p + 1 }}</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
