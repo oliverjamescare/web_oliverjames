@@ -41,6 +41,7 @@ import {CareHomeUpcomingJobsTabComponent} from './resources/pages/care-home/care
 import {CareHomeJobActionsComponent} from './resources/pages/care-home/care-home-job-actions/care-home-job-actions.component';
 import {CareHomeJobDetailsComponent} from './resources/pages/care-home/care-home-job-actions/care-home-job-details/care-home-job-details.component';
 import {CareHomeJobEditComponent} from './resources/pages/care-home/care-home-job-actions/care-home-job-edit/care-home-job-edit.component';
+import {CarerNotificationsComponent} from './resources/pages/carer/carer-notifications/carer-notifications.component';
 
 const routes: Routes = [
     {
@@ -85,6 +86,11 @@ const routes: Routes = [
             {
                 path: 'carer-apply-for-job/:id',
                 component: ApplyForJobComponent,
+                canActivate: [CarerAuthGuardService]
+            },
+            {
+                path: 'carer-notifications',
+                component: CarerNotificationsComponent,
                 canActivate: [CarerAuthGuardService]
             },
             {

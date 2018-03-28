@@ -109,6 +109,8 @@ import { CareHomeJobEditComponent } from './resources/pages/care-home/care-home-
 import { WarningPopupComponent } from './resources/pages/care-home/care-home-job-actions/care-home-job-edit/warning-popup/warning-popup.component';
 import { CancelationPopupComponent } from './resources/pages/care-home/care-home-job-actions/care-home-job-details/cancelation-popup/cancelation-popup.component';
 import { CareHomeCarerDetailsComponent } from './resources/pages/care-home/care-home-job-actions/care-home-carer-details/care-home-carer-details.component';
+import { CarerNotificationsComponent } from './resources/pages/carer/carer-notifications/carer-notifications.component';
+import {CarerService} from './services/carer.service';
 
 @NgModule({
     declarations: [
@@ -185,7 +187,8 @@ import { CareHomeCarerDetailsComponent } from './resources/pages/care-home/care-
         CareHomeJobEditComponent,
         WarningPopupComponent,
         CancelationPopupComponent,
-        CareHomeCarerDetailsComponent
+        CareHomeCarerDetailsComponent,
+        CarerNotificationsComponent
     ],
     imports: [
         CommonModule,
@@ -218,7 +221,8 @@ import { CareHomeCarerDetailsComponent } from './resources/pages/care-home/care-
         CarerJobService,
         CarerProfileService,
         LoadingService,
-        GoogleService
+        GoogleService,
+        CarerService
     ]
 })
 export class WebModule {

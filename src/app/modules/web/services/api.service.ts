@@ -127,6 +127,13 @@ export class ApiService {
         );
     }
 
+    getCarerNotifications(page: number): Observable<any> {
+        return this.httpClient.get(
+            `${this.endpoint}/carer/notifications/list?page=${page}`,
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
     // care home
     getCalendarData(): Observable<any> {
         return this.httpClient.get(this.endpoint + '/care-home/calendar', {headers: this.getAuthorizationHeaders()});
