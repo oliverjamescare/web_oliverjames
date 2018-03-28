@@ -59,6 +59,32 @@
 
 }
 
+.btn-warn {
+  border-radius: 0;
+  color: $white-color;
+  text-align: center;
+  padding: 10px;
+  background: $yellow-color;
+  border-color: $yellow-color;
+  font-family: $main-font;
+  font-weight: 500;
+  width: 100%;
+  &:hover {
+    background: lighten($yellow-color, 5%);
+    border-color: $yellow-color;
+  }
+  &:focus, &:active:focus, &:not([disabled]):not(.disabled):active:focus {
+    box-shadow: 0 0 0 0.2rem rgba($yellow-color, 0.5);
+    background: $yellow-color;
+    border-color: $yellow-color;
+  }
+  &.disabled, &:disabled {
+    background: $yellow-color;
+
+  }
+}
+
+
 //outline success
 .btn-outline-success {
   border-radius: 0;

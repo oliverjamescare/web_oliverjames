@@ -1,3 +1,96 @@
-<p>
-  care-home-carer-details works!
-</p>
+<div *ngIf="careHomeService?.jobDetails?.carer" class="job-details">
+    <span class="details-header">Carer details</span>
+    <div class="details-row tall">
+        <span class="details-info">
+            <div class="avatar">
+                <div class="avatar-wrapper">
+                    <img *ngIf="careHomeService.jobDetails.carer.carer.profile_image" [src]="getProfileImage()" class="img img responsive profile-image">
+                </div>
+            </div>
+            <div class="info">
+                <span class="float bold">{{ careHomeService?.jobDetails?.carer.carer.first_name }} {{ careHomeService?.jobDetails?.carer.carer.surname }}</span>
+                <span class="float small-font"
+                      *ngIf="careHomeService.jobDetails.carer.carer.reviews.count === 0">No reviews so far</span>
+            <span class="float small-font">{{ careHomeService.jobDetails.carer.carer.care_experience.years }} year(s) care experience</span>
+            </div>
+            <button class="btn-success btn-warn separate-top">Find me a different carer</button>
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Telephone number</span>
+        <span class="details-info">
+            {{ careHomeService.jobDetails.carer.phone_number }}
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Dementia</span>
+        <span class="details-info">
+            {{ careHomeService.jobDetails.carer.carer.training_record.dementia | timestampDate }}
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Fire safety</span>
+        <span class="details-info">
+            {{ careHomeService.jobDetails.carer.carer.training_record.fire_safety | timestampDate }}
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">First aid and basic life support</span>
+        <span class="details-info">
+            {{ careHomeService.jobDetails.carer.carer.training_record.first_aid_and_basic_life_support | timestampDate }}
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">First aid awareness</span>
+        <span class="details-info">
+            {{ careHomeService.jobDetails.carer.carer.training_record.first_aid_awareness | timestampDate }}
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">H & S</span>
+        <span class="details-info">
+            {{ careHomeService.jobDetails.carer.carer.training_record.h_and_s | timestampDate }}
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Infection control</span>
+        <span class="details-info">
+            {{ careHomeService.jobDetails.carer.carer.training_record.infection_control | timestampDate }}
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Manual handling people</span>
+        <span class="details-info">
+            {{ careHomeService.jobDetails.carer.carer.training_record.manual_handling_people | timestampDate }}
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Medication managment</span>
+        <span class="details-info">
+            {{ careHomeService.jobDetails.carer.carer.training_record.medication_management | timestampDate }}
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Safeguarding</span>
+        <span class="details-info">
+            {{ careHomeService.jobDetails.carer.carer.training_record.safeguarding | timestampDate }}
+        </span>
+    </div>
+
+    <div class="details-row">
+        <span class="details-label">Dbs status</span>
+        <span class="details-info">
+            {{ careHomeService.jobDetails.carer.carer.dbs.status }}
+        </span>
+    </div>
+</div>

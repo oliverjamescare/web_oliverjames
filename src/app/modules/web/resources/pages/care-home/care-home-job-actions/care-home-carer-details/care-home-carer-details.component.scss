@@ -1,0 +1,43 @@
+.tall {
+  height: 145px;
+}
+
+.float {
+  float: left;
+  width: 100%;
+}
+
+.bold {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.avatar {
+  float: left;
+  width: 20%;
+  .avatar-wrapper {
+    border-radius: 50px;
+    overflow: hidden;
+    width: 66px;
+    height: 66px;
+    background-color: #4a4a4a;
+  }
+}
+
+.info {
+  float: left;
+  width: 80%;
+  padding-left: 10px;
+}
+
+.separate-top {
+  margin-top: 5px;
+}
+
+.small-font {
+  font-size: 14px;
+}
+
+.profile-image {
+  height: 66px;
+}
