@@ -13,10 +13,12 @@ import { CmsModule } from './modules/cms/cms.module';
 import { AppComponent } from './app.component';
 import {SimpleNotificationsModule} from 'angular2-notifications';
 import {SharedModule} from './modules/shared/shared.module';
+import { TermsComponent } from './terms/terms.component';
 
 @NgModule({
     declarations: [
-        AppComponent
+        AppComponent,
+        TermsComponent
     ],
     imports: [
         SharedModule,

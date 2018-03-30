@@ -148,7 +148,7 @@
                 </div>
             </div>
             <div formArrayName="references">
-                <div *ngFor="let control of getFormArray('qualifications').controls; let i = index" [formGroupName]="i" class="row">
+                <div *ngFor="let control of getFormArray('references').controls; let i = index" [formGroupName]="i" class="row">
                     <div class="col-4">
                         <div class="form-group">
                             <input formControlName="name" type="text" class="form-control" placeholder="reference">
