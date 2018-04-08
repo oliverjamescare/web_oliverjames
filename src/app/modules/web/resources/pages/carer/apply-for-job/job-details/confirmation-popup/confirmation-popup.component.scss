@@ -1,7 +1,7 @@
 .confirmation-popup {
   position: absolute;
   z-index: 1000;
-  top: 80px;
+  bottom: 80px;
   left: 0;
   right: 0;
   background-color: white;
@@ -46,19 +46,6 @@
   }
 }
 
-.checkbox-div {
-  position: relative;
-  label {
-    position: absolute;
-    left: 0;
-  }
-  p {
-    color: #03c88b;
-    margin-left: 33px;
-    font-size: 13px;
-  }
-
-  .weight {
-    font-weight: 600;
-  }
+.small-font {
+  font-size: 14px;
 }

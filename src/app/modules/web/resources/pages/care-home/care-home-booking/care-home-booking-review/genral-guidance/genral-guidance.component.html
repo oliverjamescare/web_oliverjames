@@ -64,7 +64,7 @@
                 Upload a floorplan of your care home
             </div>
             <div class="guidance-right-tab text-center">
-                <span *ngIf="form.get('floor_plan').value !== ''" class="file-link"><a class="gj-cursor-pointer" [href]="getFloorPlan()" target="_blank">Floor plan</a></span>
+                <span *ngIf="form.get('floor_plan').value !== ''" class="file-link"><a class="gj-cursor-pointer" [href]="getFloorPlan()" target="_blank">Floor plan uploaded</a></span>
                 <span *ngIf="form.get('floor_plan').value === ''" class="file-link">No floor plan updated so far</span>
                 <input type="file"
                        id="file"

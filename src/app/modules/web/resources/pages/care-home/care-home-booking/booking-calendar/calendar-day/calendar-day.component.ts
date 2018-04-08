@@ -18,7 +18,7 @@ export class CalendarDayComponent implements OnInit, OnChanges, OnDestroy {
     @Input() index: number;
 
     pastDay: boolean;
-    allJobs: { start: Date, end: Date, preBooked: boolean }[] = [];
+    allJobs: { start: Date, end: Date, preBooked: boolean, role: string}[] = [];
     preBookedJobs: PreBookedJob[] = [];
 
     bookedJobSub: Subscription;
@@ -93,6 +93,7 @@ export class CalendarDayComponent implements OnInit, OnChanges, OnDestroy {
                 this.allJobs.push({
                     start: new Date(job.start_date),
                     end: new Date(job.end_date),
+                    role: job.role,
                     preBooked: false
                 });
             });
@@ -100,6 +101,7 @@ export class CalendarDayComponent implements OnInit, OnChanges, OnDestroy {
                 this.allJobs.push({
                     start: job.getStartDate(),
                     end: job.getEndDate(),
+                    role: job.role,
                     preBooked: true
                 });
             });

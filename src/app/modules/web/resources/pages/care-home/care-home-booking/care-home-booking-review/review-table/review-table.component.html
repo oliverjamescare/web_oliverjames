@@ -23,7 +23,7 @@
                 <td>{{ job.getStartDate() | hourPipe }}</td>
                 <td>{{ job.getEndDate() | hourPipe }}</td>
                 <td>{{ job.amount }}</td>
-                <td>{{ job.getEndDate().getHours() - job.getStartDate().getHours() }}</td>
+                <td>{{ getTotalHours(job) }}</td>
                 <td>{{ job.role }}</td>
                 <td>
                     <textarea formControlName="{{ i }}" class="array-input"></textarea>

@@ -12,12 +12,80 @@
             <thead>
                 <tr>
                     <th>Job ID</th>
-                    <th>Start Date</th>
+                    <th class="sort-cell" (clickOutside)="showStartSorters = false">
+                        Start
+                        <span (click)="onShowSorters('showStartSorters')" class="sort-icon">
+                            <i class="fas fa-sort"></i>
+                        </span>
+                        <div
+                                *ngIf="showStartSorters"
+                                class="suggestions text-left">
+                            <ul>
+                                <li (click)="onSelectSorter('startASC', 'showStartSorters')">
+                                    ASC
+                                </li>
+                                <li (click)="onSelectSorter('startDESC', 'showStartSorters')">
+                                    DESC
+                                </li>
+                            </ul>
+                        </div>
+                    </th>
                     <th>From</th>
-                    <th>Till</th>
-                    <th>Projected income</th>
+                    <th class="sort-cell" (clickOutside)="showEndSorters = false">
+                        Till
+                        <span (click)="onShowSorters('showEndSorters')" class="sort-icon">
+                            <i class="fas fa-sort"></i>
+                        </span>
+                        <div
+                                *ngIf="showEndSorters"
+                                class="suggestions text-left">
+                            <ul>
+                                <li (click)="onSelectSorter('endASC', 'showEndSorters')">
+                                    ASC
+                                </li>
+                                <li (click)="onSelectSorter('endDESC', 'showEndSorters')">
+                                    DESC
+                                </li>
+                            </ul>
+                        </div>
+                    </th>
+                    <th class="sort-cell" (clickOutside)="showIncomeSorters = false">
+                        Projected Income
+                        <span (click)="onShowSorters('showIncomeSorters')" class="sort-icon">
+                            <i class="fas fa-sort"></i>
+                        </span>
+                        <div
+                                *ngIf="showIncomeSorters"
+                                class="suggestions text-left">
+                            <ul>
+                                <li (click)="onSelectSorter('incomeASC', 'showIncomeSorters')">
+                                    ASC
+                                </li>
+                                <li (click)="onSelectSorter('incomeDESC', 'showIncomeSorters')">
+                                    DESC
+                                </li>
+                            </ul>
+                        </div>
+                    </th>
                     <th>Care home</th>
-                    <th>Role</th>
+                    <th class="sort-cell" (clickOutside)="showRoleSorters = false">
+                        Role
+                        <span (click)="onShowSorters('showRoleSorters')" class="sort-icon">
+                            <i class="fas fa-sort"></i>
+                        </span>
+                        <div
+                                *ngIf="showRoleSorters"
+                                class="suggestions text-left">
+                            <ul>
+                                <li (click)="onSelectSorter('roleASC', 'showRoleSorters')">
+                                    ASC
+                                </li>
+                                <li (click)="onSelectSorter('roleDESC', 'showRoleSorters')">
+                                    DESC
+                                </li>
+                            </ul>
+                        </div>
+                    </th>
                     <th>Address</th>
                     <th class="sort-cell" (clickOutside)="showDistanceFilters = false">
                         Distance from home
@@ -60,10 +128,15 @@
                     <td>{{ job.getStartDate() | date }}</td>
                     <td>{{ job.getStartDate() | hourPipe  }}</td>
                     <td>{{ job.getEndDate() | hourPipe}}</td>
-                    <td></td>
+                    <td>{{ job.projected_income }} <span>&#163;</span></td>
                     <td>{{ job.author.care_home.care_service_name }}</td>
                     <td>{{ job.role }}</td>
-                    <td>{{ job.author.address.address_line_1 }}, {{ job.author.address.city}}</td>
+                    <td>
+                        {{ job?.author.address.address_line_1 }}
+                        {{ job?.author.address.address_line_2 }},
+                        {{ job.author.address.postal_code }}
+                        {{ job?.author.address.city}}
+                    </td>
                     <td>
                         {{ job.author.distance }} mi
                     </td>
@@ -108,14 +181,111 @@
             <thead>
             <tr>
                 <th>Job ID</th>
-                <th>Start Date</th>
+                <th class="sort-cell" (clickOutside)="showStartSortersWithout = false">
+                    Start
+                    <span (click)="onShowSortersWithout('showStartSortersWithout')" class="sort-icon">
+                            <i class="fas fa-sort"></i>
+                        </span>
+                    <div
+                            *ngIf="showStartSortersWithout"
+                            class="suggestions text-left">
+                        <ul>
+                            <li (click)="onSelectSorterWithout('startASC', 'showStartSortersWithout')">
+                                ASC
+                            </li>
+                            <li (click)="onSelectSorterWithout('startDESC', 'showStartSortersWithout')">
+                                DESC
+                            </li>
+                        </ul>
+                    </div>
+                </th>
                 <th>From</th>
-                <th>Till</th>
-                <th>Projected income</th>
+                <th class="sort-cell" (clickOutside)="showEndSortersWithout = false">
+                    Till
+                    <span (click)="onShowSortersWithout('showEndSortersWithout')" class="sort-icon">
+                            <i class="fas fa-sort"></i>
+                        </span>
+                    <div
+                            *ngIf="showEndSortersWithout"
+                            class="suggestions text-left">
+                        <ul>
+                            <li (click)="onSelectSorterWithout('endASC', 'showEndSortersWithout')">
+                                ASC
+                            </li>
+                            <li (click)="onSelectSorterWithout('endDESC', 'showEndSortersWithout')">
+                                DESC
+                            </li>
+                        </ul>
+                    </div>
+                </th>
+                <th class="sort-cell" (clickOutside)="showIncomeSortersWithout = false">
+                    Projected Income
+                    <span (click)="onShowSortersWithout('showIncomeSortersWithout')" class="sort-icon">
+                            <i class="fas fa-sort"></i>
+                        </span>
+                    <div
+                            *ngIf="showIncomeSortersWithout"
+                            class="suggestions text-left">
+                        <ul>
+                            <li (click)="onSelectSorterWithout('incomeASC', 'showIncomeSortersWithout')">
+                                ASC
+                            </li>
+                            <li (click)="onSelectSorterWithout('incomeDESC', 'showIncomeSortersWithout')">
+                                DESC
+                            </li>
+                        </ul>
+                    </div>
+                </th>
                 <th>Care home</th>
-                <th>Role</th>
+                <th class="sort-cell" (clickOutside)="showRoleSortersWithout = false">
+                    Role
+                    <span (click)="onShowSortersWithout('showRoleSortersWithout')" class="sort-icon">
+                            <i class="fas fa-sort"></i>
+                        </span>
+                    <div
+                            *ngIf="showRoleSortersWithout"
+                            class="suggestions text-left">
+                        <ul>
+                            <li (click)="onSelectSorterWithout('roleASC', 'showRoleSortersWithout')">
+                                ASC
+                            </li>
+                            <li (click)="onSelectSorterWithout('roleDESC', 'showRoleSortersWithout')">
+                                DESC
+                            </li>
+                        </ul>
+                    </div>
+                </th>
                 <th>Address</th>
-                <th>Distance from home</th>
+                <th class="sort-cell" (clickOutside)="showDistanceFiltersWithout = false">
+                    Distance from home
+                    <span (click)="onShowFiltersWithout()" class="sort-icon">
+                            <i class="fas fa-sort"></i>
+                        </span>
+                    <div
+                            *ngIf="showDistanceFiltersWithout"
+                            class="suggestions text-left">
+                        <ul>
+                            <li (click)="onSelectDistanceFilterWithout(0.5)">
+                                0.5 miles
+                            </li>
+                            <li (click)="onSelectDistanceFilterWithout(1)">
+                                1 mile
+                            </li>
+                            <li (click)="onSelectDistanceFilterWithout(2)">
+                                2 mile
+                            </li>
+                            <li (click)="onSelectDistanceFilterWithout(3)">
+                                3 mile
+                            </li>
+                            <li (click)="onSelectDistanceFilterWithout(5)">
+                                5 mile
+                            </li>
+                            <li (click)="onSelectDistanceFilterWithout(10)">
+                                10 mile
+                            </li>
+                        </ul>
+                    </div>
+                </th>
                 <th>Job details</th>
                 <th>Notes</th>
             </tr>
@@ -127,10 +297,15 @@
                 <td>{{ job?.getStartDate() | date }}</td>
                 <td>{{ job?.getStartDate() | hourPipe  }}</td>
                 <td>{{ job?.getEndDate() | hourPipe}}</td>
-                <td></td>
+                <td>{{ job.projected_income }} <span>&#163;</span></td>
                 <td>{{ job?.author.care_home.care_service_name }}</td>
                 <td>{{ job?.role }}</td>
-                <td>{{ job?.author.address.address_line_1 }}, {{ job?.author.address.city}}</td>
+                <td>
+                    {{ job?.author.address.address_line_1 }}
+                    {{ job?.author.address.address_line_2 }},
+                    {{ job.author.address.postal_code }}
+                    {{ job?.author.address.city}}
+                </td>
                 <td>
                     {{ job?.author.distance }} mi
                 </td>

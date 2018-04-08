@@ -113,7 +113,7 @@ export class ApiService {
 
     getOtherJobs(jobId: string): Observable<any> {
         return this.httpClient.get(
-            `${this.endpoint}/jobs/${jobId}/other-jobs`,
+            `${this.endpoint}/jobs/${jobId}/other-jobs?results=50`,
             {headers: this.getAuthorizationHeaders()}
         );
     }

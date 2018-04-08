@@ -11,11 +11,18 @@ import {Job} from '../../../../models/care-home-booking/job';
 })
 export class CarerAvailableJobsComponent implements OnInit, OnDestroy {
     availableJobs: Job[] = [];
-    availableJobsWithoutCriteria: Job[] = [];
     showDistanceFilters = false;
-    showStartFilters = false;
-    // showEndFilter = false;
-    // showRoleFilters = false;
+    showStartSorters = false;
+    showEndSorters = false;
+    showIncomeSorters = false;
+    showRoleSorters = false;
+
+    availableJobsWithoutCriteria: Job[] = [];
+    showDistanceFiltersWithout = false;
+    showStartSortersWithout = false;
+    showEndSortersWithout = false;
+    showIncomeSortersWithout = false;
+    showRoleSortersWithout = false;
 
     getParams = {
         page: 1,
@@ -52,10 +59,6 @@ export class CarerAvailableJobsComponent implements OnInit, OnDestroy {
         this.getJobsSub.unsubscribe();
     }
 
-    onShowFilters(): void {
-        this.showDistanceFilters = !this.showDistanceFilters;
-    }
-
     onPaginationWithoutChange(page: number): void {
         this.getParamsWithoutCriteria.page = page;
         this.getAvailableJobsWithoutCriteria();
@@ -65,19 +68,44 @@ export class CarerAvailableJobsComponent implements OnInit, OnDestroy {
         this.getAvailableJobs();
     }
 
-    // onShowStartFilters(): void {
-    //     this.showStartFilters = !this.showStartFilters;
-    // }
-    //
-    // onSelectFilter(filter: string): void {
-    //     this.getParams.sort = filter;
-    //     this.getAvailableJobs();
-    // }
+    onShowFilters(): void {
+        this.showDistanceFilters = !this.showDistanceFilters;
+    }
 
     onSelectDistanceFilter(distance: number): void {
         this.getParams.distance = distance;
         this.showDistanceFilters = false;
         this.getAvailableJobs();
+    }
+
+    onShowFiltersWithout(): void {
+        this.showDistanceFilters = !this.showDistanceFilters;
+    }
+
+    onSelectDistanceFilterWithout(distance: number): void {
+        this.getParamsWithoutCriteria.distance = distance;
+        this.showDistanceFilters = false;
+        this.getAvailableJobsWithoutCriteria();
+    }
+
+    onShowSorters(sorterName: string): void {
+        this[sorterName] = !this[sorterName];
+    }
+
+    onSelectSorter(sortString: string, sorter: string): void {
+        this.getParams.sort = sortString;
+        this[sorter] = false;
+        this.getAvailableJobs();
+    }
+
+    onShowSortersWithout(sorterName: string): void {
+        this[sorterName] = !this[sorterName];
+    }
+
+    onSelectSorterWithout(sortString: string, sorter: string): void {
+        this.getParamsWithoutCriteria.sort = sortString;
+        this[sorter] = false;
+        this.getAvailableJobsWithoutCriteria();
     }
 
     private getAvailableJobs(): void {

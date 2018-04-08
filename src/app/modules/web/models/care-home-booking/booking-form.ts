@@ -1,6 +1,6 @@
 export interface BookingForm {
-    from: string;
-    till: string;
+    from: number;
+    till: number;
     start_date: number;
     number: number;
     role: string;

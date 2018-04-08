@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {CareHomeBookingService} from '../../../../../../services/care-home-booking.service';
+import * as dateformat from 'dateformat';
 
 const TIMESTAMP_INTERVAL = 900000; // 15 min in milliseconds
 const MIN_IN_MILLISECONDS = 60000;
@@ -34,24 +35,35 @@ export class CalendarPopupComponent implements OnInit {
     }
 
     onAddBooking(): void {
-        console.log('Start date', new Date(this.form.controls['from'].value));
         if (!this.form.valid) {
             this.errorMessage = 'One or many fields are incomplete';
         } else if (!this.isValidFromTill(this.form.get('from').value, this.form.get('till').value)) {
             this.errorMessage = 'Please check the start and end times';
-        } else if (!this.validDate(new Date(this.form.controls['from'].value))) {
-            this.errorMessage = 'Job must start at least 1 hour from now';
+        } else if (!this.validDate(+this.form.controls['from'].value)) {
+            this.errorMessage = `The earliest a job can start is ${dateformat(this.timeTillArr[this.findActualFromIndex()], 'shortTime')}`;
         } else {
-            this.bookingService.bookJob(this.form.value, +this.form.controls['start_date'].value);
+            this.addJobsToList();
             this.closePopup.emit();
+        }
+    }
+
+    private addJobsToList(): void {
+        for (let i = 0; i < this.form.get('number').value; i++) {
+            this.bookingService.bookJob({
+                start_date: this.form.get('start_date').value,
+                from: this.timeFromArr[this.form.get('from').value].getTime(),
+                till: this.timeTillArr[this.form.get('till').value].getTime(),
+                role: this.form.get('role').value,
+                number: 1
+            }, +this.form.get('start_date').value);
         }
     }
 
     private createForm(): void {
         this.form = new FormGroup({
             'start_date': new FormControl(this.getBookingCalendarIndex(), Validators.required),
-            'from': new FormControl(this.timeFromArr[0], Validators.required),
-            'till': new FormControl(this.timeTillArr[0], Validators.required),
+            'from': new FormControl(28, Validators.required),
+            'till': new FormControl(29, Validators.required),
             'role': new FormControl(null, Validators.required),
             'number': new FormControl(1, [Validators.min(1), Validators.max(5)])
         });
@@ -90,13 +102,27 @@ export class CalendarPopupComponent implements OnInit {
         return -1;
     }
 
-    private isValidFromTill(start: string, end: string): boolean {
-        return new Date(end).getTime() - new Date(start).getTime() >= TIMESTAMP_INTERVAL;
+    private isValidFromTill(start: number, end: number): boolean {
+        return (end - start) >= 0;
     }
 
-    private validDate(startDate: Date): boolean {
+    private validDate(startDate: number): boolean {
+        const index = this.findActualFromIndex();
+        console.log('index', index);
+        return startDate > index;
+    }
+
+    private findActualFromIndex(): number {
         const now = new Date();
-        return startDate.getTime() - now.getTime() > 3600000;
+        console.log('now', now);
+        let findedIndex = -1;
+        this.timeFromArr.forEach((date, index) => {
+            if (now.getTime() > date.getTime()) {
+                console.log('Available from', this.timeFromArr[index]);
+                findedIndex = index;
+            }
+        });
+        return findedIndex;
     }
 
 }

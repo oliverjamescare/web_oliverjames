@@ -11,7 +11,8 @@ import {CalendarPopupService} from './calendar-popup/calendar-popup.service';
 export class BookingCalendarComponent implements OnInit {
     calendar: CalendarDay[];
     calendarArr: CalendarCell[] = [];
-    monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+    monthNames = [
+        'January', 'February', 'March', 'April', 'May', 'June',
         'July', 'August', 'September', 'October', 'November', 'December'
     ];
 

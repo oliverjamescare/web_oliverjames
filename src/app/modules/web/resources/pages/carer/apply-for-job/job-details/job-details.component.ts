@@ -4,6 +4,9 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Job} from '../../../../../models/care-home-booking/job';
 import {NotificationsService} from 'angular2-notifications';
 import {isUndefined} from 'util';
+import {AuthService} from '../../../../../services/auth.service';
+
+const HOUR_IN_MILLISECONDS = 3600000;
 
 @Component({
     selector: 'app-job-details',
@@ -18,7 +21,8 @@ export class JobDetailsComponent implements OnInit {
     constructor(public carerJobService: CarerJobService,
                 private route: ActivatedRoute,
                 private notificationService: NotificationsService,
-                private router: Router) {
+                private router: Router,
+                private authService: AuthService) {
     }
 
     ngOnInit() {
@@ -31,20 +35,7 @@ export class JobDetailsComponent implements OnInit {
     }
 
     onAcceptJob(): void {
-        this.carerJobService.acceptJob(this.carerJobService.currentJobId)
-            .subscribe(
-                response => {
-                    console.log('Accept job success response', response);
-                    this.notificationService.success('Job accepted');
-                    this.showConfirmationPopup = true;
-                },
-                error => {
-                    console.log('Accept job error response', error);
-                    if (!isUndefined(error.error.errors[0])) {
-                        this.notificationService.warn( error.error.errors[0].message);
-                    }
-                }
-            );
+        this.showConfirmationPopup = true;
     }
 
     onDeclineJob(): void {
@@ -59,6 +50,27 @@ export class JobDetailsComponent implements OnInit {
                     console.log('Decline job error response', error);
                 }
             );
+    }
+
+    getDueIn(job: Job): string {
+        const now = new Date();
+        const diff = job.start_date - now.getTime();
+        const hourDiff = Math.floor(diff / HOUR_IN_MILLISECONDS);
+        if (hourDiff > 24) {
+            return `${Math.ceil(hourDiff / 24)} day(s)`;
+        } else {
+            return hourDiff < 1 ? 'Less than hour' : `${hourDiff} hours`;
+        }
+    }
+
+    getFloorPlanLink(): string {
+        return `${this.carerJobService.jobDetails.general_guidance.floor_plan}?access-token=${this.authService.getAccessToken().token}`;
+    }
+
+    getGoogleMapsLink(): string {
+        const latitude = this.carerJobService.jobDetails.author.address.location.coordinates[0];
+        const longitude = this.carerJobService.jobDetails.author.address.location.coordinates[1];
+        return `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`;
     }
 
     private getJobDetails(): void {

@@ -23,6 +23,11 @@ export class ReviewTableComponent implements OnInit {
         this.bookingService.removePreBookedJob(index);
     }
 
+    getTotalHours(job: PreBookedJob): string {
+        const diff = job.getEndDate().getHours() - job.getStartDate().getHours();
+        return diff > 0 ? `${diff}` : 'Less than hour';
+    }
+
     private checkCarersToContact(): void {
         this.bookingService.cheekCarersToContact()
             .subscribe(

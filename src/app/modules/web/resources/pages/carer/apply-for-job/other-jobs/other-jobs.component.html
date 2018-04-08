@@ -1,5 +1,5 @@
-<span class="section-title">Other jobs</span>
-<p *ngIf="!loading && carerJobService.otherJobs.length === 0">No jobs available</p>
+<span class="section-title">Other jobs in this service</span>
+<p *ngIf="!loading && carerJobService.otherJobs.length === 0">No other jobs in this service</p>
 <table *ngIf="!loading && carerJobService.otherJobs.length !==0" class="custom-table text-center">
     <thead>
     <tr>
@@ -20,7 +20,7 @@
         <td>{{ job.getStartDate() | date }}</td>
         <td>{{ job.getStartDate() | hourPipe }}</td>
         <td>{{ job.getEndDate() | hourPipe}}</td>
-        <td></td>
+        <td>{{ job.projected_income }} <span>&#163;</span></td>
         <td>{{ job.author.care_home.care_service_name }}</td>
         <td>{{ job.role }}</td>
         <td>

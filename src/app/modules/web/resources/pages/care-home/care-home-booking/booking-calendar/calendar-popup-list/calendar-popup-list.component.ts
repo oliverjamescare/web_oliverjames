@@ -7,7 +7,7 @@ import {CalendarPopupService} from '../calendar-popup/calendar-popup.service';
     styleUrls: ['./calendar-popup-list.component.scss']
 })
 export class CalendarPopupListComponent implements OnInit {
-    @Input() allJobs: { start: Date, end: Date, preBooked: boolean }[] = [];
+    @Input() allJobs: { start: Date, end: Date, role: string, preBooked: boolean }[] = [];
     @Input() index: number;
     @Input() direction: string;
 
@@ -24,6 +24,9 @@ export class CalendarPopupListComponent implements OnInit {
     onOpenAddPopup(): void {
         this.popupService.openListPopup = null;
         this.popupService.openAddPopup = this.index;
+    }
+
+    onGoToEdit(): void {
     }
 
 }

@@ -7,18 +7,23 @@
         <div class="text-center">
             <label class="weight">Important</label>
             <p>
-                You have accepted this job.
-            Please call the care home to confirm on {{ carerJobService.jobDetails.author.phone_number }}.
-            This will ensure they don’t fill the shift with a carer from elsewhere – avoiding confusion and ensuring you still get paid
-            Ask to speak to [TEXT FROM ‘IF OUR CARER NEEDS TO CALL YOUR SERVICE]
+                You are about to accept this job. To accept, please call the care home to confirm on
+                {{ carerJobService.jobDetails.author.phone_number }}. This
+                will ensure they don’t fill the shift with a carer from elsewhere – avoiding confusion and ensuring you
+                still get paid Ask to speak to {{ carerJobService.jobDetails.general_guidance.superior_contact }}.
             </p>
         </div>
-        <div class="checkbox-div">
-            <input (change)="onCheckBoxChange()" type="checkbox" id="confirm" class="custom-control-input">
-            <label for="confirm" class="custom-control-label"></label>
-            <p>I confirm that I have spoken to the care home and they have agreed to this job</p>
+        <!--<div class="checkbox-div">-->
+            <!--<input (change)="onCheckBoxChange()" type="checkbox" id="confirm" class="custom-control-input">-->
+            <!--<label for="confirm" class="custom-control-label"></label>-->
+            <!--<p>I confirm that I have spoken to the care home and they have agreed to this job</p>-->
+        <!--</div>-->
+        <div class="custom-control custom-checkbox">
+            <input (change)="onCheckBoxChange()" type="checkbox" class="custom-control-input" id="confirm" name="terms">
+            <label class="custom-control-label small-font" for="confirm">I confirm that I have spoken to the care home and they have agreed to this jobs</label>
         </div>
-        <button (click)="onConfirm(); $event.stopPropagation()" [disabled]="!confirmed" type="button" class="btn-success btn-popup">
+        <button (click)="onConfirm(); $event.stopPropagation()" [disabled]="!confirmed" type="button"
+                class=" btn btn-success btn-popup">
             Ok
         </button>
     </div>

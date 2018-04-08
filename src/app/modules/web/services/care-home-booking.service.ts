@@ -21,7 +21,6 @@ export class CareHomeBookingService {
     florPlanFile: File = null;
 
     card_number: any;
-    checked = false;
 
     constructor(private apiService: ApiService,
                 private fakeApiService: FakeApiService) {
@@ -84,7 +83,7 @@ export class CareHomeBookingService {
             .map(
                 userProfile => {
                     // fake until api passs stripe token
-                    this.card_number = this.checked ? 223334 : userProfile.care_home.payment_system.card_number;
+                    this.card_number = userProfile.care_home.payment_system.card_number;
                     return GeneralGuidance.getInstanceFromResponse(userProfile.care_home.general_guidance);
                 }
             );

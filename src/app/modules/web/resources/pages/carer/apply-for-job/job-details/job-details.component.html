@@ -1,69 +1,140 @@
 <div *ngIf="!loading" class="job-details">
-    <span class="details-header">Job details</span>
-    <div class="details-row">
-        <span class="details-label">Job ID:</span>
-        <span class="details-info">
-            {{ carerJobService.jobDetails._id }}
-        </span>
-    </div>
+    <div class="details-header">Job details</div>
+    <ul>
+        <li class="details-row">
+            <span class="details-label">Job ID:</span>
+            <p class="details-info">
+                {{ carerJobService.jobDetails._id }}
+            </p>
+        </li>
 
-    <div class="details-row">
-        <span class="details-label">Start:</span>
-        <span class="details-info">
-            {{ carerJobService.jobDetails.getStartDate() | datePipe}}
-        </span>
-    </div>
+        <li class="details-row">
+            <span class="details-label">Care Home name</span>
+            <p class="details-info">
+                {{ carerJobService.jobDetails.author.care_home.name }}
+            </p>
+        </li>
 
-    <div class="details-row">
-        <span class="details-label">Time:</span>
-        <span class="details-info">
-            {{ carerJobService.jobDetails.getStartDate() | hourPipe}} till {{ carerJobService.jobDetails.getEndDate() | hourPipe }}
-        </span>
-    </div>
+        <li class="details-row">
+            <span class="details-label">Projected income</span>
+            <p class="details-info">
+                {{ carerJobService.jobDetails.projected_income }} <span>&#163;</span>
+            </p>
+        </li>
 
-    <div class="details-row">
-        <span class="details-label">Due in:</span>
-        <span class="details-info">
-            XXXX hours
-        </span>
-    </div>
+        <li class="details-row">
+            <span class="details-label">Start:</span>
+            <p class="details-info">
+                {{ carerJobService.jobDetails.getStartDate() | datePipe}}
+            </p>
+        </li>
 
-    <div class="details-row">
-        <span class="details-label">Phone:</span>
-        <span class="details-info">
-            {{ carerJobService.jobDetails.author.phone_number }}
-        </span>
-    </div>
+        <li class="details-row">
+            <span class="details-label">Time:</span>
+            <p class="details-info">
+                {{ carerJobService.jobDetails.getStartDate() | hourPipe}} till {{
+                carerJobService.jobDetails.getEndDate() | hourPipe }}
+            </p>
+        </li>
 
-    <div class="details-row">
-        <span class="details-label">Address:</span>
-        <span class="details-info">
-            {{ carerJobService.jobDetails.author.address.address_line_1 }},
-            {{ carerJobService.jobDetails.author.address.address_line_2 }}
-            {{ carerJobService.jobDetails.author.address.city }}
-        </span>
-    </div>
+        <li class="details-row">
+            <span class="details-label">Role</span>
+            <p class="details-info">
+                {{ carerJobService.jobDetails.role }}
+            </p>
+        </li>
 
-    <div class="details-row">
-        <span class="details-label">Contact on arrival:</span>
-        <span class="details-info">
-            {{ carerJobService.jobDetails.general_guidance.report_contact }}
-        </span>
-    </div>
+        <li class="details-row">
+            <span class="details-label">Due in:</span>
+            <p class="details-info">
+                {{ getDueIn(carerJobService.jobDetails) }}
+            </p>
+        </li>
 
-    <div class="details-row">
-        <span class="details-label">Job guidance:</span>
-        <span class="details-info">
-            {{ carerJobService.jobDetails.notes }}
-        </span>
-    </div>
+        <li class="details-row">
+            <span class="details-label">Phone:</span>
+            <p class="details-info">
+                {{ carerJobService.jobDetails.author.phone_number }}
+            </p>
+        </li>
+
+        <li class="details-row">
+            <span class="details-label">Address:</span>
+            <p class="details-info">
+                {{ carerJobService.jobDetails.author.address.address_line_1 }}
+                {{ carerJobService.jobDetails.author.address.address_line_2 }},
+                {{ carerJobService.jobDetails.author.address.postal_code }}
+                {{ carerJobService.jobDetails.author.address.city }}
+            </p>
+        </li>
+
+        <li class="details-row">
+            <span class="details-label">Google Maps</span>
+            <p class="details-info">
+                <a
+                        [href]="getGoogleMapsLink()" target="_blank">
+                    Find service on Google Maps</a>
+            </p>
+        </li>
+
+        <li class="details-row">
+            <span class="details-label">Job guidance:</span>
+            <p class="details-info">
+                <span *ngIf="carerJobService.jobDetails.notes">{{ carerJobService.jobDetails.notes }}</span>
+                <span *ngIf="!carerJobService.jobDetails.notes">This job has no guidance</span>
+            </p>
+        </li>
+
+        <li class="details-row">
+            <span class="details-label">Floor plan:</span>
+            <p class="details-info">
+                <a [href]="getFloorPlanLink()" target="_blank">Floor plan</a>
+            </p>
+        </li>
+
+        <li class="details-row">
+            <span class="details-label">Contact on arrival:</span>
+            <p class="details-info">
+                {{ carerJobService.jobDetails.general_guidance.report_contact }}
+            </p>
+        </li>
+
+        <li class="details-row">
+            <span class="details-label">Contact to confirm job:</span>
+            <p class="details-info">
+                {{ carerJobService.jobDetails.general_guidance.superior_contact }}
+            </p>
+        </li>
+
+        <li class="details-row">
+            <span class="details-label">Emergency guidance:</span>
+            <p class="details-info">
+                {{ carerJobService.jobDetails.general_guidance.emergency_guidance }}
+            </p>
+        </li>
+
+        <li class="details-row">
+            <span class="details-label">Notes for carers:</span>
+            <p class="details-info">
+                {{ carerJobService.jobDetails.general_guidance.notes_for_carers }}
+            </p>
+        </li>
+
+        <li class="details-row">
+            <span class="details-label">Parking:</span>
+            <p class="details-info">
+                {{ carerJobService.jobDetails.general_guidance.parking }}
+            </p>
+        </li>
+
+    </ul>
     <app-confirmation-popup
             *ngIf="showConfirmationPopup"
             (close)="showConfirmationPopup = false"
     ></app-confirmation-popup>
 </div>
 <br>
-<div class="details-actions">
-    <button (click)="onDeclineJob()" class="btn-success margin-r btn-red">Decline job</button>
-    <button (click)="onAcceptJob()" class="btn-success right">Accept job</button>
+<div *ngIf="!loading" class="details-actions">
+    <button (click)="onDeclineJob()" [disabled]="carerJobService.jobDetails.status !== 'POSTED'" class="btn btn-success margin-r btn-red">Decline job</button>
+    <button (click)="onAcceptJob()" [disabled]="carerJobService.jobDetails.status !== 'POSTED'" class="btn btn-success right">Accept job</button>
 </div>

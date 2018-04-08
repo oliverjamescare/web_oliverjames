@@ -10,6 +10,8 @@ export class Job {
     conflict?: boolean;
     general_guidance: GeneralGuidance;
     notes: string;
+    projected_income?: number;
+    status: string;
 
     static getInstance(job: Job): Job {
         const j = new Job();

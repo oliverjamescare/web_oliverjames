@@ -102,7 +102,6 @@ export class CareHomeBookingPaymentDetailsComponent implements OnInit {
                     this.buttonLoading = false;
                     console.log('update card details error response', error);
                     this.notificationService.warn('Enable to store card data to api', 'Submit bookings without adding card');
-                    this.bookingService.checked = true;
                     this.router.navigate(['/care-home-booking', 'review']);
                 }
             );
