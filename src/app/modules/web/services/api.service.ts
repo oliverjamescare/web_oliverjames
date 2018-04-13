@@ -159,9 +159,17 @@ export class ApiService {
             {headers: this.getAuthorizationHeaders()});
     }
 
-    getSubmitedJobNotifications(group: string): Observable<any> {
+    getSubmittedJobNotifications(group: string, page: number): Observable<any> {
         return this.httpClient.get(
-            `${this.endpoint}/jobs/${group}/notifications/carers`,
+            `${this.endpoint}/jobs/${group}/notifications/carers?page=${page}`,
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
+    cancelCarerNotification(group: string, carerId: string): Observable<any> {
+        return this.httpClient.put(
+            `${this.endpoint}/jobs/${group}/notifications/carers/${carerId}`,
+            {group, id: carerId},
             {headers: this.getAuthorizationHeaders()}
         );
     }

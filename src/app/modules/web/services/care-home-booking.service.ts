@@ -99,8 +99,12 @@ export class CareHomeBookingService {
         sessionStorage.removeItem('preBookedJobs');
     }
 
-    getSubmitedJobsNotifications(group: string): Observable<any> {
-        return this.apiService.getSubmitedJobNotifications(group);
+    getSubmitedJobsNotifications(group: string, page: number): Observable<any> {
+        return this.apiService.getSubmittedJobNotifications(group, page);
+    }
+
+    cancelCarerNotification(group: string, carerId: string): Observable<any> {
+        return this.apiService.cancelCarerNotification(group, carerId);
     }
 
     private parsePreBookedJobs(): string {

@@ -1,0 +1,23 @@
+.avatar {
+  padding: 5px;
+  .avatar-wrapper {
+    border-radius: 50px;
+    overflow: hidden;
+    width: 66px;
+    height: 66px;
+    background-color: #4a4a4a;
+  }
+}
+
+.profile-image {
+  height: 66px;
+}
+
+.image-cell {
+  width: 88px;
+}
+
+.info-row {
+  background-color: lightgrey;
+  text-align: left;
+}
