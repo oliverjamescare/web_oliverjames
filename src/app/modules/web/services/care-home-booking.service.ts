@@ -99,6 +99,10 @@ export class CareHomeBookingService {
         sessionStorage.removeItem('preBookedJobs');
     }
 
+    getSubmitedJobsNotifications(group: string): Observable<any> {
+        return this.apiService.getSubmitedJobNotifications(group);
+    }
+
     private parsePreBookedJobs(): string {
         return JSON.stringify(this.preBookedJobs);
     }
@@ -123,7 +127,7 @@ export class CareHomeBookingService {
         formData.append('emergency_guidance', this.generalGuidanceForm.emergency_guidance);
         formData.append('report_contact', this.generalGuidanceForm.report_contact);
         formData.append('superior_contact', this.generalGuidanceForm.superior_contact);
-        console.log('general guidance data',  this.generalGuidanceForm);
+        console.log('general guidance data', this.generalGuidanceForm);
         return formData;
     }
 }

@@ -62,16 +62,12 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Your address</th>
+                    <th>Postcode</th>
                     <td>
-                        <input
-                                placeholder="Search for address"
-                                autocorrect="off"
-                                autocapitalize="off"
-                                spellcheck="off"
-                                type="text"
-                                class="form-control"
-                                id="searchControl" #search [formControl]="searchControl">
+                        <input formControlName="postal_code" id="postcode" name="postcode" type="text" class="form-control">
+                        <span *ngIf="form.get('postal_code').errors?.required" class="red full-width">
+                        This field is required
+                    </span>
                     </td>
                 </tr>
                 <tr>
@@ -92,15 +88,6 @@
                     <td>
                         <input formControlName="city" type="text" class="form-control">
                         <span *ngIf="form.get('city').errors?.required" class="red full-width">
-                        This field is required
-                    </span>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Postcode</th>
-                    <td>
-                        <input formControlName="postal_code" type="text" class="form-control">
-                        <span *ngIf="form.get('postal_code').errors?.required" class="red full-width">
                         This field is required
                     </span>
                     </td>
@@ -130,13 +117,13 @@
                     <span
                             *ngIf="profileDetails?.care_home.payment_system.card_number !== null"
                             class="first-row"
-                    >Account set up</span>
+                    >Stored {{ profileDetails?.care_home.payment_system.card_number }}</span>
                         <span
                                 *ngIf="profileDetails?.care_home.payment_system.card_number === null"
                                 class="first-row"
                         >Account not set up</span>
                         <span class="action">
-                        <button class="btn-success">Edit</button>
+                        <button (click)="showEditCardDetails = true" class="btn-success">Edit</button>
                     </span>
                     </td>
                 </tr>
@@ -279,3 +266,9 @@
         (reload)="onUpdateData()"
 >
 </app-blocked-carers>
+
+<app-edit-card
+        *ngIf="showEditCardDetails"
+        (closed)="showEditCardDetails = false"
+>
+</app-edit-card>

@@ -1,103 +1,107 @@
 <div *ngIf="careHomeService?.jobDetails" class="job-details">
     <span class="details-header">Job details</span>
-    <div class="details-row">
-        <span class="details-label">Job ID:</span>
-        <span class="details-info">
-            {{ careHomeService.jobDetails._id }}
-        </span>
-    </div>
+    <ul>
+        <li class="details-row">
+            <span class="details-label">Job ID:</span>
+            <p class="details-info">
+                {{ careHomeService.jobDetails._id }}
+            </p>
+        </li>
 
-    <div class="details-row">
-        <span class="details-label">Start:</span>
-        <span class="details-info">
-            {{ careHomeService.jobDetails.start_date | timestampDate}}
-        </span>
-    </div>
+        <li class="details-row">
+            <span class="details-label">Start:</span>
+            <p class="details-info">
+                {{ careHomeService.jobDetails.start_date | timestampDate}}
+            </p>
+        </li>
 
-    <div class="details-row">
-        <span class="details-label">Time:</span>
-        <span class="details-info">
-            {{ careHomeService.jobDetails.end_date | timestampHour}} till {{ careHomeService.jobDetails.end_date | timestampHour }}
-        </span>
-    </div>
+        <li class="details-row">
+            <span class="details-label">Time:</span>
+            <p class="details-info">
+                {{ careHomeService.jobDetails.end_date | timestampHour}} till {{ careHomeService.jobDetails.end_date |
+                timestampHour }}
+            </p>
+        </li>
 
-    <div class="details-row">
-        <span class="details-label">Due in:</span>
-        <span class="details-info">
-            XXXX hours
-        </span>
-    </div>
+        <li class="details-row">
+            <span class="details-label">Due in:</span>
+            <p class="details-info">
+                {{ getDueIn(careHomeService.jobDetails) }}
+            </p>
+        </li>
 
-    <div class="details-row">
-        <span class="details-label">Phone:</span>
-        <span class="details-info">
-            {{ careHomeService.jobDetails.author.phone_number }}
-        </span>
-    </div>
+        <li class="details-row">
+            <span class="details-label">Phone:</span>
+            <p class="details-info">
+                {{ careHomeService.jobDetails.author.phone_number }}
+            </p>
+        </li>
 
-    <div class="details-row">
-        <span class="details-label">Address:</span>
-        <span class="details-info">
-            {{ careHomeService.jobDetails.author.address.address_line_1 }},
-            {{ careHomeService.jobDetails.author.address.address_line_2 }}
-            {{ careHomeService.jobDetails.author.address.city }}
-        </span>
-    </div>
+        <li class="details-row">
+            <span class="details-label">Address:</span>
+            <p class="details-info">
+                {{ careHomeService.jobDetails.author.address.address_line_1 }},
+                {{ careHomeService.jobDetails.author.address.address_line_2 }}
+                {{ careHomeService.jobDetails.author.address.city }}
+            </p>
+        </li>
 
-    <div class="details-row">
-        <span class="details-label">Google maps:</span>
-        <span class="details-info">
-            Find service on <a [href]="" target="_blank">Google Maps</a>
-        </span>
-    </div>
+        <li class="details-row">
+            <span class="details-label">Google maps:</span>
+            <p class="details-info">
+                Find service on <a [href]="" target="_blank">Google Maps</a>
+            </p>
+        </li>
 
-    <div class="details-row">
-        <span class="details-label">Job guidance:</span>
-        <span class="details-info">
-            {{ careHomeService.jobDetails.notes }}
-        </span>
-    </div>
+        <li class="details-row">
+            <span class="details-label">Job guidance:</span>
+            <p class="details-info">
+                {{ careHomeService.jobDetails.notes }}
+            </p>
+        </li>
 
-    <div class="details-row">
-        <span class="details-label">Floor plan:</span>
-        <span class="details-info">
-            <a [href]="getFloorPlanLink(careHomeService.jobDetails.general_guidance.floor_plan)" target="_blank">Floor plan</a>
-        </span>
-    </div>
+        <li class="details-row">
+            <span class="details-label">Floor plan:</span>
+            <p class="details-info">
+                <a [href]="getFloorPlanLink(careHomeService.jobDetails.general_guidance.floor_plan)" target="_blank">Floor
+                    plan</a>
+            </p>
+        </li>
 
-    <div class="details-row">
-        <span class="details-label">Contact on arrival:</span>
-        <span class="details-info">
-            {{ careHomeService.jobDetails.general_guidance.report_contact }}
-        </span>
-    </div>
+        <li class="details-row">
+            <span class="details-label">Contact on arrival:</span>
+            <p class="details-info">
+                {{ careHomeService.jobDetails.general_guidance.report_contact }}
+            </p>
+        </li>
 
-    <div class="details-row">
-        <span class="details-label">Suprior contact:</span>
-        <span class="details-info">
-            {{ careHomeService.jobDetails.general_guidance.superior_contact }}
-        </span>
-    </div>
+        <li class="details-row">
+            <span class="details-label">Contact to confirm job:</span>
+            <p class="details-info">
+                {{ careHomeService.jobDetails.general_guidance.superior_contact }}
+            </p>
+        </li>
 
-    <div class="details-row">
-        <span class="details-label">Parking:</span>
-        <span class="details-info">
-            {{ careHomeService.jobDetails.general_guidance.parking }}
-        </span>
-    </div>
+        <li class="details-row">
+            <span class="details-label">Parking:</span>
+            <p class="details-info">
+                {{ careHomeService.jobDetails.general_guidance.parking }}
+            </p>
+        </li>
 
-    <div class="details-row">
-        <span class="details-label">Notes for carers:</span>
-        <span class="details-info">
-            {{ careHomeService.jobDetails.general_guidance.notes_for_carers }}
-        </span>
-    </div>
-    <div class="details-row">
-        <span class="details-label">Emergency guidance:</span>
-        <span class="details-info">
-            {{ careHomeService.jobDetails.general_guidance.emergency_guidance}}
-        </span>
-    </div>
+        <li class="details-row">
+            <span class="details-label">Notes for carers:</span>
+            <p class="details-info">
+                {{ careHomeService.jobDetails.general_guidance.notes_for_carers }}
+            </p>
+        </li>
+        <li class="details-row">
+            <span class="details-label">Emergency guidance:</span>
+            <p class="details-info">
+                {{ careHomeService.jobDetails.general_guidance.emergency_guidance}}
+            </p>
+        </li>
+    </ul>
 </div>
 <br>
 <div class="details-actions">

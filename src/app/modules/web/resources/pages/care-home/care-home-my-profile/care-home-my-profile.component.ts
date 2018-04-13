@@ -12,7 +12,7 @@ import {NotificationsService} from 'angular2-notifications';
     templateUrl: './care-home-my-profile.component.html',
     styleUrls: ['./care-home-my-profile.component.scss']
 })
-export class CareHomeMyProfileComponent implements OnInit, AfterViewInit {
+export class CareHomeMyProfileComponent implements OnInit {
     profileDetails: any;
     form: FormGroup;
     floorPlanFile: File;
@@ -32,11 +32,8 @@ export class CareHomeMyProfileComponent implements OnInit, AfterViewInit {
     showEditEmail = false;
     showChangePassword = false;
     showBlockedCarers = false;
+    showEditCardDetails = false;
     buttonLoading = false;
-
-    @ViewChild('search') searchElementRef: ElementRef;
-
-    searchControl: FormControl;
 
     constructor(private apiService: ApiService,
                 private mapsAPILoader: MapsAPILoader,
@@ -47,32 +44,8 @@ export class CareHomeMyProfileComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit() {
-        this.searchControl = new FormControl();
         this.createForm();
         this.getProfile();
-    }
-
-    ngAfterViewInit() {
-        this.mapsAPILoader.load().then(() => {
-            const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-                types: ['address']
-            });
-            autocomplete.addListener('place_changed', () => {
-                this.ngZone.run(() => {
-                    // get the place result
-                    const place: google.maps.places.PlaceResult = autocomplete.getPlace();
-                    // verify result
-                    if (place.geometry === undefined || place.geometry === null) {
-                        return;
-                    }
-                    // set latitude, longitude and zoom
-                    const findedData = this.googleService.searchForAddresProperties(place.address_components);
-                    this.form.controls['city'].setValue(findedData.city);
-                    this.form.controls['postal_code'].setValue(findedData.postal_code);
-                    this.form.controls['address_line_1'].setValue(`${findedData.street} ${findedData.street_number}`);
-                });
-            });
-        });
     }
 
     onUpdateProfile(): void {
@@ -163,6 +136,27 @@ export class CareHomeMyProfileComponent implements OnInit, AfterViewInit {
             report_contact: new FormControl(null),
             superior_contact: new FormControl(null),
             notes: new FormControl(''),
+        });
+
+        this.setUpPca();
+    }
+
+    private setUpPca(): void {
+        if (pca.load) {
+            pca.load();
+        }
+
+        pca.on('load', (type, id, control) => {
+
+            control.listen('populate', (address) => {
+                console.log(address);
+                this.form.patchValue({
+                    postal_code: address['PostalCode'],
+                    address_line_1: address['Line1'],
+                    address_line_2: address['Line2'],
+                    city: address['City']
+                });
+            });
         });
     }
 

@@ -1,18 +1,19 @@
-import {Component, OnInit, ViewChild, ElementRef} from '@angular/core';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-
-import {StripeService, Elements, Element as StripeElement, ElementsOptions} from 'ngx-stripe';
-import {ApiService} from '../../../../../services/api.service';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {NotificationsService} from 'angular2-notifications';
-import {Router} from '@angular/router';
-import {CareHomeBookingService} from '../../../../../services/care-home-booking.service';
+import {Element as StripeElement, Elements, ElementsOptions, StripeService} from 'ngx-stripe';
+import {ApiService} from '../../../../../services/api.service';
 
 @Component({
-    selector: 'app-care-home-booking-payment-details',
-    templateUrl: './care-home-booking-payment-details.component.html',
-    styleUrls: ['./care-home-booking-payment-details.component.scss']
+    selector: 'app-edit-card',
+    templateUrl: './edit-card.component.html',
+    styleUrls: ['./edit-card.component.scss']
 })
-export class CareHomeBookingPaymentDetailsComponent implements OnInit {
+export class EditCardComponent implements OnInit, AfterViewInit {
+    @Input() type = 'card_details';
+    @Output() closed = new EventEmitter();
+
+    title = 'Edid card details';
     elements: Elements;
     card: StripeElement;
     @ViewChild('card') cardRef: ElementRef;
@@ -31,9 +32,7 @@ export class CareHomeBookingPaymentDetailsComponent implements OnInit {
     constructor(private fb: FormBuilder,
                 private stripeService: StripeService,
                 private apiService: ApiService,
-                private notificationService: NotificationsService,
-                private router: Router,
-                private bookingService: CareHomeBookingService) {
+                private notificationService: NotificationsService) {
     }
 
     ngOnInit() {
@@ -66,6 +65,11 @@ export class CareHomeBookingPaymentDetailsComponent implements OnInit {
             });
     }
 
+    ngAfterViewInit() {
+        $('#' + this.type + '_id').modal();
+        $('#' + this.type + '_id').on('hidden.bs.modal', () => this.closed.emit(true));
+    }
+
     onCardDetailsSave() {
         this.buttonLoading = true;
         if (!this.stripeTest.valid) {
@@ -96,7 +100,6 @@ export class CareHomeBookingPaymentDetailsComponent implements OnInit {
                     this.buttonLoading = false;
                     console.log('update card details success response', response);
                     this.notificationService.success('Card details saved');
-                    this.router.navigate(['/care-home-booking', 'review']);
                 },
                 error => {
                     this.buttonLoading = false;

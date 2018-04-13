@@ -13,10 +13,12 @@ export class CardDetailsComponent implements OnInit, AfterViewInit {
     @Input() type: string;
     @Output() closed = new EventEmitter();
     @Output() forgotPasswordTriggered: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Output() reload = new EventEmitter();
 
     title = 'Bank account details';
     form: FormGroup;
     apiError: string;
+    buttonLoading = false;
 
     constructor(private stripeService: StripeService,
                 private apiService: ApiService,
@@ -33,6 +35,7 @@ export class CardDetailsComponent implements OnInit, AfterViewInit {
     }
 
     onAccountStore(): void {
+        this.buttonLoading = true;
         console.log('Form value', this.form.value);
         this.stripeService.createToken('bank_account', this.form.value)
             .subscribe(result => {
@@ -40,22 +43,27 @@ export class CardDetailsComponent implements OnInit, AfterViewInit {
                     // Use the token to create a charge or a customer
                     // https://stripe.com/docs/charges
                     console.log(result.token);
-                    this.storeAccaountDataInApi(result.token.id);
+                    this.storeAccountDataInApi(result.token.id);
                 } else if (result.error) {
                     // Error creating the token
                     console.log(result.error.message);
                     this.apiError = result.error.message;
+                    this.buttonLoading = false;
                 }
             });
     }
 
-    private storeAccaountDataInApi(token: string): void {
+    private storeAccountDataInApi(token: string): void {
         this.apiService.updateBankDetails(token)
             .subscribe(
                 response => {
+                    this.buttonLoading = false;
                     console.log('update account details success response', response);
+                    this.notificationService.success('Bank details successfully stored');
+                    this.reload.emit();
                 },
                 error => {
+                    this.buttonLoading = false;
                     console.log('update account details error response', error);
                     this.notificationService.warn('Api error occurs');
                 }

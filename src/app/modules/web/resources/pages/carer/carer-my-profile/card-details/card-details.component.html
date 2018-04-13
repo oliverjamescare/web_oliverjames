@@ -12,19 +12,19 @@
                     >{{ apiError }}</span>
                     <label class="left">Country</label>
                     <select formControlName="country" class="form-control">
-                        <option value="US">United Kingdom</option>
+                        <option value="GB">United Kingdom</option>
                     </select>
                 </div>
                 <br>
                 <div class="form group text-center">
                     <label class="left">Currency</label>
                     <select formControlName="currency" class="form-control">
-                        <option value="usd">British pound (GBP)</option>
+                        <option value="gbp">British pound (GBP)</option>
                     </select>
                 </div>
                 <br>
                 <div class="form group text-center">
-                    <label class="left">Bank routing number</label>
+                    <label class="left">Bank Sort Code</label>
                     <input formControlName="routing_number" class="form-control" type="text">
                 </div>
                 <br>
@@ -49,7 +49,7 @@
                 <div class="buttons-container">
                     <button (click)="onAccountStore()" type="submit" class="btn btn-success"
                             [disabled]="!form.valid">
-                        Update account details
+                        Update account details <span *ngIf="buttonLoading"><i class="fa fa-spinner fa-spin"></i></span>
                     </button>
                 </div>
             </form>

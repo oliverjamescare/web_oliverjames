@@ -159,6 +159,13 @@ export class ApiService {
             {headers: this.getAuthorizationHeaders()});
     }
 
+    getSubmitedJobNotifications(group: string): Observable<any> {
+        return this.httpClient.get(
+            `${this.endpoint}/jobs/${group}/notifications/carers`,
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
     getCareHomeJobs(page: number, results = 10): Observable<any> {
         return this.httpClient.get(
             `${this.endpoint}/care-home/my-jobs`,

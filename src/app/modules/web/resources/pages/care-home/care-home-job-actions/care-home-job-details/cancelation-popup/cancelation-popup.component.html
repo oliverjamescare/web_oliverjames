@@ -1,9 +1,10 @@
 <app-popup [title]="title" [id]="type + '_id'" [showLogo]="false">
     <div class="row">
         <div class="col-12 text-center">
-            <p>Once a job is accepted, you may cancel up to 24 hours before it is due to start, free-of-charge. When
-                user cancels a job and the carer accepted that job more than 2 hours before your cancellation, you will
-                be charged 50% of the job. Under these terms, cancelling this job will be Free of charge</p>
+            <p>Once a job is accepted, you may cancel up to 24 hours before it is due to start, free-of-charge. When a
+                user cancels a job due to start within the next 24 hours and it has been more than 2 hours since it was
+                accepted, you will be charged 50% of the job fee. Under these terms, cancelling this job will be Free of
+                charge</p>
             <br>
 
             <button (click)="onClose()" class="btn btn-success btn-actions">Do not cancel</button>

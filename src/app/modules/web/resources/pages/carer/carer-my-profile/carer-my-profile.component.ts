@@ -18,7 +18,7 @@ import {numbers} from '../../../../../../utilities/validators';
     templateUrl: './carer-my-profile.component.html',
     styleUrls: ['./carer-my-profile.component.scss']
 })
-export class CarerMyProfileComponent implements OnInit, OnDestroy, AfterViewInit {
+export class CarerMyProfileComponent implements OnInit, OnDestroy {
     buttonLoading = false;
     form: FormGroup;
 
@@ -27,10 +27,6 @@ export class CarerMyProfileComponent implements OnInit, OnDestroy, AfterViewInit
     showChangePassword = false;
     showChangeProfileImage = false;
     showBankAccountForm = false;
-
-    @ViewChild('search') searchElementRef: ElementRef;
-
-    searchControl: FormControl;
 
     getProfileSub: Subscription;
     updateProfileSub: Subscription;
@@ -46,33 +42,10 @@ export class CarerMyProfileComponent implements OnInit, OnDestroy, AfterViewInit
     }
 
     ngOnInit() {
-        this.searchControl = new FormControl();
         this.getCarerProfile();
         this.createDetailsForm();
     }
 
-    ngAfterViewInit() {
-        this.mapsAPILoader.load().then(() => {
-            const autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
-                types: ['address']
-            });
-            autocomplete.addListener('place_changed', () => {
-                this.ngZone.run(() => {
-                    // get the place result
-                    const place: google.maps.places.PlaceResult = autocomplete.getPlace();
-                    // verify result
-                    if (place.geometry === undefined || place.geometry === null) {
-                        return;
-                    }
-                    // set latitude, longitude and zoom
-                    const findedData = this.googleService.searchForAddresProperties(place.address_components);
-                    this.form.controls['city'].setValue(findedData.city);
-                    this.form.controls['postal_code'].setValue(findedData.postal_code);
-                    this.form.controls['address_line_1'].setValue(`${findedData.street} ${findedData.street_number}`);
-                });
-            });
-        });
-    }
 
     ngOnDestroy() {
         this.getProfileSub.unsubscribe();
@@ -135,8 +108,29 @@ export class CarerMyProfileComponent implements OnInit, OnDestroy, AfterViewInit
             'address_line_1': new FormControl(null, Validators.required),
             'address_line_2': new FormControl(null),
             'phone_number': new FormControl(null, [
-                Validators.required, Validators.minLength(6), Validators.maxLength(9), numbers
+                Validators.required, Validators.minLength(6), numbers
             ])
+        });
+
+        this.setUpPca();
+    }
+
+    private setUpPca(): void {
+        if (pca.load) {
+            pca.load();
+        }
+
+        pca.on('load', (type, id, control) => {
+
+            control.listen('populate', (address) => {
+                console.log(address);
+                this.form.patchValue({
+                    postal_code: address['PostalCode'],
+                    address_line_1: address['Line1'],
+                    address_line_2: address['Line2'],
+                    city: address['City']
+                });
+            });
         });
     }
 

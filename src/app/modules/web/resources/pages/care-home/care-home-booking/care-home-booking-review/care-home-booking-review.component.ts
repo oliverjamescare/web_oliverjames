@@ -27,7 +27,8 @@ export class CareHomeBookingReviewComponent implements OnInit {
                 .subscribe(
                     response => {
                         this.bookingService.clearAfterBooking();
-                        this.router.navigate(['care-home-dashboard']);
+                        this.router.navigate(['/care-home-booking', 'submited'],
+                            { queryParams: { group: response.group } });
                         this.notificationService.success('Success', 'Jobs booked');
                     },
                     error => {

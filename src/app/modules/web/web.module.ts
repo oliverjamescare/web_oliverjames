@@ -113,6 +113,8 @@ import { CarerNotificationsComponent } from './resources/pages/carer/carer-notif
 import {CarerService} from './services/carer.service';
 import { CarerPaidSubmittedComponent } from './resources/pages/carer/carer-paid-submitted/carer-paid-submitted.component';
 import { PaymentDetailsComponent } from './resources/pages/carer/carer-paid-submitted/payment-details/payment-details.component';
+import { EditCardComponent } from './resources/pages/care-home/care-home-my-profile/edit-card/edit-card.component';
+import { PaymentsDetailsComponent } from './resources/partials/payments-details/payments-details.component';
 
 @NgModule({
     declarations: [
@@ -192,7 +194,9 @@ import { PaymentDetailsComponent } from './resources/pages/carer/carer-paid-subm
         CareHomeCarerDetailsComponent,
         CarerNotificationsComponent,
         CarerPaidSubmittedComponent,
-        PaymentDetailsComponent
+        PaymentDetailsComponent,
+        EditCardComponent,
+        PaymentsDetailsComponent
     ],
     imports: [
         CommonModule,

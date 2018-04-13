@@ -37,7 +37,7 @@
                         This field is required
                     </span>
                     <span *ngIf="form.get('phone_number').errors?.minlength || form.get('phone_number').errors?.maxlength" class="red full-width">
-                        Phone number must contain between 6 and 9 numbers
+                        Phone number must contain at least 6 numbers
                     </span>
                 </td>
             </tr>
@@ -62,16 +62,12 @@
                 </td>
             </tr>
             <tr>
-                <th>Your address</th>
+                <th>Postcode</th>
                 <td>
-                    <input
-                            placeholder="Search for address"
-                            autocorrect="off"
-                            autocapitalize="off"
-                            spellcheck="off"
-                            type="text"
-                            class="form-control"
-                            id="searchControl" #search [formControl]="searchControl">
+                    <input formControlName="postal_code" id="postcode" name="postcode" type="text" class="form-control">
+                    <span *ngIf="form.get('postal_code').errors?.required" class="red full-width">
+                        This field is required
+                    </span>
                 </td>
             </tr>
             <tr>
@@ -97,15 +93,6 @@
                 </td>
             </tr>
             <tr>
-                <th>Postcode</th>
-                <td>
-                    <input formControlName="postal_code" type="text" class="form-control">
-                    <span *ngIf="form.get('postal_code').errors?.required" class="red full-width">
-                        This field is required
-                    </span>
-                </td>
-            </tr>
-            <tr>
                 <th>Password</th>
                 <td class="relative tall">
                     <span class="action">
@@ -119,7 +106,7 @@
                     <span
                             *ngIf="carerProfileService?.carerProfile?.carer.payment_system.bank_number"
                             class="first-row"
-                    >Account set up</span>
+                    >Stored {{ carerProfileService?.carerProfile?.carer.payment_system.bank_number }}</span>
                     <span
                             *ngIf="!carerProfileService?.carerProfile?.carer.payment_system.bank_number"
                             class="first-row"
@@ -182,4 +169,5 @@
 <app-card-details
     *ngIf="showBankAccountForm"
     (closed)="showBankAccountForm = false"
+    (reload)="onUpdateData()"
 ></app-card-details>
