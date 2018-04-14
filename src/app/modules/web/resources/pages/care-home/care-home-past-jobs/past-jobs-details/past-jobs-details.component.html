@@ -5,3 +5,136 @@
 ></app-care-home-booking-header>
 
 <br>
+
+<div class="row">
+    <div class="col-sm-4">
+        <div *ngIf="jobDetails" class="job-details">
+            <span class="details-header">Job details</span>
+            <ul>
+                <li class="details-row">
+                    <span class="details-label">Job ID:</span>
+                    <p class="details-info">
+                        {{ jobDetails._id }}
+                    </p>
+                </li>
+
+                <li class="details-row">
+                    <span class="details-label">Start:</span>
+                    <p class="details-info">
+                        {{ jobDetails.start_date | timestampDate}}
+                    </p>
+                </li>
+
+                <li class="details-row">
+                    <span class="details-label">Time:</span>
+                    <p class="details-info">
+                        {{ jobDetails.end_date | timestampHour}} till {{ jobDetails.end_date |
+                        timestampHour }}
+                    </p>
+                </li>
+
+                <li class="details-row">
+                    <span class="details-label">Phone:</span>
+                    <p class="details-info">
+                        {{ jobDetails.author.phone_number }}
+                    </p>
+                </li>
+
+                <li class="details-row">
+                    <span class="details-label">Address:</span>
+                    <p class="details-info">
+                        {{ jobDetails.author.address.address_line_1 }},
+                        {{ jobDetails.author.address.address_line_2 }}
+                        {{ jobDetails.author.address.city }}
+                    </p>
+                </li>
+
+                <li class="details-row">
+                    <span class="details-label">Google maps:</span>
+                    <p class="details-info">
+                        Find service on <a [href]="getGoogleMapsLink()" target="_blank">Google Maps</a>
+                    </p>
+                </li>
+
+                <li class="details-row">
+                    <span class="details-label">Job guidance:</span>
+                    <p class="details-info">
+                        <span *ngIf="jobDetails.notes">{{ jobDetails.notes }}</span>
+                        <span *ngIf="!jobDetails.notes">This job has no guidance</span>
+                    </p>
+                </li>
+
+                <li class="details-row">
+                    <span class="details-label">Floor plan:</span>
+                    <p class="details-info">
+                        <a [href]="getFloorPlanLink(jobDetails.general_guidance.floor_plan)" target="_blank">Floor
+                            plan</a>
+                    </p>
+                </li>
+
+                <li class="details-row">
+                    <span class="details-label">Contact on arrival:</span>
+                    <p class="details-info">
+                        {{ jobDetails.general_guidance.report_contact }}
+                    </p>
+                </li>
+
+                <li class="details-row">
+                    <span class="details-label">Contact to confirm job:</span>
+                    <p class="details-info">
+                        {{ jobDetails.general_guidance.superior_contact }}
+                    </p>
+                </li>
+
+                <li class="details-row">
+                    <span class="details-label">Parking:</span>
+                    <p class="details-info">
+                        {{ jobDetails.general_guidance.parking }}
+                    </p>
+                </li>
+
+                <li class="details-row">
+                    <span class="details-label">Notes for carers:</span>
+                    <p class="details-info">
+                        {{ jobDetails.general_guidance.notes_for_carers }}
+                    </p>
+                </li>
+                <li class="details-row">
+                    <span class="details-label">Emergency guidance:</span>
+                    <p class="details-info">
+                        {{ jobDetails.general_guidance.emergency_guidance}}
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div *ngIf="jobDetails" class="col-sm-4">
+        <div class="job-details">
+            <span class="details-header">Carer</span>
+        </div>
+        <div class="carer-header text-center">
+            <div class="avatar">
+                <div class="avatar-wrapper">
+                    <img [src]="getProfileImage()" class="img img responsive profile-image">
+                </div>
+                <span class="carer-name">{{ jobDetails?.carer.carer.first_name }} {{ jobDetails?.carer.carer.surname }}</span>
+            </div>
+        </div>
+
+        <button (click)="showBlockConfirmation = true" class="btn btn-success btn-red">Block this carer from future jobs</button>
+        <div class="green">
+            <a
+                    *ngIf="jobDetails.carer?.acceptance_document"
+                    class="green"
+                    target="_blank"
+                    [href]="getPdf()">Download PDF of this job and the carer record at the time they were booked</a>
+        </div>
+    </div>
+</div>
+
+<app-block-carer-confirmation
+        *ngIf="showBlockConfirmation"
+        [type]="'block-confirmation'"
+        [carerId]="jobDetails?.carer._id"
+        (closed)="showBlockConfirmation = false"
+></app-block-carer-confirmation>

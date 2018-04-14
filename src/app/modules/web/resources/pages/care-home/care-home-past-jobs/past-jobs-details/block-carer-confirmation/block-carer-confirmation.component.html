@@ -1,0 +1,14 @@
+<app-popup [title]="title" [id]="type + '_id'" [showLogo]="false">
+    <div class="row">
+        <div class="col-12 text-center">
+            <p>Blocking this carer will remove them from seeing future jobs at your service. You should also check if
+                they have already accepted any jobs in your ‘upcoming jobs’ list. If they have, you can click ‘find a
+                new carer’ to replace them</p>
+            <br>
+
+            <button (click)="onClose()" class="btn btn-success btn-actions">Cancel</button>
+            <button (click)="onBlockCarer()" class="btn btn-success btn-actions">Block carer <span
+                    *ngIf="buttonLoading"><i class="fa fa-spinner fa-spin"></i></span></button>
+        </div>
+    </div>
+</app-popup>

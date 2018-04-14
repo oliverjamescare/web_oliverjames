@@ -17,6 +17,7 @@ export class CareHomeService {
     // job
     jobDetails: any;
     detailsLoaded = new Subject();
+    pastJobDetails;
 
     constructor(private apiService: ApiService, private authService: AuthService) {
     }
@@ -94,6 +95,10 @@ export class CareHomeService {
 
     getPastJobDetails(jobId: string): Observable<any> {
         return this.apiService.getPastJobsDetails(jobId);
+    }
+
+    challengeJobPayment(jobId: string, description: string): Observable<any> {
+        return this.apiService.challengeJobPayment(jobId, description);
     }
 
 }

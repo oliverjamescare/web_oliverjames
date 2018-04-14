@@ -47,6 +47,7 @@ import {PaymentDetailsComponent} from './resources/pages/carer/carer-paid-submit
 import {CareHomeReviewsComponent} from './resources/pages/care-home/care-home-reviews/care-home-reviews.component';
 import {CareHomePastJobsComponent} from './resources/pages/care-home/care-home-past-jobs/care-home-past-jobs.component';
 import {PastJobsDetailsComponent} from './resources/pages/care-home/care-home-past-jobs/past-jobs-details/past-jobs-details.component';
+import {ChallengeJobComponent} from './resources/pages/care-home/care-home-past-jobs/challenge-job/challenge-job.component';
 
 const routes: Routes = [
     {
@@ -156,6 +157,11 @@ const routes: Routes = [
             {
                 path: 'care-home-past-jobs-details/:id',
                 component: PastJobsDetailsComponent,
+                canActivate: [CareHomeAuthGuardService]
+            },
+            {
+                path: 'care-home-past-challenge-job',
+                component: ChallengeJobComponent,
                 canActivate: [CareHomeAuthGuardService]
             },
         ]

@@ -1,0 +1,79 @@
+<app-care-home-booking-header
+        navigationTitle="Back"
+        navigationRoute="/care-home-past-jobs"
+        mainTitle="Challenge job"
+></app-care-home-booking-header>
+
+<br>
+<div class="row">
+    <div class="col-sm">
+        <table *ngIf="careHomeService?.pastJobDetails" class="custom-table text-center">
+            <thead>
+                <tr>
+                    <th>Job Id</th>
+                    <th>Start date</th>
+                    <th>From</th>
+                    <th>Till</th>
+                    <th>Total cost</th>
+                    <th>Carer</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ careHomeService.pastJobDetails._id }}</td>
+                    <td>{{ careHomeService.pastJobDetails.start_date | timestampDate }}</td>
+                    <td>{{ careHomeService.pastJobDetails.start_date | timestampHour }}</td>
+                    <td>{{ careHomeService.pastJobDetails.end_date | timestampHour }}</td>
+                    <td>{{ careHomeService.pastJobDetails.cost.total_cost }} <span>&#163;</span></td>
+                    <td>{{ careHomeService.pastJobDetails.carer.carer.first_name }}
+                        {{ careHomeService.pastJobDetails.carer.carer.surname }}
+                    </td>
+                    <td>{{ careHomeService.pastJobDetails.status | status }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<br>
+<div *ngIf="careHomeService?.pastJobDetails" class="row">
+    <div class="col-8 offset-2">
+        <div class="contact-form-container">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="row">
+                    <div class="col-12">
+                        <textarea
+                                rows="5"
+                                placeholder="Please send us a message explaining why you want to challenge payment for this job"
+                                class="form-control"
+                                formControlName="message"
+                                [ngClass]="formUtils.handleValidationStateClass(form, 'message')"
+                        ></textarea>
+                        <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'message', messages) }} </span>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-6">
+                        <button class="btn btn-success" [disabled]="!form.valid || inProgress" type="submit">Challenge job</button>
+                        <span class="invalid-feedback"> {{ error }} </span>
+                    </div>
+                    <div class="col-6">
+                        <span>Our telephone number: TO COME</span>
+                        <br>
+                        <span>Our address: TO COME</span>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <br>
+            </form>
+        </div>
+    </div>
+</div>
+
+<app-challenge-confirmation
+        *ngIf="showChallengeConfirmation"
+        type="challenge-confirmation"
+        (closed)="onConfirmationClose()"
+></app-challenge-confirmation>

@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {CareHomeService} from '../../../../services/care-home.service';
 import {FormControl, FormGroup} from '@angular/forms';
+import {Router} from '@angular/router';
 
 const MONTH_IN_MILLISECONDS = 2592000000;
 
@@ -15,7 +16,8 @@ export class CareHomePastJobsComponent implements OnInit {
     pastJobs: any[] = [];
     pages: number[] = [];
 
-    constructor(private careHomeService: CareHomeService) {
+    constructor(private careHomeService: CareHomeService,
+                private router: Router) {
     }
 
     ngOnInit() {
@@ -27,6 +29,11 @@ export class CareHomePastJobsComponent implements OnInit {
     onPaginationChange(page: number): void {
         this.page = page;
         this.getPastJobs();
+    }
+
+    navigateToChallenge(job: any): void {
+        this.careHomeService.pastJobDetails = job;
+        this.router.navigate(['/care-home-past-challenge-job/']);
     }
 
     private getPastJobs(): void {

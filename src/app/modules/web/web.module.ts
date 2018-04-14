@@ -119,6 +119,9 @@ import {StatusPipe} from './pipes/status.pipe';
 import { CareHomeReviewsComponent } from './resources/pages/care-home/care-home-reviews/care-home-reviews.component';
 import { CareHomePastJobsComponent } from './resources/pages/care-home/care-home-past-jobs/care-home-past-jobs.component';
 import { PastJobsDetailsComponent } from './resources/pages/care-home/care-home-past-jobs/past-jobs-details/past-jobs-details.component';
+import { BlockCarerConfirmationComponent } from './resources/pages/care-home/care-home-past-jobs/past-jobs-details/block-carer-confirmation/block-carer-confirmation.component';
+import { ChallengeJobComponent } from './resources/pages/care-home/care-home-past-jobs/challenge-job/challenge-job.component';
+import { ChallengeConfirmationComponent } from './resources/pages/care-home/care-home-past-jobs/challenge-job/challenge-confirmation/challenge-confirmation.component';
 
 @NgModule({
     declarations: [
@@ -204,7 +207,10 @@ import { PastJobsDetailsComponent } from './resources/pages/care-home/care-home-
         PaymentsDetailsComponent,
         CareHomeReviewsComponent,
         CareHomePastJobsComponent,
-        PastJobsDetailsComponent
+        PastJobsDetailsComponent,
+        BlockCarerConfirmationComponent,
+        ChallengeJobComponent,
+        ChallengeConfirmationComponent
     ],
     imports: [
         CommonModule,
