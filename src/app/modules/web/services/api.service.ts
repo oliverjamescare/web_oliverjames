@@ -242,6 +242,13 @@ export class ApiService {
         );
     }
 
+    getCareHomePastJobs(from: number, to: number, page: number): Observable<any> {
+        return this.httpClient.get(
+            `${this.endpoint}/care-home/past-jobs?from=${from}&to=${to}&page=${page}`,
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
 // care home & carer
 
     getUserProfile(): Observable<any> {

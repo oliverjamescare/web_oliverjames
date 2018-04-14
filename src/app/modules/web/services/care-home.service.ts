@@ -88,4 +88,8 @@ export class CareHomeService {
         return this.apiService.addCarerToBlocked(carerId);
     }
 
+    getCareHomePastJobs(from: number, to: number, page: number): Observable<any> {
+        return this.apiService.getCareHomePastJobs(from, to, page);
+    }
+
 }

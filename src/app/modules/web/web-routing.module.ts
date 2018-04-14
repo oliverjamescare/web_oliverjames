@@ -45,6 +45,8 @@ import {CarerNotificationsComponent} from './resources/pages/carer/carer-notific
 import {CarerPaidSubmittedComponent} from './resources/pages/carer/carer-paid-submitted/carer-paid-submitted.component';
 import {PaymentDetailsComponent} from './resources/pages/carer/carer-paid-submitted/payment-details/payment-details.component';
 import {CareHomeReviewsComponent} from './resources/pages/care-home/care-home-reviews/care-home-reviews.component';
+import {CareHomePastJobsComponent} from './resources/pages/care-home/care-home-past-jobs/care-home-past-jobs.component';
+import {PastJobsDetailsComponent} from './resources/pages/care-home/care-home-past-jobs/past-jobs-details/past-jobs-details.component';
 
 const routes: Routes = [
     {
@@ -144,6 +146,16 @@ const routes: Routes = [
             {
                 path: 'care-home-reviews',
                 component: CareHomeReviewsComponent,
+                canActivate: [CareHomeAuthGuardService]
+            },
+            {
+                path: 'care-home-past-jobs',
+                component: CareHomePastJobsComponent,
+                canActivate: [CareHomeAuthGuardService]
+            },
+            {
+                path: 'care-home-past-jobs-details/:id',
+                component: PastJobsDetailsComponent,
                 canActivate: [CareHomeAuthGuardService]
             },
         ]

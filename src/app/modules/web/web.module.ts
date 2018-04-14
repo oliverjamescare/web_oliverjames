@@ -118,6 +118,7 @@ import { PaymentsDetailsComponent } from './resources/partials/payments-details/
 import {StatusPipe} from './pipes/status.pipe';
 import { CareHomeReviewsComponent } from './resources/pages/care-home/care-home-reviews/care-home-reviews.component';
 import { CareHomePastJobsComponent } from './resources/pages/care-home/care-home-past-jobs/care-home-past-jobs.component';
+import { PastJobsDetailsComponent } from './resources/pages/care-home/care-home-past-jobs/past-jobs-details/past-jobs-details.component';
 
 @NgModule({
     declarations: [
@@ -202,7 +203,8 @@ import { CareHomePastJobsComponent } from './resources/pages/care-home/care-home
         EditCardComponent,
         PaymentsDetailsComponent,
         CareHomeReviewsComponent,
-        CareHomePastJobsComponent
+        CareHomePastJobsComponent,
+        PastJobsDetailsComponent
     ],
     imports: [
         CommonModule,

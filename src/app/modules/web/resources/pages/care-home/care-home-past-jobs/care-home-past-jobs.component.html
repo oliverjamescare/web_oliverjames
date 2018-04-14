@@ -1,3 +1,81 @@
-<p>
-  care-home-past-jobs works!
-</p>
+<app-care-home-booking-header
+        navigationTitle="Back"
+        navigationRoute="/care-home-dashboard"
+        mainTitle="Past jobs / invoices"
+></app-care-home-booking-header>
+
+<br>
+<div [formGroup]="form" class="row text-center">
+    <div class="col-sm-5">
+        <div class="green-div">
+            From
+        </div>
+        <div class="white-div">
+            <input type="text" class="form-control" id="from" formControlName="from">
+        </div>
+    </div>
+
+    <div class="col-sm-5">
+        <div class="green-div">
+            To
+        </div>
+        <div class="white-div">
+            <input type="text" class="form-control" id="to" formControlName="to">
+        </div>
+    </div>
+</div>
+<br>
+
+<div class="row">
+    <div class="col-sm">
+        <p *ngIf="pastJobs.length === 0">No submitted jobs so far</p>
+        <table *ngIf="pastJobs.length !== 0" class="custom-table text-center">
+            <thead>
+            <tr>
+                <th>Job Id</th>
+                <th>Start date</th>
+                <th>From</th>
+                <th>Till</th>
+                <th>Total const</th>
+                <th>Your carer</th>
+                <th>Status</th>
+                <th>Options / status</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let job of pastJobs">
+                <td>{{ job._id }}</td>
+                <td>{{ job.start_date | timestampDate }}</td>
+                <td>{{ job.start_date | timestampHour }}</td>
+                <td>{{ job.end_date | timestampHour }}</td>
+                <td>{{ job.cost.total_cost }} <span>&#163;</span></td>
+                <td>{{ job.carer.carer.first_name }} {{ job.carer.carer.surname }}</td>
+                <td>{{ job.status | status }}</td>
+                <td>
+                    <div class="text-center">
+                            <span
+                                    [routerLink]="['/care-home-past-jobs-details', job._id]"
+                                    class="actions"
+                            >Modify/ cancel</span>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <div  class="text-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li
+                            *ngFor="let p of pages"
+                            [ngClass]="{'active': page === p + 1}"
+                            class="page-item">
+                        <a
+                                (click)="onPaginationChange(p + 1)"
+                                class="page-link">{{ p + 1 }}</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+<br><br>
