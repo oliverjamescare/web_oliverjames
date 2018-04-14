@@ -235,12 +235,21 @@ export class RegisterCareHomeComponent implements OnInit {
                 .registerCareHome(this.form.value)
                 .subscribe(() => {
                         this.inProgress = false;
-                        this.router.navigate(['/']);
+                        this.logCareHome();
                     },
                     (error: HttpErrorResponse) => {
                         this.error = getMessageError(error);
                         this.inProgress = false;
                     });
         }
+    }
+
+    logCareHome(): void {
+        this.careHomeService.loginCareHome(this.form.get('email').value, this.form.get('password').value)
+            .subscribe(
+                response => {
+                    this.router.navigate(['/care-home-dashboard']);
+                }
+            );
     }
 }

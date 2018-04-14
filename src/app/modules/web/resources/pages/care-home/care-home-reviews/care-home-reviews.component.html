@@ -7,6 +7,8 @@
 <div [formGroup]="form">
     <div formArrayName="ratings" class="row">
         <div *ngFor="let review of pendingReviews; let i = index" class="col-md-6">
+            <br>
+            <br>
             <div class="carer-header text-center">
                 <div class="avatar">
                     <div class="avatar-wrapper">
@@ -37,13 +39,11 @@
                 <p><ngb-rating
                         formControlName="rate"
                         class="rating"
-                        [rate]="'4'"
-                        [max]="'5'"
-                        (rateChange)="onRateChange()"
+                        [max]="5"
                 ></ngb-rating></p>
                 <textarea formControlName="description" class="form-control" rows="5"></textarea>
                 <button
-                        (click)="addCarerToBlocked(review.carer._id)"
+                        (click)="openConfirmationPopup(review.carer._id)"
                         class="btn btn-success btn-red">Block this carer from future jobs</button>
                 <button
                         (click)="reviewJobCarer(i)"
@@ -54,3 +54,10 @@
         </div>
     </div>
 </div>
+
+<app-block-carer-confirmation
+        *ngIf="showBlockConfirmation"
+        [type]="'block-confirmation'"
+        [carerId]="currentCarerId"
+        (closed)="showBlockConfirmation = false"
+></app-block-carer-confirmation>

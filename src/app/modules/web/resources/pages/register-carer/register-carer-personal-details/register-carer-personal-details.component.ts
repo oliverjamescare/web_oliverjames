@@ -267,7 +267,7 @@ export class RegisterCarerPersonalDetailsComponent implements OnInit, OnDestroy
             jobRoleCarer: new FormControl(null),
             jobRoleSeniorCarer: new FormControl(null),
             mobile: new FormControl(null, [ Validators.required, greaterThan(0) ]),
-            careExperiance: new FormControl(null, [ Validators.required, greaterThan(2)])
+            careExperiance: new FormControl(null)
         });
 
         // overriding values

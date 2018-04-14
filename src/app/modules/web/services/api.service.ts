@@ -256,6 +256,14 @@ export class ApiService {
         );
     }
 
+    challengeJobPayment(jobId: string, description: string): Observable<any> {
+        return this.httpClient.post(
+            `${this.endpoint}/jobs/${jobId}/challenge`,
+            {description},
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
 // care home & carer
 
     getUserProfile(): Observable<any> {

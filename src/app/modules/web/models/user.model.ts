@@ -10,6 +10,7 @@ export class User extends Model
     access_token?: Token = null;
     carer?: Carer = null;
     care_home?: CareHome = null;
+    status?: string = null;
 
     constructor(object: Object = {})
     {

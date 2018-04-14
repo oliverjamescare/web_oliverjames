@@ -8,42 +8,53 @@
     </div>
 </app-popup>
 
-<h4>What do you want to do?</h4>
-<div class="row">
-    <div class="col-4">
-        <a routerLink="/carer-upcoming-jobs" class="btn btn-success">See my upcoming jobs</a>
-        <div class="text-center">
-            <small class="text-muted text-center">{{ jobsDue }} jobs due in next 24 hours</small>
+<div *ngIf="activated">
+    <h4>What do you want to do?</h4>
+    <div class="row">
+        <div class="col-4">
+            <a routerLink="/carer-upcoming-jobs" class="btn btn-success">See my upcoming jobs</a>
+            <div class="text-center">
+                <small class="text-muted text-center">{{ jobsDue }} jobs due in next 24 hours</small>
+            </div>
+        </div>
+        <div class="col-4">
+            <a routerLink="/carer-available-jobs" class="btn btn-success">See new jobs available</a>
+            <div class="text-center">
+                <small class="text-muted text-center">X new jobs available</small>
+            </div>
+        </div>
+        <div class="col-4">
+            <button class="btn btn-success" (click)="showLogoutPopup()">Logout</button>
         </div>
     </div>
-    <div class="col-4">
-        <a routerLink="/carer-available-jobs" class="btn btn-success">See new jobs available</a>
-        <div class="text-center">
-            <small class="text-muted text-center">X new jobs available</small>
+    <div class="row">
+        <div class="col-4">
+            <a routerLink="/carer-availability" class="btn btn-success">Set my availability</a>
+        </div>
+        <div class="col-4">
+            <a routerLink="/carer-paid-submitted" class="btn btn-success">See paid and submitted jobs</a>
+        </div>
+        <div class="col-4">
+            <a routerLink="/carer-notifications" class="btn btn-success">Notifications</a>
         </div>
     </div>
-    <div class="col-4">
-        <button class="btn btn-success" (click)="showLogoutPopup()">Logout</button>
+    <br>
+    <div class="row">
+        <div class="col-sm">
+            <h5>My upcoming jobs</h5>
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-4">
-        <a routerLink="/carer-availability" class="btn btn-success">Set my availability</a>
-    </div>
-    <div class="col-4">
-        <a routerLink="/carer-paid-submitted" class="btn btn-success">See paid and submitted jobs</a>
-    </div>
-    <div class="col-4">
-        <a routerLink="/carer-notifications" class="btn btn-success">Notifications</a>
-    </div>
-</div>
-<br>
-<div class="row">
-    <div class="col-sm">
-        <h5>My upcoming jobs</h5>
-    </div>
-</div>
-<app-upcoming-jobs
-        (jobsDue)="jobsDue = $event"
-></app-upcoming-jobs>
+    <app-upcoming-jobs
+            (jobsDue)="jobsDue = $event"
+    ></app-upcoming-jobs>
 
+</div>
+
+<div *ngIf="!activated">
+    <div class="row">
+        <div class="col-sm text-center">
+            <p class="info">Your account is pending verification and setup</p>
+            <button class="btn btn-success btn-pending" (click)="showLogoutPopup()">Logout</button>
+        </div>
+    </div>
+</div>

@@ -3,5 +3,6 @@ export const environment = {
     // api: 'http://localhost:8000/api',
     // api: 'https://api.oliver-james.ready4s.it/api',
     api: 'https://dev.api.oliver-james.ready4s.it/api',
-    admin: 'https://dev.api.oliver-james.ready4s.it/admin'
+    admin: 'https://dev.api.oliver-james.ready4s.it/admin',
+    site: 'https://oliver-james.ready4s.it/terms'
 };

@@ -39,7 +39,8 @@
                 <th>Total const</th>
                 <th>Your carer</th>
                 <th>Status</th>
-                <th>Options / status</th>
+                <th>Options</th>
+                <th>Details</th>
             </tr>
             </thead>
             <tbody>
@@ -52,11 +53,19 @@
                 <td>{{ job.carer.carer.first_name }} {{ job.carer.carer.surname }}</td>
                 <td>{{ job.status | status }}</td>
                 <td>
+                    <div *ngIf="job.status === 'PENDING_PAYMENT'" class="text-center">
+                            <span
+                                    (click)="navigateToChallenge(job)"
+                                    class="actions"
+                            >Challenge</span>
+                    </div>
+                </td>
+                <td>
                     <div class="text-center">
                             <span
                                     [routerLink]="['/care-home-past-jobs-details', job._id]"
                                     class="actions"
-                            >Modify/ cancel</span>
+                            >Details</span>
                     </div>
                 </td>
             </tr>

@@ -13,7 +13,7 @@ const MINUTE_IN_MILLISECONDS = 60000;
 })
 export class PaymentDetailsComponent implements OnInit {
 
-    constructor(private carerJobService: CarerJobService,
+    constructor(public carerJobService: CarerJobService,
                 private router: Router) {
     }
 

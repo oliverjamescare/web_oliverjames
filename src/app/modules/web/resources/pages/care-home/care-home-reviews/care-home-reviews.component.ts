@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CareHomeService} from '../../../../services/care-home.service';
 import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {NotificationsService} from 'angular2-notifications';
+import {AuthService} from '../../../../services/auth.service';
 
 @Component({
     selector: 'app-care-home-reviews',
@@ -13,9 +14,12 @@ export class CareHomeReviewsComponent implements OnInit {
     pendingReviews: any[] = [];
 
     form: FormGroup;
+    showBlockConfirmation = false;
+    currentCarerId: string;
 
     constructor(private careHomeService: CareHomeService,
-                private notificationService: NotificationsService) {
+                private notificationService: NotificationsService,
+                private authService: AuthService) {
     }
 
     ngOnInit() {
@@ -25,13 +29,15 @@ export class CareHomeReviewsComponent implements OnInit {
         this.getPendingReviews();
     }
 
-    getProfileImage(): string {
-        // getProfileImage(carer): string {
-        //     return carer.profile_image ?
-        //         `${carer.profile_image}?access-token=${this.authService.getAccessToken().token}`
-        //         : '../../../../../assets/images/placeholder.jpg';
-        // }
-        return '../../../../assets/images/placeholder.jpg';
+    getProfileImage(carer): string {
+        return carer.profile_image ?
+            `${carer.profile_image}?access-token=${this.authService.getAccessToken().token}`
+            : '../../../../assets/images/placeholder.jpg';
+    }
+
+    openConfirmationPopup(carerId): void {
+        this.currentCarerId = carerId;
+        this.showBlockConfirmation = true;
     }
 
     onRateChange(): void {
