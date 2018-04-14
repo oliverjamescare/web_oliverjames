@@ -25,7 +25,7 @@
 <br>
 <div class="row">
     <div class="col-sm-4">
-        <button class="btn btn-success" [disabled]="!jobDetails?.review">See review</button>
+        <button (click)="seeReviewDialog = true" class="btn btn-success" [disabled]="!jobDetails?.review">See review</button>
     </div>
     <div class="col-sm-4">
         <button class="btn btn-success" [disabled]="true">Add manual booking charge</button>
@@ -224,3 +224,12 @@
         [jobId]="jobId"
         (closed)="showResolveChallengeDialog = false"
 ></app-resolve-challenge>
+
+<app-see-review
+        *ngIf="seeReviewDialog"
+        type="see-review"
+        [review]="jobDetails.review"
+        [jobId]="jobDetails._id"
+        (closed)="seeReviewDialog = false"
+>
+</app-see-review>

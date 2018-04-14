@@ -1,0 +1,18 @@
+<app-cms-popup [title]="title" [id]="type + '_id'" [showLogo]="false">
+    <div class="row">
+        <div class="col-12 text-left">
+            <div class="text-center">
+                <div class="rate">
+                    <label>
+                        Rate: {{ review.rate }}
+                    </label>
+                </div>
+                <label>Description</label>
+                <textarea disabled class="form-control" rows="5" [value]="review.description"></textarea>
+            </div>
+            <br>
+            <button (click)="onApproveReview('ARCHIVED')" class="btn btn-success btn-actions">Archive review</button>
+            <button (click)="onApproveReview('PUBLISHED')" class="btn right btn-success btn-actions">Publish review</button>
+        </div>
+    </div>
+</app-cms-popup>

@@ -41,6 +41,7 @@ import { CareHomesListComponent } from './resources/pages/care-homes/care-homes-
 import { CareHomeDetailsComponent } from './resources/pages/care-homes/care-home-details/care-home-details.component';
 import { SeeProfilePictrueComponent } from './resources/pages/carers/carer-details/see-profile-pictrue/see-profile-pictrue.component';
 import { AddJobComponent } from './resources/pages/jobs/add-job/add-job.component';
+import { SeeReviewComponent } from './resources/pages/jobs/job-details/see-review/see-review.component';
 
 
 @NgModule({
@@ -73,7 +74,8 @@ import { AddJobComponent } from './resources/pages/jobs/add-job/add-job.componen
         CareHomesListComponent,
         CareHomeDetailsComponent,
         SeeProfilePictrueComponent,
-        AddJobComponent
+        AddJobComponent,
+        SeeReviewComponent
     ],
     providers: [
         ApiService,
