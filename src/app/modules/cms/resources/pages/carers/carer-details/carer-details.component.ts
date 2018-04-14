@@ -34,6 +34,7 @@ export class CarerDetailsComponent implements OnInit {
             params => {
                 this.carerId = params['id'];
                 this.getCarerDetails();
+                this.createForm();
             }
         );
     }
@@ -126,12 +127,14 @@ export class CarerDetailsComponent implements OnInit {
 
     private createForm(): void {
         const refArr = new FormArray([]);
-        this.carerDetails.carer.reference.references.forEach((ref) => {
-            refArr.push(new FormGroup({
-                'name': new FormControl(ref.name),
-                'type': new FormControl(ref.type)
-            }));
-        });
+        if (this.carerDetails && !isUndefined(this.carerDetails.carer.reference.references)) {
+            this.carerDetails.carer.reference.references.forEach((ref) => {
+                refArr.push(new FormGroup({
+                    'name': new FormControl(ref.name),
+                    'type': new FormControl(ref.type)
+                }));
+            });
+        }
         this.form = new FormGroup({
             'training_other': new FormControl(),
             'dbs_date': new FormControl(),

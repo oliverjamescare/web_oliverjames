@@ -6,7 +6,7 @@
 </div>
 <br>
 
-<div class="row">
+<div *ngIf="carerDetails" class="row">
     <div class="col-sm">
         <table *ngIf="carerDetails" [formGroup]="form" class="carer-details-table">
             <tr>
@@ -86,7 +86,7 @@
             </tr>
             <tr>
                 <th>CV / equivalent upload</th>
-                <td>{{ carerDetails.carer.cv_uploads.length }} files uploaded
+                <td>{{ carerDetails?.carer?.cv_uploads?.length }} files uploaded
                     <span (click)="onPopupOpen('cv')" class="green right gj-cursor-pointer">Upload / edit</span></td>
             </tr>
             <tr>
