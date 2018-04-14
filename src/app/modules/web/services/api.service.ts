@@ -196,6 +196,14 @@ export class ApiService {
         );
     }
 
+    addCarerToBlocked(carerId: string): Observable<any> {
+        return this.httpClient.post(
+            `${this.endpoint}/care-home/carers/${carerId}/block`,
+            {},
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
     removeCarerFromBlocked(carerId: string): Observable<any> {
         return this.httpClient.delete(
             `${this.endpoint}/care-home/carers/${carerId}/block`,
@@ -222,6 +230,14 @@ export class ApiService {
     getPendingReviews(page: number): Observable<any> {
         return this.httpClient.get(
             `${this.endpoint}/care-home/pending-reviews?page=${page}`,
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
+    reviewJobCarer(jobId: string, rate: number, description: string): Observable<any> {
+        return this.httpClient.post(
+            `${this.endpoint}/jobs/${jobId}/carer/review`,
+            {rate, description},
             {headers: this.getAuthorizationHeaders()}
         );
     }

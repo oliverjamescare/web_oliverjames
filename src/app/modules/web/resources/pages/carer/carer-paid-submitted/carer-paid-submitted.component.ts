@@ -16,6 +16,8 @@ export class CarerPaidSubmittedComponent implements OnInit {
 
     submittedJobs: any[] = [];
 
+    pages: number[] = [];
+
     constructor(private carerJobService: CarerJobService,
                 private router: Router) {
     }
@@ -23,6 +25,11 @@ export class CarerPaidSubmittedComponent implements OnInit {
     ngOnInit() {
         this.createForm();
         this.setDatepickers();
+        this.getSubmttedJobs();
+    }
+
+    onPaginationChange(page: number): void {
+        this.page = page;
         this.getSubmttedJobs();
     }
 
@@ -36,6 +43,7 @@ export class CarerPaidSubmittedComponent implements OnInit {
                 response => {
                     console.log('Get submitted jobs success response', response);
                     this.submittedJobs = response.results;
+                    this.pages = this.setPaginationArray(response.pages);
                 },
                 error => {
                     console.log('Get submitted jobs error response', error);
@@ -84,8 +92,16 @@ export class CarerPaidSubmittedComponent implements OnInit {
     }
 
     private getInitialToDate(): Date {
-        const endTimestamp = this.getInitialFromDate().getTime() + MONTH_IN_MILLISECONDS;
+        const endTimestamp = new Date().getTime() + MONTH_IN_MILLISECONDS;
         return new Date(endTimestamp);
+    }
+
+    private setPaginationArray(length: number): number[] {
+        const arr = [];
+        for (let i = 0; i < length; i++) {
+            arr.push(i);
+        }
+        return arr;
     }
 
 }

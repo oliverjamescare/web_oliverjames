@@ -4,46 +4,53 @@
         mainTitle="Jobs reviews"
 ></app-care-home-booking-header>
 <br>
-
-<div class="row">
-    <div class="col-md-6">
-        <div class="carer-header">
-            <div class="avatar">
-                <div class="avatar-wrapper">
-                    <img [src]="getProfileImage(carer)" class="img img responsive profile-image">
+<div [formGroup]="form">
+    <div formArrayName="ratings" class="row">
+        <div *ngFor="let review of pendingReviews; let i = index" class="col-md-6">
+            <div class="carer-header text-center">
+                <div class="avatar">
+                    <div class="avatar-wrapper">
+                        <img [src]="getProfileImage(review)" class="img img responsive profile-image">
+                    </div>
+                    <span class="carer-name">{{ review.carer.carer.first_name }} {{ review.carer.carer.surname }}</span>
                 </div>
-                <span class="carer-name">Anastasia Kornlukov</span>
             </div>
-        </div>
-        <div class="job-info">
-            <table class="custom-table text-center">
-                <thead>
+            <div class="job-info">
+                <table class="custom-table text-center">
+                    <thead>
                     <th>Job ID</th>
                     <th>Start Date</th>
                     <th>From</th>
                     <th>Till</th>
-                </thead>
-                <tbody>
-                    <td class="left-td">1234567889</td>
-                    <td>1-11-2018</td>
-                    <td>7:00 PM</td>
-                    <td>11:00 PM</td>
-                </tbody>
-            </table>
-        </div>
-        <br>
-        <div class="text-center">
-            <span class="label">Your review of Anastasia</span>
-            <p><ngb-rating
-                    class="rating"
-                    [rate]="'4'"
-                    [max]="'5'"
-                    (rateChange)="onRateChange(event)"
-                    [formControl]="rating"
-            ></ngb-rating></p>
-            <textarea class="form-control" rows="5"></textarea>
-            <button class="btn btn-success btn-red">Block this carer from future jobs</button>
-            <button class="btn btn-success">Submit</button>
+                    </thead>
+                    <tbody>
+                    <td class="left-td">{{ review._id }}</td>
+                    <td>{{ review.start_date | timestampDate }}</td>
+                    <td>{{ review.start_date | timestampHour }}</td>
+                    <td>{{ review.end_date | timestampHour }}</td>
+                    </tbody>
+                </table>
+            </div>
+            <br>
+            <div [formGroupName]="i" class="text-center">
+                <span class="label">Your review of {{ review.carer.carer.first_name }}</span>
+                <p><ngb-rating
+                        formControlName="rate"
+                        class="rating"
+                        [rate]="'4'"
+                        [max]="'5'"
+                        (rateChange)="onRateChange()"
+                ></ngb-rating></p>
+                <textarea formControlName="description" class="form-control" rows="5"></textarea>
+                <button
+                        (click)="addCarerToBlocked(review.carer._id)"
+                        class="btn btn-success btn-red">Block this carer from future jobs</button>
+                <button
+                        (click)="reviewJobCarer(i)"
+                        [disabled]="!form.get('ratings').controls[i].valid"
+                        class="btn btn-success"
+                >Submit</button>
+            </div>
         </div>
     </div>
 </div>

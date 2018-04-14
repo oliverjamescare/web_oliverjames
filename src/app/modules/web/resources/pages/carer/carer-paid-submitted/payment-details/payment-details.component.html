@@ -5,36 +5,36 @@
 ></app-care-home-booking-header>
 <br>
 
-<div class="row">
+<div *ngIf="carerJobService.pastJobDetails" class="row">
     <div class="col-sm">
         <table class="profile-table">
             <tr>
                 <th>Total time worked (hours)</th>
-                <td>6 hours 30 min</td>
+                <td>{{ getTotalTimeWorked() }}</td>
             </tr>
             <tr>
                 <th>Less deductions (minutes)</th>
-                <td></td>
+                <td>{{ carerJobService?.pastJobDetails.payment.deductions }}</td>
             </tr>
             <tr>
                 <th>Time billed</th>
-                <td>6 hours 30 min</td>
+                <td>{{ getTotalTimeBilled() }}</td>
             </tr>
             <tr>
                 <th>Gross due</th>
-                <td>68</td>
+                <td>{{ carerJobService?.pastJobDetails.payment.job_income }} <span>&#163;</span></td>
             </tr>
             <tr>
                 <th>Oliver James Commission</th>
-                <td>3</td>
+                <td>{{ carerJobService?.pastJobDetails.payment.application_fee }} <span>&#163;</span></td>
             </tr>
             <tr>
                 <th>Oliver James deduction: Training</th>
-                <td>2</td>
+                <td>{{ carerJobService?.pastJobDetails.payment.transaction_charge }} <span>&#163;</span></td>
             </tr>
             <tr>
                 <th>Net due</th>
-                <td>63</td>
+                <td>{{ carerJobService?.pastJobDetails.payment.net_income }} <span>&#163;</span></td>
             </tr>
         </table>
         <br>

@@ -80,4 +80,12 @@ export class CareHomeService {
         return this.apiService.getPendingReviews(page);
     }
 
+    reviewJobCarer(jobId: string, rate: number, description: string): Observable<any> {
+        return this.apiService.reviewJobCarer(jobId, rate, description);
+    }
+
+    addCarerToBlocked(carerId: string): Observable<any> {
+        return this.apiService.addCarerToBlocked(carerId);
+    }
+
 }

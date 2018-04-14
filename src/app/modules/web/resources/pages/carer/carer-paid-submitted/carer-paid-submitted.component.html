@@ -58,16 +58,30 @@
             <tr *ngFor="let job of submittedJobs">
                 <td>{{ job._id }}</td>
                 <td>{{ job.start_date | timestampDate }}</td>
-                <td>{{ job.startDate | timestampHour }}</td>
+                <td>{{ job.start_date | timestampHour }}</td>
                 <td>{{ job.end_date | timestampHour }}</td>
                 <td>{{ job.projected_income }} <span>&#163;</span></td>
                 <td><span (click)="navigateToDetails(job)" class="green gj-cursor-pointer">See pay details</span></td>
-                <td>The Elms nursing</td>
+                <td>{{ job.author.care_home.care_service_name }}</td>
                 <td>{{ job.status | status }}</td>
                 <td>{{ job.payment.status | status }}</td>
             </tr>
             </tbody>
         </table>
+        <br>
+        <div  class="text-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li
+                            *ngFor="let p of pages"
+                            [ngClass]="{'active': page === p + 1}"
+                            class="page-item">
+                        <a
+                                (click)="onPaginationChange(p + 1)"
+                                class="page-link">{{ p + 1 }}</a></li>
+                </ul>
+            </nav>
+        </div>
     </div>
 </div>
 <br><br>
