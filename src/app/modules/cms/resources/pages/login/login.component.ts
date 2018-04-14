@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserService } from '../../../services/user.service';
+import { AdminService } from '../../../services/admin.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { getMessageError } from '../../../../../utilities/form.utils';
 
@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit
     inProgress: boolean = false;
     error: string = '';
 
-    constructor(private router: Router, private userService: UserService) { }
+    constructor(private router: Router, private userService: AdminService) { }
 
     ngOnInit()
     {

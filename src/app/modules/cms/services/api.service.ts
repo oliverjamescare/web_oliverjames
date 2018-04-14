@@ -124,4 +124,25 @@ export class ApiService {
             'X-access-token': this.authService.getAccessToken()
         });
     }
+
+    //care homes
+    getCareHomes(search: string, status: string, sort: string, page: number): Observable<any> {
+        return this.httpClient.get(
+            `${this.endpoint}/care-homes`,
+            {
+                headers: this.getAuthorizationHeaders(),
+                params: new HttpParams().set('search', search).set('status_filter', status).set('sort', sort).set('page', `${page}`)
+            }
+        );
+    }
+
+    getCareHomeDetails(id: string): Observable<any>
+    {
+        return this.httpClient.get(`${this.endpoint}/care-homes/${id}`, { headers: this.getAuthorizationHeaders() });
+    }
+
+    updateCareHome(id: string, body: FormData): Observable<any>
+    {
+        return this.httpClient.put(`${this.endpoint}/care-homes/${id}`, body, { headers: this.getAuthorizationHeaders() });
+    }
 }

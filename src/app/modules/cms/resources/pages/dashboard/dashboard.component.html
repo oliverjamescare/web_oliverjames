@@ -2,7 +2,7 @@
     <img src="./assets/images/oliver-james-slim-logo.png" alt="logo">
     <h2>CMS</h2>
     <div class="user-section">
-        <span>Logged as {{ user.first_name }} {{ user.surname }}</span>
+        <span>Logged as {{ admin.first_name }} {{ admin.surname }}</span>
         <div class="buttons-container">
             <a href="#">Edit</a>
             <a href="#" (click)="onLogout($event)">Logout</a>
@@ -12,7 +12,8 @@
         <ul>
             <li><a routerLink="/admin/jobs/list">Jobs</a></li>
             <li><a routerLink="/admin/carers/list">Carers</a></li>
-            <li><a>Care homes</a></li>
+            <li><a routerLink="/admin/care-homes">Care homes</a></li>
+            <li><a >Waiting list</a></li>
             <li><a>Export data</a></li>
             <li><a>Staff</a></li>
             <li><a>Parameters settings</a></li>

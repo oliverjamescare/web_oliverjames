@@ -1,34 +1,34 @@
-import { User } from '../models/user.model';
+import { Admin } from '../models/admin.model';
 import { Subject } from 'rxjs/Subject';
 
 export class AuthService
 {
-    private user: User;
+    private admin: Admin;
     private token: string;
     private authenticated = false;
-    authChanged: Subject<User> = new Subject();
+    authChanged: Subject<Admin> = new Subject();
 
     constructor()
     {
-        var user;
+        var admin;
         try
         {
-            user = JSON.parse(sessionStorage.getItem("authAdmin"));
-            this.login(user);
+            admin = JSON.parse(sessionStorage.getItem("authAdmin"));
+            this.login(admin);
         }
         catch (error) {}
     }
 
-    login(user: User)
+    login(admin: Admin)
     {
-        if(user)
+        if(admin)
         {
-            sessionStorage.setItem("authAdmin", JSON.stringify(user));
+            sessionStorage.setItem("authAdmin", JSON.stringify(admin));
             this.authenticated = true;
-            this.token = user.token;
-            delete user["token"];
-            this.user = user;
-            this.authChanged.next(user);
+            this.token = admin.token;
+            delete admin["token"];
+            this.admin = admin;
+            this.authChanged.next(admin);
         }
     }
 
@@ -36,14 +36,14 @@ export class AuthService
     {
         sessionStorage.removeItem("authAdmin");
         this.token = null;
-        this.user = null;
+        this.admin = null;
         this.authenticated = false;
-        this.authChanged.next(this.user);
+        this.authChanged.next(this.admin);
     }
 
-    getLoggedUser() : User
+    getLoggedUser() : Admin
     {
-        return this.user;
+        return this.admin;
     }
 
     getAccessToken(): string

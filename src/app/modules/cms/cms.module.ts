@@ -10,8 +10,9 @@ import {AuthGuardService} from './guards/auth-guard.service';
 //services
 import {ApiService} from './services/api.service';
 import {AuthService} from './services/auth.service';
-import {UserService} from './services/user.service';
+import {AdminService} from './services/admin.service';
 import {CarersService} from './services/carers.service';
+import { CareHomesService } from './services/care-homes.service';
 
 // components
 import {CmsComponent} from './cms.component';
@@ -35,6 +36,10 @@ import {TimestampHourPipe} from './pipes/timestampHour.pipe';
 import { JobsDetailsComponent } from './resources/pages/jobs/jobs-details/jobs-details.component';
 import { CancelJobComponent } from './resources/pages/jobs/jobs-details/cancel-job/cancel-job.component';
 import { ResolveChallengeComponent } from './resources/pages/jobs/jobs-details/resolve-challenge/resolve-challenge.component';
+import { CareHomesComponent } from './resources/pages/care-homes/care-homes.component';
+import { CareHomesListComponent } from './resources/pages/care-homes/care-homes-list/care-homes-list.component';
+import { CareHomeDetailsComponent } from './resources/pages/care-homes/care-home-details/care-home-details.component';
+
 
 @NgModule({
     imports: [
@@ -61,16 +66,20 @@ import { ResolveChallengeComponent } from './resources/pages/jobs/jobs-details/r
         TimestampHourPipe,
         JobsDetailsComponent,
         CancelJobComponent,
-        ResolveChallengeComponent
+        ResolveChallengeComponent,
+        CareHomesComponent,
+        CareHomesListComponent,
+        CareHomeDetailsComponent
     ],
     providers: [
         ApiService,
         AuthService,
-        UserService,
+        AdminService,
         AuthGuardService,
         CarersService,
         DatesService,
-        JobsService
+        JobsService,
+        CareHomesService
     ]
 
 })

@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
 
 import { AuthService } from './auth.service';
-import { User } from '../models/user.model';
+import { Admin } from '../models/admin.model';
 
 @Injectable()
-export class UserService
+export class AdminService
 {
     constructor(private apiService: ApiService, private authService: AuthService) {}
 
@@ -16,8 +16,8 @@ export class UserService
             .map(result => {
 
                 //admin login handle
-                const user = new User(result["user"]);
-                this.authService.login(user);
+                const admin = new Admin(result["user"]);
+                this.authService.login(admin);
                 return result;
             });
     }
