@@ -92,4 +92,8 @@ export class CareHomeService {
         return this.apiService.getCareHomePastJobs(from, to, page);
     }
 
+    getPastJobDetails(jobId: string): Observable<any> {
+        return this.apiService.getPastJobsDetails(jobId);
+    }
+
 }
