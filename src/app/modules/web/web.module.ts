@@ -115,6 +115,8 @@ import { CarerPaidSubmittedComponent } from './resources/pages/carer/carer-paid-
 import { PaymentDetailsComponent } from './resources/pages/carer/carer-paid-submitted/payment-details/payment-details.component';
 import { EditCardComponent } from './resources/pages/care-home/care-home-my-profile/edit-card/edit-card.component';
 import { PaymentsDetailsComponent } from './resources/partials/payments-details/payments-details.component';
+import {StatusPipe} from './pipes/status.pipe';
+import { CareHomeReviewsComponent } from './resources/pages/care-home/care-home-reviews/care-home-reviews.component';
 
 @NgModule({
     declarations: [
@@ -184,6 +186,7 @@ import { PaymentsDetailsComponent } from './resources/partials/payments-details/
         CareHomeUpcomingJobsComponent,
         TimestampHourPipe,
         TimestampDatePipe,
+        StatusPipe,
         BlockedCarersComponent,
         CareHomeUpcomingJobsTabComponent,
         CareHomeJobActionsComponent,
@@ -196,7 +199,8 @@ import { PaymentsDetailsComponent } from './resources/partials/payments-details/
         CarerPaidSubmittedComponent,
         PaymentDetailsComponent,
         EditCardComponent,
-        PaymentsDetailsComponent
+        PaymentsDetailsComponent,
+        CareHomeReviewsComponent
     ],
     imports: [
         CommonModule,
@@ -210,7 +214,7 @@ import { PaymentsDetailsComponent } from './resources/partials/payments-details/
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyBWoEhh2-9yp52XVTtfTaLIPcxcmTkt_Ms',
             libraries: ['places', 'geometry']
-        })
+        }),
     ],
     providers: [
         ApiService,

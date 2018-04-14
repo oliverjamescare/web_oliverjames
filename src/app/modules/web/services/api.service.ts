@@ -134,6 +134,13 @@ export class ApiService {
         );
     }
 
+    getCarerSubmittedJobs(from: number, to: number, page: number): Observable<any> {
+        return this.httpClient.get(
+            `${this.endpoint}/carer/submitted-jobs?from=${from}&to=${to}&page=${page}`,
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
     // care home
     getCalendarData(): Observable<any> {
         return this.httpClient.get(this.endpoint + '/care-home/calendar', {headers: this.getAuthorizationHeaders()});
@@ -208,6 +215,13 @@ export class ApiService {
         return this.httpClient.put(
             `${this.endpoint}/jobs/${jobId}/cancel`,
             {id: jobId},
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
+    getPendingReviews(page: number): Observable<any> {
+        return this.httpClient.get(
+            `${this.endpoint}/care-home/pending-reviews?page=${page}`,
             {headers: this.getAuthorizationHeaders()}
         );
     }

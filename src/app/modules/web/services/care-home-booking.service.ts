@@ -48,7 +48,7 @@ export class CareHomeBookingService {
     }
 
     searchForPriority(searchString: string): Observable<any> {
-        return this.fakeApiService.searchForPriorityUsersFake(searchString)
+        return this.apiService.searchForPriorityUsers(searchString)
             .map(
                 (response: SearchForPriorityResponse) => {
                     return response.carers;

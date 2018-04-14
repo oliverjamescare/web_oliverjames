@@ -18,6 +18,7 @@ export class CarerJobService {
     currentJobId: string;
     otherJobs: Job[] = [];
     consideredJob = new Subject<Job>();
+    pastJobDetails: any;
 
     constructor(private apiService: ApiService,
                 private datesService: DatesService) {
@@ -102,6 +103,10 @@ export class CarerJobService {
                     return jobsArr;
                 }
             );
+    }
+
+    getSubmittedJobs(from: number, to: number, page: number): Observable<any> {
+        return this.apiService.getCarerSubmittedJobs(from, to, page);
     }
 
     private getAvailableJobsParams(par: any): HttpParams {

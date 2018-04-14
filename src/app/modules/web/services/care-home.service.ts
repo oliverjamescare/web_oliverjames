@@ -76,4 +76,8 @@ export class CareHomeService {
         return this.apiService.cancelJob(jobId);
     }
 
+    getPendingReviews(page: number): Observable<any> {
+        return this.apiService.getPendingReviews(page);
+    }
+
 }

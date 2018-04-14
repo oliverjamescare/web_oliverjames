@@ -1,0 +1,55 @@
+.avatar {
+  padding: 5px;
+  .avatar-wrapper {
+    border-radius: 50px;
+    overflow: hidden;
+    width: 66px;
+    height: 66px;
+    background-color: #4a4a4a;
+    float: left;
+  }
+}
+
+.profile-image {
+  height: 66px;
+}
+
+.carer-name {
+  float: left;
+  margin-top: 24px;
+  font-weight: 600;
+  margin-left: 16px;
+}
+
+.job-info {
+  margin-top: 75px;
+  .left-td {
+    border-left: 1px solid #d3d3d3;
+  }
+  td {
+    border-right: 1px solid #d3d3d3;
+    border-bottom: 1px solid #d3d3d3;
+  }
+}
+
+.label {
+  font-weight: 600;
+}
+
+.rating {
+  font-size: 50px;
+  color: #03c88b;
+  margin-top: -10px;
+  &:focus {
+    outline: none;
+  }
+}
+
+.form-control {
+  margin-top: -15px;
+  text-align: left;
+}
+
+.btn {
+  margin-top: 10px;
+}

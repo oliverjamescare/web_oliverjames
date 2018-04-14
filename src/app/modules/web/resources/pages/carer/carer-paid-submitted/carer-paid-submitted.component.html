@@ -6,7 +6,7 @@
 <br>
 
 <div class="row text-center">
-    <div class="col-sm-6">
+    <div class="col-sm-10">
         <div class="grey-div">
             Total earned in last 30 days
         </div>
@@ -16,22 +16,22 @@
     </div>
 </div>
 <br>
-<div class="row text-center">
-    <div class="col-sm-3">
+<div [formGroup]="form" class="row text-center">
+    <div class="col-sm-5">
         <div class="green-div">
             From
         </div>
         <div class="white-div">
-            1/12/17
+            <input type="text" class="form-control" id="from" formControlName="from">
         </div>
     </div>
 
-    <div class="col-sm-3">
+    <div class="col-sm-5">
         <div class="green-div">
             To
         </div>
         <div class="white-div">
-            2/1/18
+            <input type="text" class="form-control" id="to" formControlName="to">
         </div>
     </div>
 </div>
@@ -39,14 +39,15 @@
 
 <div class="row">
     <div class="col-sm">
-        <table class="custom-table text-center">
+        <p *ngIf="submittedJobs.length === 0">No submitted jobs so far</p>
+        <table *ngIf="submittedJobs.length !== 0" class="custom-table text-center">
             <thead>
             <tr>
                 <th>Job Id</th>
                 <th>Start date</th>
                 <th>From</th>
                 <th>Till</th>
-                <th>Income recived</th>
+                <th>Projected income</th>
                 <th>See details</th>
                 <th>Care home</th>
                 <th>Job status</th>
@@ -54,49 +55,16 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>1231234234jkl</td>
-                <td>1/12/2018</td>
-                <td>8:00 PM</td>
-                <td>9:00 PM</td>
-                <td>45</td>
-                <td><span routerLink="/carer-paid-submitted-details" class="green gj-cursor-pointer">See pay details</span></td>
+            <tr *ngFor="let job of submittedJobs">
+                <td>{{ job._id }}</td>
+                <td>{{ job.start_date | timestampDate }}</td>
+                <td>{{ job.startDate | timestampHour }}</td>
+                <td>{{ job.end_date | timestampHour }}</td>
+                <td>{{ job.projected_income }} <span>&#163;</span></td>
+                <td><span (click)="navigateToDetails(job)" class="green gj-cursor-pointer">See pay details</span></td>
                 <td>The Elms nursing</td>
-                <td>Worked</td>
-                <td>Payment due 11/1/17</td>
-            </tr>
-            <tr>
-                <td>1231234234jkl</td>
-                <td>1/12/2018</td>
-                <td>8:00 PM</td>
-                <td>9:00 PM</td>
-                <td>45</td>
-                <td><span routerLink="/carer-paid-submitted-details" class="green gj-cursor-pointer">See pay details</span></td>
-                <td>The Elms nursing</td>
-                <td>Worked</td>
-                <td>Payment due 11/1/17</td>
-            </tr>
-            <tr>
-                <td>1231234234jkl</td>
-                <td>1/12/2018</td>
-                <td>8:00 PM</td>
-                <td>9:00 PM</td>
-                <td>45</td>
-                <td><span routerLink="/carer-paid-submitted-details" class="green gj-cursor-pointer">See pay details</span></td>
-                <td>The Elms nursing</td>
-                <td>Worked</td>
-                <td>Payment due 11/1/17</td>
-            </tr>
-            <tr>
-                <td>1231234234jkl</td>
-                <td>1/12/2018</td>
-                <td>8:00 PM</td>
-                <td>9:00 PM</td>
-                <td>45</td>
-                <td><span routerLink="/carer-paid-submitted-details" class="green gj-cursor-pointer">See pay details</span></td>
-                <td>The Elms nursing</td>
-                <td>Worked</td>
-                <td>Payment due 11/1/17</td>
+                <td>{{ job.status | status }}</td>
+                <td>{{ job.payment.status | status }}</td>
             </tr>
             </tbody>
         </table>
