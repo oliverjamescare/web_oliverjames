@@ -18,6 +18,30 @@
                 <td>{{ carerDetails.carer.first_name }} {{ carerDetails.carer.surname }}</td>
             </tr>
             <tr>
+                <th>Email</th>
+                <td>{{ carerDetails.email }}</td>
+            </tr>
+            <tr>
+                <th>Phone number</th>
+                <td>{{ carerDetails.phone_number }}</td>
+            </tr>
+            <tr>
+                <th>Bank details</th>
+                <td>
+                    <span *ngIf="!carerDetails.carer.payment_system.bank_number">Not set up</span>
+                    <span *ngIf="carerDetails.carer.payment_system.bank_number">
+                        Stored {{ carerDetails.carer.payment_system.bank_number }}</span>
+                </td>
+            </tr>
+            <tr>
+                <th>Date created</th>
+                <td>{{ carerDetails.created | timestamp }}</td>
+            </tr>
+            <tr>
+                <th>Profile picture</th>
+                <td><span (click)="showProfilePicture = true" class="green gj-cursor-pointer">See</span></td>
+            </tr>
+            <tr>
                 <th>Carer Dob</th>
                 <td>{{ carerDetails.carer.date_of_birth }}</td>
             </tr>
@@ -64,7 +88,7 @@
                 <td>{{ carerDetails.carer.training_record.dementia | timestamp }}</td>
             </tr>
             <tr>
-                <th>Medication Managment & administration (not awarness)</th>
+                <th>Medication Management & Administration (not awareness)</th>
                 <td>{{ carerDetails.carer.training_record.medication_management | timestamp }}</td>
             </tr>
             <tr>
@@ -77,12 +101,8 @@
                     <span (click)="onPopupOpen('training_record')" class="green right gj-cursor-pointer">Upload / edit</span></td>
             </tr>
             <tr>
-                <th class="green-cell white-color">Care experience</th>
+                <th class="green-cell white-color">CV</th>
                 <td class="green-cell"></td>
-            </tr>
-            <tr>
-                <th>Total care experience before starting work at Oliver James (according to CV)</th>
-                <td>Years: {{ carerDetails.carer.joining_care_experience.years}} Months: {{ carerDetails.carer.joining_care_experience.months }}</td>
             </tr>
             <tr>
                 <th>CV / equivalent upload</th>
@@ -203,3 +223,9 @@
         (reload)="onReload()"
 >
 </app-file-uploading>
+
+<app-see-profile-pictrue
+        *ngIf="showProfilePicture"
+        [url]="carerDetails.carer.profile_image"
+>
+</app-see-profile-pictrue>

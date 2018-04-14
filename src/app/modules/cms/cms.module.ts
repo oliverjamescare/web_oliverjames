@@ -39,6 +39,8 @@ import { ResolveChallengeComponent } from './resources/pages/jobs/jobs-details/r
 import { CareHomesComponent } from './resources/pages/care-homes/care-homes.component';
 import { CareHomesListComponent } from './resources/pages/care-homes/care-homes-list/care-homes-list.component';
 import { CareHomeDetailsComponent } from './resources/pages/care-homes/care-home-details/care-home-details.component';
+import { SeeProfilePictrueComponent } from './resources/pages/carers/carer-details/see-profile-pictrue/see-profile-pictrue.component';
+import { AddJobComponent } from './resources/pages/jobs/add-job/add-job.component';
 
 
 @NgModule({
@@ -69,7 +71,9 @@ import { CareHomeDetailsComponent } from './resources/pages/care-homes/care-home
         ResolveChallengeComponent,
         CareHomesComponent,
         CareHomesListComponent,
-        CareHomeDetailsComponent
+        CareHomeDetailsComponent,
+        SeeProfilePictrueComponent,
+        AddJobComponent
     ],
     providers: [
         ApiService,
