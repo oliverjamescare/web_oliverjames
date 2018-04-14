@@ -9,4 +9,5 @@ export const environment = {
     // api: 'https://api.oliver-james.ready4s.it/api',
     api: 'https://api.oliver-james.ready4s.it/api',
     admin: 'https://api.oliver-james.ready4s.it/admin',
+    site: 'https://oliver-james.ready4s.it/terms'
 };

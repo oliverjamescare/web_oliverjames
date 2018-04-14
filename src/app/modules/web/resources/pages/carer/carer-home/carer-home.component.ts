@@ -9,11 +9,13 @@ import {AuthService} from '../../../../services/auth.service';
 })
 export class CarerHomeComponent implements OnInit {
     jobsDue: number;
+    activated: boolean;
 
     constructor(private router: Router, private authService: AuthService) {
     }
 
     ngOnInit() {
+        this.checkActivation();
     }
 
     showLogoutPopup() {
@@ -23,5 +25,11 @@ export class CarerHomeComponent implements OnInit {
     onLogout() {
         this.authService.logout();
         $('#logout').modal('hide').on('hidden.bs.modal', () => this.router.navigate(['/']));
+    }
+
+    checkActivation(): void {
+        const auth = JSON.parse(sessionStorage.getItem('auth'));
+        this.activated = auth.status === 'ACTIVE';
+        console.log('Activated', this.activated);
     }
 }

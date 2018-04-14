@@ -16,7 +16,6 @@
                 <th>Till</th>
                 <th>Your carer</th>
                 <th>Current carer rating</th>
-                <th>Experience</th>
                 <th></th>
             </tr>
             </thead>
@@ -27,8 +26,20 @@
                 <td>{{ job.start_date | timestampHour }}</td>
                 <td>{{ job.end_date | timestampHour}}</td>
                 <td [ngClass]="{'red-bg': getCarerOutput(i) === 'Pending'}">{{ getCarerOutput(i) }}</td>
-                <td></td>
-                <td></td>
+                <td>
+                    <div *ngIf="job?.carer">
+                        <span *ngIf="job.carer.carer.reviews.count === 0">Unrated</span>
+                        <span *ngIf="job.carer.carer.reviews.count !== 0">
+                        {{ job.carer.carer.reviews.average }} from {{ job.carer.carer.reviews.count }} reviews
+                    </span>
+                    </div>
+                </td>
+                <!--<td>-->
+                    <!--<span *ngIf="job?.carer">-->
+                        <!--{{ job.carer.carer.care_experience.years | yearPipe}}-->
+                        <!--{{ job.carer.carer.care_experience.months | monthPipe}}-->
+                    <!--</span>-->
+                <!--</td>-->
                 <td>
                     <div class="text-center">
                             <span

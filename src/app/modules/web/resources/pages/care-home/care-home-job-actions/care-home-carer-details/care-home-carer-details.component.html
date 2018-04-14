@@ -10,8 +10,8 @@
             <div class="info">
                 <span class="float bold">{{ careHomeService?.jobDetails?.carer.carer.first_name }} {{ careHomeService?.jobDetails?.carer.carer.surname }}</span>
                 <span class="float small-font"
-                      *ngIf="careHomeService.jobDetails.carer.carer.reviews.count === 0">No reviews so far</span>
-            <span class="float small-font">{{ careHomeService.jobDetails.carer.carer.care_experience.years }} year(s) care experience</span>
+                      *ngIf="careHomeService.jobDetails.carer.carer.reviews.count === 0">Unrated</span>
+            <!--<span class="float small-font">{{ careHomeService.jobDetails.carer.carer.care_experience.years }} year(s) care experience</span>-->
             </div>
             <button class="btn-success btn-warn separate-top">Find me a different carer</button>
     </div>

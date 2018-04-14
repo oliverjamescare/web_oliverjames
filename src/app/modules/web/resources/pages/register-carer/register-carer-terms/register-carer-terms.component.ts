@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CarerAuthService } from '../../../../services/carer-auth.service';
+import {environment} from '../../../../../../../environments/environment';
 
 @Component({
     selector: 'app-register-carer-terms',
@@ -42,5 +43,9 @@ export class RegisterCarerTermsComponent
             this.carerService.registerStep = this.carerService.availableSteps.PERSONAL_DETAILS;
             this.router.navigate(['/carer/register/personal-details'])
         }
+    }
+
+    getTermsLink(): string {
+        return `${environment.site}`;
     }
 }

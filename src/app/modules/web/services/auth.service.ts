@@ -19,6 +19,7 @@ export class AuthService {
 
     login(user: User) {
         if (user) {
+            console.log('Save user to session storage', user);
             sessionStorage.setItem('auth', JSON.stringify(user));
             this.authenticated = true;
             this.access_token = user.access_token;

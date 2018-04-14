@@ -38,7 +38,8 @@ export class LoginComponent implements OnInit, AfterViewInit {
             this.inProgress = true;
             this.carerService
                 .loginCarer(form.value.email, form.value.password)
-                .subscribe(() => {
+                .subscribe((response) => {
+                        console.log('Login response', response);
                         this.inProgress = false;
                         $('#' + this.type + '_id').modal('hide');
                         this.router.navigate(['/carer-dashboard']);

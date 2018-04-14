@@ -122,6 +122,8 @@ import { PastJobsDetailsComponent } from './resources/pages/care-home/care-home-
 import { BlockCarerConfirmationComponent } from './resources/pages/care-home/care-home-past-jobs/past-jobs-details/block-carer-confirmation/block-carer-confirmation.component';
 import { ChallengeJobComponent } from './resources/pages/care-home/care-home-past-jobs/challenge-job/challenge-job.component';
 import { ChallengeConfirmationComponent } from './resources/pages/care-home/care-home-past-jobs/challenge-job/challenge-confirmation/challenge-confirmation.component';
+import {MonthPipe} from './pipes/monthPipe';
+import {YearPipe} from './pipes/yearPipe';
 
 @NgModule({
     declarations: [
@@ -210,7 +212,9 @@ import { ChallengeConfirmationComponent } from './resources/pages/care-home/care
         PastJobsDetailsComponent,
         BlockCarerConfirmationComponent,
         ChallengeJobComponent,
-        ChallengeConfirmationComponent
+        ChallengeConfirmationComponent,
+        YearPipe,
+        MonthPipe
     ],
     imports: [
         CommonModule,

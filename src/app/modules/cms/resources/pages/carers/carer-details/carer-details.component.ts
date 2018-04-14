@@ -175,6 +175,8 @@ export class CarerDetailsComponent implements OnInit {
         this.carerDetails.carer.dbs.ref_number = this.form.get('dbs_ref_number').value;
         this.carerDetails.carer.dbs.status = this.form.get('dbs_status').value;
         this.carerDetails.carer.reference.references = this.form.get('reference').value;
+        this.carerDetails.carer.joining_care_experience.years = 1;
+        this.carerDetails.carer.joining_care_experience.months = 1;
         this.carerDetails.carer.eligible_roles = this.getEilgableRoles();
         this.carerDetails.notes = this.form.get('notes').value;
         this.carerDetails.status = this.form.get('status').value;
