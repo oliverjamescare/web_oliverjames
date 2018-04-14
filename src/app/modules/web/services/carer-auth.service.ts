@@ -32,6 +32,7 @@ export class CarerAuthService {
             form.append('middle_name', this.personalDetailsFormValues.middle_name);
             form.append('surname', this.personalDetailsFormValues.surname);
             form.append('date_of_birth', this.personalDetailsFormValues.date_of_birth);
+            form.append('gender', this.personalDetailsFormValues.gender);
 
             // address
             form.append('postal_code', this.personalDetailsFormValues.postal_code);

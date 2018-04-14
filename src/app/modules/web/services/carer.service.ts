@@ -10,4 +10,8 @@ export class CarerService {
     getNotifications(page: number): Observable<any> {
         return this.apiService.getCarerNotifications(page);
     }
+
+    getHomeScreen(): Observable<any> {
+        return this.apiService.getCarerHomeScreen();
+    }
 }
