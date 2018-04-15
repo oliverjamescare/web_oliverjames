@@ -14,6 +14,8 @@ export class AddJobComponent implements OnInit {
     searchTerm: FormControl;
     searchResult: any[] = [];
     careHomesNotFound: string;
+    carersNotFoundMessage: boolean = false;
+
 
     messages = [
         {
@@ -62,6 +64,10 @@ export class AddJobComponent implements OnInit {
         });
     }
 
+    onClickOutside()
+    {
+        
+    }
     // private getCarers(): void {
     //     this.searchTerm.valueChanges
     //         .debounceTime(400)
