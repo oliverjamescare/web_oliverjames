@@ -78,6 +78,8 @@ import { SeeReviewComponent } from './resources/pages/jobs/job-details/see-revie
         CareHomesListComponent,
         CareHomeDetailsComponent,
         SeeProfilePictrueComponent,
+        WaitingListComponent,
+        AddCareHomeComponent,
         AddJobComponent,
         SeeReviewComponent
     ],
