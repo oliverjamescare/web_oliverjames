@@ -68,6 +68,16 @@
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'date_of_birth', messages) }} </span>
                     </div>
                 </div>
+                <div class="col-4">
+                    <div class="form-group">
+                        <select type="text" class="form-control"  id="gender" formControlName="gender" [ngClass]="formUtils.handleValidationStateClass(form, 'gender')">
+                            <option value="">Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'gender', messages) }} </span>
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-3">

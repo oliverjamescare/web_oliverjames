@@ -33,6 +33,7 @@ export class JobsDetailsComponent implements OnInit {
     showCancelJobDialog = false;
     waiveCharges: boolean;
     showResolveChallengeDialog = false;
+    seeReviewDialog = false;
 
     messages = [
         {

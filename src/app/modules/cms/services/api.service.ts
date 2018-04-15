@@ -130,6 +130,14 @@ export class ApiService {
         });
     }
 
+    approveJobReview(jobId: string, status: string): Observable<any> {
+        return this.httpClient.put(
+            `${this.endpoint}/jobs/${jobId}/review`,
+            {status},
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
     //care homes
     getCareHomes(search: string, status: string, sort: string, page: number): Observable<any> {
         return this.httpClient.get(
@@ -141,14 +149,12 @@ export class ApiService {
         );
     }
 
-    getCareHomeDetails(id: string): Observable<any>
-    {
-        return this.httpClient.get(`${this.endpoint}/care-homes/${id}`, { headers: this.getAuthorizationHeaders() });
+    getCareHomeDetails(id: string): Observable<any> {
+        return this.httpClient.get(`${this.endpoint}/care-homes/${id}`, {headers: this.getAuthorizationHeaders()});
     }
 
-    updateCareHome(id: string, body: FormData): Observable<any>
-    {
-        return this.httpClient.put(`${this.endpoint}/care-homes/${id}`, body, { headers: this.getAuthorizationHeaders() });
+    updateCareHome(id: string, body: FormData): Observable<any> {
+        return this.httpClient.put(`${this.endpoint}/care-homes/${id}`, body, {headers: this.getAuthorizationHeaders()});
     }
     addCareHome(body: FormData): Observable<any>
     {

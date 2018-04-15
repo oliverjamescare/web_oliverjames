@@ -20,6 +20,7 @@ import { CareHomesListComponent } from './resources/pages/care-homes/care-homes-
 import { CareHomeDetailsComponent } from './resources/pages/care-homes/care-home-details/care-home-details.component';
 import { WaitingListComponent } from './resources/pages/waiting-list/waiting-list.component';
 import { AddCareHomeComponent } from './resources/pages/care-homes/add-care-home/add-care-home.component';
+import {AddJobComponent} from './resources/pages/jobs/add-job/add-job.component';
 
 const routes: Routes = [
     {
@@ -43,6 +44,7 @@ const routes: Routes = [
                     {
                         path: 'jobs', component: JobsComponent, children: [
                             {path: 'list', component: JobsListComponent},
+                            {path: 'add', component: AddJobComponent},
                             {path: 'details/:id', component: JobsDetailsComponent},
                             // {path: 'add', component: AddCarerComponent}
                         ]

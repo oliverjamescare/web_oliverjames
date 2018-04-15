@@ -167,6 +167,15 @@ export class RegisterCarerPersonalDetailsComponent implements OnInit, OnDestroy
             ]
         },
         {
+            field: 'gender',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'Gender is required'
+                }
+            ]
+        },
+        {
             field: 'postal_code',
             errors: [
                 {
@@ -258,6 +267,7 @@ export class RegisterCarerPersonalDetailsComponent implements OnInit, OnDestroy
             password: new FormControl(null, [ Validators.required, Validators.minLength(6), password ] ),
             password_confirm: new FormControl(null, [ Validators.required ]),
             date_of_birth: new FormControl(null, [ Validators.required, invalidDate, adult ]),
+            gender: new FormControl('', Validators.required),
             postal_code: new FormControl(null, Validators.required),
             company: new FormControl(''),
             address_line_1: new FormControl(null, Validators.required),

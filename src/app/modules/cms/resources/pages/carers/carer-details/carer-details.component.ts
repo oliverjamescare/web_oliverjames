@@ -21,6 +21,7 @@ export class CarerDetailsComponent implements OnInit {
 
     buttonLoading = false;
     showFileUploader = false;
+    showProfilePicture = false;
     resourceName: string;
     uploadTitle: string;
     files: string[] = [];
@@ -181,7 +182,16 @@ export class CarerDetailsComponent implements OnInit {
             'job_role2': new FormControl(null),
             'notes': new FormControl(),
             'status': new FormControl(),
-            'banned_until': new FormControl()
+            'banned_until': new FormControl(),
+            fire_safety: new FormControl(),
+            dementia: new FormControl(),
+            h_and_s: new FormControl(),
+            first_aid_awareness: new FormControl(),
+            first_aid_and_basic_life_support: new FormControl(),
+            infection_control: new FormControl(),
+            medication_management: new FormControl(),
+            manual_handling_people: new FormControl(),
+            safeguarding: new FormControl(),
         });
     }
 
@@ -227,6 +237,90 @@ export class CarerDetailsComponent implements OnInit {
             arr.push(this.form.get('job_role2').value);
         }
         return arr;
+    }
+
+    private setDatepickers(): void {
+        $('#fire_safety').datepicker({
+            showOtherMonths: true,
+            format: 'yyyy-mm-dd',
+            value: moment(new Date()).format('YYYY-MM-DD'),
+            hide: (event: Event) => {
+                this.form.get('fire_safety').setValue(event.target['value']);
+            }
+        });
+
+        $('#dementia').datepicker({
+            showOtherMonths: true,
+            format: 'yyyy-mm-dd',
+            value: moment(new Date()).format('YYYY-MM-DD'),
+            hide: (event: Event) => {
+                this.form.get('dementia').setValue(event.target['value']);
+            }
+        });
+
+        $('#h_and_s').datepicker({
+            showOtherMonths: true,
+            format: 'yyyy-mm-dd',
+            value: moment(new Date()).format('YYYY-MM-DD'),
+            hide: (event: Event) => {
+                this.form.get('h_and_s').setValue(event.target['value']);
+            }
+        });
+
+
+        $('#first_aid_awareness').datepicker({
+            showOtherMonths: true,
+            format: 'yyyy-mm-dd',
+            value: moment(new Date()).format('YYYY-MM-DD'),
+            hide: (event: Event) => {
+                this.form.get('first_aid_awareness').setValue(event.target['value']);
+            }
+        });
+
+        $('#first_aid_and_basic_life_support').datepicker({
+            showOtherMonths: true,
+            format: 'yyyy-mm-dd',
+            value: moment(new Date()).format('YYYY-MM-DD'),
+            hide: (event: Event) => {
+                this.form.get('first_aid_and_basic_life_support').setValue(event.target['value']);
+            }
+        });
+
+        $('#infection_control').datepicker({
+            showOtherMonths: true,
+            format: 'yyyy-mm-dd',
+            value: moment(new Date()).format('YYYY-MM-DD'),
+            hide: (event: Event) => {
+                this.form.get('infection_control').setValue(event.target['value']);
+            }
+        });
+
+        $('#medication_management').datepicker({
+            showOtherMonths: true,
+            format: 'yyyy-mm-dd',
+            value: moment(new Date()).format('YYYY-MM-DD'),
+            hide: (event: Event) => {
+                this.form.get('medication_management').setValue(event.target['value']);
+            }
+        });
+
+        $('#manual_handling_people').datepicker({
+            showOtherMonths: true,
+            format: 'yyyy-mm-dd',
+            value: moment(new Date()).format('YYYY-MM-DD'),
+            hide: (event: Event) => {
+                this.form.get('manual_handling_people').setValue(event.target['value']);
+            }
+        });
+
+        $('#safeguarding').datepicker({
+            showOtherMonths: true,
+            format: 'yyyy-mm-dd',
+            value: moment(new Date()).format('YYYY-MM-DD'),
+            hide: (event: Event) => {
+                this.form.get('safeguarding').setValue(event.target['value']);
+            }
+        });
     }
 
 }

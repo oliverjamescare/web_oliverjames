@@ -5,6 +5,6 @@ import * as dateformat from 'dateformat';
 export class TimestampPipe implements PipeTransform {
     transform(value: number): string {
         const date = new Date(value);
-        return value? dateformat(date, 'yyyy-mm-dd') : null;
+        return value ? dateformat(date, 'yyyy-mm-dd') : null;
     }
 }

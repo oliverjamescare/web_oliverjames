@@ -141,6 +141,13 @@ export class ApiService {
         );
     }
 
+    getCarerHomeScreen(): Observable<any> {
+        return this.httpClient.get(
+            `${this.endpoint}/carer/home`,
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
+
     // care home
     getCalendarData(): Observable<any> {
         return this.httpClient.get(this.endpoint + '/care-home/calendar', {headers: this.getAuthorizationHeaders()});
@@ -229,7 +236,7 @@ export class ApiService {
 
     getPendingReviews(page: number): Observable<any> {
         return this.httpClient.get(
-            `${this.endpoint}/care-home/pending-reviews?page=${page}`,
+            `${this.endpoint}/care-home/pending-reviews?page=${page}&results=50`,
             {headers: this.getAuthorizationHeaders()}
         );
     }

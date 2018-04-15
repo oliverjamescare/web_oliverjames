@@ -1,0 +1,10 @@
+<app-cms-popup [title]="title" [id]="type + '_id'" [showLogo]="false">
+    <div class="row">
+        <div class="col-12">
+            <div class="text-center">
+                <img *ngIf="url" [src]="getPictureUrl()" class="img img-responsive">
+                <p *ngIf="!url">No profile picture uploaded</p>
+            </div>
+        </div>
+    </div>
+</app-cms-popup>

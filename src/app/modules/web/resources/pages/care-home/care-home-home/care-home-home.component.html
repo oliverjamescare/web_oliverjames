@@ -24,13 +24,13 @@
     <div class="col-md-4">
         <a routerLink="/care-home-upcoming-jobs" class="btn btn-success">See all upcoming jobs</a>
         <div class="text-center">
-            <small class="text-muted text-center">X orders placed / Y filled</small>
         </div>
     </div>
     <div class="col-md-4">
         <a routerLink="/care-home-reviews" class="btn btn-success">Write reviews of carers</a>
         <div class="text-center">
-            <small class="text-muted text-center">X still to write</small>
+            <small *ngIf="dueReviews !== 0" class="text-muted text-center">{{ dueReviews }} still to write</small>
+            <small *ngIf="dueReviews === 0" class="text-muted text-center">No reviews due</small>
         </div>
     </div>
 </div>
