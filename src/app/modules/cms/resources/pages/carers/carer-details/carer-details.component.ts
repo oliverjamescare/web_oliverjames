@@ -6,6 +6,8 @@ import {FormArray, FormControl, FormGroup} from '@angular/forms';
 import {DatesService} from '../../../../services/dates.service';
 import {isUndefined} from 'util';
 import {NotificationsService} from 'angular2-notifications';
+import { getMessageError } from '../../../../../../utilities/form.utils';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-carer-details',
@@ -23,6 +25,10 @@ export class CarerDetailsComponent implements OnInit {
     uploadTitle: string;
     files: string[] = [];
 
+    deductionForm: FormGroup;
+    modalError: string = "";
+    inProgress: boolean = false;
+
     constructor(private carersService: CarersService,
                 private route: ActivatedRoute,
                 private datesService: DatesService,
@@ -37,6 +43,36 @@ export class CarerDetailsComponent implements OnInit {
                 this.createForm();
             }
         );
+
+        //deduction form init
+        this.deductionForm = new FormGroup({
+            amount: new FormControl(""),
+            type: new FormControl(""),
+            description: new FormControl("")
+        })
+    }
+
+    //deductions
+    addDeduction()
+    {
+        $("#deduction").modal();
+    }
+    onAddDeduction()
+    {
+        if(this.deductionForm.valid)
+        {
+            this.carersService
+                .addDeduction(this.carerId, this.deductionForm.value)
+                .subscribe(() => {
+                        $("#deduction").modal("hide");
+                        this.modalError = "";
+                        this.deductionForm.reset();
+                        this.getCarerDetails();
+                    },
+                    (error: HttpErrorResponse) => {
+                        this.modalError = getMessageError(error);
+                    });
+        }
     }
 
     onUpdateCarerDetails(): void {

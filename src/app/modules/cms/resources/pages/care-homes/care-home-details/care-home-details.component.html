@@ -11,255 +11,309 @@
 <div class="row">
     <div class="col-sm">
 
-        <form *ngIf="careHome" [formGroup]="form">
-            <div class="row">
-                <div class="col-sm-4">
-                    <b>Oliver James ID:</b>
+        <div *ngIf="careHome">
+            <form (ngSubmit)="onSubmit()" [formGroup]="form">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <b>Oliver James ID:</b>
+                    </div>
+                    <div class="col-sm-8">{{ careHome.id }}</div>
                 </div>
-                <div class="col-sm-8">{{ careHome.id }}</div>
-            </div>
 
-            <div class="row">
-                <div class="col-sm-4">
-                    <b>Email:</b>
-                </div>
-                <div class="col-sm-8">
-                    {{ careHome.email }}
-                    <div>
-                        <span class="invalid-feedback">{{ !careHome.email_verified ? "This email is not verified" : "" }}</span>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <b>Email:</b>
                     </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-4">
-                    <b>Phone number:</b>
-                </div>
-                <div class="col-sm-8">{{ careHome.phone_number }}</div>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-4">
-                    <b>Name:</b>
-                </div>
-                <div class="col-sm-8">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Name" formControlName="name">
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-4">
-                    <b>Care service name:</b>
-                </div>
-                <div class="col-sm-8">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Name" formControlName="care_service_name">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <b>Type of home:</b>
-                </div>
-                <div class="col-sm-8">
-                    <div class="form-group">
-                        <select class="form-control" formControlName="type_of_home">
-                            <option value="Residential">Residential</option>
-                            <option value="Nursing">Nursing</option>
-                            <option value="Learning disability">Learning disability</option>
-                            <option value="Supported living">Supported living</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <b>Gender preference:</b>
-                </div>
-                <div class="col-sm-8">
-                    <div class="form-group">
-                        <select class="form-control" formControlName="gender_preference">
-                            <option value="No preference">No preference</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <b>Notes:</b>
-                </div>
-                <div class="col-sm-8">
-                    <div class="form-group">
-                        <textarea type="text" class="form-control" placeholder="Notes" formControlName="notes"></textarea>
-                    </div>
-                </div>
-            </div>
-
-            <br>
-            <br>
-            <h4>Address</h4>
-            <div class="row">
-                <div class="col-sm-4">
-                    <b>Postcode:</b>
-                </div>
-                <div class="col-sm-8">
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="postal_code" placeholder="Postcode" formControlName="postal_code">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <b>Company name:</b>
-                </div>
-                <div class="col-sm-8">
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="company" placeholder="Company name" formControlName="company">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <b>Address line 1:</b>
-                </div>
-                <div class="col-sm-8">
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="address_line_1" placeholder="Address line 1" formControlName="address_line_1">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <b>Address line 2:</b>
-                </div>
-                <div class="col-sm-8">
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="address_line_2" placeholder="Address line 2" formControlName="address_line_2">
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <b>City:</b>
-                </div>
-                <div class="col-sm-8">
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="city" placeholder="City" formControlName="city">
-                    </div>
-                </div>
-            </div>
-
-            <br>
-            <br>
-            <h4>General Guidance / CQC compliance</h4>
-            <div class="row">
-                <div class="col-sm-4">
-                    <b>If our carer needs to call your service, who should they speak to :</b>
-                </div>
-                <div class="col-sm-8">
-                    <div class="form-group">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="e.g. senior carer, manager" formControlName="superior_contact">
+                    <div class="col-sm-8">
+                        {{ careHome.email }}
+                        <div>
+                            <span class="invalid-feedback">{{ !careHome.email_verified ? "This email is not verified" : "" }}</span>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <b>Where should carer report to upon arrival:</b>
-                </div>
-                <div class="col-sm-8">
-                    <div class="form-group">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="e.g. ask to speak to the senior carer or manager" formControlName="report_contact">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <b>Carer guidance in event of fire alarm sounding:</b>
-                </div>
-                <div class="col-sm-8">
-                    <div class="form-group">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="e.g. report to fire panel at the main entrance" formControlName="emergency_guidance">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <b>Notes on High risk / complexity residents / any other requests for our carers:</b>
-                </div>
-                <div class="col-sm-8">
-                    <div class="form-group">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="e.g. Room 1 has swallowing difficulties. Please Please take written notes during handover" formControlName="notes_for_carers">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <b>Where to park your car :</b>
-                </div>
-                <div class="col-sm-8">
-                    <div class="form-group">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Describe where and if it’s free parking / how to pay" formControlName="parking">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-4">
-                    <b>Floor plan :</b>
-                </div>
-                <div class="col-sm-8">
-                    <div class="form-group">
-                        <div class="form-group">
-                            <input type="file">
-                            <br>
-                            <a *ngIf="careHome.care_home.general_guidance.floor_plan" href="{{ careHome.care_home.general_guidance.floor_plan }}?access-token={{token}}" target="_blank">Floor plan</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <br>
-            <br>
-            <h4>Credits</h4>
-            <div class="row">
-                <div class="col-sm-4">
-                    <b>Credits balance:</b>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <b>Phone number:</b>
+                    </div>
+                    <div class="col-sm-8">{{ careHome.phone_number }}</div>
                 </div>
-                <div class="col-sm-8">£ {{ careHome.care_home.credits_balance }}</div>
-            </div>
-            <br>
-            <div class="row">
-                <div class="col-sm-12">
-                    <a href="#">Manage credits</a>
-                </div>
-            </div>
 
-            <br>
-            <br>
-            <h4>Blocked carers</h4>
-            <div class="row">
-                <div class="col-sm-12"><p *ngIf="!careHome.care_home.blocked_carers.length">No blocked carers</p>
-                    <ul class="list-group" *ngIf="careHome.care_home.blocked_carers.length">
-                        <li class="list-group-item" *ngFor="let carer of careHome.care_home.blocked_carers">{{ carer["carer"]["first_name"]}} {{ carer["carer"]["surname"]}}</li>
-                    </ul>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <b>Name:</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Name" formControlName="name">
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <button type="submit" class="btn btn-success">Save</button>
-            <div class="invalid-feedback">{{ error }}</div>
-        </form>
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <b>Care service name:</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Name" formControlName="care_service_name">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <b>Type of home:</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <select class="form-control" formControlName="type_of_home">
+                                <option value="Residential">Residential</option>
+                                <option value="Nursing">Nursing</option>
+                                <option value="Learning disability">Learning disability</option>
+                                <option value="Supported living">Supported living</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <b>Gender preference:</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <select class="form-control" formControlName="gender_preference">
+                                <option value="No preference">No preference</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <b>Notes:</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <textarea type="text" class="form-control" placeholder="Notes" formControlName="notes"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+                <br>
+                <h4>Address</h4>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <b>Postcode:</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="postcode" name="postcode" formControlName="postal_code" placeholder="Postcode">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <b>Company name:</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="company" placeholder="Company name" formControlName="company">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <b>Address line 1:</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="address_line_1" placeholder="Address line 1" formControlName="address_line_1">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <b>Address line 2:</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="address_line_2" placeholder="Address line 2" formControlName="address_line_2">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <b>City:</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="city" placeholder="City" formControlName="city">
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+                <br>
+                <h4>General Guidance / CQC compliance</h4>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <b>If our carer needs to call your service, who should they speak to :</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="e.g. senior carer, manager" formControlName="superior_contact">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <b>Where should carer report to upon arrival:</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="e.g. ask to speak to the senior carer or manager" formControlName="report_contact">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <b>Carer guidance in event of fire alarm sounding:</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="e.g. report to fire panel at the main entrance" formControlName="emergency_guidance">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <b>Notes on High risk / complexity residents / any other requests for our carers:</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="e.g. Room 1 has swallowing difficulties. Please Please take written notes during handover" formControlName="notes_for_carers">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <b>Where to park your car :</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Describe where and if it’s free parking / how to pay" formControlName="parking">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <b>Floor plan :</b>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <input type="file">
+                                <br>
+                                <a *ngIf="careHome.care_home.general_guidance.floor_plan" href="{{ careHome.care_home.general_guidance.floor_plan }}?access-token={{token}}" target="_blank">Floor plan</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <br>
+                <br>
+                <h4>Credits</h4>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <b>Credits balance:</b>
+                    </div>
+                    <div class="col-sm-8">£ {{ careHome.care_home.credits_balance }}</div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <table class="credits-table table" *ngIf="careHome.care_home.credits.length">
+                            <thead>
+                                <th>ID</th>
+                                <th>Date</th>
+                                <th>Description</th>
+                                <th>Credit / Debit</th>
+                                <th>Balance</th>
+                                <th>Status</th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let credit of careHome.care_home.credits; let i = index;">
+                                    <td>{{ i +1 }}</td>
+                                    <td>{{ datesService.getDateString(credit.created) }}</td>
+                                    <td>{{ credit.description }}</td>
+                                    <td>{{ credit.amount }}</td>
+                                    <td>{{ credit.balance }}</td>
+                                    <td>{{ credit.status.toLowerCase() }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                        <button (click)="addCredits()" class="btn btn-success  submit-button" type="button">Add credits</button>
+                    </div>
+                </div>
+
+                <br>
+                <br>
+                <h4>Blocked carers</h4>
+                <div class="row">
+                    <div class="col-sm-12"><p *ngIf="!careHome.care_home.blocked_carers.length">No blocked carers</p>
+                        <ul class="list-group" *ngIf="careHome.care_home.blocked_carers.length">
+                            <li class="list-group-item" *ngFor="let carer of careHome.care_home.blocked_carers">{{ carer["carer"]["first_name"]}} {{ carer["carer"]["surname"]}}</li>
+                        </ul>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <button type="submit" class="btn btn-success submit-button">Save</button>
+                <div class="invalid-feedback">{{ error }}</div>
+            </form>
+        </div>
     </div>
 </div>
 <br><br><br><br><br>
+
+<!-- credits modal -->
+<app-cms-popup [title]="'Add credits'" [id]="'credits'" [showLogo]="false">
+    <div class="row">
+        <div class="col-sm">
+            <form (ngSubmit)="onAddCredits()" [formGroup]="creditsForm">
+                <div class="form-group">
+                    <label>Amount</label>
+                    <select class="form-control" formControlName="type">
+                        <option value="">Select type</option>
+                        <option value="DEBIT">Debit</option>
+                        <option value="CREDIT">Credit</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Amount</label>
+                    <input type="text" class="form-control" formControlName="amount" placeholder="Amount">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-control" formControlName="description" placeholder="Description" rows="5"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-success">Add</button>
+                <div class="invalid-feedback">{{ modalError }}</div>
+            </form>
+        </div>
+    </div>
+</app-cms-popup>

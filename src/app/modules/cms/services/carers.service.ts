@@ -3,6 +3,7 @@ import {ApiService} from './api.service';
 import {Observable} from 'rxjs/Observable';
 import {CarersListResponse} from '../models/response/carers-list-response';
 import {CarerDetailsResponse} from '../models/response/carer-details-response';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable()
 export class CarersService {
@@ -39,6 +40,11 @@ export class CarersService {
 
     checkEmailUniqueness(email: string) {
         return this.apiService.checkUniqueness('email', email);
+    }
+
+    addDeduction(id: string, params: HttpParams): Observable<any>
+    {
+        return this.apiService.addDeduction(id, params);
     }
 
 }

@@ -3,7 +3,7 @@
         <h2>Care homes</h2>
     </div>
     <div class="col-sm-6">
-        <a class="btn btn-success right">Add care home</a>
+        <a routerLink="add" class="btn btn-success right">Add care home</a>
     </div>
 </div>
 
@@ -94,7 +94,7 @@
                     <td> {{ careHome.banned_until? datesService.getDateString(careHome.banned_until) : "N/A" }}</td>
                     <td> £ {{ careHome.care_home.credits_balance }}</td>
                     <td> {{ careHome.notes }}</td>
-                    <td><a routerLink={{careHome.id}}>Details</a></td>
+                    <td><a routerLink={{careHome.id}} class="cms-link">Details</a></td>
                 </tr>
             </tbody>
         </table>

@@ -18,6 +18,8 @@ import {JobsDetailsComponent} from './resources/pages/jobs/jobs-details/jobs-det
 import { CareHomesComponent } from './resources/pages/care-homes/care-homes.component';
 import { CareHomesListComponent } from './resources/pages/care-homes/care-homes-list/care-homes-list.component';
 import { CareHomeDetailsComponent } from './resources/pages/care-homes/care-home-details/care-home-details.component';
+import { WaitingListComponent } from './resources/pages/waiting-list/waiting-list.component';
+import { AddCareHomeComponent } from './resources/pages/care-homes/add-care-home/add-care-home.component';
 
 const routes: Routes = [
     {
@@ -29,7 +31,8 @@ const routes: Routes = [
                 component: DashboardComponent,
                 canActivate: [AuthGuardService],
                 children: [
-                    {path: '', component: HomeComponent},
+                    { path: '', component: HomeComponent },
+                    { path: 'waiting-list', component: WaitingListComponent },
                     {
                         path: 'carers', component: CarersComponent, children: [
                             {path: 'list', component: CarersListComponent},
@@ -47,9 +50,10 @@ const routes: Routes = [
                     {
                         path: 'care-homes', component: CareHomesComponent, children: [
                             { path: '', component: CareHomesListComponent },
+                            { path: 'add', component: AddCareHomeComponent },
                             { path: ':id', component: CareHomeDetailsComponent },
                         ]
-                    }
+                    },
                 ]
             },
         ]

@@ -1,6 +1,5 @@
 import { Model } from '../../../models/model.model';
 import { GeneralGuidance } from './general-guidance.model';
-import { User } from './user.model';
 import { Credit } from './credit.model';
 
 export class CareHome extends Model

@@ -183,6 +183,44 @@
                 <td><input formControlName="banned_until" class="form-control" placeholder="yyyy-mm-dd"></td>
             </tr>
         </table>
+
+        <br>
+        <br>
+        <h4>Deductions</h4>
+        <div class="row">
+            <div class="col-sm-4">
+                <b>Deductions balance:</b>
+            </div>
+            <div class="col-sm-8">£ {{ carerDetails.carer.deductions_balance }}</div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="deductions-table table" *ngIf="carerDetails.carer.deductions.length">
+                    <thead>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Credit / Debit</th>
+                    <th>Balance</th>
+                    <th>Status</th>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let deduction of carerDetails.carer.deductions; let i = index;">
+                        <td>{{ i +1 }}</td>
+                        <td>{{ datesService.getDateString(deduction.created) }}</td>
+                        <td>{{ deduction.description }}</td>
+                        <td>{{ deduction.amount }}</td>
+                        <td>{{ deduction.balance }}</td>
+                        <td>{{ deduction.status.toLowerCase() }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <br>
+                <button (click)="addDeduction()" class="btn btn-success  submit-button" type="button">Add deduction</button>
+            </div>
+        </div>
+
         <br>
         <div class="carer-actions">
             <button class="btn-success btn-actions btn-right">Go back (do not save)</button>
@@ -203,3 +241,32 @@
         (reload)="onReload()"
 >
 </app-file-uploading>
+
+<!-- credits modal -->
+<app-cms-popup [title]="'Add deduction'" [id]="'deduction'" [showLogo]="false">
+    <div class="row">
+        <div class="col-sm">
+            <form (ngSubmit)="onAddDeduction()" [formGroup]="deductionForm">
+                <div class="form-group">
+                    <label>Amount</label>
+                    <select class="form-control" formControlName="type">
+                        <option value="">Select type</option>
+                        <option value="DEBIT">Debit</option>
+                        <option value="CREDIT">Credit</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Amount</label>
+                    <input type="text" class="form-control" formControlName="amount" placeholder="Amount">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea class="form-control" formControlName="description" placeholder="Description" rows="5"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-success">Add</button>
+                <div class="invalid-feedback">{{ modalError }}</div>
+            </form>
+        </div>
+    </div>
+</app-cms-popup>

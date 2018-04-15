@@ -13,6 +13,7 @@ import {AuthService} from './services/auth.service';
 import {AdminService} from './services/admin.service';
 import {CarersService} from './services/carers.service';
 import { CareHomesService } from './services/care-homes.service';
+import { WaitingListService } from './services/waiting-list.service';
 
 // components
 import {CmsComponent} from './cms.component';
@@ -39,6 +40,9 @@ import { ResolveChallengeComponent } from './resources/pages/jobs/jobs-details/r
 import { CareHomesComponent } from './resources/pages/care-homes/care-homes.component';
 import { CareHomesListComponent } from './resources/pages/care-homes/care-homes-list/care-homes-list.component';
 import { CareHomeDetailsComponent } from './resources/pages/care-homes/care-home-details/care-home-details.component';
+import { WaitingListComponent } from './resources/pages/waiting-list/waiting-list.component';
+import { AddCareHomeComponent } from './resources/pages/care-homes/add-care-home/add-care-home.component';
+
 
 
 @NgModule({
@@ -69,7 +73,9 @@ import { CareHomeDetailsComponent } from './resources/pages/care-homes/care-home
         ResolveChallengeComponent,
         CareHomesComponent,
         CareHomesListComponent,
-        CareHomeDetailsComponent
+        CareHomeDetailsComponent,
+        WaitingListComponent,
+        AddCareHomeComponent
     ],
     providers: [
         ApiService,
@@ -79,7 +85,8 @@ import { CareHomeDetailsComponent } from './resources/pages/care-homes/care-home
         CarersService,
         DatesService,
         JobsService,
-        CareHomesService
+        CareHomesService,
+        WaitingListService,
     ]
 
 })

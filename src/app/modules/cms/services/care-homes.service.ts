@@ -3,6 +3,9 @@ import {ApiService} from './api.service';
 import {Observable} from 'rxjs/Observable';
 
 import { User } from '../../cms/models/user.model';
+import { CarerDetailsResponse } from '../models/response/carer-details-response';
+import { FormGroup } from '@angular/forms';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable()
 export class CareHomesService
@@ -37,9 +40,46 @@ export class CareHomesService
         return this.apiService.getCareHomeDetails(id).map(result => new User(result));
     }
 
-    // getCarerDetails(id: string): Observable<CarerDetailsResponse> {
-    //     return this.apiService.getCarerDetails(id);
-    // }
+    updateCareHomeDetails(id: string, form: FormGroup): Observable<any>
+    {
+        //data serialisation
+        const formData: FormData = new FormData();
+
+        Object.keys(form.value).forEach(key => {
+            formData.append(key, form.get(key).value)
+        });
+
+        return this.apiService.updateCareHome(id, formData);
+    }
+
+    addCareHome(form: FormGroup, floorPlan: File)
+    {
+        //data serialisation
+        const formData: FormData = new FormData();
+
+        Object.keys(form.value).forEach(key => {
+            if(key != "floor_plan")
+                formData.append(key, form.get(key).value);
+        });
+
+        if(floorPlan)
+            formData.append("floor_plan", floorPlan);
+
+        return this.apiService.addCareHome(formData);
+    }
+
+    addCredits(id: string, params: HttpParams): Observable<any>
+    {
+        return this.apiService.addCredits(id, params);
+    }
+
+    checkPhoneNumberUniqueness(phoneNumber: string) {
+        return this.apiService.checkUniqueness('phone_number', phoneNumber);
+    }
+
+    checkEmailUniqueness(email: string) {
+        return this.apiService.checkUniqueness('email', email);
+    }
 
 
 }

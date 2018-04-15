@@ -71,6 +71,11 @@ export class ApiService {
         );
     }
 
+    addDeduction(id: string, body: HttpParams): Observable<any>
+    {
+        return this.httpClient.post(`${this.endpoint}/carers/${id}/deductions`, body, { headers: this.getAuthorizationHeaders() });
+    }
+
     // jobs
     getJobs(search: string, jobStatus: string, reviewStatus: string, manualBooking: string, page: number): Observable<any> {
         return this.httpClient.get(
@@ -144,5 +149,32 @@ export class ApiService {
     updateCareHome(id: string, body: FormData): Observable<any>
     {
         return this.httpClient.put(`${this.endpoint}/care-homes/${id}`, body, { headers: this.getAuthorizationHeaders() });
+    }
+    addCareHome(body: FormData): Observable<any>
+    {
+        return this.httpClient.post(`${this.endpoint}/care-homes`, body, { headers: this.getAuthorizationHeaders() });
+    }
+
+    addCredits(id: string, body: HttpParams): Observable<any>
+    {
+        return this.httpClient.post(`${this.endpoint}/care-homes/${id}/credits`, body, { headers: this.getAuthorizationHeaders() });
+    }
+
+    //waiting list
+    getWaitingList(page: number): Observable<any> {
+        return this.httpClient.get(
+            `${this.endpoint}/care-homes/waiting-list`,
+            {
+                headers: this.getAuthorizationHeaders(),
+                params: new HttpParams().set('page', `${page}`)
+            }
+        );
+    }
+
+    deleteWaitingUser(id: string): Observable<any> {
+        return this.httpClient.delete(
+            `${this.endpoint}/care-homes/waiting-list/${id}`,
+            { headers: this.getAuthorizationHeaders() }
+        );
     }
 }

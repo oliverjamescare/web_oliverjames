@@ -1,0 +1,52 @@
+<div class="row header">
+    <div class="col-sm-6">
+        <h2>Waiting list</h2>
+    </div>
+</div>
+
+
+<!-- list -->
+<br>
+<div class="row">
+    <div class="col-sm">
+
+        <!-- no results -->
+        <p *ngIf="waitingList?.length === 0">No results</p>
+
+        <table *ngIf="waitingList?.length !== 0" class="custom-table text-center">
+            <thead>
+                <tr>
+                    <th class="sort-cell">ID</th>
+                    <th class="sort-cell">Email</th>
+                    <th class="sort-cell">Name</th>
+                    <th class="sort-cell">Address</th>
+                    <th class="sort-cell">Date</th>
+                    <th class="sort-cell"></th>
+                </tr>
+            </thead>
+
+            <tbody>
+            <tr *ngFor="let waitingUser of waitingList; let i = index;">
+                <td> {{ i + 1}}</td>
+                <td> {{ waitingUser.email }}</td>
+                <td> {{ waitingUser.name }}</td>
+                <td> {{ waitingUser.address.stringify() }}</td>
+                <td> {{ datesService.getDateString(waitingUser.created) }}</td>
+                <td>
+                    <a href="#" (click)="onRemove($event, waitingUser.id)" class="cms-link">Remove</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <div *ngIf="pages.length > 1" class="text-center">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li *ngFor="let p of pages" [ngClass]="{'active': page === p + 1}" class="page-item">
+                        <a (click)="onPageChange(p + 1)" class="page-link">{{ p + 1 }}</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
