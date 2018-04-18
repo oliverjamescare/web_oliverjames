@@ -1,69 +1,43 @@
 <div class="row">
     <div class="col-sm">
-        <h2>Current / upcoming jobs</h2>
+        <h4>Current / upcoming jobs</h4>
     </div>
 </div>
-<br>
 <div class="row">
     <div class="col-sm">
-        <p *ngIf="upcomingJobs.length === 0">No jobs available</p>
-        <table *ngIf="upcomingJobs.length !==0" class="custom-table text-center">
-            <thead>
-            <tr>
-                <th>Job ID</th>
-                <th>Start Date</th>
-                <th>From</th>
-                <th>Till</th>
-                <th>Your carer</th>
-                <th>Current carer rating</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let job of upcomingJobs; let i = index">
-                <td>{{ job._id }}</td>
-                <td>{{ job.start_date | timestampDate }}</td>
-                <td>{{ job.start_date | timestampHour }}</td>
-                <td>{{ job.end_date | timestampHour}}</td>
-                <td [ngClass]="{'red-bg': getCarerOutput(i) === 'Pending'}">{{ getCarerOutput(i) }}</td>
-                <td>
-                    <div *ngIf="job?.carer">
-                        <span *ngIf="job.carer.carer.reviews.count === 0">Unrated</span>
-                        <span *ngIf="job.carer.carer.reviews.count !== 0">
-                        {{ job.carer.carer.reviews.average }} from {{ job.carer.carer.reviews.count }} reviews
-                    </span>
-                    </div>
-                </td>
-                <!--<td>-->
-                    <!--<span *ngIf="job?.carer">-->
-                        <!--{{ job.carer.carer.care_experience.years | yearPipe}}-->
-                        <!--{{ job.carer.carer.care_experience.months | monthPipe}}-->
-                    <!--</span>-->
-                <!--</td>-->
-                <td>
-                    <div class="text-center">
-                            <span
-                                    [routerLink]="['/care-home-job-actions', job._id, 'details']"
-                                    class="actions"
-                            >Modify / cancel</span>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <br>
-        <div *ngIf="pages.length > 1 && showPagination" class="text-center">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li
-                            *ngFor="let p of pages"
-                            [ngClass]="{'active': page === p + 1}"
-                            class="page-item">
-                        <a
-                                (click)="onPageChange(p + 1)"
-                                class="page-link">{{ p + 1 }}</a></li>
-                </ul>
-            </nav>
+        <p *ngIf="!jobs.length">No jobs available</p>
+        <div *ngIf="jobs.length" >
+            <table class="custom-table text-center">
+                <thead>
+                <tr>
+                    <th>Job ID</th>
+                    <th>Start date</th>
+                    <th>From</th>
+                    <th>Till</th>
+                    <th>Your carer</th>
+                    <th>Current carer rating</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let job of jobs">
+                    <td>{{ job.id }}</td>
+                    <td>{{ job.start_date | datePattern: "YYYY-MM-DD" }}</td>
+                    <td>{{ job.start_date | datePattern: "h:mm A" }}</td>
+                    <td>{{ job.end_date | datePattern: "h:mm A"}}</td>
+                    <td [ngClass]="{'red-bg': !job.carer }"> {{ job.carer ? job.carer.carer.getCarerFullName() : "Pending" }}</td>
+                    <td>
+                        <div *ngIf="job.carer">
+                            <span *ngIf="job.carer.carer.reviews.count == 0">Unrated</span>
+                            <span *ngIf="job.carer.carer.reviews.count != 0">{{ job.carer.carer.reviews.average }} from {{ job.carer.carer.reviews.count }} reviews </span>
+                        </div>
+                    </td>
+                    <td><a [routerLink]="['/care-home-job-actions', job.id, 'details']" class="app-link">Modify / cancel</a></td>
+                </tr>
+                </tbody>
+            </table>
+            <br>
+            <app-pagination (pageChanged)="onPageChange($event)" [numberOfPages]="pages" [currentPage]="page"></app-pagination>
         </div>
     </div>
 </div>

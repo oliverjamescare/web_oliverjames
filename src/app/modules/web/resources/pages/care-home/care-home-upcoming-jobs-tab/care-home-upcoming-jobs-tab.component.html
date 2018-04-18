@@ -1,10 +1,10 @@
-<app-care-home-booking-header
-        navigationTitle="Back"
-        navigationRoute="/care-home-dashboard"
-        mainTitle="Upcoming jobs"
-></app-care-home-booking-header>
+<div class="row">
+    <div class="col-sm text-center">
+        <h2 class="main-title">Upcoming jobs</h2>
+        <a routerLink="/care-home-dashboard"  class="btn btn-subnav btn-secondary left">Back</a>
+    </div>
+</div>
 <br>
 
-<app-care-home-upcoming-jobs
-        [showPagination]="true"
-></app-care-home-upcoming-jobs>
+<!-- list -->
+<app-care-home-upcoming-jobs></app-care-home-upcoming-jobs>

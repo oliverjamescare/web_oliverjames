@@ -1,16 +1,18 @@
-import {Injectable} from '@angular/core';
-import {ApiService} from './api.service';
+import { Injectable } from '@angular/core';
+import { ApiService } from './api.service';
 import 'rxjs/Rx';
 
-import {AuthService} from './auth.service';
-import {FormGroup} from '@angular/forms';
-import {HttpParams} from '@angular/common/http';
-import {User} from '../models/user.model';
-import {Observable} from 'rxjs/Observable';
-import {Subject} from 'rxjs/Subject';
+import { AuthService } from './auth.service';
+import { FormGroup } from '@angular/forms';
+import { HttpParams } from '@angular/common/http';
+import { User } from '../models/user.model';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+import { Job } from '../models/job.model';
 
 @Injectable()
-export class CareHomeService {
+export class CareHomeService
+{
     public address;
     public addressForm: FormGroup;
 
@@ -19,19 +21,21 @@ export class CareHomeService {
     detailsLoaded = new Subject();
     pastJobDetails;
 
-    constructor(private apiService: ApiService, private authService: AuthService) {
-    }
+    constructor(private apiService: ApiService, private authService: AuthService) {}
 
-    registerCareHome(careHomeFormObject: Object) {
+    registerCareHome(careHomeFormObject: Object)
+    {
         this.addressForm = null;
         return this.apiService.register(careHomeFormObject);
     }
 
-    loginCareHome(email: string, password: string) {
-        const body = {email, password, 'userType': 'care_home'};
+    loginCareHome(email: string, password: string)
+    {
+        const body = { email, password, 'userType': 'care_home' };
         return this.apiService
             .login(body)
-            .map(result => {
+            .map(result =>
+            {
 
                 // care home login handle
                 const user = new User(result['user']);
@@ -40,7 +44,8 @@ export class CareHomeService {
             });
     }
 
-    checkCarersNearby(addressObject: Object) {
+    checkCarersNearby(addressObject: Object)
+    {
         const params = new HttpParams()
             .set('postal_code', addressObject['postal_code'])
             .set('address_line_1', addressObject['address_line_1'])
@@ -50,18 +55,22 @@ export class CareHomeService {
         return this.apiService.checkCarersNearPoint(params);
     }
 
-    addCareHomeToWaitingList(waitingFormObject: Object) {
+    addCareHomeToWaitingList(waitingFormObject: Object)
+    {
         return this.apiService.addCareHomeToWaitingList(waitingFormObject);
     }
 
-    getJobs(page): Observable<any> {
-        return this.apiService.getCareHomeJobs(page);
+    getJobs(page): Observable<{ jobs: Array<Job>, pages: number }>
+    {
+        return this.apiService.getCareHomeJobs(page).map(this.parseJobsResults);
     }
 
-    getJobDetails(jobId: string): Observable<any> {
+    getJobDetails(jobId: string): Observable<any>
+    {
         return this.apiService.getJobDetails(jobId)
             .map(
-                response => {
+                response =>
+                {
                     this.jobDetails = response;
                     this.detailsLoaded.next();
                     return response;
@@ -69,36 +78,53 @@ export class CareHomeService {
             );
     }
 
-    editJob(jobId: string, formData: FormData): Observable<any> {
+    editJob(jobId: string, formData: FormData): Observable<any>
+    {
         return this.apiService.editJob(jobId, formData);
     }
 
-    cancelJob(jobId: string): Observable<any> {
+    cancelJob(jobId: string): Observable<any>
+    {
         return this.apiService.cancelJob(jobId);
     }
 
-    getPendingReviews(page: number): Observable<any> {
+    getPendingReviews(page: number): Observable<any>
+    {
         return this.apiService.getPendingReviews(page);
     }
 
-    reviewJobCarer(jobId: string, rate: number, description: string): Observable<any> {
+    reviewJobCarer(jobId: string, rate: number, description: string): Observable<any>
+    {
         return this.apiService.reviewJobCarer(jobId, rate, description);
     }
 
-    addCarerToBlocked(carerId: string): Observable<any> {
+    addCarerToBlocked(carerId: string): Observable<any>
+    {
         return this.apiService.addCarerToBlocked(carerId);
     }
 
-    getCareHomePastJobs(from: number, to: number, page: number): Observable<any> {
+    getCareHomePastJobs(from: number, to: number, page: number): Observable<any>
+    {
         return this.apiService.getCareHomePastJobs(from, to, page);
     }
 
-    getPastJobDetails(jobId: string): Observable<any> {
+    getPastJobDetails(jobId: string): Observable<any>
+    {
         return this.apiService.getPastJobsDetails(jobId);
     }
 
-    challengeJobPayment(jobId: string, description: string): Observable<any> {
+    challengeJobPayment(jobId: string, description: string): Observable<any>
+    {
         return this.apiService.challengeJobPayment(jobId, description);
     }
 
+    private parseJobsResults(response: { results: Array<Job>, pages: number }) : { jobs: Array<Job>, pages: number }
+    {
+        const res: { jobs: Array<Job>, pages: number } = {
+            jobs: Array.isArray(response.results) ? response.results.map(job => new Job(job)) : [],
+            pages: response.pages || 0
+        };
+
+        return res;
+    }
 }

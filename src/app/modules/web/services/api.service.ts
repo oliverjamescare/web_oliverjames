@@ -1,334 +1,383 @@
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {environment} from '../../../../environments/environment';
-import {Observable} from 'rxjs/Observable';
-import {AuthService} from './auth.service';
-import {Availability} from '../models/carer-availability/carer-availability';
-import {AvailableJobsResponse} from '../models/available-jobs/available-jobs-response';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { environment } from '../../../../environments/environment';
+import { Observable } from 'rxjs/Observable';
+import { AuthService } from './auth.service';
+import { Availability } from '../models/carer-availability/carer-availability';
+import { AvailableJobsResponse } from '../models/available-jobs/available-jobs-response';
 
 @Injectable()
-export class ApiService {
+export class ApiService
+{
     private endpoint: string;
 
-    constructor(private httpClient: HttpClient, private authService: AuthService) {
+    constructor(private httpClient: HttpClient, private authService: AuthService)
+    {
         this.endpoint = environment.api;
     }
 
     // auth
-    register(form: FormData | Object) {
+    register(form: FormData | Object)
+    {
         return this.httpClient.post(this.endpoint + '/register', form);
     }
 
-    login(body: Object) {
+    login(body: Object)
+    {
         return this.httpClient.post(this.endpoint + '/login', body);
     }
 
-    forgotPassword(body: Object) {
+    forgotPassword(body: Object)
+    {
         return this.httpClient.post(this.endpoint + '/password/remind', body);
     }
 
-    resetPassword(body: Object) {
+    resetPassword(body: Object)
+    {
         return this.httpClient.put(this.endpoint + '/password/remind/change', body);
     }
 
-    addCareHomeToWaitingList(body: Object) {
+    addCareHomeToWaitingList(body: Object)
+    {
         return this.httpClient.post(this.endpoint + '/care-home/waiting-list', body);
     }
 
     // contact
-    sendContactMessage(body: Object) {
+    sendContactMessage(body: Object)
+    {
         return this.httpClient.post(this.endpoint + '/contact', body);
     }
 
     // user
-    checkUniqueness(param: string, value: string) {
-        return this.httpClient.get(this.endpoint + '/user/uniqueness', {params: new HttpParams().set(param, value)});
+    checkUniqueness(param: string, value: string)
+    {
+        return this.httpClient.get(this.endpoint + '/user/uniqueness', { params: new HttpParams().set(param, value) });
     }
 
-    confirmEmail(body: Object) {
+    confirmEmail(body: Object)
+    {
         return this.httpClient.put(this.endpoint + '/user/confirm-email', body);
     }
 
     // carer
-    checkCarersNearPoint(params: HttpParams) {
-        return this.httpClient.get(this.endpoint + '/carers/nearby', {params: params});
+    checkCarersNearPoint(params: HttpParams)
+    {
+        return this.httpClient.get(this.endpoint + '/carers/nearby', { params: params });
     }
 
-    getUpcomingJobs(page: number): Observable<any> {
-        return this.httpClient.get(`${this.endpoint}/carer/my-jobs?page=${page}`, {headers: this.getAuthorizationHeaders()});
+    getUpcomingJobs(page: number): Observable<any>
+    {
+        return this.httpClient.get(`${this.endpoint}/carer/my-jobs?page=${page}`, { headers: this.getAuthorizationHeaders() });
     }
 
-    getAvailabilityCalendar(week: number): Observable<Availability> {
+    getAvailabilityCalendar(week: number): Observable<Availability>
+    {
         return this.httpClient.get<Availability>(
             `${this.endpoint}/carer/availability?week=${week}`,
-            {headers: this.getAuthorizationHeaders()}
+            { headers: this.getAuthorizationHeaders() }
         );
     }
 
-    updateAvailabilityCalendar(week: number, availability: Availability): Observable<Availability> {
+    updateAvailabilityCalendar(week: number, availability: Availability): Observable<Availability>
+    {
         return this.httpClient.put<Availability>(
             `${this.endpoint}/carer/availability?week=${week}`,
             availability,
-            {headers: this.getAuthorizationHeaders()}
+            { headers: this.getAuthorizationHeaders() }
         );
     }
 
-    getAvailableJobs(params: HttpParams): Observable<AvailableJobsResponse> {
+    getAvailableJobs(params: HttpParams): Observable<AvailableJobsResponse>
+    {
         console.log('Distance param', params.get('distance'));
         return this.httpClient.get<AvailableJobsResponse>(
             `${this.endpoint}/carer/jobs`,
-            {headers: this.getAuthorizationHeaders(), params: params}
+            { headers: this.getAuthorizationHeaders(), params: params }
         );
     }
 
-    getCarerCalendar(): Observable<any> {
+    getCarerCalendar(): Observable<any>
+    {
         return this.httpClient.get(
             `${this.endpoint}/carer/calendar`,
-            {headers: this.getAuthorizationHeaders()}
+            { headers: this.getAuthorizationHeaders() }
         );
     }
 
-    getJobDetails(jobId: string): Observable<any> {
+    getJobDetails(jobId: string): Observable<any>
+    {
         return this.httpClient.get(
             `${this.endpoint}/jobs/${jobId}`,
-            {headers: this.getAuthorizationHeaders()}
+            { headers: this.getAuthorizationHeaders() }
         );
     }
 
-    acceptJob(jobId: string): Observable<any> {
+    acceptJob(jobId: string): Observable<any>
+    {
         return this.httpClient.put(
             `${this.endpoint}/jobs/${jobId}/accept`,
             {},
-            {headers: this.getAuthorizationHeaders()}
+            { headers: this.getAuthorizationHeaders() }
         );
     }
 
-    declineJob(jobId: string): Observable<any> {
+    declineJob(jobId: string): Observable<any>
+    {
         return this.httpClient.put(
             `${this.endpoint}/jobs/${jobId}/decline`,
             {},
-            {headers: this.getAuthorizationHeaders()}
+            { headers: this.getAuthorizationHeaders() }
         );
     }
 
-    getOtherJobs(jobId: string): Observable<any> {
+    getOtherJobs(jobId: string): Observable<any>
+    {
         return this.httpClient.get(
             `${this.endpoint}/jobs/${jobId}/other-jobs?results=50`,
-            {headers: this.getAuthorizationHeaders()}
+            { headers: this.getAuthorizationHeaders() }
         );
     }
 
 
-    updateCarerProfile(body: any): Observable<any> {
+    updateCarerProfile(body: any): Observable<any>
+    {
         return this.httpClient.put(
             `${this.endpoint}/user/carer`,
             body,
-            {headers: this.getAuthorizationHeaders()}
+            { headers: this.getAuthorizationHeaders() }
         );
     }
 
-    getCarerNotifications(page: number): Observable<any> {
+    getCarerNotifications(page: number): Observable<any>
+    {
         return this.httpClient.get(
             `${this.endpoint}/carer/notifications/list?page=${page}`,
-            {headers: this.getAuthorizationHeaders()}
+            { headers: this.getAuthorizationHeaders() }
         );
     }
 
-    getCarerSubmittedJobs(from: number, to: number, page: number): Observable<any> {
+    getCarerSubmittedJobs(from: number, to: number, page: number): Observable<any>
+    {
         return this.httpClient.get(
             `${this.endpoint}/carer/submitted-jobs?from=${from}&to=${to}&page=${page}`,
-            {headers: this.getAuthorizationHeaders()}
+            { headers: this.getAuthorizationHeaders() }
         );
     }
 
-    getCarerHomeScreen(): Observable<any> {
+    getCarerHomeScreen(): Observable<any>
+    {
         return this.httpClient.get(
             `${this.endpoint}/carer/home`,
-            {headers: this.getAuthorizationHeaders()}
+            { headers: this.getAuthorizationHeaders() }
         );
     }
 
     // care home
-    getCalendarData(): Observable<any> {
-        return this.httpClient.get(this.endpoint + '/care-home/calendar', {headers: this.getAuthorizationHeaders()});
+    getCalendarData(): Observable<any>
+    {
+        return this.httpClient.get(this.endpoint + '/care-home/calendar', { headers: this.getAuthorizationHeaders() });
     }
 
-    searchForPriorityUsers(searchString: string): Observable<any> {
+    searchForPriorityUsers(searchString: string): Observable<any>
+    {
         return this.httpClient.get(
             `${this.endpoint}/care-home/carers/search`,
-            {headers: this.getAuthorizationHeaders(), params: new HttpParams().set('search', searchString)});
+            { headers: this.getAuthorizationHeaders(), params: new HttpParams().set('search', searchString) });
     }
 
-    checkCarersToContact(jobs: string, gender: string = 'no preference'): Observable<any> {
+    checkCarersToContact(jobs: string, gender: string = 'no preference'): Observable<any>
+    {
         return this.httpClient.get(
             `${this.endpoint}/jobs/carers`,
-            {headers: this.getAuthorizationHeaders(), params: new HttpParams().set('jobs', jobs).set('gender', gender)}
+            { headers: this.getAuthorizationHeaders(), params: new HttpParams().set('jobs', jobs).set('gender', gender) }
         );
     }
 
-    bookJobs(data: any): Observable<any> {
+    bookJobs(data: any): Observable<any>
+    {
         return this.httpClient.post(
             `${this.endpoint}/jobs`,
             data,
-            {headers: this.getAuthorizationHeaders()});
+            { headers: this.getAuthorizationHeaders() });
     }
 
-    getSubmittedJobNotifications(group: string, page: number): Observable<any> {
+    getSubmittedJobNotifications(group: string, page: number): Observable<any>
+    {
         return this.httpClient.get(
             `${this.endpoint}/jobs/${group}/notifications/carers?page=${page}`,
-            {headers: this.getAuthorizationHeaders()}
+            { headers: this.getAuthorizationHeaders() }
         );
     }
 
-    cancelCarerNotification(group: string, carerId: string): Observable<any> {
+    cancelCarerNotification(group: string, carerId: string): Observable<any>
+    {
         return this.httpClient.put(
             `${this.endpoint}/jobs/${group}/notifications/carers/${carerId}`,
-            {group, id: carerId},
-            {headers: this.getAuthorizationHeaders()}
+            { group, id: carerId },
+            { headers: this.getAuthorizationHeaders() }
         );
     }
 
-    getCareHomeJobs(page: number, results = 10): Observable<any> {
+    getCareHomeJobs(page: number, results = 10): Observable<any>
+    {
         return this.httpClient.get(
             `${this.endpoint}/care-home/my-jobs`,
-            {headers: this.getAuthorizationHeaders(), params: new HttpParams().set('page', `${page}`).set('results', `${results}`)}
+            { headers: this.getAuthorizationHeaders(), params: new HttpParams().set('page', `${page}`).set('results', `${results}`) }
         );
     }
 
-    updateCareHomeProfile(formData: FormData): Observable<any> {
+    updateCareHomeProfile(formData: FormData): Observable<any>
+    {
         return this.httpClient.put(
             `${this.endpoint}/user/care-home`,
             formData,
-            {headers: this.getAuthorizationHeaders()}
+            { headers: this.getAuthorizationHeaders() }
         );
     }
 
-    addCarerToBlocked(carerId: string): Observable<any> {
+    addCarerToBlocked(carerId: string): Observable<any>
+    {
         return this.httpClient.post(
             `${this.endpoint}/care-home/carers/${carerId}/block`,
             {},
-            {headers: this.getAuthorizationHeaders()}
+            { headers: this.getAuthorizationHeaders() }
         );
     }
 
-    removeCarerFromBlocked(carerId: string): Observable<any> {
+    removeCarerFromBlocked(carerId: string): Observable<any>
+    {
         return this.httpClient.delete(
             `${this.endpoint}/care-home/carers/${carerId}/block`,
-            {headers: this.getAuthorizationHeaders()}
+            { headers: this.getAuthorizationHeaders() }
         );
     }
 
-    editJob(jobId: string, formData: FormData): Observable<any> {
+    editJob(jobId: string, formData: FormData): Observable<any>
+    {
         return this.httpClient.put(
             `${this.endpoint}/jobs/${jobId}`,
             formData,
-            {headers: this.getAuthorizationHeaders()}
+            { headers: this.getAuthorizationHeaders() }
         );
     }
 
-    cancelJob(jobId: string): Observable<any> {
+    cancelJob(jobId: string): Observable<any>
+    {
         return this.httpClient.put(
             `${this.endpoint}/jobs/${jobId}/cancel`,
-            {id: jobId},
-            {headers: this.getAuthorizationHeaders()}
+            { id: jobId },
+            { headers: this.getAuthorizationHeaders() }
         );
     }
 
-    getPendingReviews(page: number): Observable<any> {
+    getPendingReviews(page: number): Observable<any>
+    {
         return this.httpClient.get(
             `${this.endpoint}/care-home/pending-reviews?page=${page}&results=50`,
-            {headers: this.getAuthorizationHeaders()}
+            { headers: this.getAuthorizationHeaders() }
         );
     }
 
-    reviewJobCarer(jobId: string, rate: number, description: string): Observable<any> {
+    reviewJobCarer(jobId: string, rate: number, description: string): Observable<any>
+    {
         return this.httpClient.post(
             `${this.endpoint}/jobs/${jobId}/carer/review`,
-            {rate, description},
-            {headers: this.getAuthorizationHeaders()}
+            { rate, description },
+            { headers: this.getAuthorizationHeaders() }
         );
     }
 
-    getCareHomePastJobs(from: number, to: number, page: number): Observable<any> {
+    getCareHomePastJobs(from: number, to: number, page: number): Observable<any>
+    {
         return this.httpClient.get(
             `${this.endpoint}/care-home/past-jobs?from=${from}&to=${to}&page=${page}`,
-            {headers: this.getAuthorizationHeaders()}
+            { headers: this.getAuthorizationHeaders() }
         );
     }
 
-    getPastJobsDetails(jobId: string): Observable<any> {
+    getPastJobsDetails(jobId: string): Observable<any>
+    {
         return this.httpClient.get(
             `${this.endpoint}/care-home/past-jobs/${jobId}`,
-            {headers: this.getAuthorizationHeaders()}
+            { headers: this.getAuthorizationHeaders() }
         );
     }
 
-    challengeJobPayment(jobId: string, description: string): Observable<any> {
+    challengeJobPayment(jobId: string, description: string): Observable<any>
+    {
         return this.httpClient.post(
             `${this.endpoint}/jobs/${jobId}/challenge`,
-            {description},
-            {headers: this.getAuthorizationHeaders()}
+            { description },
+            { headers: this.getAuthorizationHeaders() }
         );
     }
 
 // care home & carer
 
-    getUserProfile(): Observable<any> {
+    getUserProfile(): Observable<any>
+    {
         return this.httpClient.get(
             `${this.endpoint}/user/profile`,
-            {headers: this.getAuthorizationHeaders()}
+            { headers: this.getAuthorizationHeaders() }
         );
     }
 
-    changeEmail(email: string): Observable<any> {
+    changeEmail(email: string): Observable<any>
+    {
         return this.httpClient.put(
             `${this.endpoint}/user/email`,
-            {email},
-            {headers: this.getAuthorizationHeaders()}
+            { email },
+            { headers: this.getAuthorizationHeaders() }
         );
     }
 
-    resendEmail(): Observable<any> {
+    resendEmail(): Observable<any>
+    {
         return this.httpClient.post(
             `${this.endpoint}/user/email/verification`,
             {},
-            {headers: this.getAuthorizationHeaders()}
+            { headers: this.getAuthorizationHeaders() }
         );
     }
 
-    changeProfileImage(formData: FormData): Observable<any> {
+    changeProfileImage(formData: FormData): Observable<any>
+    {
         return this.httpClient.put(
             `${this.endpoint}/user/profile-image`,
             formData,
-            {headers: this.getAuthorizationHeaders()}
+            { headers: this.getAuthorizationHeaders() }
         );
     }
 
-    changePassword(oldPassword: string, newPassword: string): Observable<any> {
+    changePassword(oldPassword: string, newPassword: string): Observable<any>
+    {
         return this.httpClient.put(
             `${this.endpoint}/user/password`,
-            {old_password: oldPassword, new_password: newPassword},
-            {headers: this.getAuthorizationHeaders()}
+            { old_password: oldPassword, new_password: newPassword },
+            { headers: this.getAuthorizationHeaders() }
         );
     }
 
-    updateBankDetails(token: string): Observable<any> {
+    updateBankDetails(token: string): Observable<any>
+    {
         return this.httpClient.put(
             `${this.endpoint}/payments/bank`,
-            {token},
-            {headers: this.getAuthorizationHeaders()}
+            { token },
+            { headers: this.getAuthorizationHeaders() }
         );
     }
 
-    updateCardDetails(token: string): Observable<any> {
+    updateCardDetails(token: string): Observable<any>
+    {
         return this.httpClient.put(
             `${this.endpoint}/payments/card`,
-            {token},
-            {headers: this.getAuthorizationHeaders()}
+            { token },
+            { headers: this.getAuthorizationHeaders() }
         );
     }
 
-    private getAuthorizationHeaders(): HttpHeaders {
+    private getAuthorizationHeaders(): HttpHeaders
+    {
         return new HttpHeaders({
             'X-access-token': this.authService.getAccessToken().token
         });

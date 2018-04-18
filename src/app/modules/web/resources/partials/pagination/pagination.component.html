@@ -1,0 +1,9 @@
+<div *ngIf="pages.length > 1" class="text-center">
+    <nav>
+        <ul class="pagination">
+            <li *ngFor="let p of pages" [ngClass]="{'active': currentPage === p + 1}" class="page-item">
+                <a (click)="onPageChangeClicked(p + 1)" class="page-link">{{ p + 1 }}</a>
+            </li>
+        </ul>
+    </nav>
+</div>

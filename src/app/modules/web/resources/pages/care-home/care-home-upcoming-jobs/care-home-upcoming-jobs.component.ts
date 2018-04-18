@@ -1,67 +1,39 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {CareHomeService} from '../../../../services/care-home.service';
-import {isUndefined} from 'util';
+import { Component, OnInit } from '@angular/core';
+import { CareHomeService } from '../../../../services/care-home.service';
+import { Job } from '../../../../models/job.model';
 
 @Component({
     selector: 'app-care-home-upcoming-jobs',
     templateUrl: './care-home-upcoming-jobs.component.html',
     styleUrls: ['./care-home-upcoming-jobs.component.scss']
 })
-export class CareHomeUpcomingJobsComponent implements OnInit {
-    @Input() showPagination = false;
-    results = 10;
-    page = 1;
-    upcomingJobs: any[] = [];
+export class CareHomeUpcomingJobsComponent implements OnInit
+{
+    page: number = 1;
+    pages: number = 0;
+    jobs: Array<Job> = [];
 
-    pages: number[] = [];
+    constructor(private careHomeService: CareHomeService) {}
 
-    constructor(private careHomeService: CareHomeService) {
-    }
-
-    ngOnInit() {
+    ngOnInit()
+    {
         this.getUpcomingJobs();
     }
 
-    getCarerOutput(index: number): string {
-        if (!isUndefined(this.upcomingJobs[index].carer)) {
-            return `${this.upcomingJobs[index].carer.carer.first_name} ${this.upcomingJobs[index].carer.carer.surname}`;
-        } else if (this.upcomingJobs[index].status !== 'CANCELLED') {
-            return 'Pending';
-        } else {
-            return '';
-        }
-    }
-
-    onPageChange(page: number): void {
+    //pagination handle
+    onPageChange(page: number): void
+    {
         this.page = page;
         this.getUpcomingJobs();
     }
 
-    private getUpcomingJobs(): void {
+    //getting data
+    private getUpcomingJobs(): void
+    {
         this.careHomeService.getJobs(this.page)
-            .subscribe(
-                response => {
-                    console.log('get upcoming jobs success response', response);
-                    this.upcomingJobs = [];
-                    response.results.forEach((job) => {
-                        if (job.status !== 'CANCELLED') {
-                            this.upcomingJobs.push(job);
-                        }
-                    });
-                    this.pages = this.setPaginationArray(response.pages);
-                },
-                error => {
-                    console.log('Get upciming jobs error response');
-                }
-            );
+            .subscribe((results: { jobs: Array<Job>, pages: number }) => {
+                this.jobs = results.jobs;
+                this.pages = results.pages;
+            });
     }
-
-    private setPaginationArray(length: number): number[] {
-        const arr = [];
-        for (let i = 0; i < length; i++) {
-            arr.push(i);
-        }
-        return arr;
-    }
-
 }
