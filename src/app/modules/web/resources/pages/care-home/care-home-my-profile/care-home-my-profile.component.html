@@ -5,7 +5,7 @@
 ></app-care-home-booking-header>
 <br>
 <div>
-    <div [formGroup]="form" class="row">
+    <div *ngIf="form" [formGroup]="form" class="row">
         <div class="col-sm">
             <table class="profile-table">
                 <tr>
@@ -37,9 +37,9 @@
                         <span *ngIf="form.get('phone_number').errors?.required" class="red full-width">
                         This field is required
                     </span>
-                        <span *ngIf="form.get('phone_number').errors?.minlength || form.get('phone_number').errors?.maxlength"
+                        <span *ngIf="form.get('phone_number').errors?.minlength"
                               class="red full-width">
-                        Phone number must contain between 6 and 9 numbers
+                        Phone number must contain at least 6 numbers
                     </span>
                     </td>
                 </tr>
@@ -164,7 +164,7 @@
     <div *ngIf="profileDetails" class="row">
         <div class="col-sm-12">
             <h5>General Guidance</h5>
-            <p>Complete optionally - this will be saved for all future jobs and seen by Oliver James carers coming to [CARE SERVICE NAME]</p>
+            <p>Complete optionally - this will be saved for all future jobs and seen by Oliver James carers coming to {{ profileDetails?.care_home.care_service_name }}</p>
         </div>
         <div [formGroup]="form" class="col-md-12 col-lg-7">
             <div class="guidance-row">

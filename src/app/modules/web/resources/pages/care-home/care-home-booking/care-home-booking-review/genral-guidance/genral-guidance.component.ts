@@ -1,7 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {CareHomeBookingService} from '../../../../../../services/care-home-booking.service';
 import {AuthService} from '../../../../../../services/auth.service';
+import {CareHome} from '../../../../../../models/care-home.model';
 
 @Component({
     selector: 'app-general-guidance',
@@ -11,6 +12,7 @@ import {AuthService} from '../../../../../../services/auth.service';
 export class GeneralGuidanceComponent implements OnInit {
     form: FormGroup;
     floorPlanError: string;
+    careHome: CareHome;
 
     private validMimeTypes = [
         'application/msword',
@@ -21,11 +23,11 @@ export class GeneralGuidanceComponent implements OnInit {
         'image/jpeg'
     ];
 
-    constructor(public bookingService: CareHomeBookingService,
-                private authService: AuthService) {
-    }
+    constructor(public bookingService: CareHomeBookingService, private authService: AuthService) {}
 
-    ngOnInit() {
+    ngOnInit()
+    {
+        this.careHome = this.authService.getLoggedUser().care_home;
         this.createGuidanceForm();
         this.setUpForm();
         this.listenToFormChanges();

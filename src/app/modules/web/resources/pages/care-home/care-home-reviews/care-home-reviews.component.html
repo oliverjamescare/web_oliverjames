@@ -5,6 +5,7 @@
 ></app-care-home-booking-header>
 <br>
 <div [formGroup]="form">
+    <p *ngIf="!pendingReviews.length">No carers to review</p>
     <div formArrayName="ratings" class="row">
         <div *ngFor="let review of pendingReviews; let i = index" class="col-md-6">
             <br>

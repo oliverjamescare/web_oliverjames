@@ -3,19 +3,22 @@ import {CareHomeBookingService} from '../../../../../services/care-home-booking.
 import {Router} from '@angular/router';
 import {NotificationsService} from 'angular2-notifications';
 import {GeneralGuidance} from '../../../../../models/care-home-booking/general-guidance';
+import {AuthService} from '../../../../../services/auth.service';
 
 @Component({
     selector: 'app-care-home-booking-review',
     templateUrl: './care-home-booking-review.component.html'
 })
-export class CareHomeBookingReviewComponent implements OnInit {
+export class CareHomeBookingReviewComponent implements OnInit
+{
     showGuidanceForm = false;
     showPreferenceTab = false;
 
-    constructor(public bookingService: CareHomeBookingService,
-                private router: Router,
-                private notificationService: NotificationsService) {
-    }
+    constructor(
+        public bookingService: CareHomeBookingService,
+        private router: Router,
+        private notificationService: NotificationsService
+    ) {}
 
     ngOnInit() {
         this.getGuidanceInfo();

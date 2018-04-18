@@ -13,7 +13,7 @@ export class EditCardComponent implements OnInit, AfterViewInit {
     @Input() type = 'card_details';
     @Output() closed = new EventEmitter();
 
-    title = 'Edid card details';
+    title = 'Edit card details';
     elements: Elements;
     card: StripeElement;
     @ViewChild('card') cardRef: ElementRef;

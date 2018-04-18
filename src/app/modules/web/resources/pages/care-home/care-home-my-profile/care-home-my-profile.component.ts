@@ -127,7 +127,7 @@ export class CareHomeMyProfileComponent implements OnInit {
             address_line_1: new FormControl(null, Validators.required),
             address_line_2: new FormControl(null),
             phone_number: new FormControl(null, [
-                Validators.required, Validators.minLength(6), Validators.maxLength(9), numbers
+                Validators.required, Validators.minLength(6), numbers
             ]),
             floor_plan: new FormControl(null),
             parking: new FormControl(null),
@@ -154,7 +154,7 @@ export class CareHomeMyProfileComponent implements OnInit {
                     postal_code: address['PostalCode'],
                     address_line_1: address['Line1'],
                     address_line_2: address['Line2'],
-                    city: address['City']
+                    city: address['City'],
                 });
             });
         });
@@ -176,7 +176,8 @@ export class CareHomeMyProfileComponent implements OnInit {
         this.form.get('superior_contact').setValue(this.profileDetails.care_home.general_guidance.superior_contact);
     }
 
-    private prepareDataToUpdate(): any {
+    private prepareDataToUpdate(): any
+    {
         const formData = new FormData();
         const keys = Object.keys(this.form.value);
         keys.forEach((key) => {
@@ -191,7 +192,8 @@ export class CareHomeMyProfileComponent implements OnInit {
         return formData;
     }
 
-    private setUpPreferenceTab(): void {
+    private setUpPreferenceTab(): void
+    {
         switch (this.profileDetails.care_home.gender_preference) {
             case 'No preference': {
                 this.selectedTab = 0;

@@ -22,15 +22,20 @@ export class CalendarPopupComponent implements OnInit {
     timeTillArr: Date[] = [];
     errorMessage: string = null;
 
-    constructor(public bookingService: CareHomeBookingService) {
-    }
+    constructor(public bookingService: CareHomeBookingService) {}
 
-    ngOnInit() {
+    ngOnInit()
+    {
         this.setHoursIntervals();
         this.createForm();
+
+        this.form.valueChanges.subscribe(d => {
+            console.log(d)
+        })
     }
 
-    onClosePopup(): void {
+    onClosePopup(): void
+    {
         this.closePopup.emit();
     }
 
@@ -59,7 +64,8 @@ export class CalendarPopupComponent implements OnInit {
         }
     }
 
-    private createForm(): void {
+    private createForm(): void
+    {
         this.form = new FormGroup({
             'start_date': new FormControl(this.getBookingCalendarIndex(), Validators.required),
             'from': new FormControl(28, Validators.required),

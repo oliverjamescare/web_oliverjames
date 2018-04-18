@@ -36,7 +36,7 @@
                 <th>Start date</th>
                 <th>From</th>
                 <th>Till</th>
-                <th>Total const</th>
+                <th>Total cost</th>
                 <th>Your carer</th>
                 <th>Status</th>
                 <th>Options</th>
@@ -49,7 +49,7 @@
                 <td>{{ job.start_date | timestampDate }}</td>
                 <td>{{ job.start_date | timestampHour }}</td>
                 <td>{{ job.end_date | timestampHour }}</td>
-                <td>{{ job.cost.total_cost }} <span>&#163;</span></td>
+                <td><span>&#163;</span>{{ job.cost.total_cost }}</td>
                 <td>{{ job.carer.carer.first_name }} {{ job.carer.carer.surname }}</td>
                 <td>{{ job.status | status }}</td>
                 <td>
