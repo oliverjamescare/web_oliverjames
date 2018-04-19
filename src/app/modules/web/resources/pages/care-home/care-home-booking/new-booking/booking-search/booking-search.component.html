@@ -5,10 +5,7 @@
     </div>
 
     <div class="col-lg text-right">
-        <button
-                (click)="onNavigateNext()"
-                class="btn-success btn-subnav"
-        >Next</button>
+        <button (click)="onNavigateNext()" class="btn btn-success btn-subnav">Next</button>
         <div class="input" (clickOutside)="onClickOutside()">
             <input [formControl]="searchTerm" type="text" class="form-control margin-bottom10" placeholder="Search">
             <div class="suggestions text-left" *ngIf="searchResult.length > 0">

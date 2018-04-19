@@ -1,10 +1,14 @@
-<app-care-home-booking-header
-        navigationTitle="Back"
-        navigationRoute="/care-home-dashboard"
-        mainTitle="Book a new job"
-></app-care-home-booking-header>
+<div class="row">
+    <div class="col-sm text-center">
+        <h2 class="main-title">Book a new job</h2>
+        <a routerLink="/care-home-dashboard"  class="btn btn-subnav btn-secondary left">Back</a>
+    </div>
+</div>
 <br>
+
+<!-- calendar -->
 <app-booking-calendar bookingServiceStr="bookingService"></app-booking-calendar>
 <br>
+
 <app-booking-search></app-booking-search>
 <app-priority-carers-list></app-priority-carers-list>

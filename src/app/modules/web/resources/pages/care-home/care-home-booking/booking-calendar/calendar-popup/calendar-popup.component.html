@@ -4,38 +4,54 @@
         <span (click)="onClosePopup(); $event.stopPropagation()" class="exit">X</span>
     </div>
     <div class="popup-content">
-        <p class="popup-error">{{ errorMessage }}</p>
+        <p class="popup-error">{{ error }}</p>
+
+        <!-- form -->
         <div [formGroup]="form">
+
+            <!-- start date -->
             <label class="small-label">Start date</label>
-            <select formControlName="start_date" class="form-control">
-                <option
-                        *ngFor="let day of bookingService.calendar; let i = index" [value]="i"
-                >{{ day.day | date }}</option>
+            <select formControlName="start_date" class="form-control" [ngClass]="formUtils.handleValidationStateClass(form, 'start_date')">
+                <option *ngFor="let day of startDays" [value]="day | datePattern: 'YYYY-MM-DD'">{{ day | datePattern: "MMM DD, YYYY" }}</option>
             </select>
+            <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'start_date', messages) }} </span>
+
+            <!-- times -->
             <div class="inline-input padding-right5">
                 <label class="small-label">From</label>
-                <select formControlName="from" class="form-control">
-                    <option *ngFor="let hour of timeFromArr; let i = index" [value]="i">{{ hour | hourPipe }}</option>
+                <select formControlName="from" class="form-control" [ngClass]="formUtils.handleValidationStateClass(form, 'from')">
+                    <option *ngFor="let startHour of startIntervals" [value]="startHour">{{ startHour | datePattern: "h:mm A" }}</option>
                 </select>
+                <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'from', messages) }} </span>
             </div>
+
             <div class="inline-input padding-left5">
                 <label class="small-label">Till</label>
-                <select formControlName="till" class="form-control">
-                    <option *ngFor="let hour of timeTillArr; let i = index" [value]="i">{{ hour | hourPipe }}</option>
+                <select formControlName="till" class="form-control" [ngClass]="formUtils.handleValidationStateClass(form, 'till')">
+                    <option *ngFor="let endHour of endIntervals" [value]="endHour">{{ endHour | datePattern: "h:mm A" }}</option>
                 </select>
+                <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'till', messages) }} </span>
             </div>
+
+
+            <!-- role -->
             <div class="inline-input padding-right5">
                 <label class="small-label">Role</label>
-                <select formControlName="role" class="form-control">
+                <select formControlName="role" class="form-control" [ngClass]="formUtils.handleValidationStateClass(form, 'role')">
                     <option value="Carer">Carer</option>
                     <option value="Senior Carer">Senior carer</option>
                 </select>
+                <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'role', messages) }} </span>
             </div>
+
+            <!-- amount -->
             <div class="inline-input padding-left5">
                 <label class="small-label">Number</label>
-                <input formControlName="number" class="form-control" type="number" min="1" max="5">
+                <input formControlName="amount" class="form-control" type="number" min="1" max="5" [ngClass]="formUtils.handleValidationStateClass(form, 'amount')">
+                <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'amount', messages) }} </span>
             </div>
         </div>
-        <button (click)="onAddBooking(); $event.stopPropagation()" type="button" class="btn-success btn-popup">Add job</button>
+        <br>
+        <button (click)="onAddBooking(); $event.stopPropagation()" type="button" class="btn btn-success btn-popup" [disabled]="!form.valid">Add job</button>
     </div>
 </div>

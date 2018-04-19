@@ -40,6 +40,12 @@ export function greaterThan(value: any)
     return (control: FormControl): { [ key: string ]: boolean } =>  parseInt(control.value) <= parseInt(value) ? { 'greaterThan': true } : null;
 }
 
+//dates
+export function dateGreaterThan(value: Date)
+{
+    return (control: FormControl): { [ key: string ]: boolean } => new Date(control.value).getTime() <= new Date(value).getTime() ? { 'dateGreaterThan': true } : null;
+}
+
 //file validators
 export function fileSize(file: File, max: number)
 {

@@ -3,16 +3,17 @@ import {CareHomeBookingService} from '../../../../../services/care-home-booking.
 import {Router} from '@angular/router';
 import {NotificationsService} from 'angular2-notifications';
 import {GeneralGuidance} from '../../../../../models/care-home-booking/general-guidance';
-import {AuthService} from '../../../../../services/auth.service';
 
 @Component({
     selector: 'app-care-home-booking-review',
-    templateUrl: './care-home-booking-review.component.html'
+    templateUrl: './care-home-booking-review.component.html',
+    styleUrls: ['./care-home-booking-review.component.scss']
 })
 export class CareHomeBookingReviewComponent implements OnInit
 {
     showGuidanceForm = false;
     showPreferenceTab = false;
+    inProgress: boolean = false;
 
     constructor(
         public bookingService: CareHomeBookingService,
@@ -24,17 +25,22 @@ export class CareHomeBookingReviewComponent implements OnInit
         this.getGuidanceInfo();
     }
 
-    onSubmitBookings(): void {
-        if (this.bookingService.card_number !== null) {
+    onSubmitBookings(): void
+    {
+        if (this.bookingService.card_number !== null)
+        {
+            this.inProgress = true;
             this.bookingService.bookJobs()
                 .subscribe(
                     response => {
+                        this.inProgress = false;
                         this.bookingService.clearAfterBooking();
                         this.router.navigate(['/care-home-booking', 'submited'],
                             { queryParams: { group: response.group } });
                         this.notificationService.success('Success', 'Jobs booked');
                     },
                     error => {
+                        this.inProgress = false;
                         console.log('Book jobs error', error);
                     }
                 );

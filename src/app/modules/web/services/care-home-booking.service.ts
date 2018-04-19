@@ -40,8 +40,10 @@ export class CareHomeBookingService {
             );
     }
 
-    bookJob(bookingForm: BookingForm, index: number): void {
+    bookJob(bookingForm: BookingForm, index: number): void
+    {
         const bookedJob: PreBookedJob = PreBookedJob.getInstanceFromForm(bookingForm, index);
+
         this.preBookedJobs.push(bookedJob);
         this.addedBooking.next(bookedJob);
         sessionStorage.setItem('preBookedJobs', JSON.stringify(this.preBookedJobs));
@@ -93,7 +95,8 @@ export class CareHomeBookingService {
         return this.apiService.bookJobs(this.getAddBookBodyForRequest());
     }
 
-    clearAfterBooking(): void {
+    clearAfterBooking(): void
+    {
         this.preBookedJobs = [];
         this.priorityCarers = [];
         sessionStorage.removeItem('preBookedJobs');

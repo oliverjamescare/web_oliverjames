@@ -1,17 +1,21 @@
-<app-care-home-booking-header
-        navigationTitle="Add more jobs"
-        navigationRoute="/care-home-booking/new"
-        mainTitle="Review your jobs then press submit"
-></app-care-home-booking-header>
+
+<div class="row">
+    <div class="col-sm text-center">
+        <h2 class="main-title">Review your jobs then press submit</h2>
+        <a routerLink="/care-home-booking/new"  class="btn btn-subnav btn-secondary left">Add more jobs</a>
+    </div>
+</div>
 <br>
+
 <app-review-table></app-review-table>
 <br>
 <app-preference-tab></app-preference-tab>
 <br>
 <app-general-guidance *ngIf="showGuidanceForm"></app-general-guidance>
 <br>
+<br>
 <div class="row">
     <div class="col-md-12 col-lg-7">
-        <button (click)="onSubmitBookings()" class="btn-success">Submit bookings</button>
+        <button (click)="onSubmitBookings()" class="btn btn-success submit-bookings" [disabled]="inProgress">Submit bookings</button>
     </div>
 </div>

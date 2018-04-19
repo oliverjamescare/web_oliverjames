@@ -4,6 +4,7 @@ import {isUndefined} from 'util';
 import {PreBookedJob} from '../../../../../../models/care-home-booking/pre-booked-job';
 import {Subscription} from 'rxjs/Subscription';
 import {CareHomeBookingService} from '../../../../../../services/care-home-booking.service';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-calendar-day',
@@ -78,7 +79,8 @@ export class CalendarDayComponent implements OnInit, OnChanges, OnDestroy {
     private getBookedJob(): void {
         this.bookedJobSub = this.bookingService.addedBooking.subscribe(
             (bookedJob: PreBookedJob) => {
-                if (bookedJob._id === this.index) {
+
+                if (moment(bookedJob._id).format("YYYY-MM-DD") == moment(this.date).format("YYYY-MM-DD")) {
                     this.preBookedJobs.push(bookedJob);
                     this.setUpList();
                 }
@@ -86,9 +88,11 @@ export class CalendarDayComponent implements OnInit, OnChanges, OnDestroy {
         );
     }
 
-    private setUpList(): void {
+    private setUpList(): void
+    {
         this.allJobs = [];
-        if (!isUndefined(this.jobs)) {
+        if (!isUndefined(this.jobs))
+        {
             this.jobs.forEach((job) => {
                 this.allJobs.push({
                     start: new Date(job.start_date),

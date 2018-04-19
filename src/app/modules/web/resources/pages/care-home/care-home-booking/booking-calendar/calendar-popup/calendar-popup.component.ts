@@ -1,37 +1,130 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {CareHomeBookingService} from '../../../../../../services/care-home-booking.service';
-import * as dateformat from 'dateformat';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CareHomeBookingService } from '../../../../../../services/care-home-booking.service';
+import * as moment from 'moment';
+import { handleValidationErrorMessage, handleValidationStateClass } from '../../../../../../../../utilities/form.utils';
+import { dateGreaterThan } from '../../../../../../../../utilities/validators';
 
-const TIMESTAMP_INTERVAL = 900000; // 15 min in milliseconds
-const MIN_IN_MILLISECONDS = 60000;
-const NUMBER_OF_INTERVALS = 98; // number of 15 min intervals in select list hour from 7:00, 19:00
+const NUMBER_OF_INTERVALS = 96; // number of 15 min intervals in select list hour from 7:00, 19:00
 
 @Component({
     selector: 'app-calendar-popup',
     templateUrl: './calendar-popup.component.html',
     styleUrls: ['./calendar-popup.component.scss']
 })
-export class CalendarPopupComponent implements OnInit {
+export class CalendarPopupComponent implements OnInit
+{
     @Input() direction: string;
     @Input() date: Date;
     @Input() index: number;
     @Output() closePopup = new EventEmitter();
     form: FormGroup;
-    timeFromArr: Date[] = [];
-    timeTillArr: Date[] = [];
-    errorMessage: string = null;
+    formUtils = { handleValidationStateClass, handleValidationErrorMessage };
+    startDate: Date;
+    endDate: Date;
+
+    startDays: Array<Date> = [];
+    startIntervals: Array<Date> = [];
+    endIntervals: Array<Date> = [];
+    error: string = "";
+
+    messages = [
+        {
+            field: 'start_date',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'Start date is required'
+                },
+            ]
+        },
+        {
+            field: 'from',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'From is required.'
+                }
+            ]
+        },
+        {
+            field: 'till',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'Till is required'
+                },
+                {
+                    error: 'dateGreaterThan',
+                    message: 'Till must be greater than from.'
+                }
+            ]
+        },
+        {
+            field: 'role',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'Role is required'
+                }
+            ]
+        },
+        {
+            field: 'amount',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'Amount is required'
+                },
+                {
+                    error: 'min',
+                    message: 'Amount must have 1 at least.'
+                },
+                {
+                    error: 'max',
+                    message: 'Amount cannot be larger than 5.'
+                },
+            ]
+        }
+    ];
 
     constructor(public bookingService: CareHomeBookingService) {}
 
     ngOnInit()
     {
-        this.setHoursIntervals();
+        //init days and times arrays
+        this.prepareStartDays();
+        this.prepareStartIntervals();
+        this.prepareEndIntervals();
+        this.calculateInitials();
+
         this.createForm();
 
-        this.form.valueChanges.subscribe(d => {
-            console.log(d)
-        })
+        // end time validation
+        this.form
+            .valueChanges
+            .subscribe(() => this.form.get('till').setValidators([Validators.required, dateGreaterThan(this.form.get('from').value)]));
+
+        //on day change
+        this.form.get("start_date")
+            .valueChanges
+            .subscribe((day) => {
+                this.date = new Date(day);
+                this.date.setHours(0, 0, 0, 0);
+
+                this.prepareStartIntervals();
+                this.prepareEndIntervals();
+                this.calculateInitials();
+            });
+
+        //on start time change
+        this.form.get("from")
+            .valueChanges
+            .subscribe((from) => {
+                const end = new Date(from)
+                end.setMinutes(end.getMinutes() + 15);
+                this.form.get("till").patchValue(end);
+            })
     }
 
     onClosePopup(): void
@@ -39,96 +132,101 @@ export class CalendarPopupComponent implements OnInit {
         this.closePopup.emit();
     }
 
-    onAddBooking(): void {
-        if (!this.form.valid) {
-            this.errorMessage = 'One or many fields are incomplete';
-        } else if (!this.isValidFromTill(this.form.get('from').value, this.form.get('till').value)) {
-            this.errorMessage = 'Please check the start and end times';
-        } else if (!this.validDate(+this.form.controls['from'].value)) {
-            this.errorMessage = `The earliest a job can start is ${dateformat(this.timeTillArr[this.findActualFromIndex()], 'shortTime')}`;
-        } else {
+    onAddBooking(): void
+    {
+        if(this.form.valid)
+        {
             this.addJobsToList();
             this.closePopup.emit();
         }
     }
 
-    private addJobsToList(): void {
-        for (let i = 0; i < this.form.get('number').value; i++) {
+    private addJobsToList(): void
+    {
+        for (let i = 0; i < this.form.get('amount').value; i++)
+        {
             this.bookingService.bookJob({
                 start_date: this.form.get('start_date').value,
-                from: this.timeFromArr[this.form.get('from').value].getTime(),
-                till: this.timeTillArr[this.form.get('till').value].getTime(),
+                from: new Date(this.form.get('from').value).getTime(),
+                till: new Date(this.form.get('till').value).getTime(),
                 role: this.form.get('role').value,
                 number: 1
-            }, +this.form.get('start_date').value);
+            }, new Date(this.form.get('start_date').value).getTime());
         }
     }
 
     private createForm(): void
     {
+
         this.form = new FormGroup({
-            'start_date': new FormControl(this.getBookingCalendarIndex(), Validators.required),
-            'from': new FormControl(28, Validators.required),
-            'till': new FormControl(29, Validators.required),
+            'start_date': new FormControl(moment(this.startDate).format("YYYY-MM-DD"), Validators.required),
+            'from': new FormControl(this.startDate, Validators.required),
+            'till': new FormControl(this.endDate, Validators.required),
             'role': new FormControl(null, Validators.required),
-            'number': new FormControl(1, [Validators.min(1), Validators.max(5)])
+            'amount': new FormControl(1, [ Validators.min(1), Validators.max(5) ])
         });
     }
 
-    private getStartTime(): Date {
-        const date = this.date;
-        date.setHours(0, 0, 0, 0);
-        return date;
-    }
-
-    private setHoursIntervals(): void {
-        this.timeFromArr.push(this.getStartTime());
-        for (let i = 1; i < NUMBER_OF_INTERVALS; i++) {
-            if (i > 1) {
-                if (i === NUMBER_OF_INTERVALS - 1) {
-                    this.timeTillArr.push(new Date(this.timeFromArr[i - 1].getTime() - MIN_IN_MILLISECONDS));
-                } else {
-                    this.timeTillArr.push(new Date(this.timeFromArr[i - 1].getTime()));
-                }
-            }
-            if (i < NUMBER_OF_INTERVALS - 1) {
-                this.timeFromArr.push(new Date(this.timeFromArr[i - 1].getTime() + TIMESTAMP_INTERVAL));
-            }
-        }
-        this.timeFromArr.splice(this.timeFromArr.length - 1, 1);
-    }
-
-    private getBookingCalendarIndex(): number {
-        for (let i = 0; i < this.bookingService.calendar.length; i++) {
-            if (this.date.getMonth() === this.bookingService.calendar[i].day.getMonth() &&
-                this.date.getDate() === this.bookingService.calendar[i].day.getDate()) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    private isValidFromTill(start: number, end: number): boolean {
-        return (end - start) >= 0;
-    }
-
-    private validDate(startDate: number): boolean {
-        const index = this.findActualFromIndex();
-        console.log('index', index);
-        return startDate > index;
-    }
-
-    private findActualFromIndex(): number {
+    //preparing dates
+    private prepareStartDays()
+    {
         const now = new Date();
-        console.log('now', now);
-        let findedIndex = -1;
-        this.timeFromArr.forEach((date, index) => {
-            if (now.getTime() > date.getTime()) {
-                console.log('Available from', this.timeFromArr[index]);
-                findedIndex = index;
-            }
-        });
-        return findedIndex;
+
+        this.bookingService.calendar.forEach(day => {
+            if(day.day.getTime() >= now.getTime() || now.getDate() == day.day.getDate())
+                this.startDays.push(day.day)
+        })
     }
 
+    private prepareStartIntervals() : void
+    {
+        //basic intervals setup
+        this.startIntervals = [];
+        const date = new Date(this.date.getTime());
+        date.setHours(0, 0, 0, 0);
+
+        for(let i = 0; i < NUMBER_OF_INTERVALS; i++)
+        {
+            this.startIntervals.push(new Date(date.getTime()));
+            date.setMinutes(date.getMinutes() + 15);
+        }
+
+        //removing past dates
+        const now = new Date();
+        //now.setHours(23,59,0,0);
+        this.startIntervals = this.startIntervals.filter(intervalDate => now.getTime() <= intervalDate.getTime());
+    }
+
+    private prepareEndIntervals() : void
+    {
+        //next day start
+        const nextDayStart = this.getNexDayStart();
+
+        //preparing end intervals
+        this.endIntervals = [];
+        const date = new Date(this.startIntervals[1] ? this.startIntervals[1].getTime() : nextDayStart.getTime());
+        for(let i = 0; i < NUMBER_OF_INTERVALS; i++)
+        {
+            this.endIntervals.push(new Date(date.getTime()));
+            date.setMinutes(date.getMinutes() + 15);
+        }
+    }
+
+    private getNexDayStart() : Date
+    {
+        const nextDayStart = new Date(this.date.getTime())
+        nextDayStart.setDate(nextDayStart.getDate() + 1);
+        nextDayStart.setHours(0, 0, 0, 0);
+
+        return nextDayStart;
+    }
+
+    private calculateInitials()
+    {
+        //creating dates
+        const now = new Date();
+        this.startDate = new Date(this.startIntervals.find(date => now.getTime() <= date.getTime()) || this.getNexDayStart());
+        this.endDate = new Date(this.startDate.getTime())
+        this.endDate.setMinutes(this.endDate.getMinutes() + 15);
+    }
 }

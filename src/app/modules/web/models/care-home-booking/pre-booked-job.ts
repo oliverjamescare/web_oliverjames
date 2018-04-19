@@ -23,14 +23,15 @@ export class PreBookedJob {
         return preBookedJob;
     }
 
-    static getInstanceFromForm(bookingForm: BookingForm, index: number): PreBookedJob {
+    static getInstanceFromForm(bookingForm: BookingForm, index: number): PreBookedJob
+    {
         const preBookedJob = new PreBookedJob();
         preBookedJob._id = index;
-        console.log('start date', new Date(bookingForm.from));
         preBookedJob.start_date = bookingForm.from;
         preBookedJob.end_date = bookingForm.till;
         preBookedJob.amount = bookingForm.number;
         preBookedJob.role = bookingForm.role;
+
         return preBookedJob;
     }
 

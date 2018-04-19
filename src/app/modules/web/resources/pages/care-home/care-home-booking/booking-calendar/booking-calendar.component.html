@@ -1,8 +1,5 @@
 <div class="row">
     <div class="col-sm" (clickOutside)="popupService.openAddPopup = null; popupService.openListPopup = null">
-        <app-calendar-cell
-                *ngFor="let cell of calendarArr"
-                [cellData]="cell"
-        ></app-calendar-cell>
+        <app-calendar-cell *ngFor="let cell of calendarArr" [cellData]="cell"></app-calendar-cell>
     </div>
 </div>

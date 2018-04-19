@@ -5,12 +5,9 @@
     </div>
     <div class="popup-content">
         <ul class="books-list">
-            <li
-                    *ngFor="let job of allJobs; let i = index"
-                    (click)="onGoToEdit()"
-            >{{ i + 1 }}. {{ job.start | hourPipe }}-{{ job.end | hourPipe }}, {{ job.role }} </li>
+            <li *ngFor="let job of allJobs; let i = index" (click)="onGoToEdit()">{{ i + 1 }}. {{ job.start | hourPipe }}-{{ job.end | hourPipe }}, {{ job.role }} </li>
         </ul>
         <br>
-        <button (click)="onOpenAddPopup(); $event.stopPropagation()" type="button" class="btn-success btn-popup">Book another job</button>
+        <button (click)="onOpenAddPopup(); $event.stopPropagation()" type="button" class="btn btn-success btn-popup">Book another job</button>
     </div>
 </div>
