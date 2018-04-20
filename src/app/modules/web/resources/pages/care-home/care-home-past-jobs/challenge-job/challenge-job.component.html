@@ -1,8 +1,9 @@
-<app-care-home-booking-header
-        navigationTitle="Back"
-        navigationRoute="/care-home-past-jobs"
-        mainTitle="Challenge job"
-></app-care-home-booking-header>
+<div class="row">
+    <div class="col-sm text-center">
+        <h2 class="main-title">Challenge job</h2>
+        <a routerLink="/care-home-past-jobs"  class="btn btn-subnav btn-secondary left">Back</a>
+    </div>
+</div>
 
 <br>
 <div class="row">
@@ -21,15 +22,13 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>{{ careHomeService.pastJobDetails._id }}</td>
-                    <td>{{ careHomeService.pastJobDetails.start_date | timestampDate }}</td>
-                    <td>{{ careHomeService.pastJobDetails.start_date | timestampHour }}</td>
-                    <td>{{ careHomeService.pastJobDetails.end_date | timestampHour }}</td>
-                    <td>{{ careHomeService.pastJobDetails.cost.total_cost }} <span>&#163;</span></td>
-                    <td>{{ careHomeService.pastJobDetails.carer.carer.first_name }}
-                        {{ careHomeService.pastJobDetails.carer.carer.surname }}
-                    </td>
-                    <td>{{ careHomeService.pastJobDetails.status | status }}</td>
+                    <td>{{ careHomeService.pastJobDetails.id }}</td>
+                    <td>{{ careHomeService.pastJobDetails.start_date | datePattern: "YYYY-MM-DD" }}</td>
+                    <td>{{ careHomeService.pastJobDetails.start_date | datePattern: "h:mm A" }}</td>
+                    <td>{{ careHomeService.pastJobDetails.end_date | datePattern: "h:mm A"}}</td>
+                    <td><span>&#163;</span>{{ careHomeService.pastJobDetails.cost.total_cost }}</td>
+                    <td>{{ careHomeService.pastJobDetails.carer.carer.getCarerFullName() }}</td>
+                    <td>{{ (careHomeService.pastJobDetails.status).replace("_"," ") | capitalize }}</td>
                 </tr>
             </tbody>
         </table>
@@ -59,9 +58,9 @@
                         <span class="invalid-feedback"> {{ error }} </span>
                     </div>
                     <div class="col-6">
-                        <span>Our telephone number: TO COME</span>
+                        <span>Our telephone number: 0207 824 5149</span>
                         <br>
-                        <span>Our address: TO COME</span>
+                        <span>Our address: support@oliverjamescare.co.uk</span>
                     </div>
                 </div>
                 <br>

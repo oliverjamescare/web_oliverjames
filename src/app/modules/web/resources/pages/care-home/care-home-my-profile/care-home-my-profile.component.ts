@@ -1,25 +1,28 @@
-import {AfterViewInit, Component, ElementRef, NgZone, OnInit, ViewChild} from '@angular/core';
-import {ApiService} from '../../../../services/api.service';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {numbers} from '../../../../../../utilities/validators';
-import {GoogleService} from '../../../../services/google.service';
-import {MapsAPILoader} from '@agm/core';
-import {AuthService} from '../../../../services/auth.service';
-import {NotificationsService} from 'angular2-notifications';
+import { Component, NgZone, OnInit } from '@angular/core';
+import { ApiService } from '../../../../services/api.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { alpha, fileSize, fileType, numbers } from '../../../../../../utilities/validators';
+import { GoogleService } from '../../../../services/google.service';
+import { MapsAPILoader } from '@agm/core';
+import { AuthService } from '../../../../services/auth.service';
+import { NotificationsService } from 'angular2-notifications';
+import { getMessageError, handleValidationErrorMessage, handleValidationStateClass } from '../../../../../../utilities/form.utils';
+import { UserService } from '../../../../services/user.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { AddressDetail } from '../../../../models/address/address-detail.model';
 
 @Component({
     selector: 'app-care-home-my-profile',
     templateUrl: './care-home-my-profile.component.html',
     styleUrls: ['./care-home-my-profile.component.scss']
 })
-export class CareHomeMyProfileComponent implements OnInit {
+export class CareHomeMyProfileComponent implements OnInit
+{
     profileDetails: any;
-    form: FormGroup;
-    floorPlanFile: File;
-    floorPlanError: string;
-    selectedTab: number;
     blockedCarers: any[] = [];
 
+    //floor plan
+    floorPlanFile: File;
     private validMimeTypes = [
         'application/msword',
         'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -28,201 +31,249 @@ export class CareHomeMyProfileComponent implements OnInit {
         'image/jpg',
         'image/jpeg'
     ];
+    private maxFileSizeMB = 10;
 
+    //modals
     showEditEmail = false;
     showChangePassword = false;
     showBlockedCarers = false;
     showEditCardDetails = false;
     buttonLoading = false;
 
+    //form
+    form: FormGroup;
+    formUtils = { handleValidationStateClass, handleValidationErrorMessage };
+    inProgress = false;
+
+    messages = [
+        {
+            field: 'phone_number',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'Phone number is required'
+                },
+                {
+                    error: 'numbers',
+                    message: 'Phone number can contain only numbers'
+                },
+                {
+                    error: 'minlength',
+                    message: 'Phone number must have 6 characters at least'
+                }
+            ]
+        },
+        {
+            field: 'name',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'Name is required'
+                },
+                {
+                    error: 'alpha',
+                    message: 'Name can contain only alphabetical characters'
+                },
+                {
+                    error: 'maxlength',
+                    message: 'Name cannot be longer than 100 characters'
+                }
+            ]
+        },
+        {
+            field: 'postal_code',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'Postcode is required'
+                }
+            ]
+        },
+        {
+            field: 'address_line_1',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'This field is required'
+                }
+            ]
+        },
+        {
+            field: 'city',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'City is required'
+                }
+            ]
+        },
+        {
+            field: 'care_service_name',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'Care service name is required'
+                },
+                {
+                    error: 'alpha',
+                    message: 'Care service can contain only alphabetical characters'
+                },
+                {
+                    error: 'maxlength',
+                    message: 'Care service cannot be longer than 100 characters'
+                }
+            ]
+        },
+        {
+            field: 'type_of_home',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'Type of home is required'
+                }
+            ]
+        },
+        {
+            field: 'floor_plan',
+            errors: [
+                {
+                    error: 'fileType',
+                    message: 'Invalid file type. Only doc, docx, pdf, png, jpg.'
+                },
+                {
+                    error: 'fileSize',
+                    message: 'Your floor plan cannot be larger than 10MB'
+                }
+            ]
+        },
+    ];
+
     constructor(private apiService: ApiService,
                 private mapsAPILoader: MapsAPILoader,
                 private ngZone: NgZone,
                 private googleService: GoogleService,
+                private userService: UserService,
                 private authService: AuthService,
-                private notificationService: NotificationsService) {
+                private notificationService: NotificationsService)
+    {
     }
 
-    ngOnInit() {
-        this.createForm();
+    ngOnInit()
+    {
         this.getProfile();
     }
 
-    onUpdateProfile(): void {
-        this.buttonLoading = true;
+    onSubmit(): void
+    {
+        this.inProgress = true;
         this.apiService.updateCareHomeProfile(this.prepareDataToUpdate())
-            .subscribe(
-                response => {
-                    this.buttonLoading = false;
-                    console.log('Edit care home profile success response', response);
-                    this.notificationService.success('Profile updated successfully');
+            .subscribe(() => {
+                    this.inProgress = false;
+                    this.notificationService.success('Profile updated!');
                     this.getProfile();
                 },
-                error => {
-                    this.buttonLoading = false;
-                    console.log('Edit care home profile error response', error);
-                    this.notificationService.error('Profile update failed');
-                }
-            );
+                (error: HttpErrorResponse) => {
+                    this.inProgress = false;
+                    this.notificationService.error('Error! ' + getMessageError(error));
+                });
     }
 
-    onResendEmail(): void {
+    onAddressFound(addressDetails: AddressDetail)
+    {
+        this.form.patchValue({
+            postal_code: addressDetails.PostalCode,
+            company: addressDetails.Company,
+            address_line_1: addressDetails.Line1,
+            address_line_2: addressDetails.Line2,
+            city: addressDetails.City
+        })
+    }
+
+    onResendEmail(): void
+    {
         this.apiService.resendEmail()
             .subscribe(
                 response => {
-                    console.log('Resend email success response', response);
-                    this.notificationService.success('Success', 'Email verification resend');
-                },
-                error => {
-                    console.log('Resend email error response', error);
-                }
-            );
+                    this.notificationService.success('Success', 'Email verification send!');
+                });
     }
 
-    onUpdateData(): void {
+    onUpdateData(): void
+    {
         this.getProfile();
     }
 
-    getFloorPlan(): string {
+    getFloorPlan(): string
+    {
         return `${this.profileDetails.care_home.general_guidance.floor_plan}?access-token=${this.authService.getAccessToken().token}`;
     }
 
-    handleFileInput(files: FileList) {
-        const file = files.item(0);
-        if (this.validMimeTypes.indexOf(file.type) !== -1) {
-            this.floorPlanError = null;
-            this.floorPlanFile = file;
-        } else {
-            this.floorPlanError = 'Invalid file type';
-        }
-    }
-
-    onTabChange(index: number): void {
-        this.selectedTab = index;
-    }
-
-    private getProfile(): void {
+    private getProfile(): void
+    {
         this.apiService.getUserProfile()
             .subscribe(
                 response => {
-                    console.log('get care home profile success response', response);
                     this.profileDetails = response;
                     this.blockedCarers = this.profileDetails.care_home.blocked_carers;
-                    this.setUpForm();
-                    this.setUpPreferenceTab();
-                },
-                error => {
-                    console.log('get care home profile error response', error);
+                    this.createForm();
                 }
             );
     }
 
-    private createForm(): void {
+    private createForm(): void
+    {
         this.form = new FormGroup({
-            name: new FormControl(null, [Validators.required]),
-            care_service_name: new FormControl(null),
-            type_of_home: new FormControl(null),
-            city: new FormControl(null, Validators.required),
-            postal_code: new FormControl(null, Validators.required),
-            address_line_1: new FormControl(null, Validators.required),
-            address_line_2: new FormControl(null),
-            phone_number: new FormControl(null, [
-                Validators.required, Validators.minLength(6), numbers
-            ]),
+            phone_number: new FormControl(this.profileDetails.phone_number,
+                [Validators.required, Validators.minLength(6), numbers]
+            ),
+            name: new FormControl(this.profileDetails.care_home.name, [Validators.required, Validators.maxLength(100), alpha]),
+            care_service_name: new FormControl(this.profileDetails.care_home.care_service_name, [Validators.required, Validators.maxLength(100), alpha]),
+            type_of_home: new FormControl(this.profileDetails.care_home.type_of_home, [ Validators.required ]),
+            postal_code: new FormControl(this.profileDetails.address.postal_code, Validators.required),
+            company: new FormControl(this.profileDetails.address.company),
+            address_line_1: new FormControl(this.profileDetails.address.address_line_1, Validators.required),
+            address_line_2: new FormControl(this.profileDetails.address.address_line_2),
+            city: new FormControl(this.profileDetails.address.city, Validators.required),
+
+            gender_preference: new FormControl(this.profileDetails.care_home.gender_preference),
             floor_plan: new FormControl(null),
-            parking: new FormControl(null),
-            notes_for_carers: new FormControl(null),
-            emergency_guidance: new FormControl(null),
-            report_contact: new FormControl(null),
-            superior_contact: new FormControl(null),
-            notes: new FormControl(''),
+            parking: new FormControl(this.profileDetails.care_home.general_guidance.parking),
+            notes_for_carers: new FormControl(this.profileDetails.care_home.general_guidance.notes_for_carers),
+            emergency_guidance: new FormControl(this.profileDetails.care_home.general_guidance.emergency_guidance),
+            report_contact: new FormControl(this.profileDetails.care_home.general_guidance.report_contact),
+            superior_contact: new FormControl(this.profileDetails.care_home.general_guidance.superior_contact),
         });
-
-        this.setUpPca();
     }
 
-    private setUpPca(): void {
-        if (pca.load) {
-            pca.load();
+    onFileChange(event)
+    {
+        if (event.target.files.length)
+        {
+            const fileResource = event.target.files[0];
+            if (this.validMimeTypes.indexOf(fileResource.type) !== -1 && fileResource.size < 1024 * 1024 * this.maxFileSizeMB)
+                this.floorPlanFile = fileResource;
+
+            const control = this.form.get('floor_plan');
+            control.setValue(fileResource.name);
+            control.markAsTouched();
+            control.setValidators([Validators.required, fileType(fileResource, this.validMimeTypes), fileSize(fileResource, this.maxFileSizeMB)]);
+            control.updateValueAndValidity();
         }
-
-        pca.on('load', (type, id, control) => {
-
-            control.listen('populate', (address) => {
-                console.log(address);
-                this.form.patchValue({
-                    postal_code: address['PostalCode'],
-                    address_line_1: address['Line1'],
-                    address_line_2: address['Line2'],
-                    city: address['City'],
-                });
-            });
-        });
     }
 
-    private setUpForm(): void {
-        this.form.get('name').setValue(this.profileDetails.care_home.name);
-        this.form.get('care_service_name').setValue(this.profileDetails.care_home.care_service_name);
-        this.form.get('type_of_home').setValue(this.profileDetails.care_home.type_of_home);
-        this.form.get('city').setValue(this.profileDetails.address.city);
-        this.form.get('postal_code').setValue(this.profileDetails.address.postal_code);
-        this.form.get('address_line_1').setValue(this.profileDetails.address.address_line_1);
-        this.form.get('address_line_2').setValue(this.profileDetails.address.address_line_2);
-        this.form.get('phone_number').setValue(this.profileDetails.phone_number);
-        this.form.get('parking').setValue(this.profileDetails.care_home.general_guidance.parking);
-        this.form.get('notes_for_carers').setValue(this.profileDetails.care_home.general_guidance.notes_for_carers);
-        this.form.get('emergency_guidance').setValue(this.profileDetails.care_home.general_guidance.emergency_guidance);
-        this.form.get('report_contact').setValue(this.profileDetails.care_home.general_guidance.report_contact);
-        this.form.get('superior_contact').setValue(this.profileDetails.care_home.general_guidance.superior_contact);
-    }
-
-    private prepareDataToUpdate(): any
+    private prepareDataToUpdate(): FormData
     {
         const formData = new FormData();
-        const keys = Object.keys(this.form.value);
-        keys.forEach((key) => {
-            formData.append(key, this.form.get(key).value);
-            console.log(key, this.form.get(key).value);
+        Object.keys(this.form.value).forEach((key) => {
+
+            if(this.form.value[key] != null && key != "floor_plan")
+                formData.append(key, this.form.value[key] || "");
         });
-        if (this.floorPlanFile) {
+
+        if(this.floorPlanFile)
             formData.append('floor_plan', this.floorPlanFile);
-        }
-        formData.append('gender_preference', this.getGenderPreference());
+
 
         return formData;
     }
-
-    private setUpPreferenceTab(): void
-    {
-        switch (this.profileDetails.care_home.gender_preference) {
-            case 'No preference': {
-                this.selectedTab = 0;
-                break;
-            }
-            case 'Male': {
-                this.selectedTab = 1;
-                break;
-            }
-            case 'Female': {
-                this.selectedTab = 2;
-                break;
-            }
-        }
-    }
-
-    private getGenderPreference(): string {
-        switch (this.selectedTab) {
-            case 0: {
-                return 'No preference';
-            }
-            case 1: {
-                return 'Male';
-            }
-            case 2: {
-                return 'Female';
-            }
-        }
-        return 'No preference';
-    }
-
 }

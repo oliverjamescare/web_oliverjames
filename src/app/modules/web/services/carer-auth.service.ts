@@ -21,9 +21,9 @@ export class CarerAuthService {
     }
 
     registerCarer() {
-        if (this.registerStep && this.cv && this.qaFormValues) {
+        if (this.registerStep && this.cv && this.qaFormValues)
+        {
             // building form
-            console.log('Carer register form', this.personalDetailsFormValues);
             let form = new FormData();
             form.append('email', this.personalDetailsFormValues.email);
             form.append('password', this.personalDetailsFormValues.password);

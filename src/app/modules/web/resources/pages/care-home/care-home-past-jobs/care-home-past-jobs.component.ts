@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CareHomeService} from '../../../../services/care-home.service';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Router} from '@angular/router';
+import { Job } from '../../../../models/job.model';
 
 const MONTH_IN_MILLISECONDS = 2592000000;
 
@@ -10,58 +11,57 @@ const MONTH_IN_MILLISECONDS = 2592000000;
     templateUrl: './care-home-past-jobs.component.html',
     styleUrls: ['./care-home-past-jobs.component.scss']
 })
-export class CareHomePastJobsComponent implements OnInit {
-    page = 1;
+export class CareHomePastJobsComponent implements OnInit
+{
+    page: number = 1;
+    pages: number = 0;
     form: FormGroup;
-    pastJobs: any[] = [];
-    pages: number[] = [];
+    jobs: Array<Job> = [];
 
-    constructor(private careHomeService: CareHomeService,
-                private router: Router) {
-    }
+    constructor(private careHomeService: CareHomeService, private router: Router) {}
 
-    ngOnInit() {
+    ngOnInit()
+    {
         this.createForm();
         this.setDatepickers();
         this.getPastJobs();
     }
 
-    onPaginationChange(page: number): void {
+    onPageChange(page: number): void
+    {
         this.page = page;
         this.getPastJobs();
     }
 
-    navigateToChallenge(job: any): void {
+    navigateToChallenge(job: any): void
+    {
         this.careHomeService.pastJobDetails = job;
         this.router.navigate(['/care-home-past-challenge-job/']);
     }
 
-    private getPastJobs(): void {
+    private getPastJobs(): void
+    {
         this.careHomeService.getCareHomePastJobs(
-            new Date(this.form.get('from').value).getTime(),
-            new Date(this.form.get('to').value).getTime(),
-            this.page
-        )
-            .subscribe(
-                response => {
-                    console.log('Get submitted jobs success response', response);
-                    this.pastJobs = response.results;
-                    this.pages = this.setPaginationArray(response.pages);
-                },
-                error => {
-                    console.log('Get submitted jobs error response', error);
-                }
-            );
+                new Date(this.form.get('from').value).getTime(),
+                new Date(this.form.get('to').value).getTime(),
+                this.page
+            ).subscribe((results: { jobs: Array<Job>, pages: number }) => {
+                console.log(results);
+                this.jobs = results.jobs;
+                this.pages = results.pages;
+            });
     }
 
-    private createForm(): void {
+    private createForm(): void
+    {
         this.form = new FormGroup({
             from: new FormControl(moment(this.getInitialFromDate()).format('YYYY-MM-DD')),
             to: new FormControl(moment(this.getInitialToDate()).format('YYYY-MM-DD'))
         });
     }
 
-    private setDatepickers(): void {
+    private setDatepickers(): void
+    {
         $('#from').datepicker({
             showOtherMonths: true,
             format: 'yyyy-mm-dd',
@@ -83,22 +83,15 @@ export class CareHomePastJobsComponent implements OnInit {
         });
     }
 
-    private getInitialFromDate(): Date {
+    private getInitialFromDate(): Date
+    {
         const startTimestamp = new Date().getTime() - MONTH_IN_MILLISECONDS;
         return new Date(startTimestamp);
     }
 
-    private getInitialToDate(): Date {
+    private getInitialToDate(): Date
+    {
         const endTimestamp = new Date().getTime() + MONTH_IN_MILLISECONDS;
         return new Date(endTimestamp);
     }
-
-    private setPaginationArray(length: number): number[] {
-        const arr = [];
-        for (let i = 0; i < length; i++) {
-            arr.push(i);
-        }
-        return arr;
-    }
-
 }

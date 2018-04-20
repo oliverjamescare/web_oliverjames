@@ -103,9 +103,9 @@ export class CareHomeService
         return this.apiService.addCarerToBlocked(carerId);
     }
 
-    getCareHomePastJobs(from: number, to: number, page: number): Observable<any>
+    getCareHomePastJobs(from: number, to: number, page: number): Observable<{ jobs: Array<Job>, pages: number }>
     {
-        return this.apiService.getCareHomePastJobs(from, to, page);
+        return this.apiService.getCareHomePastJobs(from, to, page).map(this.parseJobsResults);
     }
 
     getPastJobDetails(jobId: string): Observable<any>

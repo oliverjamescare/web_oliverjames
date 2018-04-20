@@ -1,24 +1,22 @@
-<app-care-home-booking-header
-        navigationTitle="Back"
-        navigationRoute="/care-home-dashboard"
-        mainTitle="Past jobs / invoices"
-></app-care-home-booking-header>
-
+<div class="row">
+    <div class="col-sm text-center">
+        <h2 class="main-title">Past jobs / invoices</h2>
+        <a routerLink="/care-home-dashboard"  class="btn btn-subnav btn-secondary left">Back</a>
+    </div>
+</div>
 <br>
+
+<!--filters-->
 <div [formGroup]="form" class="row text-center">
     <div class="col-sm-5">
-        <div class="green-div">
-            From
-        </div>
+        <div class="green-div">From</div>
         <div class="white-div">
             <input type="text" class="form-control" id="from" formControlName="from">
         </div>
     </div>
 
     <div class="col-sm-5">
-        <div class="green-div">
-            To
-        </div>
+        <div class="green-div">To</div>
         <div class="white-div">
             <input type="text" class="form-control" id="to" formControlName="to">
         </div>
@@ -26,64 +24,49 @@
 </div>
 <br>
 
+<!--results-->
 <div class="row">
     <div class="col-sm">
-        <p *ngIf="pastJobs.length === 0">No submitted jobs so far</p>
-        <table *ngIf="pastJobs.length !== 0" class="custom-table text-center">
-            <thead>
-            <tr>
-                <th>Job Id</th>
-                <th>Start date</th>
-                <th>From</th>
-                <th>Till</th>
-                <th>Total cost</th>
-                <th>Your carer</th>
-                <th>Status</th>
-                <th>Options</th>
-                <th>Details</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let job of pastJobs">
-                <td>{{ job._id }}</td>
-                <td>{{ job.start_date | timestampDate }}</td>
-                <td>{{ job.start_date | timestampHour }}</td>
-                <td>{{ job.end_date | timestampHour }}</td>
-                <td><span>&#163;</span>{{ job.cost.total_cost }}</td>
-                <td>{{ job.carer.carer.first_name }} {{ job.carer.carer.surname }}</td>
-                <td>{{ job.status | status }}</td>
-                <td>
-                    <div *ngIf="job.status === 'PENDING_PAYMENT'" class="text-center">
-                            <span
-                                    (click)="navigateToChallenge(job)"
-                                    class="actions"
-                            >Challenge</span>
-                    </div>
-                </td>
-                <td>
-                    <div class="text-center">
-                            <span
-                                    [routerLink]="['/care-home-past-jobs-details', job._id]"
-                                    class="actions"
-                            >Details</span>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <br>
-        <div  class="text-center">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li
-                            *ngFor="let p of pages"
-                            [ngClass]="{'active': page === p + 1}"
-                            class="page-item">
-                        <a
-                                (click)="onPaginationChange(p + 1)"
-                                class="page-link">{{ p + 1 }}</a></li>
-                </ul>
-            </nav>
+        <p *ngIf="!jobs.length">No submitted jobs so far</p>
+        <div *ngIf="jobs.length !== 0">
+            <table  class="custom-table text-center">
+                <thead>
+                    <tr>
+                        <th>Job Id</th>
+                        <th>Start date</th>
+                        <th>From</th>
+                        <th>Till</th>
+                        <th>Total cost</th>
+                        <th>Your carer</th>
+                        <th>Status</th>
+                        <th>Options</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let job of jobs">
+                        <td>{{ job.id }}</td>
+                        <td>{{ job.start_date | datePattern: "YYYY-MM-DD" }}</td>
+                        <td>{{ job.start_date | datePattern: "h:mm A" }}</td>
+                        <td>{{ job.end_date | datePattern: "h:mm A"}}</td>
+                        <td><span>&#163;</span>{{ job.cost.total_cost }}</td>
+                        <td>{{ job.carer.carer.getCarerFullName() }}</td>
+                        <td>{{ (job.status).replace("_"," ") | capitalize }}</td>
+                        <td>
+                            <div *ngIf="job.status === 'PENDING_PAYMENT'" class="text-center">
+                                <span (click)="navigateToChallenge(job)" class="actions">Challenge</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-center">
+                                <span [routerLink]="['/care-home-past-jobs-details', job.id]" class="actions">Details</span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <app-pagination (pageChanged)="onPageChange($event)" [numberOfPages]="pages" [currentPage]="page"></app-pagination>
         </div>
     </div>
 </div>

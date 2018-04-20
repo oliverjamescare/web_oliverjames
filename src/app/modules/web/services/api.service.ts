@@ -376,6 +376,19 @@ export class ApiService
         );
     }
 
+    //address
+    searchAddresses(search: string, container?: string): Observable<any>
+    {
+        return this.httpClient.get(
+            `${this.endpoint}/address/search`,
+            { params: new HttpParams().set("search", search).set("container", container) }
+        );
+    }
+    getAddress(id:string): Observable<any>
+    {
+        return this.httpClient.get(`${this.endpoint}/address/search/${id}`);
+    }
+
     private getAuthorizationHeaders(): HttpHeaders
     {
         return new HttpHeaders({

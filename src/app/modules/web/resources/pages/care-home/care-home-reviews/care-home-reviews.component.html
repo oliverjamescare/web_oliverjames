@@ -1,8 +1,9 @@
-<app-care-home-booking-header
-        navigationTitle="Back"
-        navigationRoute="/care-home-dashboard"
-        mainTitle="Jobs reviews"
-></app-care-home-booking-header>
+<div class="row">
+    <div class="col-sm text-center">
+        <h2 class="main-title">Jobs reviews</h2>
+        <a routerLink="/care-home-dashboard"  class="btn btn-subnav btn-secondary left">Back</a>
+    </div>
+</div>
 <br>
 <div [formGroup]="form">
     <p *ngIf="!pendingReviews.length">No carers to review</p>
@@ -21,44 +22,29 @@
             <div class="job-info">
                 <table class="custom-table text-center">
                     <thead>
-                    <th>Job ID</th>
-                    <th>Start Date</th>
-                    <th>From</th>
-                    <th>Till</th>
+                        <th>Job ID</th>
+                        <th>Start Date</th>
+                        <th>From</th>
+                        <th>Till</th>
                     </thead>
                     <tbody>
-                    <td class="left-td">{{ review._id }}</td>
-                    <td>{{ review.start_date | timestampDate }}</td>
-                    <td>{{ review.start_date | timestampHour }}</td>
-                    <td>{{ review.end_date | timestampHour }}</td>
+                        <td class="left-td">{{ review._id }}</td>
+                        <td>{{ review.start_date | timestampDate }}</td>
+                        <td>{{ review.start_date | timestampHour }}</td>
+                        <td>{{ review.end_date | timestampHour }}</td>
                     </tbody>
                 </table>
             </div>
             <br>
             <div [formGroupName]="i" class="text-center">
                 <span class="label">Your review of {{ review.carer.carer.first_name }}</span>
-                <p><ngb-rating
-                        formControlName="rate"
-                        class="rating"
-                        [max]="5"
-                ></ngb-rating></p>
+                <p><ngb-rating formControlName="rate" class="rating" [max]="5"></ngb-rating></p>
                 <textarea formControlName="description" class="form-control" rows="5"></textarea>
-                <button
-                        (click)="openConfirmationPopup(review.carer._id)"
-                        class="btn btn-success btn-red">Block this carer from future jobs</button>
-                <button
-                        (click)="reviewJobCarer(i)"
-                        [disabled]="!form.get('ratings').controls[i].valid"
-                        class="btn btn-success"
-                >Submit</button>
+                <button (click)="openConfirmationPopup(review.carer._id)" class="btn btn-success btn-red">Block this carer from future jobs</button>
+                <button (click)="reviewJobCarer(i)" [disabled]="!form.get('ratings').controls[i].valid" class="btn btn-success">Submit</button>
             </div>
         </div>
     </div>
 </div>
 
-<app-block-carer-confirmation
-        *ngIf="showBlockConfirmation"
-        [type]="'block-confirmation'"
-        [carerId]="currentCarerId"
-        (closed)="showBlockConfirmation = false"
-></app-block-carer-confirmation>
+<app-block-carer-confirmation *ngIf="showBlockConfirmation" [type]="'block-confirmation'" [carerId]="currentCarerId" (closed)="showBlockConfirmation = false"></app-block-carer-confirmation>

@@ -27,7 +27,8 @@ export class CareHomesListComponent implements OnInit {
             status_filter: new FormControl("ALL")
         })
 
-        this.form.valueChanges
+        this.form
+            .valueChanges
             .debounceTime(400)
             .subscribe(() => this.loadCareHomes());
 

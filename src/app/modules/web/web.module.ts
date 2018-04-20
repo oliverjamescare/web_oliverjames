@@ -130,6 +130,7 @@ import { ChallengeConfirmationComponent } from './resources/pages/care-home/care
 import { PaginationComponent } from './resources/partials/pagination/pagination.component';
 import { TimestampToDatePipe } from './pipes/timestamp-to-date.pipe';
 import { DatePatternPipe } from './pipes/date-pattern.pipe';
+import { AddressLookupComponent } from './resources/partials/address-lookup/address-lookup.component';
 
 
 @NgModule({
@@ -225,7 +226,8 @@ import { DatePatternPipe } from './pipes/date-pattern.pipe';
         CapitalizePipe,
         PaginationComponent,
         TimestampToDatePipe,
-        DatePatternPipe
+        DatePatternPipe,
+        AddressLookupComponent
     ],
     imports: [
         CommonModule,
