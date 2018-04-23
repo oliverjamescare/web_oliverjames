@@ -1,38 +1,39 @@
 <div class="row">
     <div class="col-sm">
-        <p *ngIf="upcomingJobs.length === 0">You have no upcoming jobs</p>
-        <table *ngIf="upcomingJobs.length !==0" class="custom-table text-center">
-            <thead>
-            <tr>
-                <th>Job ID</th>
-                <th>Start Date</th>
-                <th>From</th>
-                <th>Till</th>
-                <th>Projected income for you</th>
-                <th>Care home</th>
-                <th>Role</th>
-                <th>Job details</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let job of upcomingJobs">
-                <td>{{ job._id }}</td>
-                <td>{{ job.getStartDate() | date }}</td>
-                <td>{{ job.getStartDate() | hourPipe  }}</td>
-                <td>{{ job.getEndDate() | hourPipe}}</td>
-                <td>{{ job.projected_income }} <span>&#163;</span></td>
-                <td>{{ job.author.care_home.care_service_name }}</td>
-                <td>{{ job.role }}</td>
-                <td>
-                    <div class="text-center">
-                            <span
-                                    [routerLink]="['/carer-apply-for-job', job._id]"
-                                    class="actions"
-                            >See details/ modify</span>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <p *ngIf="jobs.length === 0">You have no upcoming jobs</p>
+        <div *ngIf="jobs.length !==0">
+            <table  class="custom-table text-center">
+                <thead>
+                    <tr>
+                        <th>Job ID</th>
+                        <th>Start date</th>
+                        <th>From</th>
+                        <th>Till</th>
+                        <th>Projected income for you</th>
+                        <th>Care home</th>
+                        <th>Role</th>
+                        <th>Job details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let job of jobs">
+                        <td>{{ job.id }}</td>
+                        <td>{{ job.start_date | datePattern: "YYYY-MM-DD" }}</td>
+                        <td>{{ job.start_date | datePattern: "h:mm A" }}</td>
+                        <td>{{ job.end_date | datePattern: "h:mm A"}}</td>
+                        <td><span>&#163;</span>{{ job.projected_income }} </td>
+                        <td>{{ job.author.care_home.care_service_name }}</td>
+                        <td>{{ job.role }}</td>
+                        <td>
+                            <div class="text-center">
+                                <a [routerLink]="['/carer-apply-for-job', job.id]" class="actions">See details / modify</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <app-pagination (pageChanged)="onPageChange($event)" [numberOfPages]="pages" [currentPage]="page"></app-pagination>
+        </div>
     </div>
 </div>

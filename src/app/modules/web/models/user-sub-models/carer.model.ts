@@ -1,4 +1,4 @@
-import { Model } from "../../../models/model.model";
+import { Model } from "../../../../models/model.model";
 import { CarerReview } from './carer-review.model';
 
 export class Carer extends Model

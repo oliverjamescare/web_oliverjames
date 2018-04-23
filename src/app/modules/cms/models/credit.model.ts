@@ -1,5 +1,5 @@
 import { Model } from '../../../models/model.model';
-import { CareHome } from '../../web/models/care-home.model';
+import { CareHome } from '../../web/models/user-sub-models/care-home.model';
 
 export class Credit extends Model
 {

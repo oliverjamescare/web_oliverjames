@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {CarerJobService} from '../../../../services/carer-job.service';
 import {Router} from '@angular/router';
+import { Job } from '../../../../models/job.model';
 
 const MONTH_IN_MILLISECONDS = 2592000000;
 
@@ -10,62 +11,57 @@ const MONTH_IN_MILLISECONDS = 2592000000;
     templateUrl: './carer-paid-submitted.component.html',
     styleUrls: ['./carer-paid-submitted.component.scss']
 })
-export class CarerPaidSubmittedComponent implements OnInit {
+export class CarerPaidSubmittedComponent implements OnInit
+{
     form: FormGroup;
-    page = 1;
+    page: number = 1;
+    pages: number = 0;
+    jobs: Array<Job> = [];
 
-    submittedJobs: any[] = [];
+    constructor(private carerJobService: CarerJobService, private router: Router) {}
 
-    pages: number[] = [];
-
-    constructor(private carerJobService: CarerJobService,
-                private router: Router) {
-    }
-
-    ngOnInit() {
+    ngOnInit()
+    {
         this.createForm();
         this.setDatepickers();
-        this.getSubmttedJobs();
+        this.getSubmittedJobs();
     }
 
-    onPaginationChange(page: number): void {
+    onPageChange(page: number): void
+    {
         this.page = page;
-        this.getSubmttedJobs();
+        this.getSubmittedJobs();
     }
 
-    private getSubmttedJobs(): void {
+    private getSubmittedJobs(): void
+    {
         this.carerJobService.getSubmittedJobs(
-            new Date(this.form.get('from').value).getTime(),
-            new Date(this.form.get('to').value).getTime(),
-            this.page
-        )
-            .subscribe(
-                response => {
-                    console.log('Get submitted jobs success response', response);
-                    this.submittedJobs = response.results;
-                    this.pages = this.setPaginationArray(response.pages);
-                },
-                error => {
-                    console.log('Get submitted jobs error response', error);
-                }
-            );
+                new Date(this.form.get('from').value).getTime(),
+                new Date(this.form.get('to').value).getTime(),
+                this.page
+            ).subscribe((results: { jobs: Array<Job>, pages: number }) => {
+                this.jobs = results.jobs;
+                this.pages = results.pages;
+            });
     }
 
-    private createForm(): void {
+    private createForm(): void
+    {
         this.form = new FormGroup({
             from: new FormControl(moment(this.getInitialFromDate()).format('YYYY-MM-DD')),
             to: new FormControl(moment(this.getInitialToDate()).format('YYYY-MM-DD'))
         });
     }
 
-    private setDatepickers(): void {
+    private setDatepickers(): void
+    {
         $('#from').datepicker({
             showOtherMonths: true,
             format: 'yyyy-mm-dd',
             value: moment(this.getInitialFromDate()).format('YYYY-MM-DD'),
             hide: (event: Event) => {
                 this.form.get('from').setValue(event.target['value']);
-                this.getSubmttedJobs();
+                this.getSubmittedJobs();
             }
         });
 
@@ -75,7 +71,7 @@ export class CarerPaidSubmittedComponent implements OnInit {
             value: moment(this.getInitialToDate()).format('YYYY-MM-DD'),
             hide: (event: Event) => {
                 this.form.get('to').setValue(event.target['value']);
-                this.getSubmttedJobs();
+                this.getSubmittedJobs();
             }
         });
     }

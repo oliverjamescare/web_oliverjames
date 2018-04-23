@@ -1,40 +1,41 @@
-<app-care-home-booking-header
-        navigationTitle="Back"
-        navigationRoute="/carer-paid-submitted"
-        mainTitle="Payment details"
-></app-care-home-booking-header>
+<div class="row">
+    <div class="col-sm text-center">
+        <h2 class="main-title">Payment details</h2>
+        <a routerLink="/carer-paid-submitted"  class="btn btn-subnav btn-secondary left">Back</a>
+    </div>
+</div>
 <br>
 
-<div *ngIf="carerJobService.pastJobDetails" class="row">
+<div *ngIf="job" class="row">
     <div class="col-sm">
         <table class="profile-table">
             <tr>
-                <th>Total time worked (hours)</th>
-                <td>{{ getTotalTimeWorked() }}</td>
+                <th>Total time worked</th>
+                <td>{{ job.getTimeBilled(false) }}</td>
             </tr>
             <tr>
-                <th>Less deductions (minutes)</th>
-                <td>{{ carerJobService?.pastJobDetails.payment.deductions }}</td>
+                <th>Less deductions: </th>
+                <td>{{ job.summary_sheet.voluntary_deduction }} {{ job.summary_sheet.voluntary_deduction == 1 ? "minute" : "minutes"}}</td>
             </tr>
             <tr>
                 <th>Time billed</th>
-                <td>{{ getTotalTimeBilled() }}</td>
+                <td>{{ job.getTimeBilled(false) }}</td>
             </tr>
             <tr>
                 <th>Gross due</th>
-                <td>{{ carerJobService?.pastJobDetails.payment.job_income }} <span>&#163;</span></td>
+                <td><span>&#163;</span>{{ job.payment.job_income }}</td>
             </tr>
             <tr>
                 <th>Oliver James Commission</th>
-                <td>{{ carerJobService?.pastJobDetails.payment.application_fee }} <span>&#163;</span></td>
+                <td><span>&#163;</span>{{ job.payment.application_fee }}</td>
             </tr>
             <tr>
                 <th>Oliver James deduction: Training</th>
-                <td>{{ carerJobService?.pastJobDetails.payment.transaction_charge }} <span>&#163;</span></td>
+                <td><span>&#163;</span>{{ job.payment.transaction_charge }} </td>
             </tr>
             <tr>
                 <th>Net due</th>
-                <td>{{ carerJobService?.pastJobDetails.payment.net_income }} <span>&#163;</span></td>
+                <td><span>&#163;</span>{{ job.payment.net_income }} </td>
             </tr>
         </table>
         <br>

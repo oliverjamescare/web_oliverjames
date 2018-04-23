@@ -1,140 +1,133 @@
-<div *ngIf="!loading" class="job-details">
+<div *ngIf="job" class="job-details">
     <div class="details-header">Job details</div>
     <ul>
         <li class="details-row">
             <span class="details-label">Job ID:</span>
             <p class="details-info">
-                {{ carerJobService.jobDetails._id }}
+                {{ job.id }}
             </p>
         </li>
 
         <li class="details-row">
             <span class="details-label">Care Home name</span>
             <p class="details-info">
-                {{ carerJobService.jobDetails.author.care_home.name }}
+                {{ job.author.care_home.name }}
             </p>
         </li>
 
         <li class="details-row">
             <span class="details-label">Projected income</span>
             <p class="details-info">
-                {{ carerJobService.jobDetails.projected_income }} <span>&#163;</span>
+                <span>&#163;</span>{{ job.projected_income }}
             </p>
         </li>
 
         <li class="details-row">
             <span class="details-label">Start:</span>
             <p class="details-info">
-                {{ carerJobService.jobDetails.getStartDate() | datePipe}}
+                {{ job.start_date | datePattern: "YYYY-MM-DD" }}
             </p>
         </li>
 
         <li class="details-row">
             <span class="details-label">Time:</span>
             <p class="details-info">
-                {{ carerJobService.jobDetails.getStartDate() | hourPipe}} till {{
-                carerJobService.jobDetails.getEndDate() | hourPipe }}
+                {{ job.start_date | datePattern: "h:mm A" }} till {{ job.end_date | datePattern: "h:mm A" }}
             </p>
         </li>
 
         <li class="details-row">
             <span class="details-label">Role</span>
             <p class="details-info">
-                {{ carerJobService.jobDetails.role }}
+                {{ job.role }}
             </p>
         </li>
 
         <li class="details-row">
             <span class="details-label">Due in:</span>
             <p class="details-info">
-                {{ getDueIn(carerJobService.jobDetails) }}
+                {{ job.getDueIn() }}
             </p>
         </li>
 
         <li class="details-row">
             <span class="details-label">Phone:</span>
             <p class="details-info">
-                {{ carerJobService.jobDetails.author.phone_number }}
+                {{ job.author.phone_number }}
             </p>
         </li>
 
         <li class="details-row">
             <span class="details-label">Address:</span>
             <p class="details-info">
-                {{ carerJobService.jobDetails.author.address.address_line_1 }}
-                {{ carerJobService.jobDetails.author.address.address_line_2 }},
-                {{ carerJobService.jobDetails.author.address.postal_code }}
-                {{ carerJobService.jobDetails.author.address.city }}
+                {{ job.author.address.stringify() }}
             </p>
         </li>
 
         <li class="details-row">
             <span class="details-label">Google Maps</span>
             <p class="details-info">
-                <a
-                        [href]="getGoogleMapsLink()" target="_blank">
-                    Find service on Google Maps</a>
+                <a [href]="job.author.address.link" target="_blank" class="app-link"> Find service on Google Maps</a>
             </p>
         </li>
 
         <li class="details-row">
             <span class="details-label">Job guidance:</span>
             <p class="details-info">
-                <span *ngIf="carerJobService.jobDetails.notes">{{ carerJobService.jobDetails.notes }}</span>
-                <span *ngIf="!carerJobService.jobDetails.notes">This job has no guidance</span>
+                <span *ngIf="job.notes">{{ job.notes }}</span>
+                <span *ngIf="!job.notes">This job has no guidance</span>
             </p>
         </li>
 
         <li class="details-row">
             <span class="details-label">Floor plan:</span>
             <p class="details-info">
-                <a [href]="getFloorPlanLink()" target="_blank">Floor plan</a>
+                <a [href]="getFloorPlanLink()" target="_blank" class="app-link">Floor plan</a>
             </p>
         </li>
 
         <li class="details-row">
             <span class="details-label">Contact on arrival:</span>
             <p class="details-info">
-                {{ carerJobService.jobDetails.general_guidance.report_contact }}
+                {{ job.general_guidance.report_contact }}
             </p>
         </li>
 
         <li class="details-row">
             <span class="details-label">Contact to confirm job:</span>
             <p class="details-info">
-                {{ carerJobService.jobDetails.general_guidance.superior_contact }}
+                {{ job.general_guidance.superior_contact }}
             </p>
         </li>
 
         <li class="details-row">
             <span class="details-label">Emergency guidance:</span>
             <p class="details-info">
-                {{ carerJobService.jobDetails.general_guidance.emergency_guidance }}
+                {{ job.general_guidance.emergency_guidance }}
             </p>
         </li>
 
         <li class="details-row">
             <span class="details-label">Notes for carers:</span>
             <p class="details-info">
-                {{ carerJobService.jobDetails.general_guidance.notes_for_carers }}
+                {{ job.general_guidance.notes_for_carers }}
             </p>
         </li>
 
         <li class="details-row">
             <span class="details-label">Parking:</span>
             <p class="details-info">
-                {{ carerJobService.jobDetails.general_guidance.parking }}
+                {{ job.general_guidance.parking }}
             </p>
         </li>
 
     </ul>
-    <app-confirmation-popup
-            *ngIf="showConfirmationPopup"
-            (close)="showConfirmationPopup = false"
-    ></app-confirmation-popup>
+
+    <!--popup-->
+    <app-confirmation-popup *ngIf="showConfirmationPopup && job" (close)="showConfirmationPopup = false" [job]="job"></app-confirmation-popup>
 </div>
 <br>
-<div *ngIf="!loading" class="details-actions">
-    <button (click)="onDeclineJob()" [disabled]="carerJobService.jobDetails.status !== 'POSTED'" class="btn btn-success margin-r btn-red">Decline job</button>
-    <button (click)="onAcceptJob()" [disabled]="carerJobService.jobDetails.status !== 'POSTED'" class="btn btn-success right">Accept job</button>
+<div *ngIf="job" class="details-actions">
+    <button (click)="onDeclineJob()" [disabled]="job.status !== 'POSTED'" class="btn btn-success margin-r btn-red">Decline job</button>
+    <button (click)="onAcceptJob()" [disabled]="job.status !== 'POSTED'" class="btn btn-success right">Accept job</button>
 </div>

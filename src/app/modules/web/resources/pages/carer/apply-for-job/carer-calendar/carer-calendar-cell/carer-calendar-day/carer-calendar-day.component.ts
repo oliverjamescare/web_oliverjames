@@ -4,7 +4,7 @@ import {CareHomeBookingService} from '../../../../../../../services/care-home-bo
 import {CalendarPopupService} from '../../../../../care-home/care-home-booking/booking-calendar/calendar-popup/calendar-popup.service';
 import {Subscription} from 'rxjs/Subscription';
 import {isUndefined} from 'util';
-import {Job} from '../../../../../../../models/care-home-booking/job';
+import {Job} from '../../../../../../../models/job.model';
 import {CarerJobService} from '../../../../../../../services/carer-job.service';
 
 @Component({
@@ -62,6 +62,7 @@ export class CarerCalendarDayComponent implements OnInit, OnChanges, OnDestroy {
     private getConsideredJob(): void {
         this.carerJobService.consideredJob.subscribe(
             (job: Job) => {
+                console.log("considered")
                 this.consideredJob = job;
                 this.setUpList();
             }
@@ -82,11 +83,12 @@ export class CarerCalendarDayComponent implements OnInit, OnChanges, OnDestroy {
         if (!isUndefined(this.jobs)) {
             this.jobs.forEach((job) => {
                 this.allJobs.push({
-                    job: Job.getInstance(job),
+                    job: new Job(job),
                     type: 'normal'
                 });
             });
         }
+
     }
 
 }

@@ -1,15 +1,18 @@
-<app-care-home-booking-header
-        navigationTitle="Back"
-        navigationRoute="/carer-dashboard"
-        mainTitle="Set Availability"
-></app-care-home-booking-header>
+<div class="row">
+    <div class="col-sm text-center">
+        <h2 class="main-title">Set Availability</h2>
+        <a routerLink="/carer-dashboard"  class="btn btn-subnav btn-secondary left">Back</a>
+    </div>
+</div>
 <br>
+
 <div class="row">
     <div class="col-sm text-center">
         <p class="red">You will not receive job notifications that cover dates you are not available</p>
     </div>
 </div>
 <br>
+
 <div class="row">
     <div class="col-sm-12 col-md-12 col-lg-9">
         <div>
@@ -77,6 +80,8 @@
 <br>
 <div class="row">
     <div class="col-sm-12 col-md-12 col-lg-9">
-        <button (click)="onAvailabilitySave()" class="btn-success">Save availability <span *ngIf="buttonLoading"><i class="fa fa-spinner fa-spin"></i></span></button>
+        <div class="text-center">
+            <button (click)="onAvailabilitySave()" class="btn btn-success">Save availability <span *ngIf="buttonLoading"><i class="fa fa-spinner fa-spin"></i></span></button>
+        </div>
     </div>
 </div>

@@ -1,5 +1,5 @@
-import { Model } from '../../../models/model.model';
-import { CareHome } from '../../web/models/user-sub-models/care-home.model';
+import { Model } from '../../../../models/model.model';
+import { CareHome } from './care-home.model';
 
 export class Address extends Model
 {

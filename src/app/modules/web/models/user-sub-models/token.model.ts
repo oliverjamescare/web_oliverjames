@@ -1,4 +1,4 @@
-import {Model} from '../../../models/model.model';
+import {Model} from '../../../../models/model.model';
 
 export class Token extends Model {
     token: string = null;

@@ -1,0 +1,21 @@
+@import "variables";
+
+.notification
+{
+    border-bottom: 1px solid darken($white-color,10%);
+    padding: 10px 10px 15px;
+    h6
+    {
+        display: inline-block;
+        &.new
+        {
+            color: $green-color;
+        }
+    }
+    .date
+    {
+        float: right;
+        display: inline-block;
+        font-size: 12px;
+    }
+}

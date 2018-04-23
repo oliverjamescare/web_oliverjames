@@ -1,48 +1,39 @@
-import {Component, OnInit} from '@angular/core';
-import {CarerService} from '../../../../services/carer.service';
+import { Component, OnInit } from '@angular/core';
+import { CarerService } from '../../../../services/carer.service';
+import { Notification } from '../../../../models/notification.model';
 
 @Component({
     selector: 'app-carer-notifications',
     templateUrl: './carer-notifications.component.html',
     styleUrls: ['./carer-notifications.component.scss']
 })
-export class CarerNotificationsComponent implements OnInit {
-    notifications: any[] = [];
-    page = 1;
-    pages: number[] = [];
+export class CarerNotificationsComponent implements OnInit
+{
+    page: number = 1;
+    pages: number = 0;
+    notifications: Array<Notification> = [];
 
-    constructor(private carerService: CarerService) {
-    }
+    constructor(private carerService: CarerService) {}
 
-    ngOnInit() {
+    ngOnInit()
+    {
         this.getNotifications();
     }
 
-    onPaginationChange(page: number): void {
+    onPageChange(page: number): void
+    {
         this.page = page;
         this.getNotifications();
     }
 
-    private getNotifications(): void {
+    private getNotifications(): void
+    {
         this.carerService.getNotifications(this.page)
-            .subscribe(
-                response => {
-                    console.log('Get notifications success response', response);
-                    this.notifications = response.results;
-                    this.pages = this.setPaginationArray(response.pages);
-                },
-                error => {
-                    console.log('Get notifications error response', error);
+            .subscribe((response: { notifications: Array<Notification>, pages: number }) => {
+                    this.notifications = response.notifications;
+                    this.pages = response.pages;
                 }
             );
-    }
-
-    private setPaginationArray(length: number): number[] {
-        const arr = [];
-        for (let i = 0; i < length; i++) {
-            arr.push(i);
-        }
-        return arr;
     }
 
 }

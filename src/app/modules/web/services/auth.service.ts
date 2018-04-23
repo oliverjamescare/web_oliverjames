@@ -1,5 +1,5 @@
 import {User} from '../models/user.model';
-import {Token} from '../models/token.model';
+import {Token} from '../models/user-sub-models/token.model';
 import {Subject} from 'rxjs/Subject';
 
 export class AuthService {

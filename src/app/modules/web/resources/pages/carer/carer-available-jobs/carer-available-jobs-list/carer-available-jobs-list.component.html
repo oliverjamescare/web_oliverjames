@@ -1,0 +1,75 @@
+<div class="row">
+    <div class="col-sm">
+        <h5>{{ title }}</h5>
+        <p *ngIf="jobs.length === 0">No jobs available</p>
+        <div *ngIf="jobs.length">
+            <table class="custom-table text-center">
+                <thead>
+                    <tr>
+                        <th>Job ID</th>
+                        <th class="sort-cell">
+                            <div class="sort-container">
+                                <div class="asc" (click)="onChangeSort('startASC')"><i class="fa fa-angle-up"></i></div>
+                                <div class="desc" (click)="onChangeSort('startDESC')"><i class="fa fa-angle-down"></i></div>
+                            </div>
+                            <div class="sort-label">Start date</div>
+                        </th>
+                        <th>From</th>
+                        <th class="sort-cell">
+                            <div class="sort-label">Till</div>
+                            <div class="sort-container">
+                                <div class="asc" (click)="onChangeSort('endASC')"><i class="fa fa-angle-up"></i></div>
+                                <div class="desc" (click)="onChangeSort('endDESC')"><i class="fa fa-angle-down"></i></div>
+                            </div>
+                        </th>
+                        <th class="sort-cell">
+                            <div class="sort-label">Projected Income</div>
+                            <div class="sort-container">
+                                <div class="asc" (click)="onChangeSort('incomeASC')"><i class="fa fa-angle-up"></i></div>
+                                <div class="desc" (click)="onChangeSort('incomeDESC')"><i class="fa fa-angle-down"></i></div>
+                            </div>
+                        </th>
+                        <th>Care home</th>
+                        <th class="sort-cell">
+                            <div class="sort-label">Role</div>
+                            <div class="sort-container">
+                                <div class="asc" (click)="onChangeSort('roleASC')"><i class="fa fa-angle-up"></i></div>
+                                <div class="desc" (click)="onChangeSort('roleDESC')"><i class="fa fa-angle-down"></i></div>
+                            </div>
+                        </th>
+                        <th>Address</th>
+                        <th>Distance from home</th>
+                        <th>Job details</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let job of jobs">
+                        <td>{{ job.id }}</td>
+                        <td>{{ job.start_date | datePattern: "YYYY-MM-DD" }}</td>
+                        <td>{{ job.start_date | datePattern: "h:mm A" }}</td>
+                        <td>{{ job.end_date | datePattern: "h:mm A"}}</td>
+                        <td><span>&#163;</span>{{ job.projected_income }} </td>
+                        <td>{{ job.author.care_home.care_service_name }}</td>
+                        <td>{{ job.role }}</td>
+                        <td>{{ job.author.address.stringify()}}</td>
+                        <td>{{ job.author.distance }} mile(s)</td>
+                        <td>
+                            <div class="text-center">
+                                <a [routerLink]="['/carer-apply-for-job', job.id]" class="actions">Apply for job</a>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-center">
+                                <span *ngIf="job.conflict" class="red">Possible conflict</span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <app-pagination (pageChanged)="onPageChange($event)" [numberOfPages]="pages" [currentPage]="page"></app-pagination>
+        </div>
+    </div>
+</div>
+

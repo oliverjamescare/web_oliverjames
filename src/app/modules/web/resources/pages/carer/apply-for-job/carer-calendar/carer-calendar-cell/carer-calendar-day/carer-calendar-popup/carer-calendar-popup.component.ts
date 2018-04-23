@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Job} from '../../../../../../../../models/care-home-booking/job';
+import {Job} from '../../../../../../../../models/job.model';
 
 @Component({
     selector: 'app-carer-calendar-popup',

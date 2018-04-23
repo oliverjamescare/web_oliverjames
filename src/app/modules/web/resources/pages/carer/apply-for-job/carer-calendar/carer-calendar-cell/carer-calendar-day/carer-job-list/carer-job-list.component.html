@@ -3,7 +3,7 @@
             (mouseenter)="onMouseEnter(i); $event.stopPropagation()"
             (mouseleave)="onMouseLeave(i)"
             *ngFor="let job of allJobs let i = index" class="single-event job carer-job">
-        {{ job.job.getStartDate() | hourPipe }}-{{ job.job.getEndDate() | hourPipe }}
+        {{ job.job.start_date | datePattern: "h:mm A" }}-{{ job.job.end_date | datePattern: "h:mm A" }}
         <app-carer-calendar-popup
                 [job]="job.job"
                 *ngIf="showPopup[i]"

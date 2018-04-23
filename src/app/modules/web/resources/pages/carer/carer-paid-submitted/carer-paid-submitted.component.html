@@ -1,21 +1,21 @@
-<app-care-home-booking-header
-        navigationTitle="Back"
-        navigationRoute="/carer-dashboard"
-        mainTitle="Paid / submitted jobs"
-></app-care-home-booking-header>
-<br>
-
-<div class="row text-center">
-    <div class="col-sm-10">
-        <div class="grey-div">
-            Total earned in last 30 days
-        </div>
-        <div class="yellow-div">
-            315
-        </div>
+<div class="row">
+    <div class="col-sm text-center">
+        <h2 class="main-title">Paid / submitted jobs</h2>
+        <a routerLink="/carer-dashboard"  class="btn btn-subnav btn-secondary left">Back</a>
     </div>
 </div>
 <br>
+
+<!--summary-->
+<div class="row text-center">
+    <div class="col-sm-10">
+        <div class="grey-div">Total earned in last 30 days</div>
+        <div class="yellow-div"><span>&#163;</span> 315</div>
+    </div>
+</div>
+<br>
+
+<!--filters-->
 <div [formGroup]="form" class="row text-center">
     <div class="col-sm-5">
         <div class="green-div">
@@ -39,49 +39,40 @@
 
 <div class="row">
     <div class="col-sm">
-        <p *ngIf="submittedJobs.length === 0">No submitted jobs so far</p>
-        <table *ngIf="submittedJobs.length !== 0" class="custom-table text-center">
-            <thead>
-            <tr>
-                <th>Job Id</th>
-                <th>Start date</th>
-                <th>From</th>
-                <th>Till</th>
-                <th>Projected income</th>
-                <th>See details</th>
-                <th>Care home</th>
-                <th>Job status</th>
-                <th>Pay status</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let job of submittedJobs">
-                <td>{{ job._id }}</td>
-                <td>{{ job.start_date | timestampDate }}</td>
-                <td>{{ job.start_date | timestampHour }}</td>
-                <td>{{ job.end_date | timestampHour }}</td>
-                <td>{{ job.projected_income }} <span>&#163;</span></td>
-                <td><span (click)="navigateToDetails(job)" class="green gj-cursor-pointer">See pay details</span></td>
-                <td>{{ job.author.care_home.care_service_name }}</td>
-                <td>{{ job.status | status }}</td>
-                <td>{{ job.payment.status | status }}</td>
-            </tr>
-            </tbody>
-        </table>
-        <br>
-        <div  class="text-center">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li
-                            *ngFor="let p of pages"
-                            [ngClass]="{'active': page === p + 1}"
-                            class="page-item">
-                        <a
-                                (click)="onPaginationChange(p + 1)"
-                                class="page-link">{{ p + 1 }}</a></li>
-                </ul>
-            </nav>
+        <p *ngIf="jobs.length === 0">No submitted jobs so far</p>
+        <div *ngIf="jobs.length !== 0">
+            <table class="custom-table text-center">
+                <thead>
+                    <tr>
+                        <th>Job Id</th>
+                        <th>Start date</th>
+                        <th>From</th>
+                        <th>Till</th>
+                        <th>Projected income</th>
+                        <th>See details</th>
+                        <th>Care home</th>
+                        <th>Job status</th>
+                        <th>Pay status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let job of jobs">
+                        <td>{{ job.id }}</td>
+                        <td>{{ job.start_date | datePattern: "YYYY-MM-DD" }}</td>
+                        <td>{{ job.start_date | datePattern: "h:mm A" }}</td>
+                        <td>{{ job.end_date | datePattern: "h:mm A"}}</td>
+                        <td><span>&#163;</span> {{ job.projected_income }} </td>
+                        <td><span (click)="navigateToDetails(job)" class="green gj-cursor-pointer">See pay details</span></td>
+                        <td>{{ job.author.care_home.care_service_name }}</td>
+                        <td>{{ job.status | capitalize }}</td>
+                        <td>{{ job.payment.status | capitalize }}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+
+        <br>
+        <app-pagination (pageChanged)="onPageChange($event)" [numberOfPages]="pages" [currentPage]="page"></app-pagination>
     </div>
 </div>
 <br><br>

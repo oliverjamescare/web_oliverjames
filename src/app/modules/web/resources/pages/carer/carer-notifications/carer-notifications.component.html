@@ -1,47 +1,26 @@
-<app-care-home-booking-header
-        navigationTitle="Back"
-        navigationRoute="/carer-dashboard"
-        mainTitle="Notifications"
-></app-care-home-booking-header>
-<br>
 
+<div class="row">
+    <div class="col-sm text-center">
+        <h2 class="main-title">Notifications</h2>
+        <a routerLink="/carer-dashboard"  class="btn btn-subnav btn-secondary left">Back</a>
+    </div>
+</div>
+<br>
+<br>
 
 <div class="row">
     <div class="col-sm">
         <p *ngIf="notifications.length === 0">No notifications so far</p>
-        <table *ngIf="notifications.length !== 0" class="custom-table text-center">
-            <thead>
-            <tr>
-                <th>Title</th>
-                <th>Description</th>
-                <th>Job</th>
-                <th>Created</th>
-                <th>Status</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let notification of notifications">
-                <td>{{ notification.title }}</td>
-                <td>{{ notification.description }}</td>
-                <td><span *ngIf="notification.job" [routerLink]="['/carer-apply-for-job', notification.job]" class="green gj-cursor-pointer">Job</span></td>
-                <td>{{ notification.created | timestampDate }}, {{ notification.created | timestampHour }}</td>
-                <td>{{ notification.status }}</td>
-            </tr>
-            </tbody>
-        </table>
-        <br>
-        <div *ngIf="pages.length > 1" class="text-center">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li
-                            *ngFor="let p of pages"
-                            [ngClass]="{'active': page === p + 1}"
-                            class="page-item">
-                        <a
-                                (click)="onPaginationChange(p + 1)"
-                                class="page-link">{{ p + 1 }}</a></li>
-                </ul>
-            </nav>
+        <div *ngIf="notifications.length !== 0">
+            <div class="row" *ngFor="let notification of notifications">
+                <div class="col-sm-6 notification" >
+                    <h6 [ngClass]="{'new': notification.status == 'CREATED'}">{{ notification.title }}</h6>
+                    <span class="date">{{ notification.created | datePattern: "YYYY-MM-DD, h:mm A"}}</span>
+                    <p>{{ notification.description }}</p>
+                </div>
+            </div>
+            <br>
+            <app-pagination (pageChanged)="onPageChange($event)" [numberOfPages]="pages" [currentPage]="page"></app-pagination>
         </div>
     </div>
 </div>

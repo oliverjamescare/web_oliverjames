@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {CareHomeBookingService} from '../../../../../../services/care-home-booking.service';
 import {AuthService} from '../../../../../../services/auth.service';
-import {CareHome} from '../../../../../../models/care-home.model';
+import {CareHome} from '../../../../../../models/user-sub-models/care-home.model';
 
 @Component({
     selector: 'app-general-guidance',

@@ -1,7 +1,6 @@
-import { Model } from '../../../models/model.model';
-import { CareHome } from '../../web/models/user-sub-models/care-home.model';
+import { Model } from "../../../../models/model.model";
 
-export class GeneralGuidance extends Model
+export class JobGeneralGuidance extends Model
 {
     floor_plan: string | File = null;
     parking: string = null;

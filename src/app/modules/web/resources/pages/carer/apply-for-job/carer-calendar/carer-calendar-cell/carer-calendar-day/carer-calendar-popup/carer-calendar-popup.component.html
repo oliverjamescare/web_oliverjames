@@ -3,12 +3,12 @@
         {{ job.author.care_home.name }}
     </div>
     <div class="carer-popup-row">
-        {{ job.author.address.address_line_1 }}, {{ job.author.address.postal_code }} {{ job.author.address.city }}
+        {{ job.author.address.stringify() }}
     </div>
     <div class="carer-popup-row">
-        {{ job.getStartDate() | datePipe }}, {{ job.getStartDate() | hourPipe }} till {{ job.getEndDate() | hourPipe }}
+        {{ job.start_date | datePattern: "YYYY-MM-DD" }}, {{ job.start_date | datePattern: "h:mm A" }} till {{ job.end_date | datePattern: "h:mm A" }}
     </div>
     <div class="carer-popup-row">
-        Projected income to you: 45
+        Projected income to you: <span>&#163;</span>{{ job.projected_income}}
     </div>
 </div>

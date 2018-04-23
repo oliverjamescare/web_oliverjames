@@ -131,6 +131,7 @@ import { PaginationComponent } from './resources/partials/pagination/pagination.
 import { TimestampToDatePipe } from './pipes/timestamp-to-date.pipe';
 import { DatePatternPipe } from './pipes/date-pattern.pipe';
 import { AddressLookupComponent } from './resources/partials/address-lookup/address-lookup.component';
+import { CarerAvailableJobsListComponent } from './resources/pages/carer/carer-available-jobs/carer-available-jobs-list/carer-available-jobs-list.component';
 
 
 @NgModule({
@@ -227,7 +228,8 @@ import { AddressLookupComponent } from './resources/partials/address-lookup/addr
         PaginationComponent,
         TimestampToDatePipe,
         DatePatternPipe,
-        AddressLookupComponent
+        AddressLookupComponent,
+        CarerAvailableJobsListComponent
     ],
     imports: [
         CommonModule,

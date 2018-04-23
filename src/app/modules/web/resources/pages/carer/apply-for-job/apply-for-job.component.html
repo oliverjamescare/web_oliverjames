@@ -1,13 +1,14 @@
-<app-care-home-booking-header
-        navigationTitle="Back"
-        navigationRoute="/carer-available-jobs"
-        mainTitle="See details / accept a job"
-></app-care-home-booking-header>
+<div class="row">
+    <div class="col-sm text-center">
+        <h2 class="main-title">See details / accept a job</h2>
+        <a routerLink="/carer-available-jobs"  class="btn btn-subnav btn-secondary left">Back</a>
+    </div>
+</div>
 <br>
 
 <div class="row">
     <div class="col-lg-4">
-        <app-job-details></app-job-details>
+        <app-job-details *ngIf="job" [job]="job"></app-job-details>
     </div>
     <div class="col-lg-8">
         <app-carer-calendar></app-carer-calendar>
@@ -16,6 +17,6 @@
 <br>
 <div class="row">
     <div class="col-sm">
-        <app-other-jobs></app-other-jobs>
+        <app-other-jobs *ngIf="job" [jobId]="job.id"></app-other-jobs>
     </div>
 </div>

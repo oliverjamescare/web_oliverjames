@@ -87,13 +87,14 @@ export class ApiService
         );
     }
 
-    getAvailableJobs(params: HttpParams): Observable<AvailableJobsResponse>
+    getAvailableJobs(params: HttpParams): Observable<any>
     {
-        console.log('Distance param', params.get('distance'));
-        return this.httpClient.get<AvailableJobsResponse>(
+        return this.httpClient.get(
             `${this.endpoint}/carer/jobs`,
-            { headers: this.getAuthorizationHeaders(), params: params }
-        );
+            {
+                headers: this.getAuthorizationHeaders(),
+                params: params
+            });
     }
 
     getCarerCalendar(): Observable<any>

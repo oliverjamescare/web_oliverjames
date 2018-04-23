@@ -1,7 +1,8 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {CarerJobService} from '../../../../../../services/carer-job.service';
 import {isUndefined} from "util";
 import {NotificationsService} from 'angular2-notifications';
+import { Job } from '../../../../../../models/job.model';
 
 @Component({
     selector: 'app-confirmation-popup',
@@ -10,6 +11,7 @@ import {NotificationsService} from 'angular2-notifications';
 })
 export class ConfirmationPopupComponent implements OnInit {
     @Output() close = new EventEmitter();
+    @Input() job: Job;
     confirmed = false;
 
     constructor(public carerJobService: CarerJobService,
@@ -27,17 +29,15 @@ export class ConfirmationPopupComponent implements OnInit {
         this.confirmed = !this.confirmed;
     }
 
-    onConfirm(): void {
-        this.carerJobService.acceptJob(this.carerJobService.currentJobId)
+    onConfirm(): void
+    {
+        this.carerJobService.acceptJob(this.job.id)
             .subscribe(
                 response => {
-                    console.log('Accept job success response', response);
-                    this.carerJobService.jobDetails.status = 'ACCEPTED';
                     this.notificationService.success('Job accepted');
                     this.close.emit();
                 },
                 error => {
-                    console.log('Accept job error response', error);
                     if (!isUndefined(error.error.errors[0])) {
                         this.notificationService.warn(error.error.errors[0].message);
                     }

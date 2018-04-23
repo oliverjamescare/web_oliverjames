@@ -1,36 +1,31 @@
-import {Component, OnInit} from '@angular/core';
-import {CarerJobService} from '../../../../../services/carer-job.service';
-import {Job} from '../../../../../models/care-home-booking/job';
+import { Component, Input, OnInit } from '@angular/core';
+import { CarerJobService } from '../../../../../services/carer-job.service';
+import { Job } from '../../../../../models/job.model';
 
 @Component({
     selector: 'app-other-jobs',
     templateUrl: './other-jobs.component.html',
     styleUrls: ['./other-jobs.component.scss']
 })
-export class OtherJobsComponent implements OnInit {
+export class OtherJobsComponent implements OnInit
+{
     loading = true;
+    jobs: Array<Job> = [];
+    @Input() jobId: string;
 
-    constructor(public carerJobService: CarerJobService) {
-    }
+    constructor(private carerJobService: CarerJobService) {}
 
-    ngOnInit() {
+    ngOnInit(): void
+    {
         this.getOtherJobs();
     }
 
-    private getOtherJobs(): void {
+    private getOtherJobs(): void
+    {
         this.loading = true;
-        this.carerJobService.getOtherJobs()
-            .subscribe(
-                (response: Job[]) => {
-                    this.loading = false;
-                    console.log('Get other jobs success response', response);
-                    this.carerJobService.otherJobs = response;
-                },
-                error => {
-                    this.loading = false;
-                    console.log('Get other jobs error response', error);
-                }
-            );
+        this.carerJobService.getOtherJobs(this.jobId)
+            .subscribe((results: { jobs: Array<Job>, pages: number }) => {
+                this.jobs = results.jobs;
+            });
     }
-
 }
