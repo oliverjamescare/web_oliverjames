@@ -74,11 +74,11 @@ const routes: Routes = [
                     {path: 'contact', component: ContactComponent},
                 ]
             },
-            {
-                path: 'carer-availability',
-                component: CarerAvailabilityComponent,
-                canActivate: [CarerAuthGuardService]
-            },
+            // {
+            //     path: 'carer-availability',
+            //     component: CarerAvailabilityComponent,
+            //     canActivate: [CarerAuthGuardService]
+            // },
             {
                 path: 'carer-upcoming-jobs',
                 component: UpcomingJobsTabComponent,

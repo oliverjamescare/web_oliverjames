@@ -46,7 +46,6 @@ export class AddressLookupComponent implements OnInit
             .searchAddresses(this.search.value, this.container)
             .map(results => results.results.map(result => new AddressResult(result)))
             .subscribe((results: Array<AddressResult>) => {
-                console.log(results);
                 this.results = results;
             })
     }

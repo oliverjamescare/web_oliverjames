@@ -58,7 +58,8 @@
             <div class="row">
                 <div class="col-4">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Your postcode" id="postcode" name="postcode" formControlName="postal_code" [ngClass]="formUtils.handleValidationStateClass(form, 'postal_code')">
+                        <input type="text" class="form-control" placeholder="Your postcode" autocomplete="off" id="postcode" name="postcode" formControlName="postal_code" [ngClass]="formUtils.handleValidationStateClass(form, 'postal_code')">
+                        <app-address-lookup [search]="form.get('postal_code')" (addressFound)="onAddressFound($event)"></app-address-lookup>
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'postal_code', messages) }} </span>
                     </div>
                 </div>

@@ -100,11 +100,6 @@ export class CalendarPopupComponent implements OnInit
 
         this.createForm();
 
-        // end time validation
-        this.form
-            .valueChanges
-            .subscribe(() => this.form.get('till').setValidators([Validators.required, dateGreaterThan(this.form.get('from').value)]));
-
         //on day change
         this.form.get("start_date")
             .valueChanges
@@ -115,16 +110,25 @@ export class CalendarPopupComponent implements OnInit
                 this.prepareStartIntervals();
                 this.prepareEndIntervals();
                 this.calculateInitials();
+
             });
 
         //on start time change
         this.form.get("from")
             .valueChanges
             .subscribe((from) => {
+
                 const end = new Date(from)
                 end.setMinutes(end.getMinutes() + 15);
-                this.form.get("till").patchValue(end);
+                this.form.get("till").setValue(end);
+                this.form.get('till').setValidators([Validators.required, dateGreaterThan(this.form.get('from').value)])
+                this.form.get('till').updateValueAndValidity();
             })
+
+        // end time validation
+        this.form.get("till")
+            .valueChanges
+            .subscribe(() => this.form.get('till').setValidators([Validators.required, dateGreaterThan(this.form.get('from').value)]));
     }
 
     onClosePopup(): void

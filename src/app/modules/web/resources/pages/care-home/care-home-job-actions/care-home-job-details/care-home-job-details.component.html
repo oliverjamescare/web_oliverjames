@@ -49,7 +49,7 @@
         <li class="details-row">
             <span class="details-label">Google maps:</span>
             <p class="details-info">
-                Find service on <a [href]="" target="_blank">Google Maps</a>
+                Find service on <a [href]="" class="app-link" target="_blank">Google Maps</a>
             </p>
         </li>
 
@@ -63,7 +63,7 @@
         <li class="details-row">
             <span class="details-label">Floor plan:</span>
             <p class="details-info">
-                <a [href]="getFloorPlanLink(careHomeService.jobDetails.general_guidance.floor_plan)" target="_blank">Floor
+                <a [href]="getFloorPlanLink(careHomeService.jobDetails.general_guidance.floor_plan)" class="app-link" target="_blank">Floor
                     plan</a>
             </p>
         </li>
@@ -105,8 +105,8 @@
 </div>
 <br>
 <div class="details-actions">
-    <button (click)="onCancelJob()" class="btn-success margin-r btn-red">Cancel job</button>
-    <button (click)="onEditJob()" class="btn-success right">Edit job</button>
+    <button (click)="onCancelJob()" class="btn btn-success margin-r btn-red">Cancel job</button>
+    <button (click)="onEditJob()" class="btn btn-success right">Edit job</button>
 </div>
 
 <app-cancelation-popup

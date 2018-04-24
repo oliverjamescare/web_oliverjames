@@ -10,6 +10,7 @@ import {
 } from '../../../../../utilities/form.utils';
 import { CareHomeService } from '../../../services/care-home.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AddressDetail } from '../../../models/address/address-detail.model';
 
 @Component({
     selector: 'app-header',
@@ -102,20 +103,17 @@ export class HeaderComponent implements OnInit
         });
 
         this.authService.authChanged.subscribe((user: User) => this.loggedUser = user);
+    }
 
-        //choosing address event from PCA
-        pca.on("load", (type, id, control) => {
-            control.listen('populate', (address) => {
-                console.log(address)
-                this.form.patchValue({
-                    postal_code: address['PostalCode'],
-                    company: address["Company"],
-                    address_line_1: address["Line1"],
-                    address_line_2: address["Line2"],
-                    city: address["City"]
-                });
-            })
-        });
+    onAddressFound(addressDetails: AddressDetail)
+    {
+        this.form.patchValue({
+            postal_code: addressDetails.PostalCode,
+            company: addressDetails.Company,
+            address_line_1: addressDetails.Line1,
+            address_line_2: addressDetails.Line2,
+            city: addressDetails.City
+        })
     }
 
     onCheckCarersNearby()

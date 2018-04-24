@@ -65,7 +65,7 @@ export class CardDetailsComponent implements OnInit, AfterViewInit {
                 error => {
                     this.buttonLoading = false;
                     console.log('update account details error response', error);
-                    this.notificationService.warn('Api error occurs');
+                    this.notificationService.warn('Unable to store bank details');
                 }
             );
     }

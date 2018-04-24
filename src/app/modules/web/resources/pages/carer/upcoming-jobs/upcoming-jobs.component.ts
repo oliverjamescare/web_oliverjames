@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CarerJobService } from '../../../../services/carer-job.service';
 import { Job } from '../../../../models/job.model';
 
@@ -12,6 +12,7 @@ export class UpcomingJobsComponent implements OnInit
     page: number = 1;
     pages: number = 0;
     jobs: Array<Job> = [];
+    @Input() paginationDisabled: boolean = false;
     @Output() jobsDue = new EventEmitter<number>();
 
     constructor(public carerService: CarerJobService) {}

@@ -1,154 +1,131 @@
-<app-care-home-booking-header
-        navigationTitle="Back"
-        navigationRoute="/carer-dashboard"
-        mainTitle="Profile details"
-></app-care-home-booking-header>
-<br>
+
 <div class="row">
-    <div class="col-sm">
-        <table [formGroup]="form" class="profile-table">
-            <tr>
-                <th class="tall">Your email address</th>
-                <td class="tall relative">
-                    <span class="first-row">{{ carerProfileService?.carerProfile?.email }}</span>
-                    <span class="action">
-                        <button (click)="showEditEmail = true" class="btn-success">Edit</button>
+    <div class="col-sm text-center">
+        <h2 class="main-title">Profile details</h2>
+        <a routerLink="/carer-dashboard"  class="btn btn-subnav btn-secondary left">Back</a>
+    </div>
+</div>
+<br>
+
+<div class="row">
+    <div class="col-sm" *ngIf="form && user">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <table class="profile-table">
+                <tr>
+                    <th class="tall">Your email address</th>
+                    <td class="tall relative">
+                        <span class="first-row">{{ user.email }}</span>
+                        <span class="action">
+                        <button (click)="showEditEmail = true" class="btn btn-success" type="button">Edit</button>
                     </span>
-                    <span
-                            *ngIf="!carerProfileService?.carerProfile?.email_verified"
-                            (click)="onResendEmail()"
-                            class="red second-row gj-cursor-pointer">
+                        <span *ngIf="!user.email_verified" (click)="onResendEmail()" class="red second-row gj-cursor-pointer">
                         Not verified - tap to resend verification email
                     </span>
-                </td>
-            </tr>
-            <tr>
-                <th>Your Oliver James ID</th>
-                <td>{{ carerProfileService?.carerProfile?._id }}</td>
-            </tr>
-            <tr>
-                <th>Your phone number</th>
-                <td>
-                    <input formControlName="phone_number" type="text" class="form-control">
-                    <span *ngIf="form.get('phone_number').errors?.numbers" class="red full-width">
-                        Phone number can contain numbers only
-                    </span>
-                    <span *ngIf="form.get('phone_number').errors?.required" class="red full-width">
-                        This field is required
-                    </span>
-                    <span *ngIf="form.get('phone_number').errors?.minlength || form.get('phone_number').errors?.maxlength" class="red full-width">
-                        Phone number must contain at least 6 numbers
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <th>Your First Name</th>
-                <td>{{ carerProfileService?.carerProfile?.carer.first_name }}</td>
-            </tr>
-            <tr>
-                <th>Middle Name</th>
-                <td>{{ carerProfileService?.carerProfile?.carer?.middle_name }}</td>
-            </tr>
-            <tr>
-                <th>Your Surname</th>
-                <td>{{ carerProfileService?.carerProfile?.carer.surname }}</td>
-            </tr>
-            <tr>
-                <th>Gender</th>
-                <td>{{ carerProfileService?.carerProfile?.carer["gender"] }}</td>
-            </tr>
-            <tr>
-                <th>Profile picture</th>
-                <td class="relative tall">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Your Oliver James ID</th>
+                    <td>{{ user.id }}</td>
+                </tr>
+                <tr>
+                    <th>Your phone number</th>
+                    <td>
+                        <input formControlName="phone_number" type="text" class="form-control" [ngClass]="formUtils.handleValidationStateClass(form, 'phone_number')">
+                        <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'phone_number', messages) }} </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Your First Name</th>
+                    <td>{{ user.carer.first_name }}</td>
+                </tr>
+                <tr>
+                    <th>Middle Name</th>
+                    <td>{{ user.carer.middle_name }}</td>
+                </tr>
+                <tr>
+                    <th>Your Surname</th>
+                    <td>{{ user.carer.surname }}</td>
+                </tr>
+                <tr>
+                    <th>Gender</th>
+                    <td>{{ user.carer.gender }}</td>
+                </tr>
+                <tr>
+                    <th>Profile picture</th>
+                    <td class="relative tall">
                     <span class="action">
-                        <button (click)="showChangeProfileImage = true" class="btn-success">Edit</button>
+                        <button (click)="showChangeProfileImage = true" class="btn btn-success" type="button">Edit</button>
                     </span>
-                </td>
-            </tr>
-            <tr>
-                <th>Postcode</th>
-                <td>
-                    <input formControlName="postal_code" id="postcode" name="postcode" type="text" class="form-control">
-                    <span *ngIf="form.get('postal_code').errors?.required" class="red full-width">
-                        This field is required
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <th>Address line 1</th>
-                <td>
-                    <input formControlName="address_line_1" type="text" class="form-control">
-                    <span *ngIf="form.get('address_line_1').errors?.required" class="red full-width">
-                        This field is required
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <th>Address line 2</th>
-                <td><input formControlName="address_line_2" type="text" class="form-control"></td>
-            </tr>
-            <tr>
-                <th>City</th>
-                <td>
-                    <input formControlName="city" type="text" class="form-control">
-                    <span *ngIf="form.get('city').errors?.required" class="red full-width">
-                        This field is required
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td class="relative tall">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Postcode</th>
+                    <td>
+                        <input formControlName="postal_code" autocomplete="off" id="postcode" name="postcode" type="text" class="form-control" [ngClass]="formUtils.handleValidationStateClass(form, 'postal_code')">
+                        <app-address-lookup [search]="form.get('postal_code')" (addressFound)="onAddressFound($event)"></app-address-lookup>
+                        <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'postal_code', messages) }} </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Address line 1</th>
+                    <td>
+                        <input formControlName="address_line_1" type="text" class="form-control" [ngClass]="formUtils.handleValidationStateClass(form, 'postal_code')">
+                        <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'address_line_1', messages) }} </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Address line 2</th>
+                    <td><input formControlName="address_line_2" type="text" class="form-control" [ngClass]="formUtils.handleValidationStateClass(form, 'address_line_2')"></td>
+                </tr>
+                <tr>
+                    <th>City</th>
+                    <td>
+                        <input formControlName="city" type="text" class="form-control" [ngClass]="formUtils.handleValidationStateClass(form, 'city')">
+                        <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'city', messages) }} </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Password</th>
+                    <td class="relative tall">
                     <span class="action">
-                        <button (click)="showChangePassword = true" class="btn-success">Edit</button>
+                        <button (click)="showChangePassword = true" class="btn btn-success" type="button">Edit</button>
                     </span>
-                </td>
-            </tr>
-            <tr>
-                <th>Bank account details (to receive payment)</th>
-                <td class="relative tall">
-                    <span
-                            *ngIf="carerProfileService?.carerProfile?.carer.payment_system.bank_number"
-                            class="first-row"
-                    >Stored {{ carerProfileService?.carerProfile?.carer.payment_system.bank_number }}</span>
-                    <span
-                            *ngIf="!carerProfileService?.carerProfile?.carer.payment_system.bank_number"
-                            class="first-row"
-                    >Account not set up</span>
-                    <span class="action">
-                        <button (click)="showBankAccountForm = true" class="btn-success">Edit</button>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Bank account details (to receive payment)</th>
+                    <td class="relative tall">
+                        <span *ngIf="carerProfileService?.carerProfile?.carer.payment_system.bank_number" class="first-row">Stored {{ carerProfileService?.carerProfile?.carer.payment_system.bank_number }}</span>
+                        <span *ngIf="!carerProfileService?.carerProfile?.carer.payment_system.bank_number" class="first-row">Account not set up</span>
+                        <span class="action">
+                        <button (click)="showBankAccountForm = true" class="btn btn-success" type="button">Edit</button>
                     </span>
-                </td>
-            </tr>
-            <tr>
-                <th>Max job distance in miles</th>
-                <td>
-                    <input formControlName="max_job_distance" type="text" class="form-control">
-                    <span *ngIf="form.get('max_job_distance').errors?.required" class="red full-width">
-                        This field is required
-                    </span>
-                    <span *ngIf="form.get('max_job_distance').errors?.min" class="red full-width">
-                        Value cannot be negative
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <th>Eligible roles</th>
-                <td>
-                    <span
-                            *ngFor="let role of carerProfileService?.carerProfile?.carer.eligible_roles"
-                            class="separate-right"
-                    >{{ role }}</span>
-                     <span (click)="onRoleChange()" class="request">Request for change</span>
-                </td>
-            </tr>
-        </table>
-        <br>
-        <button
-                [disabled]="!form.valid"
-                (click)="onUpdateProfile()"
-                class="btn-success">Update profile
-            <span *ngIf="buttonLoading"><i class="fa fa-spinner fa-spin"></i></span></button>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Max job distance in miles</th>
+                    <td>
+                        <input formControlName="max_job_distance" type="text" class="form-control" [ngClass]="formUtils.handleValidationStateClass(form, 'max_job_distance')">
+                        <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'max_job_distance', messages) }} </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Eligible roles</th>
+                    <td>
+                        <span>{{ user.carer.eligible_roles.join(", ") }}</span>
+                        <span (click)="onRoleChange()" class="request">Request for change</span>
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <br>
+
+            <div class="text-center">
+                <button [disabled]="!form.valid || inProgress" class="btn btn-success submit" type="submit">Update profile
+                    <span *ngIf="inProgress"><i class="fa fa-spinner fa-spin"></i></span>
+                </button>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -165,7 +142,7 @@
 
 <app-change-profile-image
         *ngIf="showChangeProfileImage"
-        [pictureUrl]="passProfileUrl()"
+        [pictureUrl]="getProfileUrl()"
         (closed)="showChangeProfileImage = false"
         (update)="onUpdateData()"
 ></app-change-profile-image>

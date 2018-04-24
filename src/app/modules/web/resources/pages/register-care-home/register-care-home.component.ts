@@ -8,6 +8,7 @@ import {CareHomeService} from '../../../services/care-home.service';
 import {alpha, equalToFieldValue, numbers, password} from '../../../../../utilities/validators';
 import {UserService} from '../../../services/user.service';
 import {HttpErrorResponse} from '@angular/common/http';
+import { AddressDetail } from '../../../models/address/address-detail.model';
 
 @Component({
     selector: 'app-register-care-home',
@@ -169,7 +170,8 @@ export class RegisterCareHomeComponent implements OnInit {
     constructor(private router: Router, private careHomeService: CareHomeService, private userService: UserService) {
     }
 
-    ngOnInit() {
+    ngOnInit()
+    {
         // form config
         this.form = new FormGroup({
             email: new FormControl(null,
@@ -207,25 +209,17 @@ export class RegisterCareHomeComponent implements OnInit {
             .valueChanges
             .subscribe(
                 (pass: string) => this.form.get('password').setValidators([Validators.required, equalToFieldValue(pass)]));
+    }
 
-        // choosing address event from PCA
-        if (pca.load) {
-            pca.load();
-        }
-
-        pca.on('load', (type, id, control) => {
-
-            control.listen('populate', (address) => {
-                console.log(address);
-                this.form.patchValue({
-                    postal_code: address['PostalCode'],
-                    company: address['Company'],
-                    address_line_1: address['Line1'],
-                    address_line_2: address['Line2'],
-                    city: address['City']
-                });
-            });
-        });
+    onAddressFound(addressDetails: AddressDetail)
+    {
+        this.form.patchValue({
+            postal_code: addressDetails.PostalCode,
+            company: addressDetails.Company,
+            address_line_1: addressDetails.Line1,
+            address_line_2: addressDetails.Line2,
+            city: addressDetails.City
+        })
     }
 
     onSubmit() {

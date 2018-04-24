@@ -7,13 +7,13 @@
 <br>
 
 <!--summary-->
-<div class="row text-center">
-    <div class="col-sm-10">
-        <div class="grey-div">Total earned in last 30 days</div>
-        <div class="yellow-div"><span>&#163;</span> 315</div>
-    </div>
-</div>
-<br>
+<!--<div class="row text-center">-->
+    <!--<div class="col-sm-10">-->
+        <!--<div class="grey-div">Total earned in last 30 days</div>-->
+        <!--<div class="yellow-div"><span>&#163;</span> 315</div>-->
+    <!--</div>-->
+<!--</div>-->
+<!--<br>-->
 
 <!--filters-->
 <div [formGroup]="form" class="row text-center">
@@ -61,11 +61,11 @@
                         <td>{{ job.start_date | datePattern: "YYYY-MM-DD" }}</td>
                         <td>{{ job.start_date | datePattern: "h:mm A" }}</td>
                         <td>{{ job.end_date | datePattern: "h:mm A"}}</td>
-                        <td><span>&#163;</span> {{ job.projected_income }} </td>
+                        <td><span>&#163;</span>{{ job.projected_income }} </td>
                         <td><span (click)="navigateToDetails(job)" class="green gj-cursor-pointer">See pay details</span></td>
                         <td>{{ job.author.care_home.care_service_name }}</td>
-                        <td>{{ job.status | capitalize }}</td>
-                        <td>{{ job.payment.status | capitalize }}</td>
+                        <td>{{ job.status.replace("_", " ") | capitalize }}</td>
+                        <td>{{ job.payment.status.replace("_", " ") | capitalize }}</td>
                     </tr>
                 </tbody>
             </table>

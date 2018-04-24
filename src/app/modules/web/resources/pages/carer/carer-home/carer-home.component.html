@@ -20,7 +20,7 @@
         <div class="col-4">
             <a routerLink="/carer-available-jobs" class="btn btn-success">See new jobs available</a>
             <div class="text-center">
-                <small class="text-muted text-center">{{ newJobs }} new jobs available</small>
+                <small class="text-muted text-center">{{ newJobs > 0 ? newJobs + " new jobs available" : "All jobs currently filled"}}</small>
             </div>
         </div>
         <div class="col-4">
@@ -28,9 +28,9 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-4">
-            <a routerLink="/carer-availability" class="btn btn-success">Set my availability</a>
-        </div>
+        <!--<div class="col-4">-->
+            <!--<a routerLink="/carer-availability" class="btn btn-success">Set my availability</a>-->
+        <!--</div>-->
         <div class="col-4">
             <a routerLink="/carer-paid-submitted" class="btn btn-success">See paid and submitted jobs</a>
         </div>
@@ -44,10 +44,7 @@
             <h5>My upcoming jobs</h5>
         </div>
     </div>
-    <app-upcoming-jobs
-            (jobsDue)="jobsDue = $event"
-    ></app-upcoming-jobs>
-
+    <app-upcoming-jobs (jobsDue)="jobsDue = $event" [paginationDisabled]="true"></app-upcoming-jobs>
 </div>
 
 <div *ngIf="!activated">

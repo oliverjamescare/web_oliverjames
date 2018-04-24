@@ -6,7 +6,8 @@ import {Job} from '../../../../../../../../models/job.model';
     templateUrl: './carer-calendar-popup.component.html',
     styleUrls: ['./carer-calendar-popup.component.scss']
 })
-export class CarerCalendarPopupComponent implements OnInit {
+export class CarerCalendarPopupComponent implements OnInit
+{
     @Input() job: Job;
 
     constructor() {

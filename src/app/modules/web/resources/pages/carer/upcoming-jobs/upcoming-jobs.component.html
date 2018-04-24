@@ -33,7 +33,7 @@
                 </tbody>
             </table>
             <br>
-            <app-pagination (pageChanged)="onPageChange($event)" [numberOfPages]="pages" [currentPage]="page"></app-pagination>
+            <app-pagination *ngIf="!paginationDisabled" (pageChanged)="onPageChange($event)" [numberOfPages]="pages" [currentPage]="page"></app-pagination>
         </div>
     </div>
 </div>

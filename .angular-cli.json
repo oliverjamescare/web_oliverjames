@@ -9,7 +9,7 @@
             "outDir": "dist",
             "assets": [
                 "assets",
-                "favicon.ico"
+                "oliver-james.ico.png"
             ],
             "index": "index.html",
             "main": "main.ts",

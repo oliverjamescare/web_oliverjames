@@ -123,18 +123,27 @@ export class CareHomeBookingService {
         }
     }
 
-    private getAddBookBodyForRequest(): FormData {
+    private getAddBookBodyForRequest(): FormData
+    {
         const formData: FormData = new FormData();
-        if (this.florPlanFile !== null) {
-            formData.append('floor_plan', this.florPlanFile);
-        }
+
         formData.append('jobs', this.parsePreBookedJobs());
-        formData.append('parking', this.generalGuidanceForm.parking);
-        formData.append('notes_for_carers', this.generalGuidanceForm.notes_for_carers);
-        formData.append('emergency_guidance', this.generalGuidanceForm.emergency_guidance);
-        formData.append('report_contact', this.generalGuidanceForm.report_contact);
-        formData.append('superior_contact', this.generalGuidanceForm.superior_contact);
-        console.log('general guidance data', this.generalGuidanceForm);
+
+        //general guidance
+        if (this.florPlanFile !== null)
+            formData.append('floor_plan', this.florPlanFile);
+
+        if(this.generalGuidanceForm.parking)
+            formData.append('parking', this.generalGuidanceForm.parking);
+        if(this.generalGuidanceForm.notes_for_carers)
+            formData.append('notes_for_carers', this.generalGuidanceForm.notes_for_carers);
+        if(this.generalGuidanceForm.emergency_guidance)
+            formData.append('emergency_guidance', this.generalGuidanceForm.emergency_guidance);
+        if(this.generalGuidanceForm.report_contact)
+            formData.append('report_contact', this.generalGuidanceForm.report_contact);
+        if(this.generalGuidanceForm.superior_contact)
+            formData.append('superior_contact', this.generalGuidanceForm.superior_contact);
+
         return formData;
     }
 }

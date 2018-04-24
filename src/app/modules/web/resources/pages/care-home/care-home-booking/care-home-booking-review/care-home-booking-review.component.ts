@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {CareHomeBookingService} from '../../../../../services/care-home-booking.service';
-import {Router} from '@angular/router';
-import {NotificationsService} from 'angular2-notifications';
-import {GeneralGuidance} from '../../../../../models/care-home-booking/general-guidance';
+import { Component, OnInit } from '@angular/core';
+import { CareHomeBookingService } from '../../../../../services/care-home-booking.service';
+import { Router } from '@angular/router';
+import { NotificationsService } from 'angular2-notifications';
+import { GeneralGuidance } from '../../../../../models/care-home-booking/general-guidance';
 
 @Component({
     selector: 'app-care-home-booking-review',
@@ -19,9 +19,12 @@ export class CareHomeBookingReviewComponent implements OnInit
         public bookingService: CareHomeBookingService,
         private router: Router,
         private notificationService: NotificationsService
-    ) {}
+    )
+    {
+    }
 
-    ngOnInit() {
+    ngOnInit()
+    {
         this.getGuidanceInfo();
     }
 
@@ -32,29 +35,34 @@ export class CareHomeBookingReviewComponent implements OnInit
             this.inProgress = true;
             this.bookingService.bookJobs()
                 .subscribe(
-                    response => {
+                    response =>
+                    {
                         this.inProgress = false;
                         this.bookingService.clearAfterBooking();
                         this.router.navigate(['/care-home-booking', 'submited'],
-                            { queryParams: { group: response.group } });
+                            {queryParams: {group: response.group}});
                         this.notificationService.success('Success', 'Jobs booked');
                     },
-                    error => {
+                    error =>
+                    {
                         this.inProgress = false;
                         console.log('Book jobs error', error);
                     }
                 );
-        } else {
+        } else
+        {
             this.router.navigate(['/care-home-booking', 'payment-details']);
         }
     }
 
-    private getGuidanceInfo(): void {
+    private getGuidanceInfo(): void
+    {
         this.showGuidanceForm = false;
         this.showPreferenceTab = false;
         this.bookingService.getGuidanceInfo()
             .subscribe(
-                (response: GeneralGuidance) => {
+                (response: GeneralGuidance) =>
+                {
                     this.bookingService.generalGuidance = response;
                     console.log('Guidance info mapped response', response);
                     this.setGuidanceFormValue(response);
@@ -65,8 +73,10 @@ export class CareHomeBookingReviewComponent implements OnInit
             );
     }
 
-    private setGuidanceFormValue(generalGuidance: GeneralGuidance): void {
-        if (this.bookingService.generalGuidanceForm === null) {
+    private setGuidanceFormValue(generalGuidance: GeneralGuidance): void
+    {
+        if (this.bookingService.generalGuidanceForm === null)
+        {
             this.bookingService.generalGuidanceForm = generalGuidance;
         }
     }

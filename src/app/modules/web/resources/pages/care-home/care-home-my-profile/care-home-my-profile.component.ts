@@ -276,4 +276,11 @@ export class CareHomeMyProfileComponent implements OnInit
 
         return formData;
     }
+
+    //update view hooks
+    onCardUpdated()
+    {
+        this.showEditCardDetails = false;
+        this.getProfile();
+    }
 }

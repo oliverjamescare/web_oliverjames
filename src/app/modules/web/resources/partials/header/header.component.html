@@ -87,7 +87,9 @@
                         <p class="section-desctiption">Quality temporary carers at affordable prices</p>
                         <form  [formGroup]="form" (ngSubmit)="onCheckCarersNearby()">
                             <div class="form-group">
-                                <input type="text" placeholder="Enter your postcode" class="form-control" name="postal_code" formControlName="postal_code" [ngClass]="{'is-invalid': !form.valid && form.get('postal_code').touched, 'is-valid': form.valid && form.get('postal_code').touched }">
+                                <input type="text" placeholder="Enter your postcode" class="form-control" name="postal_code" autocomplete="off" formControlName="postal_code" [ngClass]="{'is-invalid': !form.valid && form.get('postal_code').touched, 'is-valid': form.valid && form.get('postal_code').touched }">
+                                <app-address-lookup [search]="form.get('postal_code')" (addressFound)="onAddressFound($event)"></app-address-lookup>
+
                                 <input type="text" name="company" formControlName="company" class="d-none">
                                 <input type="text" name="line_one" formControlName="address_line_1" class="d-none">
                                 <input type="text" name="line_two" formControlName="address_line_2" class="d-none">

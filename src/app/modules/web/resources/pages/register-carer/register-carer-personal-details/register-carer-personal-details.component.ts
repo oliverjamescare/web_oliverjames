@@ -5,13 +5,14 @@ import { handleUniqueValidator, handleValidationStateClass, handleValidationErro
 import { alpha, numbers, equalToFieldValue, invalidDate, adult, password, equalTo, greaterThan } from '../../../../../../utilities/validators';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../../../services/user.service';
+import { AddressDetail } from '../../../../models/address/address-detail.model';
 
 @Component({
     selector: 'app-register-carer-personal-details',
     templateUrl: './register-carer-personal-details.component.html',
     styleUrls: [ './register-carer-personal-details.component.scss' ]
 })
-export class RegisterCarerPersonalDetailsComponent implements OnInit, OnDestroy
+export class RegisterCarerPersonalDetailsComponent implements OnInit
 {
     steps: Array<{ name: string, active: boolean, completed: boolean }> = [
         {
@@ -39,7 +40,6 @@ export class RegisterCarerPersonalDetailsComponent implements OnInit, OnDestroy
     // form config
     form: FormGroup
     formUtils = { handleValidationStateClass, handleValidationErrorMessage }
-    pcaControl: any;
 
     messages = [
         {
@@ -296,24 +296,6 @@ export class RegisterCarerPersonalDetailsComponent implements OnInit, OnDestroy
             .subscribe(
                 (pass: string) => this.form.get('password').setValidators([Validators.required, equalToFieldValue(pass)]));
 
-        // choosing address event from PCA
-        if (pca.load) {
-            pca.load();
-        }
-
-        pca.on('load', (type, id, control) => {
-
-            control.listen('populate', (address) => {
-                 console.log(address);
-                 this.form.patchValue({
-                     postal_code: address['PostalCode'],
-                     company: address['Company'],
-                     address_line_1: address['Line1'],
-                     address_line_2: address['Line2'],
-                     city: address['City']
-                 });
-             });
-        });
 
         // datepicker config
         const adultDate = new Date();
@@ -328,11 +310,15 @@ export class RegisterCarerPersonalDetailsComponent implements OnInit, OnDestroy
         });
     }
 
-    ngOnDestroy() {
-        if (this.pcaControl) {
-            this.pcaControl.destroy();
-        }
-        console.log(this.pcaControl);
+    onAddressFound(addressDetails: AddressDetail)
+    {
+        this.form.patchValue({
+            postal_code: addressDetails.PostalCode,
+            company: addressDetails.Company,
+            address_line_1: addressDetails.Line1,
+            address_line_2: addressDetails.Line2,
+            city: addressDetails.City
+        })
     }
 
     previousStep() {

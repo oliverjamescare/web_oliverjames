@@ -97,7 +97,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Bank account details (to receive payment)</th>
+                    <th>Card details</th>
                     <td class="relative tall">
                         <span *ngIf="profileDetails?.care_home.payment_system.card_number !== null" class="first-row">Stored {{ profileDetails?.care_home.payment_system.card_number }}</span>
                         <span *ngIf="profileDetails?.care_home.payment_system.card_number === null" class="first-row">Account not set up</span>
@@ -233,10 +233,7 @@
         (update)="onUpdateData()"
 ></app-change-email>
 
-<app-change-password
-        *ngIf="showChangePassword"
-        (closed)="showChangePassword = false"
-></app-change-password>
+<app-change-password *ngIf="showChangePassword" (closed)="showChangePassword = false"></app-change-password>
 
 <app-blocked-carers
         *ngIf="showBlockedCarers"
@@ -248,8 +245,4 @@
 >
 </app-blocked-carers>
 
-<app-edit-card
-        *ngIf="showEditCardDetails"
-        (closed)="showEditCardDetails = false"
->
-</app-edit-card>
+<app-edit-card *ngIf="showEditCardDetails" (closed)="onCardUpdated()"></app-edit-card>

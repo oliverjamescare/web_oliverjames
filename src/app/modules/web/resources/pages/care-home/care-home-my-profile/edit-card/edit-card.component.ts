@@ -98,13 +98,13 @@ export class EditCardComponent implements OnInit, AfterViewInit {
             .subscribe(
                 response => {
                     this.buttonLoading = false;
-                    console.log('update card details success response', response);
                     this.notificationService.success('Card details saved');
+                    $('#' + this.type + '_id').modal("hide");
+
                 },
                 error => {
                     this.buttonLoading = false;
-                    console.log('update card details error response', error);
-                    this.notificationService.warn('Enable to store card data to api');
+                    this.notificationService.warn('Unable to store card data');
                 }
             );
     }

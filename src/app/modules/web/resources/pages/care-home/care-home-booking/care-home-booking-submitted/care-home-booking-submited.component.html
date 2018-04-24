@@ -1,9 +1,11 @@
-<app-care-home-booking-header
-        navigationTitle="Back to my home"
-        navigationRoute="/care-home-dashboard"
-        mainTitle="Submitted"
-></app-care-home-booking-header>
+<div class="row">
+    <div class="col-sm text-center">
+        <h2 class="main-title">Submitted</h2>
+        <a routerLink="/care-home-dashboard"  class="btn btn-subnav btn-secondary left">Back to my home</a>
+    </div>
+</div>
 <br>
+
 <div class="row">
     <div class="col-sm">
         <p>
@@ -20,107 +22,82 @@
 <div *ngIf="carersToNotify" class="row">
     <div class="col-sm">
         <p *ngIf="carersToNotify.length === 0">No carers to notify</p>
-        <table *ngIf="carersToNotify.length !==0" class="custom-table text-center">
-            <thead>
-            <tr>
-                <th class="image-cell"></th>
-                <th>Name</th>
-                <th>Current carer rating</th>
-                <th>Experience</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td *ngIf="priorityCarers.length !== 0" class="info-row" colspan="5">Priority carers</td>
-            </tr>
-            <tr *ngFor="let carer of priorityCarers; let i = index">
-                <td>
-                    <div class="text-center">
-                        <div class="avatar">
-                            <div class="avatar-wrapper">
-                                <img [src]="getProfileImage(carer)" class="img img responsive profile-image">
-                            </div>
-                        </div>
-                    </div>
-                </td>
-                <td>{{ carer.carer.first_name }} {{ carer.carer.surname }}</td>
-                <td>
-                    <div *ngIf="carer.carer.reviews.count === 0">No reviews so far</div>
-                    <div *ngIf="carer.carer.reviews.count !== 0">
-                        {{ carer.carer.reviews.average }} from {{ carer.carer.reviews.count }} reviews
-                    </div>
-                </td>
-                <td>
-                    <span *ngIf="carer.carer.care_experience.years !== 0">{{ carer.carer.care_experience.years }}
-                    <span *ngIf="carer.carer.care_experience.years === 1"> yr</span><span *ngIf="carer.carer.care_experience.years !== 1">yrs</span>
-                    </span>
-                    <span *ngIf="carer.carer.care_experience.months !== 0">{{ carer.carer.care_experience.months }}
-                        <span *ngIf="carer.carer.care_experience.months !== 1">months</span>
-                    </span>
-                </td>
-                <td>
-                    <div class="text-center">
-                            <span
-                                    (click)="cancelCarerNotification(carer._id, i)"
-                                    class="actions"
-                            >Cancel</span>
-                    </div>
-                </td>
-            </tr>
 
-            <tr>
-                <td *ngIf="priorityCarers.length !== 0" class="info-row" colspan="5">Other carers we will contact after 1 hour</td>
-            </tr>
-            <tr *ngFor="let carer of nonPriorityCarers; let i = index">
-                <td>
-                    <div class="text-center">
-                        <div class="avatar">
-                            <div class="avatar-wrapper">
-                                <img [src]="getProfileImage(carer)" class="img img responsive profile-image">
+        <div *ngIf="carersToNotify.length !==0">
+            <table  class="custom-table text-center">
+                <thead>
+                    <tr>
+                        <th class="image-cell"></th>
+                        <th>Name</th>
+                        <th>Current carer rating</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    <!--priority carers-->
+                    <tr>
+                        <td *ngIf="priorityCarers.length !== 0" class="info-row" colspan="5">Priority carers</td>
+                    </tr>
+                    <tr *ngFor="let carer of priorityCarers; let i = index">
+                        <td>
+                            <div class="text-center">
+                                <div class="avatar">
+                                    <div class="avatar-wrapper">
+                                        <img [src]="getProfileImage(carer)" class="img img responsive profile-image">
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </td>
-                <td>{{ carer.carer.first_name }} {{ carer.carer.surname }}</td>
-                <td>
-                    <div *ngIf="carer.carer.reviews.count === 0">No reviews so far</div>
-                    <div *ngIf="carer.carer.reviews.count !== 0">
-                        {{ carer.carer.reviews.average }} from {{ carer.carer.reviews.count }} reviews
-                    </div>
-                </td>
-                <td>
-                    <span *ngIf="carer.carer.care_experience.years !== 0">{{ carer.carer.care_experience.years }}
-                    <span *ngIf="carer.carer.care_experience.years === 1"> yr</span><span *ngIf="carer.carer.care_experience.years !== 1">yrs</span>
-                    </span>
-                    <span *ngIf="carer.carer.care_experience.months !== 0">{{ carer.carer.care_experience.months }}
-                        <span *ngIf="carer.carer.care_experience.months !== 1">months</span>
-                    </span>
-                </td>
-                <td>
-                    <div class="text-center">
-                            <span
+                        </td>
+                        <td>{{ carer.carer.first_name }} {{ carer.carer.surname }}</td>
+                        <td>
+                            <div *ngIf="carer.carer.reviews.count === 0">No reviews so far</div>
+                            <div *ngIf="carer.carer.reviews.count !== 0">
+                                {{ carer.carer.reviews.average }} from {{ carer.carer.reviews.count }} reviews
+                            </div>
+                        </td>
+                        <td>
+                        <td>
+                            <div class="text-center">
+                                <span
                                     (click)="cancelCarerNotification(carer._id, i)"
                                     class="actions"
-                            >Cancel</span>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <br>
-        <div class="text-center">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li
-                            *ngFor="let p of pages"
-                            [ngClass]="{'active': page === p + 1}"
-                            class="page-item">
-                        <a
-                                (click)="onPageChange(p + 1)"
-                                class="page-link">{{ p + 1 }}</a></li>
-                </ul>
-            </nav>
+                                >Cancel</span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!--other carers-->
+                    <tr>
+                        <td *ngIf="priorityCarers.length !== 0" class="info-row" colspan="5">Other carers we will contact after 1 hour</td>
+                    </tr>
+                    <tr *ngFor="let carer of nonPriorityCarers; let i = index">
+                        <td>
+                            <div class="text-center">
+                                <div class="avatar">
+                                    <div class="avatar-wrapper">
+                                        <img [src]="getProfileImage(carer)" class="img img responsive profile-image">
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{ carer.carer.first_name }} {{ carer.carer.surname }}</td>
+                        <td>
+                            <div *ngIf="carer.carer.reviews.count === 0">No reviews so far</div>
+                            <div *ngIf="carer.carer.reviews.count !== 0">
+                                {{ carer.carer.reviews.average }} from {{ carer.carer.reviews.count }} reviews
+                            </div>
+                        </td>
+                        <td>
+                            <div class="text-center">
+                                <span (click)="cancelCarerNotification(carer._id, i)" class="actions">Cancel</span>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <app-pagination (pageChanged)="onPageChange($event)" [numberOfPages]="pages" [currentPage]="page"></app-pagination>
         </div>
     </div>
 </div>
