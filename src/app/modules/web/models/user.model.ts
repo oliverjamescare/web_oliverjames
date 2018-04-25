@@ -8,6 +8,7 @@ export class User extends Model
 {
     id: string = null;
     email: string = null;
+    email_verified: boolean = null;
     phone_number: string = null;
     address?: Address = null;
     access_token?: Token = null;

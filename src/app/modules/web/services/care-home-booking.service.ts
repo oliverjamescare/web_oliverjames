@@ -15,6 +15,7 @@ export class CareHomeBookingService {
     calendar: CalendarDay[];
     preBookedJobs: PreBookedJob[] = [];
     addedBooking = new Subject<PreBookedJob>();
+    removedBooking = new Subject<PreBookedJob>();
     priorityCarers: Carer[] = [];
     generalGuidance: GeneralGuidance;
     generalGuidanceForm: GeneralGuidance = null;
@@ -75,7 +76,9 @@ export class CareHomeBookingService {
             });
     }
 
-    removePreBookedJob(index: number): void {
+    removePreBookedJob(index: number): void
+    {
+        this.removedBooking.next(this.preBookedJobs[index]);
         this.preBookedJobs.splice(index, 1);
         sessionStorage.setItem('preBookedJobs', JSON.stringify(this.preBookedJobs));
     }

@@ -109,8 +109,11 @@ export class CalendarPopupComponent implements OnInit
 
                 this.prepareStartIntervals();
                 this.prepareEndIntervals();
-                this.calculateInitials();
 
+                this.form.patchValue({
+                    from: this.startIntervals[0],
+                    till: this.endIntervals[0],
+                });
             });
 
         //on start time change

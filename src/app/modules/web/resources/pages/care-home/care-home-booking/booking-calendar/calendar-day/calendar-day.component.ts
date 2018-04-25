@@ -19,10 +19,11 @@ export class CalendarDayComponent implements OnInit, OnChanges, OnDestroy {
     @Input() index: number;
 
     pastDay: boolean;
-    allJobs: { start: Date, end: Date, preBooked: boolean, role: string}[] = [];
+    allJobs: { index: number | null, start: Date, end: Date, preBooked: boolean, role: string}[] = [];
     preBookedJobs: PreBookedJob[] = [];
 
     bookedJobSub: Subscription;
+    removedJob: Subscription;
 
     constructor(private calendarPopupService: CalendarPopupService,
                 private bookingService: CareHomeBookingService) {
@@ -31,6 +32,7 @@ export class CalendarDayComponent implements OnInit, OnChanges, OnDestroy {
     ngOnInit() {
         this.validateDay();
         this.getBookedJob();
+        this.registerRemovedJobAction();
     }
 
     ngOnChanges() {
@@ -39,6 +41,7 @@ export class CalendarDayComponent implements OnInit, OnChanges, OnDestroy {
 
     ngOnDestroy() {
         this.bookedJobSub.unsubscribe();
+        this.removedJob.unsubscribe();
     }
 
     isAddPopupOpen(): boolean {
@@ -80,9 +83,28 @@ export class CalendarDayComponent implements OnInit, OnChanges, OnDestroy {
         this.bookedJobSub = this.bookingService.addedBooking.subscribe(
             (bookedJob: PreBookedJob) => {
 
-                if (moment(bookedJob._id).format("YYYY-MM-DD") == moment(this.date).format("YYYY-MM-DD")) {
+                if (moment(bookedJob._id).format("YYYY-MM-DD") == moment(this.date).format("YYYY-MM-DD"))
+                {
                     this.preBookedJobs.push(bookedJob);
                     this.setUpList();
+                }
+            }
+        );
+    }
+
+    private registerRemovedJobAction(): void
+    {
+        this.removedJob = this.bookingService.removedBooking.subscribe(
+            (bookedJob: PreBookedJob) => {
+
+                if (moment(bookedJob._id).format("YYYY-MM-DD") == moment(this.date).format("YYYY-MM-DD"))
+                {
+                    const index = this.preBookedJobs.findIndex(job => job._id == bookedJob._id);
+                    if(index != -1)
+                    {
+                        this.preBookedJobs.splice(index, 1);
+                        this.setUpList();
+                    }
                 }
             }
         );
@@ -91,18 +113,28 @@ export class CalendarDayComponent implements OnInit, OnChanges, OnDestroy {
     private setUpList(): void
     {
         this.allJobs = [];
+        const foundPreBookedIndexes = [];
+
         if (!isUndefined(this.jobs))
         {
             this.jobs.forEach((job) => {
                 this.allJobs.push({
+                    index: null,
                     start: new Date(job.start_date),
                     end: new Date(job.end_date),
                     role: job.role,
                     preBooked: false
                 });
             });
+
             this.preBookedJobs.forEach((job) => {
+
+                const index = this.bookingService.preBookedJobs.findIndex((preBookedJob, i) => preBookedJob._id == job._id && !foundPreBookedIndexes.includes(i));
+                if(index != -1)
+                    foundPreBookedIndexes.push(index);
+
                 this.allJobs.push({
+                    index: index,
                     start: job.getStartDate(),
                     end: job.getEndDate(),
                     role: job.role,

@@ -193,6 +193,7 @@ export class CarerMyProfileComponent implements OnInit
         this.carerProfileService.getCarerProfile()
             .subscribe((user: User) => {
                     this.user = user;
+                    console.log(this.user)
                     this.createForm();
                 });
     }

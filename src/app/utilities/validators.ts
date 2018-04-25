@@ -44,8 +44,6 @@ export function greaterThan(value: any)
 export function dateGreaterThan(value: Date)
 {
     return (control: FormControl): { [ key: string ]: boolean } => {
-        console.log("t", new Date(control.value))
-        console.log("f", new Date(value))
         return new Date(control.value).getTime() <= new Date(value).getTime() ? { 'dateGreaterThan': true } : null;
     }
 }
