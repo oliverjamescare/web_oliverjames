@@ -13,7 +13,7 @@
                       *ngIf="careHomeService.jobDetails.carer.carer.reviews.count === 0">Unrated</span>
             <!--<span class="float small-font">{{ careHomeService.jobDetails.carer.carer.care_experience.years }} year(s) care experience</span>-->
             </div>
-            <button class="btn btn-success btn-warn separate-top">Find me a different carer</button>
+            <button class="btn btn-success btn-warn separate-top" (click)="onCarerChangePopup()">Find me a different carer</button>
     </div>
 
     <ul>
@@ -95,3 +95,17 @@
         </li>
     </ul>
 </div>
+
+<app-popup [title]="'Change carer'" [id]="'change_carer_modal_id'">
+    <div class="row">
+        <div class="col-12">
+            <p class="modal-description">
+                Are you sure you want to change this carer?
+            </p>
+            <div class="buttons-container">
+                <button type="button" type="submit" class="btn btn-success" (click)="onCarerChange()">OK</button>
+                <button type="button" class="btn btn-outline-success" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</app-popup>

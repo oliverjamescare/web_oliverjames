@@ -3,6 +3,7 @@ import { CareHomeBookingService } from '../../../../../services/care-home-bookin
 import { Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
 import { GeneralGuidance } from '../../../../../models/care-home-booking/general-guidance';
+import { getMessageError } from '../../../../../../../utilities/form.utils';
 
 @Component({
     selector: 'app-care-home-booking-review',
@@ -43,10 +44,9 @@ export class CareHomeBookingReviewComponent implements OnInit
                             {queryParams: {group: response.group}});
                         this.notificationService.success('Success', 'Jobs booked');
                     },
-                    error =>
-                    {
+                    error => {
                         this.inProgress = false;
-                        console.log('Book jobs error', error);
+                        this.notificationService.error('Error', getMessageError(error));
                     }
                 );
         } else

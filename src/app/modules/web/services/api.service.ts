@@ -202,6 +202,11 @@ export class ApiService
             { headers: this.getAuthorizationHeaders() });
     }
 
+    requestCarerChange(id: string): Observable<any>
+    {
+        return this.httpClient.put(`${this.endpoint}/jobs/${id}/request-carer-change`, {}, { headers: this.getAuthorizationHeaders() });
+    }
+
     getSubmittedJobNotifications(group: string, page: number): Observable<any>
     {
         return this.httpClient.get(

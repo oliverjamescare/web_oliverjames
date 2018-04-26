@@ -239,7 +239,7 @@ import { CarerAvailableJobsListComponent } from './resources/pages/carer/carer-a
         NgbModule.forRoot(),
         MatInputModule,
         ClickOutsideModule,
-        NgxStripeModule.forRoot('pk_test_sihAGUNVJG3EsvgRyh7IHDQo'),
+        NgxStripeModule.forRoot('pk_live_cMA3gvaz6Z2RERBYxePK0ho8'),
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyBWoEhh2-9yp52XVTtfTaLIPcxcmTkt_Ms',
             libraries: ['places', 'geometry']
