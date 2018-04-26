@@ -60,6 +60,7 @@ export class CardDetailsComponent implements OnInit, AfterViewInit {
                     this.buttonLoading = false;
                     console.log('update account details success response', response);
                     this.notificationService.success('Bank details successfully stored');
+                    $('#' + this.type + '_id').modal("hide");
                     this.reload.emit();
                 },
                 error => {

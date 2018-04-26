@@ -1,260 +1,297 @@
 <div class="row">
     <div class="col-sm">
         <h2>Carer details</h2>
-        <button routerLink="/admin/carers/list" class="btn-success right btn-nav">Back</button>
+        <a routerLink="/admin/carers/list" class="btn btn-success right btn-nav">Back</a>
     </div>
 </div>
 <br>
 
-<div *ngIf="carerDetails" class="row">
+<div *ngIf="form" class="row">
     <div class="col-sm">
-        <table *ngIf="carerDetails" [formGroup]="form" class="carer-details-table">
-            <tr>
-                <th>Oliver James ID</th>
-                <td>{{ carerDetails._id }}</td>
-            </tr>
-            <tr>
-                <th>Carer Name</th>
-                <td>{{ carerDetails.carer.first_name }} {{ carerDetails.carer.surname }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ carerDetails.email }}</td>
-            </tr>
-            <tr>
-                <th>Phone number</th>
-                <td>{{ carerDetails.phone_number }}</td>
-            </tr>
-            <tr>
-                <th>Bank details</th>
-                <td>
-                    <span *ngIf="!carerDetails.carer.payment_system.bank_number">Not set up</span>
-                    <span *ngIf="carerDetails.carer.payment_system.bank_number">
-                        Stored {{ carerDetails.carer.payment_system.bank_number }}</span>
-                </td>
-            </tr>
-            <tr>
-                <th>Date created</th>
-                <td>{{ carerDetails.created | timestamp }}</td>
-            </tr>
-            <tr>
-                <th>Profile picture</th>
-                <td><span (click)="showProfilePicture = true" class="green gj-cursor-pointer">See</span></td>
-            </tr>
-            <tr>
-                <th>Carer Dob</th>
-                <td>{{ carerDetails.carer.date_of_birth }}</td>
-            </tr>
-            <tr>
-                <th class="green-cell white-color">Training record</th>
-                <td class="green-cell"></td>
-            </tr>
-            <tr>
-                <th>Qualifications</th>
-                <td>
-                    <span *ngFor="let qual of carerDetails.carer.training_record.qualifications; let i = index">
-                        {{ qual }}
-                        <span *ngIf="i < carerDetails.carer.training_record.qualifications.length - 1">, </span>
-                    </span>
-                    <span class="cell-list green">Edit</span>
-                </td>
-            </tr>
-            <tr>
-                <th>Safeguarding</th>
-                <td>{{ carerDetails.carer.training_record.safeguarding | timestamp }}</td>
-            </tr>
-            <tr>
-                <th>Manual handling - people</th>
-                <td>{{ carerDetails.carer.training_record.manual_handling_people | timestamp }}</td>
-            </tr>
-            <tr>
-                <th>First Aid & basic life support</th>
-                <td>{{ carerDetails.carer.training_record.first_aid_and_basic_life_support | timestamp }}</td>
-            </tr>
-            <tr>
-                <th>Infection control</th>
-                <td>{{ carerDetails.carer.training_record.infection_control | timestamp }}</td>
-            </tr>
-            <tr>
-                <th>H&S</th>
-                <td>{{ carerDetails.carer.training_record.h_and_s | timestamp }}</td>
-            </tr>
-            <tr>
-                <th>Fire safety</th>
-                <td>{{ carerDetails.carer.training_record.fire_safety | timestamp }}</td>
-            </tr>
-            <tr>
-                <th>Dementia</th>
-                <td>{{ carerDetails.carer.training_record.dementia | timestamp }}</td>
-            </tr>
-            <tr>
-                <th>Medication Managment & administration (not awarness)</th>
-                <td>{{ carerDetails.carer.training_record.medication_management | timestamp }}</td>
-            </tr>
-            <tr>
-                <th>Other</th>
-                <td><input formControlName="training_other" type="text" class="form-control"></td>
-            </tr>
-            <tr>
-                <th>Photographic evidence</th>
-                <td>{{ carerDetails.carer.training_record.files.length }} files uploaded
-                    <span (click)="onPopupOpen('training_record')" class="green right gj-cursor-pointer">Upload / edit</span></td>
-            </tr>
-            <tr>
-                <th class="green-cell white-color">Care experience</th>
-                <td class="green-cell"></td>
-            </tr>
-            <tr>
-                <th>Total care experience before starting work at Oliver James (according to CV)</th>
-                <td>Years: {{ carerDetails.carer.joining_care_experience.years}} Months: {{ carerDetails.carer.joining_care_experience.months }}</td>
-            </tr>
-            <tr>
-                <th>CV / equivalent upload</th>
-                <td>{{ carerDetails?.carer?.cv_uploads?.length }} files uploaded
-                    <span (click)="onPopupOpen('cv')" class="green right gj-cursor-pointer">Upload / edit</span></td>
-            </tr>
-            <tr>
-                <th class="green-cell white-color">DBS</th>
-                <td class="green-cell"></td>
-            </tr>
-            <tr>
-                <th>Date of DBS</th>
-                <td><input formControlName="dbs_date" type="text" class="form-control" placeholder="yyyy-mm-dd"></td>
-            </tr>
-            <tr>
-                <th>DBS ref Number</th>
-                <td><input formControlName="dbs_ref_number" type="text" class="form-control"></td>
-            </tr>
-            <tr>
-                <th>DBS status</th>
-                <td>
-                    <select formControlName="dbs_status" class="form-control">
-                        <option value="Clear">Clear</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <th>DBS photo record</th>
-                <td>{{ carerDetails.carer.dbs.files.length }} files uploaded
-                    <span (click)="onPopupOpen('dbs')" class="green right gj-cursor-pointer">Upload / edit</span></td>
-            </tr>
-            <tr>
-                <th class="green-cell white-color">References</th>
-                <td class="green-cell white-color gj-cursor-pointer"> <span (click)="onAddReference()">Add reference</span></td>
-            </tr>
-            <tbody formArrayName="reference">
-            <tr *ngFor="let reference of form.get('reference').controls; let i = index" [formGroupName]="i">
-                <td><input formControlName="name" class="form-control"></td>
-                <td>
-                    <select formControlName="type" class="form-control array-control">
-                        <option value="Professional">Professional</option>
-                        <option value="Personal">Personal</option>
-                    </select>
-                    <span (click)="onRemoveReference(i)" class="trash-control"><i class="fas fa-trash gj-cursor-pointer"></i></span>
-                </td>
-            </tr>
-            </tbody>
-            <tr>
-                <th>Photo evidence</th>
-                <td>{{ carerDetails.carer.reference.files.length }} files uploaded
-                    <span (click)="onPopupOpen('reference')" class="green right gj-cursor-pointer">Upload / edit</span></td>
-            </tr>
-            <tr>
-                <th class="green-cell white-color">Eligible job roles / wrap-up</th>
-                <td class="green-cell"></td>
-            </tr>
-            <tr>
-                <th>Job role 1</th>
-                <td>
-                    <select formControlName="job_role1" class="form-control">
-                        <option value="Carer">Carer</option>
-                        <option value="Senior Carer">Senior Carer</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <th>Job role 2</th>
-                <td>
-                    <select formControlName="job_role2" class="form-control">
-                        <option value=""></option>
-                        <option value="Carer">Carer</option>
-                        <option value="Senior Carer">Senior Carer</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <th>Notes</th>
-                <td>
-                    <textarea formControlName="notes" class="form-control" rows="10"></textarea>
-                </td>
-            </tr>
-            <tr>
-                <th class="green-cell white-color">Account</th>
-                <td class="green-cell"></td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>
-                    <select formControlName="status" class="form-control">
-                        <option value="CREATED">Created</option>
-                        <option value="ACTIVE">Active</option>
-                        <option value="BANNED">Baned</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <th>Ban carer till</th>
-                <td><input formControlName="banned_until" class="form-control" placeholder="yyyy-mm-dd"></td>
-            </tr>
-        </table>
+        <form [formGroup]="form">
+            <table class="carer-details-table">
+                <tr>
+                    <th>Oliver James ID</th>
+                    <td>{{ carerDetails._id }}</td>
+                </tr>
+                <tr>
+                    <th>Carer Name</th>
+                    <td>{{ carerDetails.carer.first_name }} {{ carerDetails.carer.surname }}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>{{ carerDetails.email }}</td>
+                </tr>
+                <tr>
+                    <th>Phone number</th>
+                    <td>{{ carerDetails.phone_number }}</td>
+                </tr>
+                <tr>
+                    <th>Bank details</th>
+                    <td>
+                        <span *ngIf="!carerDetails.carer.payment_system || !carerDetails.carer.payment_system.bank_number">Not set up</span>
+                        <span *ngIf="carerDetails.carer.payment_system && carerDetails.carer.payment_system.bank_number">
+                            Stored {{ carerDetails.carer.payment_system.bank_number }}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Date created</th>
+                    <td>{{ carerDetails.created | timestamp }}</td>
+                </tr>
+                <tr>
+                    <th>Profile picture</th>
+                    <td><span (click)="showProfilePicture = true" class="green gj-cursor-pointer">See</span></td>
+                </tr>
+                <tr>
+                    <th>Carer date of birth</th>
+                    <td>{{ carerDetails.carer.date_of_birth }}</td>
+                </tr>
 
-        <br>
-        <br>
-        <h4>Deductions</h4>
-        <div class="row">
-            <div class="col-sm-4">
-                <b>Deductions balance:</b>
-            </div>
-            <div class="col-sm-8">£ {{ carerDetails.carer.deductions_balance }}</div>
-        </div>
-        <br>
-        <div class="row">
-            <div class="col-sm-12">
-                <table class="deductions-table table" *ngIf="carerDetails.carer.deductions.length">
-                    <thead>
-                    <th>ID</th>
-                    <th>Date</th>
-                    <th>Description</th>
-                    <th>Credit / Debit</th>
-                    <th>Balance</th>
-                    <th>Status</th>
-                    </thead>
-                    <tbody>
-                    <tr *ngFor="let deduction of carerDetails.carer.deductions; let i = index;">
-                        <td>{{ i +1 }}</td>
-                        <td>{{ datesService.getDateString(deduction.created) }}</td>
-                        <td>{{ deduction.description }}</td>
-                        <td>{{ deduction.amount }}</td>
-                        <td>{{ deduction.balance }}</td>
-                        <td>{{ deduction.status.toLowerCase() }}</td>
+                <!--training record-->
+                <tr>
+                    <th class="green-cell white-color">Training record</th>
+                    <td class="green-cell"></td>
+                </tr>
+                <tr>
+                    <th>Qualifications</th>
+                    <td>
+                        <div *ngFor="let qualification of form.get('qualifications').controls; let i=index">
+                            <input type="checkbox" [formControl]="qualification"> {{qualifications[i]}}
+                        </div>
+                        <br>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Safeguarding</th>
+                    <td>
+                        <input type="text" class="form-control" data-datepicker="safeguarding" placeholder="yyyy-mm-dd" formControlName="safeguarding">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Manual handling - people</th>
+                    <td>
+                        <input formControlName="manual_handling_people" type="text" class="form-control" data-datepicker="manual_handling_people" placeholder="yyyy-mm-dd">
+                    </td>
+                </tr>
+                <tr>
+                    <th>First Aid & basic life support</th>
+                    <td>
+                        <input formControlName="first_aid_and_basic_life_support" type="text" class="form-control" placeholder="yyyy-mm-dd">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Infection control</th>
+                    <td>
+                        <input formControlName="infection_control" type="text" class="form-control" placeholder="yyyy-mm-dd">
+                    </td>
+                </tr>
+                <tr>
+                    <th>H&S</th>
+                    <td>
+                        <input formControlName="h_and_s" type="text" class="form-control" placeholder="yyyy-mm-dd">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Fire safety</th>
+                    <td>
+                        <input formControlName="fire_safety" type="text" class="form-control" placeholder="yyyy-mm-dd">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Dementia</th>
+                    <td>
+                        <input formControlName="dementia" type="text" class="form-control" placeholder="yyyy-mm-dd">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Medication Managment & administration (not awarness)</th>
+                    <td>
+                        <input formControlName="medication_management" type="text" class="form-control" placeholder="yyyy-mm-dd">
+                    </td>
+                </tr>
+                <tr>
+                    <th>First aid awareness</th>
+                    <td>
+                        <input formControlName="first_aid_awareness" type="text" class="form-control" placeholder="yyyy-mm-dd">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Other</th>
+                    <td><textarea formControlName="training_other" type="text" class="form-control"></textarea></td>
+                </tr>
+                <tr>
+                    <th>Photographic evidence</th>
+                    <td>
+                        {{ carerDetails.carer.training_record.files.length }} files uploaded
+                        <span (click)="onPopupOpen('training_record')" class="green right gj-cursor-pointer">Upload / edit</span>
+                    </td>
+                </tr>
+
+                <!--care experience-->
+                <tr>
+                    <th class="green-cell white-color">Care experience</th>
+                    <td class="green-cell"></td>
+                </tr>
+                <tr>
+                    <th>Total care experience before starting work at Oliver James (according to CV)</th>
+                    <td>Years: {{ carerDetails.carer.joining_care_experience.years}} Months: {{ carerDetails.carer.joining_care_experience.months }}</td>
+                </tr>
+                <tr>
+                    <th>CV / equivalent upload</th>
+                    <td>
+                        {{ carerDetails?.carer?.cv_uploads?.length }} files uploaded
+                        <span (click)="onPopupOpen('cv')" class="green right gj-cursor-pointer">Upload / edit</span>
+                    </td>
+                </tr>
+
+                <!--dbs-->
+                <tr>
+                    <th class="green-cell white-color">DBS</th>
+                    <td class="green-cell"></td>
+                </tr>
+                <tr>
+                    <th>Date of DBS</th>
+                    <td><input formControlName="dbs_date" type="text" class="form-control" placeholder="yyyy-mm-dd"></td>
+                </tr>
+                <tr>
+                    <th>DBS ref Number</th>
+                    <td><input formControlName="dbs_ref_number" type="text" class="form-control"></td>
+                </tr>
+                <tr>
+                    <th>DBS status</th>
+                    <td>
+                        <select formControlName="dbs_status" class="form-control">
+                            <option value="Clear">Clear</option>
+                            <option value="Minor issues - approved">Minor issues - approved</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>DBS photo record</th>
+                    <td>
+                        {{ carerDetails.carer.dbs.files.length }} files uploaded
+                        <span (click)="onPopupOpen('dbs')" class="green right gj-cursor-pointer">Upload / edit</span>
+                    </td>
+                </tr>
+
+                <!--references-->
+                <tr>
+                    <th class="green-cell white-color">References</th>
+                    <td class="green-cell white-color gj-cursor-pointer"> <span (click)="onAddReference()">Add reference</span></td>
+                </tr>
+                <tbody formArrayName="reference">
+                    <tr *ngFor="let reference of form.get('reference').controls; let i = index" [formGroupName]="i">
+                        <td><input formControlName="name" class="form-control"></td>
+                        <td>
+                            <select formControlName="type" class="form-control array-control">
+                                <option value="Professional">Professional</option>
+                                <option value="Personal">Personal</option>
+                            </select>
+                            <span (click)="onRemoveReference(i)" class="trash-control"><i class="fas fa-trash gj-cursor-pointer"></i></span>
+                        </td>
                     </tr>
-                    </tbody>
-                </table>
-                <br>
-                <button (click)="addDeduction()" class="btn btn-success  submit-button" type="button">Add deduction</button>
-            </div>
-        </div>
+                </tbody>
+                <tr>
+                    <th>Photo evidence</th>
+                    <td>
+                        {{ carerDetails.carer.reference.files.length }} files uploaded
+                        <span (click)="onPopupOpen('reference')" class="green right gj-cursor-pointer">Upload / edit</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="green-cell white-color">Eligible job roles / wrap-up</th>
+                    <td class="green-cell"></td>
+                </tr>
+                <tr>
+                    <th>Eligible roles</th>
+                    <td>
+                        <div *ngFor="let role of form.get('eligible_roles').controls; let i=index">
+                            <input type="checkbox" [formControl]="role"> {{roles[i]}}
+                        </div>
+                        <br>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Notes</th>
+                    <td>
+                        <textarea formControlName="notes" class="form-control" rows="10"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="green-cell white-color">Account</th>
+                    <td class="green-cell"></td>
+                </tr>
+                <tr>
+                    <th>Status</th>
+                    <td>
+                        <select formControlName="status" class="form-control">
+                            <option value="CREATED">Created</option>
+                            <option value="ACTIVE">Active</option>
+                            <option value="BANNED">Baned</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Ban carer till</th>
+                    <td><input formControlName="banned_until" class="form-control" placeholder="yyyy-mm-dd"></td>
+                </tr>
+            </table>
 
-        <br>
-        <div class="carer-actions">
-            <button class="btn-success btn-actions btn-right">Go back (do not save)</button>
-            <button (click)="onUpdateCarerDetails()" class="btn-success btn-actions">
-                Confirm changes <span *ngIf="buttonLoading"><i class="fa fa-spinner fa-spin"></i></span></button>
-        </div>
+            <br>
+            <br>
+            <h4>Deductions</h4>
+            <div class="row">
+                <div class="col-sm-4">
+                    <b>Deductions balance:</b>
+                </div>
+                <div class="col-sm-8">£ {{ carerDetails.carer.deductions_balance }}</div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-12">
+                    <table class="deductions-table table" *ngIf="carerDetails.carer.deductions.length">
+                        <thead>
+                        <th>ID</th>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Credit / Debit</th>
+                        <th>Balance</th>
+                        <th>Status</th>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let deduction of carerDetails.carer.deductions; let i = index;">
+                            <td>{{ i +1 }}</td>
+                            <td>{{ datesService.getDateString(deduction.created) }}</td>
+                            <td>{{ deduction.description }}</td>
+                            <td><span>&#163;</span>{{ deduction.amount }}</td>
+                            <td><span>&#163;</span>{{ deduction.balance }}</td>
+                            <td>{{ deduction.status.toLowerCase() }}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <button (click)="addDeduction()" class="btn btn-success  submit-button" type="button">Add deduction</button>
+                </div>
+            </div>
+
+            <br>
+            <div class="row">
+                <div class="col-8">
+                    <div class="carer-actions">
+                        <a routerLink="/admin/carers/list" class="btn-success btn-actions btn-right">Go back (do not save)</a>
+                        <button (click)="onUpdateCarerDetails()" class="btn btn-success btn-actions">
+                            Confirm changes
+                            <span *ngIf="buttonLoading"><i class="fa fa-spinner fa-spin"></i></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
 </div>
 <br>
 
+<!--file upload -->
 <app-file-uploading
         *ngIf="showFileUploader"
         [title]="uploadTitle"
@@ -295,8 +332,5 @@
     </div>
 </app-cms-popup>
 
-<app-see-profile-pictrue
-        *ngIf="showProfilePicture"
-        [url]="carerDetails.carer.profile_image"
->
-</app-see-profile-pictrue>
+<!--profile image-->
+<app-see-profile-pictrue *ngIf="showProfilePicture" [url]="carerDetails.carer.profile_image"></app-see-profile-pictrue>

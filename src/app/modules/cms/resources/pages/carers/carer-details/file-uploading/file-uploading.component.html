@@ -14,8 +14,7 @@
                    (change)="handleFileInput($event.target.files)">
             <span *ngFor="let error of uploadErros" class="input-error">{{ error }}</span>
             <br>
-                <button (click)="onFilesUpload()" class="btn-success">
-                    Upload files <span *ngIf="buttonLoading"><i class="fa fa-spinner fa-spin"></i></span></button>
+            <button (click)="onFilesUpload()" class="btn btn-success">Upload files <span *ngIf="buttonLoading"><i class="fa fa-spinner fa-spin"></i></span></button>
         </div>
     </div>
 </app-cms-popup>

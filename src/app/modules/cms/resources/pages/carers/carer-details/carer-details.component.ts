@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {CarersService} from '../../../../services/carers.service';
-import {ActivatedRoute} from '@angular/router';
-import {CarerDetailsResponse} from '../../../../models/response/carer-details-response';
-import {FormArray, FormControl, FormGroup} from '@angular/forms';
-import {DatesService} from '../../../../services/dates.service';
-import {isUndefined} from 'util';
-import {NotificationsService} from 'angular2-notifications';
+import { AfterContentChecked, AfterContentInit, AfterViewChecked, Component, OnInit } from '@angular/core';
+import { CarersService } from '../../../../services/carers.service';
+import { ActivatedRoute } from '@angular/router';
+import { CarerDetailsResponse } from '../../../../models/response/carer-details-response';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { DatesService } from '../../../../services/dates.service';
+import { isUndefined } from 'util';
+import { NotificationsService } from 'angular2-notifications';
 import { getMessageError } from '../../../../../../utilities/form.utils';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -14,7 +14,8 @@ import { HttpErrorResponse } from '@angular/common/http';
     templateUrl: './carer-details.component.html',
     styleUrls: ['./carer-details.component.scss']
 })
-export class CarerDetailsComponent implements OnInit {
+export class CarerDetailsComponent implements OnInit
+{
     carerId: string;
     carerDetails: CarerDetailsResponse;
     form: FormGroup;
@@ -27,76 +28,113 @@ export class CarerDetailsComponent implements OnInit {
     files: string[] = [];
 
     deductionForm: FormGroup;
-    modalError: string = "";
+    modalError: string = '';
     inProgress: boolean = false;
+    qualifications: Array<string> = [
+        "Care certificate",
+        "QCF / NVQ level 2 in Health & Social Care",
+        "QCF / NVQ level 3 in Health & Social Care",
+        "QCF / NVQ level 4 in Health & Social Care",
+        "QCF / NVQ level 5 in Health & Social Care",
+        "Agency carer induction training",
+        "Nursing qualification (UK)",
+        "Nursing qualification (elsewhere)"
+    ];
+
+    roles: Array<string> = [
+        "Carer",
+        "Senior Carer"
+    ]
 
     constructor(private carersService: CarersService,
                 private route: ActivatedRoute,
                 private datesService: DatesService,
-                private notificationService: NotificationsService) {
-    }
+                private notificationService: NotificationsService) {}
 
-    ngOnInit() {
+    ngOnInit()
+    {
         this.route.params.subscribe(
-            params => {
+            params =>
+            {
                 this.carerId = params['id'];
                 this.getCarerDetails();
-                this.createForm();
             }
         );
 
         //deduction form init
         this.deductionForm = new FormGroup({
-            amount: new FormControl(""),
-            type: new FormControl(""),
-            description: new FormControl("")
-        })
+            amount: new FormControl(''),
+            type: new FormControl(''),
+            description: new FormControl('')
+        });
+
+
+    }
+
+
+    //getting data
+    private getCarerDetails(): void
+    {
+        this.carersService.getCarerDetails(this.carerId)
+            .subscribe(
+                (response: CarerDetailsResponse) => {
+                    this.handleDetailsResponse(response);
+                });
+    }
+
+    private handleDetailsResponse(response: CarerDetailsResponse): void
+    {
+        this.carerDetails = response;
+        this.setUpFilesProperty();
+        this.createForm();
     }
 
     //deductions
     addDeduction()
     {
-        $("#deduction").modal();
+        $('#deduction').modal();
     }
+
     onAddDeduction()
     {
-        if(this.deductionForm.valid)
+        if (this.deductionForm.valid)
         {
             this.carersService
                 .addDeduction(this.carerId, this.deductionForm.value)
-                .subscribe(() => {
-                        $("#deduction").modal("hide");
-                        this.modalError = "";
+                .subscribe(() =>
+                    {
+                        $('#deduction').modal('hide');
+                        this.modalError = '';
                         this.deductionForm.reset();
                         this.getCarerDetails();
                     },
-                    (error: HttpErrorResponse) => {
+                    (error: HttpErrorResponse) =>
+                    {
                         this.modalError = getMessageError(error);
                     });
         }
     }
 
-    onUpdateCarerDetails(): void {
+    onUpdateCarerDetails(): void
+    {
         this.buttonLoading = true;
-        console.log('Details form', this.form.value);
         this.prepareDetailsToUpdate();
-        console.log('Prepared details', this.carerDetails);
         this.carersService.updateCarerDetails(this.carerId, this.carerDetails)
             .subscribe(
                 response => {
                     this.buttonLoading = false;
                     this.notificationService.success('Carer details updated');
-                    console.log('Update carer details success response', response);
+                    this.getCarerDetails();
                 },
                 error => {
                     this.buttonLoading = false;
                     this.notificationService.error('Carer details update failed');
-                    console.log('Update carer details error', error);
                 }
             );
     }
 
-    onAddReference(): void {
+    onAddReference(): void
+    {
         (<FormArray>this.form.get('reference')).push(
             new FormGroup({
                 'name': new FormControl(null),
@@ -105,222 +143,162 @@ export class CarerDetailsComponent implements OnInit {
         );
     }
 
-    onRemoveReference(index: number): void {
+    onRemoveReference(index: number): void
+    {
         (<FormArray>this.form.get('reference')).removeAt(index);
     }
 
-    onPopupOpen(resourceName: string): void {
+    onPopupOpen(resourceName: string): void
+    {
         this.resourceName = resourceName;
         this.showFileUploader = true;
         this.setUpFilesProperty();
     }
 
-    onReload(): void {
+    onReload(): void
+    {
         this.getCarerDetails();
     }
 
-    setUpFilesProperty(): void {
-        switch (this.resourceName) {
-            case 'training_record': {
+    setUpFilesProperty(): void
+    {
+        switch (this.resourceName)
+        {
+            case 'training_record':
+            {
                 this.files = this.carerDetails.carer.training_record.files;
                 this.uploadTitle = 'Photographic evidence';
                 break;
             }
-            case 'cv': {
+            case 'cv':
+            {
                 this.files = this.carerDetails.carer.cv_uploads;
                 this.uploadTitle = 'CV uploads';
                 break;
             }
-            case 'dbs': {
+            case 'dbs':
+            {
                 this.files = this.carerDetails.carer.dbs.files;
                 this.uploadTitle = 'Dbs photo record';
                 break;
             }
-            case 'reference': {
+            case 'reference':
+            {
                 this.files = this.carerDetails.carer.reference.files;
-                this.uploadTitle = 'Photo ewidence';
+                this.uploadTitle = 'Photo evidence';
                 break;
             }
         }
     }
 
-    private getCarerDetails(): void {
-        this.carersService.getCarerDetails(this.carerId)
-            .subscribe(
-                (response: CarerDetailsResponse) => {
-                    this.handleDetailsResponse(response);
-                },
-                error => console.log('Get carer details error', error)
-            );
-    }
 
-    private handleDetailsResponse(response: CarerDetailsResponse): void {
-        console.log('Get carer details response', response);
-        this.carerDetails = response;
-        this.setUpFilesProperty();
-        this.createForm();
-        this.setUpForm();
-    }
 
-    private createForm(): void {
+    private createForm(): void
+    {
         const refArr = new FormArray([]);
-        if (this.carerDetails && !isUndefined(this.carerDetails.carer.reference.references)) {
-            this.carerDetails.carer.reference.references.forEach((ref) => {
+        if (this.carerDetails && !isUndefined(this.carerDetails.carer.reference.references))
+        {
+            this.carerDetails.carer.reference.references.forEach((ref) =>
+            {
                 refArr.push(new FormGroup({
                     'name': new FormControl(ref.name),
                     'type': new FormControl(ref.type)
                 }));
             });
         }
+
         this.form = new FormGroup({
-            'training_other': new FormControl(),
-            'dbs_date': new FormControl(),
-            'dbs_ref_number': new FormControl(),
-            'dbs_status': new FormControl(),
             'reference': refArr,
-            'job_role1': new FormControl(),
-            'job_role2': new FormControl(null),
             'notes': new FormControl(),
             'status': new FormControl(),
-            'banned_until': new FormControl(),
-            fire_safety: new FormControl(),
-            dementia: new FormControl(),
-            h_and_s: new FormControl(),
-            first_aid_awareness: new FormControl(),
-            first_aid_and_basic_life_support: new FormControl(),
-            infection_control: new FormControl(),
-            medication_management: new FormControl(),
-            manual_handling_people: new FormControl(),
-            safeguarding: new FormControl(),
+            'banned_until': new FormControl(this.carerDetails.banned_until),
+
+            //training record
+            safeguarding: new FormControl(this.carerDetails.carer.training_record.safeguarding ? moment(this.carerDetails.carer.training_record.safeguarding || new Date()).format("YYYY-MM-DD") : null),
+            manual_handling_people: new FormControl(this.carerDetails.carer.training_record.manual_handling_people ? moment(this.carerDetails.carer.training_record.manual_handling_people || new Date()).format("YYYY-MM-DD") : null),
+            first_aid_and_basic_life_support: new FormControl(this.carerDetails.carer.training_record.first_aid_and_basic_life_support ? moment(this.carerDetails.carer.training_record.first_aid_and_basic_life_support || new Date()).format("YYYY-MM-DD") : null),
+            infection_control: new FormControl(this.carerDetails.carer.training_record.infection_control ? moment(this.carerDetails.carer.training_record.infection_control || new Date()).format("YYYY-MM-DD") : null),
+            h_and_s: new FormControl(this.carerDetails.carer.training_record.h_and_s ? moment(this.carerDetails.carer.training_record.h_and_s || new Date()).format("YYYY-MM-DD") : null),
+            fire_safety: new FormControl(this.carerDetails.carer.training_record.fire_safety ? moment(this.carerDetails.carer.training_record.fire_safety || new Date()).format("YYYY-MM-DD") : null),
+            dementia: new FormControl(this.carerDetails.carer.training_record.dementia ? moment(this.carerDetails.carer.training_record.dementia || new Date()).format("YYYY-MM-DD"): null),
+            medication_management: new FormControl(this.carerDetails.carer.training_record.medication_management  ? moment(this.carerDetails.carer.training_record.medication_management || new Date()).format("YYYY-MM-DD") : null),
+            first_aid_awareness: new FormControl(this.carerDetails.carer.training_record.first_aid_awareness ? moment(this.carerDetails.carer.training_record.first_aid_awareness).format("YYYY-MM-DD") : null),
+            training_other: new FormControl(this.carerDetails.carer.training_record.other),
+            qualifications: new FormArray(
+                this.qualifications.map(qualification =>
+                    new FormControl(this.carerDetails.carer.training_record.qualifications.includes(qualification))
+                )
+            ),
+
+            //dbs
+            dbs_date: new FormControl(this.carerDetails.carer.dbs.dbs_date ? moment(this.carerDetails.carer.dbs.dbs_date).format("YYYY-MM-DD") : null),
+            dbs_ref_number: new FormControl(this.carerDetails.carer.dbs.ref_number),
+            dbs_status: new FormControl(this.carerDetails.carer.dbs.status),
+
+            //eligible roles
+            eligible_roles: new FormArray(
+                this.roles.map(role =>
+                    new FormControl(this.carerDetails.carer.eligible_roles.includes(role))
+                )
+            ),
         });
     }
 
-    private setUpForm(): void {
-        this.form.get('training_other').setValue(this.carerDetails.carer.training_record.other);
-        this.form.get('dbs_date').setValue(this.datesService.getDateString(this.carerDetails.carer.dbs.dbs_date));
-        this.form.get('dbs_ref_number').setValue(this.carerDetails.carer.dbs.ref_number);
-        this.form.get('dbs_status').setValue(this.carerDetails.carer.dbs.status);
-        // to do
-        this.setUpFormJobRoles();
-        this.form.get('notes').setValue(this.carerDetails.notes);
-        this.form.get('status').setValue(this.carerDetails.status);
-        this.form.get('banned_until').setValue(this.datesService.getDateString(this.carerDetails.banned_until));
-    }
+    private prepareDetailsToUpdate(): void
+    {
+        //training record
+        const qualifications = [];
+        this.form.get('qualifications').value.forEach((value, index) => {
+            if(value)
+                qualifications.push(this.qualifications[index]);
+        })
+        this.carerDetails.carer.training_record.qualifications = qualifications;
+        this.carerDetails.carer.training_record.other = this.form.get('training_other').value === '' ? null : this.form.get('training_other').value;
+        this.carerDetails.carer.training_record.safeguarding = this.form.get('safeguarding').value || null;
+        this.carerDetails.carer.training_record.manual_handling_people = this.form.get('manual_handling_people').value || null;
+        this.carerDetails.carer.training_record.first_aid_and_basic_life_support = this.form.get('first_aid_and_basic_life_support').value || null;
+        this.carerDetails.carer.training_record.infection_control = this.form.get('infection_control').value || null;
+        this.carerDetails.carer.training_record.h_and_s = this.form.get('h_and_s').value || null;
+        this.carerDetails.carer.training_record.fire_safety = this.form.get('fire_safety').value || null;
+        this.carerDetails.carer.training_record.dementia = this.form.get('dementia').value || null;
+        this.carerDetails.carer.training_record.medication_management = this.form.get('medication_management').value || null;
+        this.carerDetails.carer.training_record.first_aid_awareness = this.form.get('first_aid_awareness').value || null;
 
-    private setUpFormJobRoles(): void {
-        this.form.get('job_role1').setValue(this.carerDetails.carer.eligible_roles[0]);
-        if (!isUndefined(this.carerDetails.carer.eligible_roles[1])) {
-            this.form.get('job_role2').setValue(this.carerDetails.carer.eligible_roles[1]);
-        }
-    }
-
-    private prepareDetailsToUpdate(): void {
-        this.carerDetails.carer.training_record.other = this.form.get('training_other').value === '' ?
-            null : this.form.get('training_other').value;
-        this.carerDetails.carer.dbs.dbs_date = new Date(this.form.get('dbs_date').value).getTime();
+        //dbs
+        this.carerDetails.carer.dbs.dbs_date = this.form.get('dbs_date').value || null;
         this.carerDetails.carer.dbs.ref_number = this.form.get('dbs_ref_number').value;
         this.carerDetails.carer.dbs.status = this.form.get('dbs_status').value;
+
+        //references
         this.carerDetails.carer.reference.references = this.form.get('reference').value;
+
+        //care experience
         this.carerDetails.carer.joining_care_experience.years = 1;
         this.carerDetails.carer.joining_care_experience.months = 1;
-        this.carerDetails.carer.eligible_roles = this.getEilgableRoles();
+
+        //roles
+        const roles = [];
+        this.form.get('eligible_roles').value.forEach((value, index) => {
+            if(value)
+                roles.push(this.roles[index]);
+        })
+        this.carerDetails.carer.eligible_roles = roles;
+
+        //rest
         this.carerDetails.notes = this.form.get('notes').value;
         this.carerDetails.status = this.form.get('status').value;
-        this.carerDetails.banned_until = this.form.get('banned_until').value === '' ?
-            null : new Date(this.form.get('banned_until').value).getTime();
+        this.carerDetails.banned_until = this.form.get('banned_until').value === '' ? null : new Date(this.form.get('banned_until').value).getTime();
     }
 
-    private getEilgableRoles(): string[] {
+    private getEilgableRoles(): string[]
+    {
         const arr = [];
         arr.push(this.form.get('job_role1').value);
-        if (this.form.get('job_role2').value !== null && this.form.get('job_role2').value !== '') {
+        if (this.form.get('job_role2').value !== null && this.form.get('job_role2').value !== '')
+        {
             arr.push(this.form.get('job_role2').value);
         }
         return arr;
-    }
-
-    private setDatepickers(): void {
-        $('#fire_safety').datepicker({
-            showOtherMonths: true,
-            format: 'yyyy-mm-dd',
-            value: moment(new Date()).format('YYYY-MM-DD'),
-            hide: (event: Event) => {
-                this.form.get('fire_safety').setValue(event.target['value']);
-            }
-        });
-
-        $('#dementia').datepicker({
-            showOtherMonths: true,
-            format: 'yyyy-mm-dd',
-            value: moment(new Date()).format('YYYY-MM-DD'),
-            hide: (event: Event) => {
-                this.form.get('dementia').setValue(event.target['value']);
-            }
-        });
-
-        $('#h_and_s').datepicker({
-            showOtherMonths: true,
-            format: 'yyyy-mm-dd',
-            value: moment(new Date()).format('YYYY-MM-DD'),
-            hide: (event: Event) => {
-                this.form.get('h_and_s').setValue(event.target['value']);
-            }
-        });
-
-
-        $('#first_aid_awareness').datepicker({
-            showOtherMonths: true,
-            format: 'yyyy-mm-dd',
-            value: moment(new Date()).format('YYYY-MM-DD'),
-            hide: (event: Event) => {
-                this.form.get('first_aid_awareness').setValue(event.target['value']);
-            }
-        });
-
-        $('#first_aid_and_basic_life_support').datepicker({
-            showOtherMonths: true,
-            format: 'yyyy-mm-dd',
-            value: moment(new Date()).format('YYYY-MM-DD'),
-            hide: (event: Event) => {
-                this.form.get('first_aid_and_basic_life_support').setValue(event.target['value']);
-            }
-        });
-
-        $('#infection_control').datepicker({
-            showOtherMonths: true,
-            format: 'yyyy-mm-dd',
-            value: moment(new Date()).format('YYYY-MM-DD'),
-            hide: (event: Event) => {
-                this.form.get('infection_control').setValue(event.target['value']);
-            }
-        });
-
-        $('#medication_management').datepicker({
-            showOtherMonths: true,
-            format: 'yyyy-mm-dd',
-            value: moment(new Date()).format('YYYY-MM-DD'),
-            hide: (event: Event) => {
-                this.form.get('medication_management').setValue(event.target['value']);
-            }
-        });
-
-        $('#manual_handling_people').datepicker({
-            showOtherMonths: true,
-            format: 'yyyy-mm-dd',
-            value: moment(new Date()).format('YYYY-MM-DD'),
-            hide: (event: Event) => {
-                this.form.get('manual_handling_people').setValue(event.target['value']);
-            }
-        });
-
-        $('#safeguarding').datepicker({
-            showOtherMonths: true,
-            format: 'yyyy-mm-dd',
-            value: moment(new Date()).format('YYYY-MM-DD'),
-            hide: (event: Event) => {
-                this.form.get('safeguarding').setValue(event.target['value']);
-            }
-        });
     }
 
 }

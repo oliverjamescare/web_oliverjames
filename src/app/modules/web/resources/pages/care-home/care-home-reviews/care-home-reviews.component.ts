@@ -81,7 +81,7 @@ export class CareHomeReviewsComponent implements OnInit {
             .subscribe(
                 response => {
                     console.log('Review job carer success response', response);
-                    this.notificationService.success('Carer rated');
+                    this.notificationService.success('Your rating has been sent for review');
                     this.pendingReviews.splice(index, 1);
                 },
                 error => {

@@ -85,7 +85,7 @@ export class FileUploadingComponent implements OnInit, AfterViewInit, OnChanges 
             .subscribe(
                 response => {
                     this.buttonLoading = false;
-                    console.log('Upload files success response', response);
+                    $('#' + this.type + '_id').modal("hide");
                     this.notificationService.success('Files uploaded successfully');
                     this.reload.emit();
                 },

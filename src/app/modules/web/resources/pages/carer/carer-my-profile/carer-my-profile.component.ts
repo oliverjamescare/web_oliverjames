@@ -198,6 +198,12 @@ export class CarerMyProfileComponent implements OnInit
                 });
     }
 
+    onBankUpdated()
+    {
+        this.showBankAccountForm = false;
+        this.getCarerProfile();
+    }
+
 }
 
 

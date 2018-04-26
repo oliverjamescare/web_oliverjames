@@ -147,8 +147,4 @@
         (update)="onUpdateData()"
 ></app-change-profile-image>
 
-<app-card-details
-    *ngIf="showBankAccountForm"
-    (closed)="showBankAccountForm = false"
-    (reload)="onUpdateData()"
-></app-card-details>
+<app-card-details *ngIf="showBankAccountForm" (closed)="onBankUpdated()" (reload)="onUpdateData()"></app-card-details>
