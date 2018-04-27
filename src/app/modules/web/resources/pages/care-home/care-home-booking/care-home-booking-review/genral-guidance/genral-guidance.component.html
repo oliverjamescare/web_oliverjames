@@ -67,10 +67,10 @@
             <div class="guidance-right-tab text-center">
                 <!--current  floor plan-->
                 <div>
-                    <span *ngIf="form.get('floor_plan').value !== ''" class="file-link">
+                    <span *ngIf="form.get('floor_plan').value" class="file-link">
                         <a class="gj-cursor-pointer app-link" [href]="getFloorPlan()" target="_blank">Floor plan</a>
                     </span>
-                    <span *ngIf="form.get('floor_plan').value === ''" class="file-link">No floor plan updated so far</span>
+                    <span *ngIf="!form.get('floor_plan').value" class="file-link">No floor plan updated so far</span>
                 </div>
                 <br>
 

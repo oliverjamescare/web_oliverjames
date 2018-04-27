@@ -75,14 +75,10 @@ export class CareHomeBookingPaymentDetailsComponent implements OnInit {
         this.stripeService
             .createToken(this.card, {name})
             .subscribe(result => {
-                if (result.token) {
-                    // Use the token to create a charge or a customer
-                    // https://stripe.com/docs/charges
-                    console.log(result.token);
+                if (result.token)
                     this.updateCardDetailsOnApi(result.token.id);
-                } else if (result.error) {
-                    // Error creating the token
-                    console.log(result.error.message);
+                else if (result.error)
+                {
                     this.apiError = result.error.message;
                     this.buttonLoading = false;
                 }
@@ -94,14 +90,12 @@ export class CareHomeBookingPaymentDetailsComponent implements OnInit {
             .subscribe(
                 response => {
                     this.buttonLoading = false;
-                    console.log('update card details success response', response);
                     this.notificationService.success('Card details saved');
                     this.router.navigate(['/care-home-booking', 'review']);
                 },
                 error => {
                     this.buttonLoading = false;
-                    console.log('update card details error response', error);
-                    this.notificationService.warn('Enable to store card data to api');
+                    this.notificationService.warn('Unable to store card data to api');
                 }
             );
     }

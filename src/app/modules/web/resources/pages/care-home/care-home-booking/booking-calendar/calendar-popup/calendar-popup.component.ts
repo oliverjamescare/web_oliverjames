@@ -108,12 +108,10 @@ export class CalendarPopupComponent implements OnInit
                 this.date.setHours(0, 0, 0, 0);
 
                 this.prepareStartIntervals();
-                this.prepareEndIntervals();
+                this.form.get("from").patchValue(this.startIntervals[0])
 
-                this.form.patchValue({
-                    from: this.startIntervals[0],
-                    till: this.endIntervals[0],
-                });
+                this.prepareEndIntervals();
+                this.form.get("till").patchValue(this.endIntervals[0]);
             });
 
         //on start time change
@@ -121,6 +119,7 @@ export class CalendarPopupComponent implements OnInit
             .valueChanges
             .subscribe((from) => {
 
+                this.prepareEndIntervals();
                 const end = new Date(from)
                 end.setMinutes(end.getMinutes() + 15);
                 this.form.get("till").setValue(end);
@@ -164,7 +163,6 @@ export class CalendarPopupComponent implements OnInit
 
     private createForm(): void
     {
-
         this.form = new FormGroup({
             'start_date': new FormControl(moment(this.startDate).format("YYYY-MM-DD"), Validators.required),
             'from': new FormControl(this.startDate, Validators.required),
@@ -200,7 +198,6 @@ export class CalendarPopupComponent implements OnInit
 
         //removing past dates
         const now = new Date();
-        //now.setHours(23,59,0,0);
         this.startIntervals = this.startIntervals.filter(intervalDate => now.getTime() <= intervalDate.getTime());
     }
 
@@ -211,12 +208,23 @@ export class CalendarPopupComponent implements OnInit
 
         //preparing end intervals
         this.endIntervals = [];
-        const date = new Date(this.startIntervals[1] ? this.startIntervals[1].getTime() : nextDayStart.getTime());
+        let date = new Date(this.startIntervals[1] ? this.startIntervals[1].getTime() : nextDayStart.getTime());
+
+        if(this.form && this.form.get("from").value)
+        {
+            const endStartingDate = new Date(this.form.get("from").value);
+            endStartingDate.setMinutes(endStartingDate.getMinutes() + 15);
+
+            date = endStartingDate;
+        }
+
         for(let i = 0; i < NUMBER_OF_INTERVALS; i++)
         {
             this.endIntervals.push(new Date(date.getTime()));
             date.setMinutes(date.getMinutes() + 15);
         }
+
+        console.log(this.endIntervals[0])
     }
 
     private getNexDayStart() : Date
