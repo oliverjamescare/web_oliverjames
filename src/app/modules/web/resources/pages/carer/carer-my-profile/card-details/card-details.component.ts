@@ -12,8 +12,8 @@ import {NotificationsService} from 'angular2-notifications';
 export class CardDetailsComponent implements OnInit, AfterViewInit {
     @Input() type: string;
     @Output() closed = new EventEmitter();
-    @Output() forgotPasswordTriggered: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() reload = new EventEmitter();
+    @Output() forgotPasswordTriggered: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     title = 'Bank account details';
     form: FormGroup;
@@ -34,23 +34,28 @@ export class CardDetailsComponent implements OnInit, AfterViewInit {
         $('#' + this.type + '_id').on('hidden.bs.modal', () => this.closed.emit(true));
     }
 
-    onAccountStore(): void {
-        this.buttonLoading = true;
-        console.log('Form value', this.form.value);
-        this.stripeService.createToken('bank_account', this.form.value)
-            .subscribe(result => {
-                if (result.token) {
-                    // Use the token to create a charge or a customer
-                    // https://stripe.com/docs/charges
-                    console.log(result.token);
-                    this.storeAccountDataInApi(result.token.id);
-                } else if (result.error) {
-                    // Error creating the token
-                    console.log(result.error.message);
-                    this.apiError = result.error.message;
-                    this.buttonLoading = false;
-                }
-            });
+    onAccountStore(): void
+    {
+        if(!this.stripeService)
+            this.apiError = "To store bank details you have to use https";
+        else
+        {
+            this.buttonLoading = true;
+            this.stripeService.createToken('bank_account', this.form.value)
+                .subscribe(result => {
+                    if (result.token) {
+                        // Use the token to create a charge or a customer
+                        // https://stripe.com/docs/charges
+                        console.log(result.token);
+                        this.storeAccountDataInApi(result.token.id);
+                    } else if (result.error) {
+                        // Error creating the token
+                        console.log(result.error.message);
+                        this.apiError = result.error.message;
+                        this.buttonLoading = false;
+                    }
+                });
+        }
     }
 
     private storeAccountDataInApi(token: string): void {

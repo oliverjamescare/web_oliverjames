@@ -372,6 +372,14 @@ export class ApiService
             { headers: this.getAuthorizationHeaders() }
         );
     }
+    uploadIdentityProof(form: FormData): Observable<any>
+    {
+        return this.httpClient.put(
+            `${this.endpoint}/payments/identity`,
+            form,
+            { headers: this.getAuthorizationHeaders() }
+        );
+    }
 
     updateCardDetails(token: string): Observable<any>
     {

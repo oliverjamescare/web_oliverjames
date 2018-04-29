@@ -132,6 +132,7 @@ import { TimestampToDatePipe } from './pipes/timestamp-to-date.pipe';
 import { DatePatternPipe } from './pipes/date-pattern.pipe';
 import { AddressLookupComponent } from './resources/partials/address-lookup/address-lookup.component';
 import { CarerAvailableJobsListComponent } from './resources/pages/carer/carer-available-jobs/carer-available-jobs-list/carer-available-jobs-list.component';
+import { UploadIdentityComponent } from './resources/pages/carer/carer-my-profile/upload-identity/upload-identity.component';
 
 
 @NgModule({
@@ -229,7 +230,8 @@ import { CarerAvailableJobsListComponent } from './resources/pages/carer/carer-a
         TimestampToDatePipe,
         DatePatternPipe,
         AddressLookupComponent,
-        CarerAvailableJobsListComponent
+        CarerAvailableJobsListComponent,
+        UploadIdentityComponent
     ],
     imports: [
         CommonModule,
@@ -239,7 +241,7 @@ import { CarerAvailableJobsListComponent } from './resources/pages/carer/carer-a
         NgbModule.forRoot(),
         MatInputModule,
         ClickOutsideModule,
-        NgxStripeModule.forRoot('pk_live_cMA3gvaz6Z2RERBYxePK0ho8'),
+        NgxStripeModule.forRoot('pk_live_cMA3gvaz6Z2RERBYxePK0ho8'), //pk_live_cMA3gvaz6Z2RERBYxePK0ho8 pk_test_sihAGUNVJG3EsvgRyh7IHDQo
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyBWoEhh2-9yp52XVTtfTaLIPcxcmTkt_Ms',
             libraries: ['places', 'geometry']

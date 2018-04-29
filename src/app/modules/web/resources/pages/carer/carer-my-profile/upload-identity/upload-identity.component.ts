@@ -1,25 +1,23 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {ApiService} from '../../../../../services/api.service';
-import {NotificationsService} from 'angular2-notifications';
+import { AfterViewInit, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { getMessageError, handleValidationErrorMessage, handleValidationStateClass } from '../../../../../../../utilities/form.utils';
-import { fileSize, fileType } from '../../../../../../../utilities/validators';
+import { alpha, fileSize, fileType, numbers } from '../../../../../../../utilities/validators';
+import { ApiService } from '../../../../../services/api.service';
+import { NotificationsService } from 'angular2-notifications';
 
 @Component({
-    selector: 'app-change-profile-image',
-    templateUrl: './change-profile-image.component.html',
-    styleUrls: ['./change-profile-image.component.scss']
+    selector: 'app-upload-identity',
+    templateUrl: './upload-identity.component.html',
+    styleUrls: ['./upload-identity.component.scss']
 })
-export class ChangeProfileImageComponent implements OnInit, AfterViewInit {
-    @Input() type: string;
-    @Input() pictureUrl: string;
+export class UploadIdentityComponent implements OnInit, AfterViewInit
+{
     @Output() closed = new EventEmitter();
-    @Output() update = new EventEmitter();
-    title = 'Change profile image';
-
+    @Output() reload = new EventEmitter();
+    error: string = '';
 
     //file
-    file: File;
+    identityFile: File;
     private validMimeTypes = [
         'image/png',
         'image/jpg',
@@ -31,11 +29,10 @@ export class ChangeProfileImageComponent implements OnInit, AfterViewInit {
     form: FormGroup;
     formUtils = { handleValidationStateClass, handleValidationErrorMessage };
     inProgress = false;
-    error: string = '';
 
     messages = [
         {
-            field: 'profile_image',
+            field: 'identity_document',
             errors: [
                 {
                     error: 'fileType',
@@ -43,11 +40,12 @@ export class ChangeProfileImageComponent implements OnInit, AfterViewInit {
                 },
                 {
                     error: 'fileSize',
-                    message: 'Your profile image cannot be larger than 5MB'
+                    message: 'Your identity document cannot be larger than 5MB'
                 }
             ]
         },
     ];
+
 
     constructor(private apiService: ApiService, private notificationService: NotificationsService) {}
 
@@ -55,15 +53,13 @@ export class ChangeProfileImageComponent implements OnInit, AfterViewInit {
     {
         //form
         this.form = new FormGroup({
-            profile_image: new FormControl(null, Validators.required),
+            identity_document: new FormControl(null, Validators.required),
         });
     }
 
-
-    ngAfterViewInit()
-    {
-        $('#' + this.type + '_id').modal();
-        $('#' + this.type + '_id').on('hidden.bs.modal', () => this.closed.emit(true));
+    ngAfterViewInit() {
+        $('#identity_modal_id').modal();
+        $('#identity_modal_id').on('hidden.bs.modal', () => this.closed.emit(true));
     }
 
     onFileChange(event)
@@ -72,9 +68,9 @@ export class ChangeProfileImageComponent implements OnInit, AfterViewInit {
         {
             const fileResource = event.target.files[0];
             if (this.validMimeTypes.indexOf(fileResource.type) !== -1 && fileResource.size < 1024 * 1024 * this.maxFileSizeMB)
-                this.file = fileResource;
+                this.identityFile = fileResource;
 
-            const control = this.form.get('profile_image');
+            const control = this.form.get('identity_document');
             control.setValue(fileResource.name);
             control.markAsTouched();
             control.setValidators([Validators.required, fileType(fileResource, this.validMimeTypes), fileSize(fileResource, this.maxFileSizeMB)]);
@@ -88,19 +84,18 @@ export class ChangeProfileImageComponent implements OnInit, AfterViewInit {
         {
             //preparing form
             const form = new FormData();
-            form.append("profile_image", this.file);
+            form.append("identity_document", this.identityFile);
 
             this.inProgress = true;
             this.error = "";
 
             //upload handle
-            this.apiService.changeProfileImage(form)
-                .subscribe(
-                    response => {
+            this.apiService.uploadIdentityProof(form)
+                .subscribe(response => {
                         this.inProgress = false;
-                        this.notificationService.success('Success', 'Profile image updated');
-                        this.update.emit();
-                        $('#' + this.type + '_id').modal('hide');
+                        this.notificationService.success('Identity document stored');
+                        $('#identity_modal_id').modal("hide");
+                        this.reload.emit();
                     },
                     error => {
                         this.inProgress = false;
@@ -110,8 +105,4 @@ export class ChangeProfileImageComponent implements OnInit, AfterViewInit {
         }
     }
 
-    getPictureUrl(): string
-    {
-        return this.pictureUrl ? this.pictureUrl : 'https://www.exaclair.com/images/placeholders/team-placeholder.jpg';
-    }
 }

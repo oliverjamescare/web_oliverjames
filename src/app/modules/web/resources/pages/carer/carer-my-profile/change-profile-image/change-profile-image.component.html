@@ -5,21 +5,21 @@
                 <img [src]="getPictureUrl()" class="img img-responsive">
             </div>
             <br>
-            <div>
-                <label>Select new profile image</label>
-                <input type="file"
-                       id="file"
-                       class="form-control floor-plan"
-                       (change)="handleFileInput($event.target.files)">
-                <span *ngFor="let error of errors" class="red full-width">{{ error }}</span>
-            </div>
-            <br>
-            <div class="buttons-container">
-                <button (click)="onPictureChange()" type="submit" class="btn btn-success"
-                        [disabled]="!profilePicture || errors.length !== 0">
-                    Change profile image <span *ngIf="buttonLoading"><i class="fa fa-spinner fa-spin"></i></span>
-                </button>
-            </div>
+
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div>
+                    <label>Select new profile image</label>
+                    <input type="text" class="form-control" class="d-none" formControlName="profile_image">
+                    <input type="file" (change)="onFileChange($event)" #fileInput>
+                    <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'profile_image', messages) }} </span>
+                </div>
+                <br>
+                <div class="buttons-container">
+                    <button type="submit" class="btn btn-success" [disabled]="!form.valid || inProgress">
+                        Change profile image <span *ngIf="inProgress"><i class="fa fa-spinner fa-spin"></i></span>
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </app-popup>

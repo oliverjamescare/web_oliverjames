@@ -84,54 +84,57 @@
 
                     <!-- modules -->
                     <div [ngClass]="{'d-none': activatedModule != 'careHomeRegister'}" class="care-home-module">
-                        <p class="section-desctiption">Quality temporary carers at affordable prices</p>
-                        <form  [formGroup]="form" (ngSubmit)="onCheckCarersNearby()">
-                            <div class="form-group">
-                                <input type="text" placeholder="Enter your postcode" class="form-control" name="postal_code" autocomplete="off" formControlName="postal_code" [ngClass]="{'is-invalid': !form.valid && form.get('postal_code').touched, 'is-valid': form.valid && form.get('postal_code').touched }">
-                                <app-address-lookup [search]="form.get('postal_code')" (addressFound)="onAddressFound($event)"></app-address-lookup>
+                        <br>
+                        <p class="section-desctiption">
+                            If you are a care home, please contact us on support@oliverjamescare.co.uk or 0207 824 5149 to register with us</p>
+                        <!--<p class="section-desctiption">Quality temporary carers at affordable prices</p>-->
+                        <!--<form  [formGroup]="form" (ngSubmit)="onCheckCarersNearby()">-->
+                            <!--<div class="form-group">-->
+                                <!--<input type="text" placeholder="Enter your postcode" class="form-control" name="postal_code" autocomplete="off" formControlName="postal_code" [ngClass]="{'is-invalid': !form.valid && form.get('postal_code').touched, 'is-valid': form.valid && form.get('postal_code').touched }">-->
+                                <!--<app-address-lookup [search]="form.get('postal_code')" (addressFound)="onAddressFound($event)"></app-address-lookup>-->
 
-                                <input type="text" name="company" formControlName="company" class="d-none">
-                                <input type="text" name="line_one" formControlName="address_line_1" class="d-none">
-                                <input type="text" name="line_two" formControlName="address_line_2" class="d-none">
-                                <input type="text" name="city" formControlName="city" class="d-none">
-                            </div>
-                            <button class="btn btn-success" type="submit">Book now / Register as a care home</button>
-                        </form>
+                                <!--<input type="text" name="company" formControlName="company" class="d-none">-->
+                                <!--<input type="text" name="line_one" formControlName="address_line_1" class="d-none">-->
+                                <!--<input type="text" name="line_two" formControlName="address_line_2" class="d-none">-->
+                                <!--<input type="text" name="city" formControlName="city" class="d-none">-->
+                            <!--</div>-->
+                            <!--<button class="btn btn-success" type="submit">Book now / Register as a care home</button>-->
+                        <!--</form>-->
                         <br>
                     </div>
 
-                    <div *ngIf="activatedModule == 'careHomeAddToWaitingList'" class="care-home-module">
-                        <p class="section-desctiption error">Sorry, we aren’t yet covering your area. Please enter your details below so you don’t miss out when we come to your area</p>
-                        <form  [formGroup]="waitingForm" (ngSubmit)="onAddToWaitingList()">
-                            <div class="row">
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <input type="text" placeholder="Your name" class="form-control" formControlName="name" [ngClass]="formUtils.handleValidationStateClass(waitingForm, 'name')">
-                                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(waitingForm, 'name', waitingFormMessages) }} </span>
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <input type="email" placeholder="E-mail" class="form-control" formControlName="email" [ngClass]="formUtils.handleValidationStateClass(waitingForm, 'email')">
-                                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(waitingForm, 'email', waitingFormMessages) }} </span>
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <input type="text" placeholder="Enter your postcode" class="form-control" name="postal_code" formControlName="postal_code" [ngClass]="formUtils.handleValidationStateClass(waitingForm, 'postal_code')">
-                                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(waitingForm, 'postal_code', waitingFormMessages) }} </span>
-                                        <input type="text" name="company" formControlName="company" class="d-none">
-                                        <input type="text" name="line_one" formControlName="address_line_1" class="d-none">
-                                        <input type="text" name="line_two" formControlName="address_line_2" class="d-none">
-                                        <input type="text" name="city" formControlName="city" class="d-none">
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="btn btn-success" [disabled]="!waitingForm.valid || inProgress">Send</button>
-                            <span class="invalid-feedback">{{ error }}</span>
-                        </form>
-                        <br>
-                    </div>
+                    <!--<div *ngIf="activatedModule == 'careHomeAddToWaitingList'" class="care-home-module">-->
+                        <!--<p class="section-desctiption error">Sorry, we aren’t yet covering your area. Please enter your details below so you don’t miss out when we come to your area</p>-->
+                        <!--<form  [formGroup]="waitingForm" (ngSubmit)="onAddToWaitingList()">-->
+                            <!--<div class="row">-->
+                                <!--<div class="col-4">-->
+                                    <!--<div class="form-group">-->
+                                        <!--<input type="text" placeholder="Your name" class="form-control" formControlName="name" [ngClass]="formUtils.handleValidationStateClass(waitingForm, 'name')">-->
+                                        <!--<span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(waitingForm, 'name', waitingFormMessages) }} </span>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="col-4">-->
+                                    <!--<div class="form-group">-->
+                                        <!--<input type="email" placeholder="E-mail" class="form-control" formControlName="email" [ngClass]="formUtils.handleValidationStateClass(waitingForm, 'email')">-->
+                                        <!--<span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(waitingForm, 'email', waitingFormMessages) }} </span>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                                <!--<div class="col-4">-->
+                                    <!--<div class="form-group">-->
+                                        <!--<input type="text" placeholder="Enter your postcode" class="form-control" name="postal_code" formControlName="postal_code" [ngClass]="formUtils.handleValidationStateClass(waitingForm, 'postal_code')">-->
+                                        <!--<span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(waitingForm, 'postal_code', waitingFormMessages) }} </span>-->
+                                        <!--<input type="text" name="company" formControlName="company" class="d-none">-->
+                                        <!--<input type="text" name="line_one" formControlName="address_line_1" class="d-none">-->
+                                        <!--<input type="text" name="line_two" formControlName="address_line_2" class="d-none">-->
+                                        <!--<input type="text" name="city" formControlName="city" class="d-none">-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<button class="btn btn-success" [disabled]="!waitingForm.valid || inProgress">Send</button>-->
+                            <!--<span class="invalid-feedback">{{ error }}</span>-->
+                        <!--</form>-->
+                        <!--<br>-->
+                    <!--</div>-->
 
                     <div *ngIf="activatedModule == 'carer'" class="carer-module">
                         <p class="section-desctiption">Get recognised for your hard work and take control of your career</p>

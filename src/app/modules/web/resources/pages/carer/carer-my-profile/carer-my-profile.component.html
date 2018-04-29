@@ -95,11 +95,22 @@
                 <tr>
                     <th>Bank account details (to receive payment)</th>
                     <td class="relative tall">
-                        <span *ngIf="carerProfileService?.carerProfile?.carer.payment_system.bank_number" class="first-row">Stored {{ carerProfileService?.carerProfile?.carer.payment_system.bank_number }}</span>
-                        <span *ngIf="!carerProfileService?.carerProfile?.carer.payment_system.bank_number" class="first-row">Account not set up</span>
+                        <span *ngIf="user.carer.payment_system.bank_number" class="first-row">Stored {{ user.carer.payment_system.bank_number }}</span>
+                        <span *ngIf="!user.carer.payment_system.bank_number" class="first-row">Account not set up</span>
                         <span class="action">
-                        <button (click)="showBankAccountForm = true" class="btn btn-success" type="button">Edit</button>
-                    </span>
+                            <button (click)="showBankAccountForm = true" class="btn btn-success" type="button">Edit</button>
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Account verification</th>
+                    <td class="relative tall">
+                        <span *ngIf="user.carer.payment_system.bank_number" class="first-row">Status: <b>{{ user.carer.payment_system.account_status }}</b></span>
+                        <span *ngIf="user.carer.payment_system.bank_number &&  user.carer.payment_system.account_status != 'verified'" class="first-row">Message: {{ user.carer.payment_system.verification_message || "No message" }}</span>
+                        <span *ngIf="!user.carer.payment_system.bank_number" class="first-row">Account not set up</span>
+                        <span class="action">
+                            <button (click)="showIdentityProofFrom= true" class="btn btn-success" type="button">Upload identity proof</button>
+                        </span>
                     </td>
                 </tr>
                 <tr>
@@ -148,3 +159,9 @@
 ></app-change-profile-image>
 
 <app-card-details *ngIf="showBankAccountForm" (closed)="onBankUpdated()" (reload)="onUpdateData()"></app-card-details>
+
+<app-upload-identity
+    *ngIf="showIdentityProofFrom"
+    (closed)="showIdentityProofFrom = false"
+    (reload)="onIdentityProofStored()"
+></app-upload-identity>

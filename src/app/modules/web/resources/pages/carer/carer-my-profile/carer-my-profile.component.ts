@@ -95,6 +95,7 @@ export class CarerMyProfileComponent implements OnInit
     showChangePassword = false;
     showChangeProfileImage = false;
     showBankAccountForm = false;
+    showIdentityProofFrom = false;
 
     constructor(public carerProfileService: CarerProfileService,
                 private notificationService: NotificationsService,
@@ -201,6 +202,12 @@ export class CarerMyProfileComponent implements OnInit
     onBankUpdated()
     {
         this.showBankAccountForm = false;
+        this.getCarerProfile();
+    }
+
+    onIdentityProofStored()
+    {
+        this.showIdentityProofFrom = false;
         this.getCarerProfile();
     }
 
