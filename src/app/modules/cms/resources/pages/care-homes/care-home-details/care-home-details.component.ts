@@ -38,7 +38,7 @@ export class CareHomeDetailsComponent implements OnInit
                 }
             );
 
-        this.loadPca();
+        //this.loadPca();
 
         //form credits init
         this.creditsForm = new FormGroup({

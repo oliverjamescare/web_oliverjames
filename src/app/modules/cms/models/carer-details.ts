@@ -8,6 +8,7 @@ export interface CarerDetails {
     surname: string;
     middle_name: string;
     date_of_birth: string;
+    gender: string;
     reference: Reference;
     dbs: Dbs;
     joining_care_experience: JoiningCareExperience;

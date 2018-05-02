@@ -19,6 +19,15 @@
                     <td>{{ carerDetails.carer.first_name }} {{ carerDetails.carer.surname }}</td>
                 </tr>
                 <tr>
+                    <th>Gender</th>
+                    <td>
+                        <select class="form-control" formControlName="gender">
+                            <option value="null">N/A</option>
+                            <option *ngFor="let gender of genders" [value]="gender">{{ gender}}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
                     <th>Email</th>
                     <td>{{ carerDetails.email }}</td>
                 </tr>

@@ -46,6 +46,11 @@ export class CarerDetailsComponent implements OnInit
         "Senior Carer"
     ]
 
+    genders: Array<string> = [
+        "Male",
+        "Female"
+    ]
+
     constructor(private carersService: CarersService,
                 private route: ActivatedRoute,
                 private datesService: DatesService,
@@ -212,6 +217,7 @@ export class CarerDetailsComponent implements OnInit
             'notes': new FormControl(),
             'status': new FormControl(),
             'banned_until': new FormControl(this.carerDetails.banned_until),
+            gender: new FormControl(this.carerDetails.carer.gender),
 
             //training record
             safeguarding: new FormControl(this.carerDetails.carer.training_record.safeguarding ? moment(this.carerDetails.carer.training_record.safeguarding || new Date()).format("YYYY-MM-DD") : null),
@@ -285,6 +291,7 @@ export class CarerDetailsComponent implements OnInit
         this.carerDetails.carer.eligible_roles = roles;
 
         //rest
+        this.carerDetails.carer.gender = this.form.get('gender').value;
         this.carerDetails.notes = this.form.get('notes').value;
         this.carerDetails.status = this.form.get('status').value;
         this.carerDetails.banned_until = this.form.get('banned_until').value === '' ? null : new Date(this.form.get('banned_until').value).getTime();

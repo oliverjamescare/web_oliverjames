@@ -21,7 +21,10 @@ export class UploadIdentityComponent implements OnInit, AfterViewInit
     private validMimeTypes = [
         'image/png',
         'image/jpg',
-        'image/jpeg'
+        'image/jpeg',
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "application/pdf",
+        "image/gif"
     ];
     private maxFileSizeMB = 5;
 
@@ -36,7 +39,7 @@ export class UploadIdentityComponent implements OnInit, AfterViewInit
             errors: [
                 {
                     error: 'fileType',
-                    message: 'Invalid file type. Only png, jpg.'
+                    message: 'Invalid file type. Only png, jpg, gif, pdf or docx'
                 },
                 {
                     error: 'fileSize',
