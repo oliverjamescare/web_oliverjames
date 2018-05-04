@@ -192,6 +192,7 @@ export class RegisterCareHomeComponent implements OnInit {
             city: new FormControl(null, Validators.required),
             care_service_name: new FormControl(null, [Validators.required, Validators.maxLength(100), alpha]),
             type_of_home: new FormControl('', [Validators.required]),
+            terms: new FormControl(false, [Validators.requiredTrue]),
         });
 
         // overriding address

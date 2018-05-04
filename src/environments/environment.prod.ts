@@ -4,5 +4,5 @@ export const environment = {
     // api: 'https://api.oliver-james.ready4s.it/api',
     api: 'https://api.oliverjamescare.co.uk/api',
     admin: 'https://api.oliverjamescare.co.uk/admin',
-    site: 'https://oliverjamescare.co.uk/terms'
+    site: 'https://oliverjamescare.co.uk'
 };
