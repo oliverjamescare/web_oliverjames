@@ -14,7 +14,7 @@ import { fileSize, fileType } from '../../../../../../../../utilities/validators
 export class GeneralGuidanceComponent implements OnInit
 {
     careHome: CareHome;
-    fileName: any = '';
+    fileName: string = null;
 
     //floor plan
     floorPlanFile: File;
@@ -61,12 +61,6 @@ export class GeneralGuidanceComponent implements OnInit
 
 
     getFloorPlan(): string {
-        // console.log(this.bookingService['jobsFieldsBeforeSubmit']);
-        console.log(this.bookingService['jobsFieldsBeforeSubmit'].florPlanFile);
-        if (this['bookingService'] && this.bookingService['jobsFieldsBeforeSubmit']['floor_plan']['name']) {
-         this.fileName = this.bookingService['jobsFieldsBeforeSubmit']['floor_plan']['name'];
-        }
-
         return `${this.bookingService.generalGuidance.floor_plan}?access-token=${this.authService.getAccessToken().token}`;
     }
 
@@ -92,9 +86,12 @@ export class GeneralGuidanceComponent implements OnInit
 
             const control = this.form.get('floor_plan');
             control.setValue(fileResource.name);
+            this.fileName = fileResource.name;
+
             control.markAsTouched();
             control.setValidators([Validators.required, fileType(fileResource, this.validMimeTypes), fileSize(fileResource, this.maxFileSizeMB)]);
             control.updateValueAndValidity();
+
             this.bookingService.fillJobsFieldsBeforeSubmit();
         }
     }
@@ -105,10 +102,9 @@ export class GeneralGuidanceComponent implements OnInit
     }
 
     private listenToFormChanges(): void {
-        this.form.valueChanges.debounceTime(400)
+        this.form.valueChanges
             .subscribe(
                 data => this.bookingService.generalGuidanceForm = data
             );
     }
-
 }

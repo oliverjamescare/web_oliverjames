@@ -70,7 +70,7 @@
                     <span *ngIf="fileName" class="file-link">
                         <b>Chosen file:</b> {{ fileName }}
                     </span>
-                    <span *ngIf="form.get('floor_plan').value" class="file-link">
+                    <span *ngIf="form.get('floor_plan').value && !fileName" class="file-link">
                         <a class="gj-cursor-pointer app-link" [href]="getFloorPlan()" target="_blank">Floor plan</a>
                     </span>
                     <span *ngIf="!form.get('floor_plan').value" class="file-link">No floor plan updated so far</span>

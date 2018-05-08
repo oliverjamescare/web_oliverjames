@@ -154,7 +154,7 @@ export class CareHomeBookingService {
 
     public fillJobsFieldsBeforeSubmit(): void {
     if (this.florPlanFile !== null)
-    this.jobsFieldsBeforeSubmit.floor_plan = this.florPlanFile;
+        this.jobsFieldsBeforeSubmit.floor_plan = this.florPlanFile.name;
     if(this.generalGuidanceForm.parking)
         this.jobsFieldsBeforeSubmit.parking =  this.generalGuidanceForm.parking;
     if(this.generalGuidanceForm.notes_for_carers)
