@@ -1,9 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { CareHomeBookingService } from '../../../../../../services/care-home-booking.service';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {CareHomeBookingService} from '../../../../../../services/care-home-booking.service';
 import * as moment from 'moment';
-import { handleValidationErrorMessage, handleValidationStateClass } from '../../../../../../../../utilities/form.utils';
-import { dateGreaterThan } from '../../../../../../../../utilities/validators';
+import {handleValidationErrorMessage, handleValidationStateClass} from '../../../../../../../../utilities/form.utils';
+import {dateGreaterThan} from '../../../../../../../../utilities/validators';
+import {ApiService} from '../../../../../../services/api.service';
+import {NotificationsService} from 'angular2-notifications';
+
 
 const NUMBER_OF_INTERVALS = 96; // number of 15 min intervals in select list hour from 7:00, 19:00
 
@@ -12,21 +15,21 @@ const NUMBER_OF_INTERVALS = 96; // number of 15 min intervals in select list hou
     templateUrl: './calendar-popup.component.html',
     styleUrls: ['./calendar-popup.component.scss']
 })
-export class CalendarPopupComponent implements OnInit
-{
+export class CalendarPopupComponent implements OnInit {
     @Input() direction: string;
     @Input() date: Date;
     @Input() index: number;
     @Output() closePopup = new EventEmitter();
     form: FormGroup;
-    formUtils = { handleValidationStateClass, handleValidationErrorMessage };
+    formUtils = {handleValidationStateClass, handleValidationErrorMessage};
     startDate: Date;
     endDate: Date;
+    profileDetails: any;
 
     startDays: Array<Date> = [];
     startIntervals: Array<Date> = [];
     endIntervals: Array<Date> = [];
-    error: string = "";
+    error: string = '';
 
     messages = [
         {
@@ -88,10 +91,11 @@ export class CalendarPopupComponent implements OnInit
         }
     ];
 
-    constructor(public bookingService: CareHomeBookingService) {}
+    constructor(public bookingService: CareHomeBookingService, private apiService: ApiService,  private notificationService: NotificationsService) {
+    }
 
-    ngOnInit()
-    {
+    ngOnInit() {
+        this.getProfile();
         //init days and times arrays
         this.prepareStartDays();
         this.prepareStartIntervals();
@@ -101,56 +105,63 @@ export class CalendarPopupComponent implements OnInit
         this.createForm();
 
         //on day change
-        this.form.get("start_date")
+        this.form.get('start_date')
             .valueChanges
             .subscribe((day) => {
                 this.date = new Date(day);
                 this.date.setHours(0, 0, 0, 0);
 
                 this.prepareStartIntervals();
-                this.form.get("from").patchValue(this.startIntervals[0])
+                this.form.get('from').patchValue(this.startIntervals[0]);
 
                 this.prepareEndIntervals();
-                this.form.get("till").patchValue(this.endIntervals[0]);
+                this.form.get('till').patchValue(this.endIntervals[0]);
             });
 
         //on start time change
-        this.form.get("from")
+        this.form.get('from')
             .valueChanges
             .subscribe((from) => {
 
                 this.prepareEndIntervals();
-                const end = new Date(from)
+                const end = new Date(from);
                 end.setMinutes(end.getMinutes() + 15);
-                this.form.get("till").setValue(end);
-                this.form.get('till').setValidators([Validators.required, dateGreaterThan(this.form.get('from').value)])
+                this.form.get('till').setValue(end);
+                this.form.get('till').setValidators([Validators.required, dateGreaterThan(this.form.get('from').value)]);
                 this.form.get('till').updateValueAndValidity();
-            })
+            });
 
         // end time validation
-        this.form.get("till")
+        this.form.get('till')
             .valueChanges
             .subscribe(() => this.form.get('till').setValidators([Validators.required, dateGreaterThan(this.form.get('from').value)]));
     }
 
-    onClosePopup(): void
-    {
+    onClosePopup(): void {
         this.closePopup.emit();
     }
 
-    onAddBooking(): void
-    {
-        if(this.form.valid)
-        {
+    onAddBooking(): void {
+        if (this.form.valid) {
+            if (this.profileDetails.care_home.payment_system.card_number === null) {
+                this.notificationService.success("Once you've placed all your shifts, scroll down and press 'Next'");
+            }
             this.addJobsToList();
             this.closePopup.emit();
         }
     }
 
-    private addJobsToList(): void
-    {
-        for (let i = 0; i < this.form.get('amount').value; i++)
-        {
+    private getProfile(): void {
+        this.apiService.getUserProfile()
+            .subscribe(
+                response => {
+                    this.profileDetails = response;
+                }
+            );
+    }
+
+    private addJobsToList(): void {
+        for (let i = 0; i < this.form.get('amount').value; i++) {
             this.bookingService.bookJob({
                 start_date: this.form.get('start_date').value,
                 from: new Date(this.form.get('from').value).getTime(),
@@ -161,37 +172,33 @@ export class CalendarPopupComponent implements OnInit
         }
     }
 
-    private createForm(): void
-    {
+    private createForm(): void {
         this.form = new FormGroup({
-            'start_date': new FormControl(moment(this.startDate).format("YYYY-MM-DD"), Validators.required),
+            'start_date': new FormControl(moment(this.startDate).format('YYYY-MM-DD'), Validators.required),
             'from': new FormControl(this.startDate, Validators.required),
             'till': new FormControl(this.endDate, Validators.required),
             'role': new FormControl(null, Validators.required),
-            'amount': new FormControl(1, [ Validators.min(1), Validators.max(5) ])
+            'amount': new FormControl(1, [Validators.min(1), Validators.max(5)])
         });
     }
 
     //preparing dates
-    private prepareStartDays()
-    {
+    private prepareStartDays() {
         const now = new Date();
 
         this.bookingService.calendar.forEach(day => {
-            if(day.day.getTime() >= now.getTime() || now.getDate() == day.day.getDate())
-                this.startDays.push(day.day)
-        })
+            if (day.day.getTime() >= now.getTime() || now.getDate() == day.day.getDate())
+                this.startDays.push(day.day);
+        });
     }
 
-    private prepareStartIntervals() : void
-    {
+    private prepareStartIntervals(): void {
         //basic intervals setup
         this.startIntervals = [];
         const date = new Date(this.date.getTime());
         date.setHours(0, 0, 0, 0);
 
-        for(let i = 0; i < NUMBER_OF_INTERVALS; i++)
-        {
+        for (let i = 0; i < NUMBER_OF_INTERVALS; i++) {
             this.startIntervals.push(new Date(date.getTime()));
             date.setMinutes(date.getMinutes() + 15);
         }
@@ -201,8 +208,7 @@ export class CalendarPopupComponent implements OnInit
         this.startIntervals = this.startIntervals.filter(intervalDate => now.getTime() <= intervalDate.getTime());
     }
 
-    private prepareEndIntervals() : void
-    {
+    private prepareEndIntervals(): void {
         //next day start
         const nextDayStart = this.getNexDayStart();
 
@@ -210,38 +216,34 @@ export class CalendarPopupComponent implements OnInit
         this.endIntervals = [];
         let date = new Date(this.startIntervals[1] ? this.startIntervals[1].getTime() : nextDayStart.getTime());
 
-        if(this.form && this.form.get("from").value)
-        {
-            const endStartingDate = new Date(this.form.get("from").value);
+        if (this.form && this.form.get('from').value) {
+            const endStartingDate = new Date(this.form.get('from').value);
             endStartingDate.setMinutes(endStartingDate.getMinutes() + 15);
 
             date = endStartingDate;
         }
 
-        for(let i = 0; i < NUMBER_OF_INTERVALS; i++)
-        {
+        for (let i = 0; i < NUMBER_OF_INTERVALS; i++) {
             this.endIntervals.push(new Date(date.getTime()));
             date.setMinutes(date.getMinutes() + 15);
         }
 
-        console.log(this.endIntervals[0])
+        console.log(this.endIntervals[0]);
     }
 
-    private getNexDayStart() : Date
-    {
-        const nextDayStart = new Date(this.date.getTime())
+    private getNexDayStart(): Date {
+        const nextDayStart = new Date(this.date.getTime());
         nextDayStart.setDate(nextDayStart.getDate() + 1);
         nextDayStart.setHours(0, 0, 0, 0);
 
         return nextDayStart;
     }
 
-    private calculateInitials()
-    {
+    private calculateInitials() {
         //creating dates
         const now = new Date();
         this.startDate = new Date(this.startIntervals.find(date => now.getTime() <= date.getTime()) || this.getNexDayStart());
-        this.endDate = new Date(this.startDate.getTime())
+        this.endDate = new Date(this.startDate.getTime());
         this.endDate.setMinutes(this.endDate.getMinutes() + 15);
     }
 }
