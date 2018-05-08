@@ -3,6 +3,7 @@ import {CareHomeService} from '../../../../services/care-home.service';
 import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {NotificationsService} from 'angular2-notifications';
 import {AuthService} from '../../../../services/auth.service';
+import {CareHomeBookingService} from '../../../../services/care-home-booking.service';
 
 @Component({
     selector: 'app-care-home-reviews',
@@ -19,7 +20,8 @@ export class CareHomeReviewsComponent implements OnInit {
 
     constructor(private careHomeService: CareHomeService,
                 private notificationService: NotificationsService,
-                private authService: AuthService) {
+                private authService: AuthService,
+                private bookingService: CareHomeBookingService) {
     }
 
     ngOnInit() {

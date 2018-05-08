@@ -10,6 +10,7 @@ import { getMessageError, handleValidationErrorMessage, handleValidationStateCla
 import { UserService } from '../../../../services/user.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AddressDetail } from '../../../../models/address/address-detail.model';
+import {CareHomeBookingService} from '../../../../services/care-home-booking.service';
 
 @Component({
     selector: 'app-care-home-my-profile',
@@ -112,7 +113,7 @@ export class CareHomeMyProfileComponent implements OnInit
             errors: [
                 {
                     error: 'required',
-                    message: 'Care service name is required'
+                    message: 'Care service name is requirebd'
                 },
                 {
                     error: 'alpha',
@@ -154,7 +155,8 @@ export class CareHomeMyProfileComponent implements OnInit
                 private googleService: GoogleService,
                 private userService: UserService,
                 private authService: AuthService,
-                private notificationService: NotificationsService)
+                private notificationService: NotificationsService,
+                private bookingService: CareHomeBookingService)
     {
     }
 
@@ -207,6 +209,8 @@ export class CareHomeMyProfileComponent implements OnInit
     {
         return `${this.profileDetails.care_home.general_guidance.floor_plan}?access-token=${this.authService.getAccessToken().token}`;
     }
+
+
 
     private getProfile(): void
     {

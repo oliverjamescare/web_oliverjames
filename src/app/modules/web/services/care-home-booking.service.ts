@@ -22,6 +22,8 @@ export class CareHomeBookingService {
     florPlanFile: File = null;
 
     card_number: any;
+    jobsFieldsBeforeSubmit: any = {};
+    genderPreference: number;
 
     constructor(private apiService: ApiService,
                 private fakeApiService: FakeApiService) {
@@ -146,8 +148,37 @@ export class CareHomeBookingService {
             formData.append('report_contact', this.generalGuidanceForm.report_contact);
         if(this.generalGuidanceForm.superior_contact)
             formData.append('superior_contact', this.generalGuidanceForm.superior_contact);
-
+            formData.append('gender_preference', this.prepareGenderPreference());
         return formData;
+    }
+
+    public fillJobsFieldsBeforeSubmit(): void {
+    if (this.florPlanFile !== null)
+    this.jobsFieldsBeforeSubmit.floor_plan = this.florPlanFile;
+    if(this.generalGuidanceForm.parking)
+        this.jobsFieldsBeforeSubmit.parking =  this.generalGuidanceForm.parking;
+    if(this.generalGuidanceForm.notes_for_carers)
+        this.jobsFieldsBeforeSubmit.notes_for_carers =  this.generalGuidanceForm.notes_for_carers;
+    if(this.generalGuidanceForm.emergency_guidance)
+        this.jobsFieldsBeforeSubmit.emergency_guidance =  this.generalGuidanceForm.emergency_guidance;
+    if(this.generalGuidanceForm.report_contact)
+        this.jobsFieldsBeforeSubmit.report_contact =  this.generalGuidanceForm.report_contact;
+    if(this.generalGuidanceForm.superior_contact)
+        this.jobsFieldsBeforeSubmit.superior_contact =  this.generalGuidanceForm.superior_contact;
+
+
+
+}
+
+    private prepareGenderPreference(): string {
+        switch (this.genderPreference) {
+            case 1:
+                return 'Male';
+            case 2:
+                return 'Female';
+            default:
+                return 'No preference';
+        }
     }
 }
 

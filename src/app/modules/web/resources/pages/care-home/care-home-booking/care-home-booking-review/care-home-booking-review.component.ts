@@ -5,6 +5,7 @@ import { NotificationsService } from 'angular2-notifications';
 import { GeneralGuidance } from '../../../../../models/care-home-booking/general-guidance';
 import { getMessageError } from '../../../../../../../utilities/form.utils';
 
+
 @Component({
     selector: 'app-care-home-booking-review',
     templateUrl: './care-home-booking-review.component.html',
@@ -19,7 +20,8 @@ export class CareHomeBookingReviewComponent implements OnInit
     constructor(
         public bookingService: CareHomeBookingService,
         private router: Router,
-        private notificationService: NotificationsService
+        private notificationService: NotificationsService,
+
     )
     {
     }
@@ -31,6 +33,7 @@ export class CareHomeBookingReviewComponent implements OnInit
 
     onSubmitBookings(): void
     {
+        this.bookingService.fillJobsFieldsBeforeSubmit();
         if (this.bookingService.card_number !== null)
         {
             this.inProgress = true;
@@ -54,6 +57,8 @@ export class CareHomeBookingReviewComponent implements OnInit
             this.router.navigate(['/care-home-booking', 'payment-details']);
         }
     }
+
+
 
     private getGuidanceInfo(): void
     {

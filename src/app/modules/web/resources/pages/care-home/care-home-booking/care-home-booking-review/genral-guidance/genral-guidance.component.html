@@ -67,6 +67,9 @@
             <div class="guidance-right-tab text-center">
                 <!--current  floor plan-->
                 <div>
+                    <span *ngIf="fileName" class="file-link">
+                        <b>Chosen file:</b> {{ fileName }}
+                    </span>
                     <span *ngIf="form.get('floor_plan').value" class="file-link">
                         <a class="gj-cursor-pointer app-link" [href]="getFloorPlan()" target="_blank">Floor plan</a>
                     </span>
@@ -76,7 +79,9 @@
 
                 <!--floor plan input-->
                 <input type="text" class="form-control" class="d-none" formControlName="floor_plan">
-                <input type="file" (change)="onFileChange($event)" #fileInput>
+                <input class="d-none" type="file" (change)="onFileChange($event)" #fileInput id="fileInput">
+                <input type="button" value="Browse" onclick="document.getElementById('fileInput').click();">
+
                 <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'floor_plan', messages) }} </span>
             </div>
         </div>

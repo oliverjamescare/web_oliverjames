@@ -14,6 +14,7 @@ import { fileSize, fileType } from '../../../../../../../../utilities/validators
 export class GeneralGuidanceComponent implements OnInit
 {
     careHome: CareHome;
+    fileName: any = '';
 
     //floor plan
     floorPlanFile: File;
@@ -60,8 +61,15 @@ export class GeneralGuidanceComponent implements OnInit
 
 
     getFloorPlan(): string {
+        // console.log(this.bookingService['jobsFieldsBeforeSubmit']);
+        console.log(this.bookingService['jobsFieldsBeforeSubmit'].florPlanFile);
+        if (this['bookingService'] && this.bookingService['jobsFieldsBeforeSubmit']['floor_plan']['name']) {
+         this.fileName = this.bookingService['jobsFieldsBeforeSubmit']['floor_plan']['name'];
+        }
+
         return `${this.bookingService.generalGuidance.floor_plan}?access-token=${this.authService.getAccessToken().token}`;
     }
+
 
     private createGuidanceForm(): void {
         this.form = new FormGroup({
@@ -87,6 +95,7 @@ export class GeneralGuidanceComponent implements OnInit
             control.markAsTouched();
             control.setValidators([Validators.required, fileType(fileResource, this.validMimeTypes), fileSize(fileResource, this.maxFileSizeMB)]);
             control.updateValueAndValidity();
+            this.bookingService.fillJobsFieldsBeforeSubmit();
         }
     }
 
