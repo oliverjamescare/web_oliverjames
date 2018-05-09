@@ -51,7 +51,7 @@
                         <td>{{ job.end_date | datePattern: "h:mm A"}}</td>
                         <td><span>&#163;</span>{{ job.cost.total_cost }}</td>
                         <td>{{ job.carer.carer.getCarerFullName() }}</td>
-                        <td>{{ (job.status).replace("_"," ") | capitalize }}</td>
+                        <td>{{ job.status | status | capitalize }}</td>
                         <td>
                             <div *ngIf="job.status === 'PENDING_PAYMENT'" class="text-center">
                                 <span (click)="navigateToChallenge(job)" class="actions">Challenge</span>

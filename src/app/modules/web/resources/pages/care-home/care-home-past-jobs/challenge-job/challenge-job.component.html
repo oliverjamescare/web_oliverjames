@@ -28,7 +28,7 @@
                     <td>{{ careHomeService.pastJobDetails.end_date | datePattern: "h:mm A"}}</td>
                     <td><span>&#163;</span>{{ careHomeService.pastJobDetails.cost.total_cost }}</td>
                     <td>{{ careHomeService.pastJobDetails.carer.carer.getCarerFullName() }}</td>
-                    <td>{{ (careHomeService.pastJobDetails.status).replace("_"," ") | capitalize }}</td>
+                    <td>{{ careHomeService.pastJobDetails.status | status | capitalize }}</td>
                 </tr>
             </tbody>
         </table>

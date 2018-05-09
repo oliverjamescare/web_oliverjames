@@ -33,9 +33,7 @@ export class ChallengeJobComponent implements OnInit {
         }
     ];
 
-    constructor(public careHomeService: CareHomeService,
-                private router: Router) {
-    }
+    constructor(public careHomeService: CareHomeService, private router: Router) {}
 
     ngOnInit() {
         if (!this.careHomeService.pastJobDetails) {
@@ -52,7 +50,7 @@ export class ChallengeJobComponent implements OnInit {
             this.inProgress = true;
             const formValues = this.form.value;
             this.careHomeService
-                .challengeJobPayment(this.careHomeService.pastJobDetails._id, formValues.message)
+                .challengeJobPayment(this.careHomeService.pastJobDetails.id, formValues.message)
                 .subscribe(() => {
                         this.inProgress = false;
                         this.form.reset();

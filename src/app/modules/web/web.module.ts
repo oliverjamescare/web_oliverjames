@@ -134,6 +134,7 @@ import { AddressLookupComponent } from './resources/partials/address-lookup/addr
 import { CarerAvailableJobsListComponent } from './resources/pages/carer/carer-available-jobs/carer-available-jobs-list/carer-available-jobs-list.component';
 import { UploadIdentityComponent } from './resources/pages/carer/carer-my-profile/upload-identity/upload-identity.component';
 
+import { environment } from './../../../environments/environment';
 
 @NgModule({
     declarations: [
@@ -241,7 +242,7 @@ import { UploadIdentityComponent } from './resources/pages/carer/carer-my-profil
         NgbModule.forRoot(),
         MatInputModule,
         ClickOutsideModule,
-        NgxStripeModule.forRoot('pk_live_cMA3gvaz6Z2RERBYxePK0ho8'), //pk_live_cMA3gvaz6Z2RERBYxePK0ho8 pk_test_sihAGUNVJG3EsvgRyh7IHDQo
+        NgxStripeModule.forRoot(environment.stripe_key), //pk_live_cMA3gvaz6Z2RERBYxePK0ho8 pk_test_sihAGUNVJG3EsvgRyh7IHDQo
         AgmCoreModule.forRoot({
             apiKey: 'AIzaSyBWoEhh2-9yp52XVTtfTaLIPcxcmTkt_Ms',
             libraries: ['places', 'geometry']

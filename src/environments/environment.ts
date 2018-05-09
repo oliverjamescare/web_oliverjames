@@ -9,5 +9,6 @@ export const environment = {
     // api: 'https://api.oliver-james.ready4s.it/api',
     api: 'https://api.oliver-james.ready4s.it/api',
     admin: 'https://api.oliver-james.ready4s.it/admin',
-    site: 'http://localhost:4200'
+    site: 'http://localhost:4200',
+    stripe_key: "pk_test_sihAGUNVJG3EsvgRyh7IHDQo"
 };
