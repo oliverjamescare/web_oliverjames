@@ -15,7 +15,12 @@
 
   .day-events {
     position: absolute;
-    bottom: 0px;
+    top: 12px;
+    left:5px;
+    span.show-more-shifts {
+      color:$green-color;
+      font-size: 12px;
+    }
     .single-event {
       width: 100%;
       float: left;
