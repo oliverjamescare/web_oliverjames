@@ -12,6 +12,7 @@ export class CancelationPopupComponent implements OnInit, AfterViewInit {
     @Input() type: string;
     @Output() closed = new EventEmitter();
 
+    halfCharge: boolean = false;
     title = 'Cancel job';
     buttonLoading = false;
 
@@ -20,7 +21,15 @@ export class CancelationPopupComponent implements OnInit, AfterViewInit {
                 private router: Router) {
     }
 
-    ngOnInit() {
+    ngOnInit()
+    {
+        const job = this.careHomeService.jobDetails;
+        const now = new Date();
+        const acceptanceTimeBound = 1000 * 60 *  60 * 2; //2 hours
+        const jobTimeBound = 1000 * 60 *  60 * 24; //24 hours
+
+        if(job.start_date - jobTimeBound <= now.getTime() && job.carer && (job.carer.acceptance_date + acceptanceTimeBound <= now.getTime()))
+            this.halfCharge = true;
     }
 
     ngAfterViewInit() {
@@ -39,14 +48,12 @@ export class CancelationPopupComponent implements OnInit, AfterViewInit {
             .subscribe(
                 response => {
                     this.buttonLoading = false;
-                    console.log('Cancel job success response', response);
                     this.notificationService.success('Job cancelled');
                     $('#' + this.type + '_id').modal('hide');
                     this.router.navigate(['/care-home-upcoming-jobs']);
                 },
                 error => {
                     this.buttonLoading = false;
-                    console.log('Cancel job error response', error);
                 }
             );
     }
