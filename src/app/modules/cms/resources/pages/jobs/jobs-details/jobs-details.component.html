@@ -1,21 +1,16 @@
 <div class="row">
     <div class="col-sm">
         <h2>Job details</h2>
-        <button routerLink="/admin/jobs/list" class="btn-success right btn-nav">Back</button>
+        <button routerLink="/admin/jobs/list" class="btn btn-success right btn-nav">Back</button>
     </div>
 </div>
 <br>
 <div class="row">
     <div class="col-sm-4">
-        <button
-                (click)="openCancelJobPopup(true)" class="btn btn-success"
-                [disabled]="jobDetails?.status === 'CANCELLED'"
-        >Cancel job</button>
+        <button (click)="openCancelJobPopup(true)" class="btn btn-success" [disabled]="jobDetails?.status === 'CANCELLED'">Cancel job</button>
     </div>
     <div class="col-sm-4">
-        <button (click)="openCancelJobPopup(false)" class="btn btn-success"
-                [disabled]="jobDetails?.status === 'CANCELLED'"
-        >Cancel job - waive charges</button>
+        <button (click)="openCancelJobPopup(false)" class="btn btn-success" [disabled]="jobDetails?.status === 'CANCELLED'">Cancel job - waive charges</button>
     </div>
     <div class="col-sm-4">
         <button (click)="showResolveChallengeDialog = true" [disabled]="jobDetails?.status !== 'CHALLENGED'" class="btn btn-success"
@@ -26,9 +21,6 @@
 <div class="row">
     <div class="col-sm-4">
         <button (click)="seeReviewDialog = true" class="btn btn-success" [disabled]="!jobDetails?.review">See review</button>
-    </div>
-    <div class="col-sm-4">
-        <button class="btn btn-success" [disabled]="true">Add manual booking charge</button>
     </div>
     <div class="col-sm-4">
         <button class="btn btn-success" [disabled]="true">Retry payment</button>
@@ -166,6 +158,8 @@
                     </select>
                 </td>
             </tr>
+
+            <!--summary sheet-->
             <tr>
                 <th class="green-cell white-color">Summary sheet</th>
                 <td class="green-cell"></td>
@@ -175,8 +169,8 @@
                 <td>
                     {{ jobDetails?.summary_sheet?.start_date | timestamp }}, {{ jobDetails?.summary_sheet?.start_date | timestampHour }}
                     <!--<input *ngIf="jobDetails?.summary_sheet" formControlName="summary_sheet_start_date" placeholder="yyyy-mm-dd" type="text"-->
-                           <!--[ngClass]="formUtils.handleValidationStateClass(form, 'summary_sheet_start_date')"-->
-                           <!--class="form-control">-->
+                    <!--[ngClass]="formUtils.handleValidationStateClass(form, 'summary_sheet_start_date')"-->
+                    <!--class="form-control">-->
                     <!--<span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'summary_sheet_start_date', messages) }} </span>-->
                 </td>
             </tr>
@@ -185,8 +179,8 @@
                 <td>
                     {{ jobDetails?.summary_sheet?.end_date | timestamp }}, {{ jobDetails?.summary_sheet?.end_date | timestampHour }}
                     <!--<input *ngIf="jobDetails?.summary_sheet" formControlName="summary_sheet_end_date" placeholder="yyyy-mm-dd" type="text"-->
-                           <!--[ngClass]="formUtils.handleValidationStateClass(form, 'summary_sheet_end_date')"-->
-                           <!--class="form-control">-->
+                    <!--[ngClass]="formUtils.handleValidationStateClass(form, 'summary_sheet_end_date')"-->
+                    <!--class="form-control">-->
                     <!--<span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'summary_sheet_end_date', messages) }} </span>-->
                 </td>
             </tr>
@@ -195,10 +189,34 @@
                 <td>
                     {{ jobDetails?.summary_sheet?.voluntary_deduction }}
                     <!--<input *ngIf="jobDetails?.summary_sheet" formControlName="voluntary_deduction" type="number" class="form-control"-->
-                           <!--[ngClass]="formUtils.handleValidationStateClass(form, 'voluntary_deduction')">-->
+                    <!--[ngClass]="formUtils.handleValidationStateClass(form, 'voluntary_deduction')">-->
                     <!--<span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'voluntary_deduction', messages) }} </span>-->
                 </td>
             </tr>
+
+            <!--challenge-->
+            <ng-template [ngIf]="jobDetails?.challenge">
+                <tr>
+                    <th class="green-cell white-color">Challenge</th>
+                    <td class="green-cell"></td>
+                </tr>
+                <tr>
+                    <th>Status</th>
+                    <td>{{ jobDetails?.challenge.status | status | capitalize }}</td>
+                </tr>
+                <tr>
+                    <th>Message</th>
+                    <td>{{ jobDetails?.challenge.description }}</td>
+                </tr>
+                <tr>
+                    <th>Admin response </th>
+                    <td>{{ jobDetails?.challenge.response || "No response so far" }}</td>
+                </tr>
+                <tr>
+                    <th>Challenge date</th>
+                    <td>{{ jobDetails?.challenge.created | datePattern: "YYYY-MM-DD, h:mm A" }}</td>
+                </tr>
+            </ng-template>
         </table>
         <br>
         <button (click)="onUpdateJob()" [disabled]="jobDetails?.status === 'CANCELLED'" class="btn btn-success">Edit job</button>
@@ -223,6 +241,7 @@
         type="resolve_challenge"
         [jobId]="jobId"
         (closed)="showResolveChallengeDialog = false"
+        (reload)="onReload()"
 ></app-resolve-challenge>
 
 <app-see-review
