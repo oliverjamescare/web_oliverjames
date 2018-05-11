@@ -141,8 +141,8 @@ export class JobsDetailsComponent implements OnInit {
         this.showCancelJobDialog = true;
     }
 
-    onReload(): void {
-        console.log('On reload');
+    onReload(): void
+    {
         this.getJobDetails();
     }
 
@@ -233,13 +233,10 @@ export class JobsDetailsComponent implements OnInit {
 
     private getJobDetails(): void {
         this.jobsService.getJobDetails(this.jobId)
-            .subscribe(
-                response => {
-                    console.log('Get job details response', response);
+            .subscribe(response => {
                     this.jobDetails = response;
                     this.setUpForm();
-                },
-                error => console.log('Get job details error response', error)
+                }
             );
     }
 
@@ -311,5 +308,7 @@ export class JobsDetailsComponent implements OnInit {
             }
         }
     }
+
+
 
 }

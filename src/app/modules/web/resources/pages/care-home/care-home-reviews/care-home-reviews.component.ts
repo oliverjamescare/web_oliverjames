@@ -4,17 +4,23 @@ import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
 import {NotificationsService} from 'angular2-notifications';
 import {AuthService} from '../../../../services/auth.service';
 import {CareHomeBookingService} from '../../../../services/care-home-booking.service';
+import { getMessageError } from '../../../../../../utilities/form.utils';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-care-home-reviews',
     templateUrl: './care-home-reviews.component.html',
     styleUrls: ['./care-home-reviews.component.scss']
 })
-export class CareHomeReviewsComponent implements OnInit {
+export class CareHomeReviewsComponent implements OnInit
+{
     page = 1;
     pendingReviews: any[] = [];
 
-    form: FormGroup;
+    forms: Array<FormGroup> = [];
+    inProgress: boolean = false;
+    error: string = '';
+
     showBlockConfirmation = false;
     currentCarerId: string;
 
@@ -24,17 +30,14 @@ export class CareHomeReviewsComponent implements OnInit {
                 private bookingService: CareHomeBookingService) {
     }
 
-    ngOnInit() {
-        this.form = new FormGroup({
-            ratings: new FormArray([])
-        });
+    ngOnInit()
+    {
         this.getPendingReviews();
     }
 
-    getProfileImage(carer): string {
-        return carer.profile_image ?
-            `${carer.profile_image}?access-token=${this.authService.getAccessToken().token}`
-            : '../../../../assets/images/placeholder.jpg';
+    getProfileImage(carer): string
+    {
+        return carer.profile_image ? `${carer.profile_image}?access-token=${this.authService.getAccessToken().token}` : '../../../../assets/images/placeholder.jpg';
     }
 
     openConfirmationPopup(carerId): void {
@@ -42,57 +45,53 @@ export class CareHomeReviewsComponent implements OnInit {
         this.showBlockConfirmation = true;
     }
 
-    onRateChange(): void {
-    }
+    onRateChange(): void {}
 
-    private getPendingReviews(): void {
+    private getPendingReviews(): void
+    {
         this.careHomeService.getPendingReviews(this.page)
-            .subscribe(
-                response => {
-                    console.log('Get pending reviews success response', response);
+            .subscribe(response => {
                     this.pendingReviews = response.results;
-                    this.createForm();
-                },
-                error => {
-                    console.log('Get pending reviews error response', error);
+                    this.createForms();
                 }
             );
     }
 
-    private createForm(): void {
-        const ratingsArr = new FormArray([]);
+    private createForms(): void
+    {
         this.pendingReviews.forEach(() => {
-            ratingsArr.push(
-                new FormGroup({
-                    rate: new FormControl(null, Validators.required),
-                    description: new FormControl(null, Validators.required)
-                })
-            );
-        });
-        this.form = new FormGroup({
-            ratings: ratingsArr
+            const form = new FormGroup({
+                rate: new FormControl(null, Validators.required),
+                description: new FormControl(null, Validators.required)
+            });
+
+            this.forms.push(form);
         });
     }
 
-    reviewJobCarer(index: number): void {
-        const rate = (<FormArray>this.form.get('ratings')).controls[index].get('rate').value;
-        const description = (<FormArray>this.form.get('ratings')).controls[index].get('description').value;
-        console.log('Rate', rate);
-        console.log('Description', description);
-        this.careHomeService.reviewJobCarer(this.pendingReviews[index]._id, rate, description)
-            .subscribe(
-                response => {
-                    console.log('Review job carer success response', response);
-                    this.notificationService.success('Your rating has been sent for review');
-                    this.pendingReviews.splice(index, 1);
-                },
-                error => {
-                    console.log('Review job carer error response', error);
-                }
-            );
+    onSubmit(form: FormGroup, jobId: string): void
+    {
+        if(form.valid)
+        {
+            this.inProgress = true;
+            this.careHomeService
+                .reviewJobCarer(jobId, form.get("rate").value, form.get("description").value)
+                .subscribe(
+                    response => {
+                        this.notificationService.success('Your rating has been sent for review');
+                        this.inProgress = false;
+                        form.reset();
+                        this.getPendingReviews();
+                    },
+                    (error: HttpErrorResponse) => {
+                        this.notificationService.error(getMessageError(error));
+                        this.inProgress = false;
+                    });
+        }
     }
 
-    addCarerToBlocked(carerId: string): void {
+    addCarerToBlocked(carerId: string): void
+    {
         this.careHomeService.addCarerToBlocked(carerId)
             .subscribe(
                 response => {

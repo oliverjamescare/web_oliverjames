@@ -5,18 +5,19 @@
     </div>
 </div>
 <br>
-<div [formGroup]="form">
-    <p *ngIf="!pendingReviews.length">No carers to review</p>
-    <div formArrayName="ratings" class="row">
-        <div *ngFor="let review of pendingReviews; let i = index" class="col-md-6">
+
+<p *ngIf="!pendingReviews.length">No carers to review</p>
+<div *ngIf="pendingReviews.length" class="row">
+    <div *ngFor="let form of forms; let i = index" class="col-md-6">
+        <form [formGroup]="form" (ngSubmit)="onSubmit(form, pendingReviews[i]._id)">
             <br>
             <br>
             <div class="carer-header text-center">
                 <div class="avatar">
                     <div class="avatar-wrapper">
-                        <img [src]="getProfileImage(review)" class="img img responsive profile-image">
+                        <img [src]="getProfileImage(pendingReviews[i].carer.carer)" class="img img-responsive profile-image">
                     </div>
-                    <span class="carer-name">{{ review.carer.carer.first_name }} {{ review.carer.carer.surname }}</span>
+                    <span class="carer-name">{{ pendingReviews[i].carer.carer.first_name }} {{ pendingReviews[i].carer.carer.surname }}</span>
                 </div>
             </div>
             <div class="job-info">
@@ -28,22 +29,26 @@
                         <th>Till</th>
                     </thead>
                     <tbody>
-                        <td class="left-td">{{ review._id }}</td>
-                        <td>{{ review.start_date | timestampDate }}</td>
-                        <td>{{ review.start_date | timestampHour }}</td>
-                        <td>{{ review.end_date | timestampHour }}</td>
+                        <td class="left-td">{{ pendingReviews[i]._id }}</td>
+                        <td>{{ pendingReviews[i].start_date | timestampDate }}</td>
+                        <td>{{ pendingReviews[i].start_date | timestampHour }}</td>
+                        <td>{{ pendingReviews[i].end_date | timestampHour }}</td>
                     </tbody>
                 </table>
             </div>
             <br>
-            <div [formGroupName]="i" class="text-center">
-                <span class="label">Your review of {{ review.carer.carer.first_name }}</span>
-                <p><ngb-rating formControlName="rate" class="rating" [max]="5"></ngb-rating></p>
+
+            <!--rating fields-->
+            <div class="text-center">
+                <span class="label">Your review of {{ pendingReviews[i].carer.carer.first_name }}</span>
+                <p>
+                    <ngb-rating formControlName="rate" class="rating" [max]="5"></ngb-rating>
+                </p>
                 <textarea formControlName="description" class="form-control" rows="5"></textarea>
-                <button (click)="openConfirmationPopup(review.carer._id)" class="btn btn-success btn-red">Block this carer from future jobs</button>
-                <button (click)="reviewJobCarer(i)" [disabled]="!form.get('ratings').controls[i].valid" class="btn btn-success">Submit</button>
+                <button type="button"(click)="openConfirmationPopup(pendingReviews[i].carer._id)" class="btn btn-success btn-red">Block this carer from future jobs</button>
+                <button type="submit"[disabled]="!form.valid || inProgress" class="btn btn-success">Submit</button>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 

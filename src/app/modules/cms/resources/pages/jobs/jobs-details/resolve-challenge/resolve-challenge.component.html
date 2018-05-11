@@ -1,21 +1,25 @@
 <app-cms-popup [title]="title" [id]="type + '_id'" [showLogo]="false">
     <div class="row">
-        <div [formGroup]="form" class="col-12 text-center">
-            <label>Whats your conclusion</label>
-            <select formControlName="conclusion" class="form-control">
-                <option value="UPHELD">Upheld</option>
-                <option value="CANCELLED">Cancel</option>
-            </select>
-            <br>
-            <div *ngIf="form.get('conclusion').value === 'CANCELLED'">
-                <label >Explain your decision</label>
-                <textarea formControlName="reason" class="form-control"></textarea>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="col-12 text-center">
+            <div class="form-group">
+                <label>Whats your conclusion?</label>
+                <select formControlName="status" class="form-control" [ngClass]="formUtils.handleValidationStateClass(form, 'status')">
+                    <option value="UPHELD">Upheld</option>
+                    <option value="CANCELLED">Cancel</option>
+                </select>
+                <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'status', messages) }} </span>
             </div>
-        </div>
-        <br>
-        <div class="div-actions">
-            <button (click)="onResolveChallenge()" class="btn-success btn-actions">Confirm</button>
-            <button (click)="onClose()" class="btn-success btn-actions">Exit</button>
-        </div>
+            <div class="form-group">
+                <label>Explain your decision: </label>
+                <textarea formControlName="explanation" class="form-control" [ngClass]="formUtils.handleValidationStateClass(form, 'explanation')"></textarea>
+                <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'explanation', messages) }} </span>
+            </div>
+
+            <div class="div-actions">
+                <button type="submit" class="btn btn-success btn-actions" [disabled]="inProgress || !form.valid">Confirm</button>
+                <button type="button" data-dismiss="modal" class="btn btn-success btn-actions">Exit</button>
+            </div>
+            <br>
+        </form>
     </div>
 </app-cms-popup>

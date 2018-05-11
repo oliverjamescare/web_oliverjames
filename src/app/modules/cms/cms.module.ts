@@ -46,6 +46,9 @@ import { AddCareHomeComponent } from './resources/pages/care-homes/add-care-home
 import { SeeProfilePictrueComponent } from './resources/pages/carers/carer-details/see-profile-pictrue/see-profile-pictrue.component';
 import { AddJobComponent } from './resources/pages/jobs/add-job/add-job.component';
 import { SeeReviewComponent } from './resources/pages/jobs/job-details/see-review/see-review.component';
+import { StatusPipe } from './pipes/status.pipe';
+import { CapitalizePipe } from './pipes/capitalize.pipe';
+import { DatePatternPipe } from './pipes/date-pattern.pipe';
 
 
 @NgModule({
@@ -81,7 +84,10 @@ import { SeeReviewComponent } from './resources/pages/jobs/job-details/see-revie
         WaitingListComponent,
         AddCareHomeComponent,
         AddJobComponent,
-        SeeReviewComponent
+        SeeReviewComponent,
+        StatusPipe,
+        CapitalizePipe,
+        DatePatternPipe
     ],
     providers: [
         ApiService,
