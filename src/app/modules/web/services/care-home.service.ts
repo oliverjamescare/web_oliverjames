@@ -118,6 +118,11 @@ export class CareHomeService
         return this.apiService.challengeJobPayment(jobId, description);
     }
 
+    getJobsCount(): Observable<any>
+    {
+        return this.apiService.getJobsCount().map(results => results.jobs);
+    }
+
     private parseJobsResults(response: { results: Array<Job>, pages: number }) : { jobs: Array<Job>, pages: number }
     {
         const res: { jobs: Array<Job>, pages: number } = {

@@ -330,6 +330,14 @@ export class ApiService
         );
     }
 
+    getJobsCount(): Observable<any>
+    {
+        return this.httpClient.get(
+            `${this.endpoint}/care-home/jobs`,
+            { headers: this.getAuthorizationHeaders() }
+        );
+    }
+
 // care home & carer
 
     getUserProfile(): Observable<any>

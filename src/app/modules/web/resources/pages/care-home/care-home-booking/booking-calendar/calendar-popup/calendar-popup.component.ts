@@ -4,8 +4,8 @@ import {CareHomeBookingService} from '../../../../../../services/care-home-booki
 import * as moment from 'moment';
 import {handleValidationErrorMessage, handleValidationStateClass} from '../../../../../../../../utilities/form.utils';
 import {dateGreaterThan} from '../../../../../../../../utilities/validators';
-import {ApiService} from '../../../../../../services/api.service';
 import {NotificationsService} from 'angular2-notifications';
+import { CareHomeService } from '../../../../../../services/care-home.service';
 
 
 const NUMBER_OF_INTERVALS = 96; // number of 15 min intervals in select list hour from 7:00, 19:00
@@ -24,7 +24,7 @@ export class CalendarPopupComponent implements OnInit {
     formUtils = {handleValidationStateClass, handleValidationErrorMessage};
     startDate: Date;
     endDate: Date;
-    profileDetails: any;
+    firstTimeBooking: boolean = true;
 
     startDays: Array<Date> = [];
     startIntervals: Array<Date> = [];
@@ -91,11 +91,10 @@ export class CalendarPopupComponent implements OnInit {
         }
     ];
 
-    constructor(public bookingService: CareHomeBookingService, private apiService: ApiService,  private notificationService: NotificationsService) {
+    constructor(public bookingService: CareHomeBookingService, private careHomeService: CareHomeService, private notificationService: NotificationsService) {
     }
 
     ngOnInit() {
-        this.getProfile();
         //init days and times arrays
         this.prepareStartDays();
         this.prepareStartIntervals();
@@ -135,29 +134,28 @@ export class CalendarPopupComponent implements OnInit {
         this.form.get('till')
             .valueChanges
             .subscribe(() => this.form.get('till').setValidators([Validators.required, dateGreaterThan(this.form.get('from').value)]));
+
+        //checking number of totally booked jobs
+        this.careHomeService.getJobsCount().subscribe(jobs => {
+            if(jobs > 0)
+                this.firstTimeBooking = false;
+        })
     }
 
     onClosePopup(): void {
         this.closePopup.emit();
     }
 
-    onAddBooking(): void {
-        if (this.form.valid) {
-            if (this.profileDetails.care_home.payment_system.card_number === null) {
+    onAddBooking(): void
+    {
+        if (this.form.valid)
+        {
+            if(this.firstTimeBooking)
                 this.notificationService.success("Once you've placed all your shifts, scroll down and press 'Next'");
-            }
+
             this.addJobsToList();
             this.closePopup.emit();
         }
-    }
-
-    private getProfile(): void {
-        this.apiService.getUserProfile()
-            .subscribe(
-                response => {
-                    this.profileDetails = response;
-                }
-            );
     }
 
     private addJobsToList(): void {
