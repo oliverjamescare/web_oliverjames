@@ -1,6 +1,7 @@
 <div class="day-events">
     <span
-            *ngFor="let job of allJobs" class="single-event"
+            *ngFor="let job of allJobs; let i=index" class="single-event"
             [ngClass]="{'job': !job.preBooked, 'pre-booked-job': job.preBooked}"
-    >{{ job.start | hourPipe }}-{{ job.end | hourPipe }}</span>
+    ><b *ngIf="i<3" class="font-weight-normal">{{ job.start | hourPipe }}-{{ job.end | hourPipe }}</b></span>
+    <span class="show-more-shifts" *ngIf="allJobs.length>3">Click to show all</span>
 </div>

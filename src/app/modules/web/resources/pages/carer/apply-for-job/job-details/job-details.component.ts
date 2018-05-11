@@ -34,12 +34,13 @@ export class JobDetailsComponent implements OnInit
 
     onDeclineJob(): void
     {
-        this.carerJobService.declineJob(this.job.id)
-            .subscribe(
-                response => {
-                    this.notificationService.warn('Job declined');
-                    this.router.navigate(['/carer-available-jobs']);
-                });
+        // this.carerJobService.declineJob(this.job.id)
+        //     .subscribe(
+        //         response => {
+        //             this.notificationService.warn('Job declined');
+        //             this.router.navigate(['/carer-available-jobs']);
+        //         });
+        this.router.navigate(['/carer-available-jobs']);
     }
 
     getFloorPlanLink(): string
