@@ -16,6 +16,7 @@ export class JobDetailsComponent implements OnInit
     @Input() job: Job;
     loading = true;
     showConfirmationPopup = false;
+    showWithdrawPopup = false;
 
     constructor(
         private carerJobService: CarerJobService,
@@ -46,6 +47,10 @@ export class JobDetailsComponent implements OnInit
     getFloorPlanLink(): string
     {
         return `${this.job.general_guidance.floor_plan}?access-token=${this.authService.getAccessToken().token}`;
+    }
+    onWithdrawJob(): void
+    {
+        this.showWithdrawPopup = true;
     }
 
 }

@@ -1,0 +1,30 @@
+<div (click)="$event.stopPropagation()" class="confirmation-popup">
+    <div class="header text text-center">
+        <span>Withdraw job confirmation</span>
+        <span (click)="onClosePopup(); $event.stopPropagation()" class="exit">X</span>
+    </div>
+    <div class="popup-content">
+        <div class="text-center">
+            <p>
+                If you have any questions, please call the care home on {{ job.author.phone_number }}.<br/>
+                All fields below are required.
+            </p>
+            <div class="form-group"  *ngIf="!checkPenndingJob()">
+                <span class="details-label details-label-input">Message:</span>
+                <textarea [ngClass]="{'is-valid': withdrawMessage.length >0}" autocomplete="off" (input)="withdrawMessage = $event.target.value" class="form-control"></textarea>
+            </div>
+            <div class="form-group" *ngIf="checkPenndingJob()">
+                <span class="details-label-input details-label-input-second">Password</span>
+                <input [ngClass]="{'is-valid': withdrawPassword.length >0}" type="password" autocomplete="off" (input)="withdrawPassword = $event.target.value" class="form-control">
+            </div>
+        </div>
+        <div class="custom-control custom-checkbox clearfix" >
+            <input (change)="onCheckBoxChange()" type="checkbox" class="custom-control-input" id="confirm" name="terms">
+            <label class="custom-control-label small-font" for="confirm">I confirm the withdrawal</label>
+        </div>
+        <button (click)="onConfirm(); $event.stopPropagation()" [disabled]="!confirmed" type="button"
+                class=" btn btn-success btn-popup">
+            Ok
+        </button>
+    </div>
+</div>

@@ -131,6 +131,18 @@ export class ApiService
         );
     }
 
+    withdrawJob(jobId: string, withdrawMessage: string, withdrawPassword: string): Observable<any>
+    {
+        return this.httpClient.put(
+            `${this.endpoint}/jobs/${jobId}/withdraw`,
+            {
+                id: jobId,
+                message: withdrawMessage,
+                password: withdrawPassword
+            },
+            { headers: this.getAuthorizationHeaders() }
+        );
+    }
     getOtherJobs(jobId: string): Observable<any>
     {
         return this.httpClient.get(

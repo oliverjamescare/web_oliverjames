@@ -123,11 +123,15 @@
 
     </ul>
 
-    <!--popup-->
+    <!--popups-->
     <app-confirmation-popup *ngIf="showConfirmationPopup && job" (close)="showConfirmationPopup = false" [job]="job"></app-confirmation-popup>
+    <app-withdraw-popup *ngIf="showWithdrawPopup && job" (close)="showWithdrawPopup = false" [job]="job"></app-withdraw-popup>
+
 </div>
 <br>
 <div *ngIf="job" class="details-actions">
-    <button (click)="onDeclineJob()" [disabled]="job.status !== 'POSTED'" class="btn btn-success margin-r btn-red">Decline job</button>
-    <button (click)="onAcceptJob()" [disabled]="job.status !== 'POSTED'" class="btn btn-success right">Accept job</button>
+    <button (click)="onDeclineJob()" *ngIf="job.status === 'POSTED'" [disabled]="job.status !== 'POSTED'" class="btn btn-success margin-r btn-red">Decline job</button>
+    <button (click)="onAcceptJob()" *ngIf="job.status === 'POSTED'" [disabled]="job.status !== 'POSTED'" class="btn btn-success right">Accept job</button>
+    <button (click)="onWithdrawJob()" *ngIf="(job.status !== 'POSTED') && (job.status !== 'PENDING_SUMMARY_SHEET')" class="btn btn-success margin-r btn-red d-block btn-top-10">Withdraw job</button>
+
 </div>

@@ -133,6 +133,7 @@ import { DatePatternPipe } from './pipes/date-pattern.pipe';
 import { AddressLookupComponent } from './resources/partials/address-lookup/address-lookup.component';
 import { CarerAvailableJobsListComponent } from './resources/pages/carer/carer-available-jobs/carer-available-jobs-list/carer-available-jobs-list.component';
 import { UploadIdentityComponent } from './resources/pages/carer/carer-my-profile/upload-identity/upload-identity.component';
+import { WithdrawPopupComponent } from './resources/pages/carer/apply-for-job/job-details/withdraw-popup/withdraw-popup.component';
 
 import { environment } from './../../../environments/environment';
 
@@ -232,7 +233,8 @@ import { environment } from './../../../environments/environment';
         DatePatternPipe,
         AddressLookupComponent,
         CarerAvailableJobsListComponent,
-        UploadIdentityComponent
+        UploadIdentityComponent,
+        WithdrawPopupComponent
     ],
     imports: [
         CommonModule,

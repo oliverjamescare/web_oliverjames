@@ -86,6 +86,11 @@ export class CarerJobService
         return this.apiService.declineJob(jobId);
     }
 
+    withdrawJob(jobId: string, withdrawMessage: string, withdrawPassword: string): Observable<any>
+    {
+        return this.apiService.withdrawJob(jobId, withdrawMessage, withdrawPassword);
+    }
+
     getOtherJobs(jobId: string): Observable<any>
     {
         return this.apiService.getOtherJobs(jobId)
