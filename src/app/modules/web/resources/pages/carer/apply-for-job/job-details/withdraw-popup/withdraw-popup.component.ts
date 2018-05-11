@@ -23,7 +23,6 @@ export class WithdrawPopupComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.checkPenndingJob());
     }
 
     onClosePopup(): void {
