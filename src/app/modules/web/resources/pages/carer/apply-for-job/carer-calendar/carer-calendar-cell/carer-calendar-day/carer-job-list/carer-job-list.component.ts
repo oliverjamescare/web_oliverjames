@@ -9,9 +9,10 @@ import {Job} from '../../../../../../../../models/care-home-booking/job';
 export class CarerJobListComponent implements OnInit {
     @Input() jobs: Job[];
     @Input() index: number;
-    @Input() allJobs: { job: Job, type: string }[] = [];
+    @Input() allJobs: { job: Job, type: string}[] = [];
 
     showPopup: boolean[] = [];
+    showAllNumber = 3;
 
     constructor() {
     }
@@ -26,6 +27,14 @@ export class CarerJobListComponent implements OnInit {
 
     onMouseLeave(index: number): void {
         this.showPopup[index] = false;
+    }
+
+    showAll(): void {
+        this.showAllNumber = 999;
+    }
+
+    showLess(): void {
+        this.showAllNumber = 3;
     }
 
     private setUpdPopupList(): void {

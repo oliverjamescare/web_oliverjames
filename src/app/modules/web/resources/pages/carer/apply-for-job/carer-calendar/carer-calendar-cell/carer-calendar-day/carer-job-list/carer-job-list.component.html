@@ -1,12 +1,22 @@
-<div class="day-events">
+<div class="day-events day-events-carer" [ngClass]="{
+    'day-events-carer-show-all':showAllNumber > 3}">
+    <span (click)="showAll();" class="show-more-shifts show-more-shifts-min" *ngIf="(showAllNumber == 3) && (allJobs.length >3)">Click to show all</span>
+    <span (click)="showLess();" class="show-more-shifts show-more-shifts-min" *ngIf="(showAllNumber > 3) && (allJobs.length > 3)">Click to show less</span>
+
     <span
             (mouseenter)="onMouseEnter(i); $event.stopPropagation()"
             (mouseleave)="onMouseLeave(i)"
-            *ngFor="let job of allJobs let i = index" class="single-event job carer-job">
+            *ngFor="let job of allJobs; let i = index" class="single-event job carer-job">
+
+
+
+        <b *ngIf="i<showAllNumber" class="font-weight-normal">
         {{ job.job.start_date | datePattern: "h:mm A" }}-{{ job.job.end_date | datePattern: "h:mm A" }}
         <app-carer-calendar-popup
                 [job]="job.job"
                 *ngIf="showPopup[i]"
         ></app-carer-calendar-popup>
+        </b>
     </span>
+
 </div>

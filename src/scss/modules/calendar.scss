@@ -16,11 +16,27 @@
   .day-events {
     position: absolute;
     top: 12px;
-    left:5px;
+    left:2px;
+    &.day-events-carer {
+      top:5px;
+    }
+    &.day-events-carer-show-all {
+      z-index:1;
+      background-color: white;
+      height: 120%;
+    }
     span.show-more-shifts {
       color:$green-color;
       font-size: 12px;
       font-weight: bold;
+      &.show-more-shifts-min {
+        font-size: 11px;
+      }
+      &.show-less {
+        display: block;
+        position: relative;
+        z-index: 1;
+      }
     }
     .single-event {
       width: 100%;
