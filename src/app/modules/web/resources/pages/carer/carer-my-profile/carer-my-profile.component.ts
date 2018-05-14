@@ -133,6 +133,7 @@ export class CarerMyProfileComponent implements OnInit {
         this.inProgress = true;
         const data = this.form.value;
         data.max_job_distance = +data.max_job_distance;
+        if (!this.form.value.address_line_2 || this.form.value.address_line_2 === 'null') delete this.form.value.address_line_2;
         this.carerProfileService.updateCarerProfile(data)
             .subscribe(
                 response => {
