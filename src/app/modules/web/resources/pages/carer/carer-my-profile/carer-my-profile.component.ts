@@ -12,7 +12,7 @@ import {} from '@types/googlemaps';
 import {GoogleService} from '../../../../services/google.service';
 import {alpha, numbers} from '../../../../../../utilities/validators';
 import {User} from '../../../../models/user.model';
-import {handleValidationErrorMessage, handleValidationStateClass} from '../../../../../../utilities/form.utils';
+import {getMessageError, handleValidationErrorMessage, handleValidationStateClass} from '../../../../../../utilities/form.utils';
 import {AddressDetail} from '../../../../models/address/address-detail.model';
 
 @Component({
@@ -143,15 +143,8 @@ export class CarerMyProfileComponent implements OnInit {
                 error => {
                     this.inProgress = false;
                     let message = '';
-                    if (error && error.error && error.error.errors && error.error.errors) {
-                        for (let i = 0; i < error.error.errors.length; i++) {
-                            if (error.error.errors[i].field === 'phone_number') {
-                                message = ' ' + error.error.errors[i].message;
-                            }
-                        }
-
-                    }
-                    this.notificationService.warn('Update carer profile failed' + message);
+                    message = getMessageError(error);
+                    this.notificationService.warn('Update carer profile failed' + ' ' + message);
                 }
             );
     }

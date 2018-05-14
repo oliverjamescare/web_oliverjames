@@ -39,8 +39,6 @@ export function getMessageError(error: HttpErrorResponse): string {
     if (errorsArray.length) {
         message = errorsArray[0].message || '';
     }
-
-    console.log(message);
     return message;
 }
 
