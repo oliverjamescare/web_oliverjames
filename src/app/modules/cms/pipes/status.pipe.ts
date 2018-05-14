@@ -7,7 +7,7 @@ export class StatusPipe implements PipeTransform
 {
     transform(value: string, args?: any): string
     {
-        return value.replace(/_/g, "");
+        return value.replace(/_/g, " ");
     }
 
 }

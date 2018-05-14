@@ -50,6 +50,8 @@ import { StatusPipe } from './pipes/status.pipe';
 import { CapitalizePipe } from './pipes/capitalize.pipe';
 import { DatePatternPipe } from './pipes/date-pattern.pipe';
 
+import { CalendarModule } from 'primeng/calendar';
+
 
 @NgModule({
     imports: [
@@ -57,6 +59,7 @@ import { DatePatternPipe } from './pipes/date-pattern.pipe';
         CmsRoutingModule,
         ReactiveFormsModule,
         FormsModule,
+        CalendarModule
     ],
     declarations: [
         CmsComponent,

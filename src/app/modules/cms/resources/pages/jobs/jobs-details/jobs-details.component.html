@@ -1,3 +1,5 @@
+
+<!--head-->
 <div class="row">
     <div class="col-sm">
         <h2>Job details</h2>
@@ -5,6 +7,8 @@
     </div>
 </div>
 <br>
+
+<!--action buttons-->
 <div class="row">
     <div class="col-sm-4">
         <button (click)="openCancelJobPopup(true)" class="btn btn-success" [disabled]="jobDetails?.status === 'CANCELLED'">Cancel job</button>
@@ -13,8 +17,7 @@
         <button (click)="openCancelJobPopup(false)" class="btn btn-success" [disabled]="jobDetails?.status === 'CANCELLED'">Cancel job - waive charges</button>
     </div>
     <div class="col-sm-4">
-        <button (click)="showResolveChallengeDialog = true" [disabled]="jobDetails?.status !== 'CHALLENGED'" class="btn btn-success"
-        >Decide on challenged job</button>
+        <button (click)="showResolveChallengeDialog = true" [disabled]="jobDetails?.status !== 'CHALLENGED'" class="btn btn-success">Decide on challenged job</button>
     </div>
 </div>
 <br>
@@ -27,199 +30,285 @@
     </div>
 </div>
 <br>
-<div class="row text-center">
-    <div class="col sm">
-        <span *ngFor="let error of errors" class="input-error">{{ error.message }}</span>
-    </div>
-</div>
+
+<!--job details-->
 <div class="row">
     <div class="col-sm">
-        <table *ngIf="jobDetails" [formGroup]="form" class="carer-details-table">
-            <tr>
-                <th>Job ID</th>
-                <td>{{ jobDetails._id }}</td>
-            </tr>
-            <tr>
-                <th>Start Date</th>
-                <td>
-                    <input formControlName="start" type="text" class="form-control" placeholder="yyyy-mm-dd">
-                </td>
-            </tr>
-            <tr>
-                <th>From</th>
-                <td>
-                    <select formControlName="start_date" class="form-control">
-                        <option *ngFor="let hour of timeArr" [value]="hour.formatedDate">{{ hour.formatedDate }}</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <th>Till</th>
-                <td>
-                    <select formControlName="end_date" class="form-control">
-                        <option *ngFor="let hour of timeArr" [value]="hour.formatedDate">{{ hour.formatedDate }}</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <th>Role</th>
-                <td>
-                    <select formControlName="role" class="form-control">
-                        <option value="Carer">Carer</option>
-                        <option value="Senior Carer">Senior Carer</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <th>Notes</th>
-                <td><textarea formControlName="notes" class="form-control"></textarea></td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{ jobDetails.status }}</td>
-            </tr>
-            <tr>
-                <th class="green-cell white-color">General Guidance</th>
-                <td class="green-cell"></td>
-            </tr>
-            <tr>
-                <th>Floor plan</th>
-                <td>
-                    <span *ngIf="jobDetails.general_guidance.floor_plan">
-                        <a [href]="jobDetails.general_guidance.floor_plan + getTokenParameter()" target="_blank">Floor plan</a>
-                    </span>
-                    <input type="file"
-                           id="file"
-                           class="form-control floor-plan"
-                           (change)="handleFileInput($event.target.files)">
-                    <span class="red">{{ floorPlanError }}</span>
-                </td>
-            </tr>
-            <tr>
-                <th>Parking</th>
-                <td>
-                    <textarea formControlName="parking" class="form-control"
-                              [ngClass]="formUtils.handleValidationStateClass(form, 'parking')"></textarea>
-                    <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'parking', messages) }} </span>
-                </td>
-            </tr>
-            <tr>
-                <th>Notes for carers</th>
-                <td>
-                    <textarea formControlName="notes_for_carers" class="form-control"
-                              [ngClass]="formUtils.handleValidationStateClass(form, 'notes_for_carers')"></textarea>
-                    <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'notes_for_carers', messages) }} </span>
-                </td>
-            </tr>
-            <tr>
-                <th>Emergency guidance</th>
-                <td>
-                    <textarea formControlName="emergency_guidance" class="form-control"
-                              [ngClass]="formUtils.handleValidationStateClass(form, 'emergency_guidance')"></textarea>
-                    <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'emergency_guidance', messages) }} </span>
-                </td>
-            </tr>
-            <tr>
-                <th>Report contact</th>
-                <td>
-                    <textarea formControlName="report_contact" class="form-control"
-                              [ngClass]="formUtils.handleValidationStateClass(form, 'report_contact')"></textarea>
-                    <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'report_contact', messages) }} </span>
-                </td>
-            </tr>
-            <tr>
-                <th>Superior contact</th>
-                <td>
-                    <textarea formControlName="superior_contact" class="form-control"
-                              [ngClass]="formUtils.handleValidationStateClass(form, 'superior_contact')"></textarea>
-                    <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'superior_contact', messages) }} </span>
-                </td>
-            </tr>
-            <tr>
-                <th class="green-cell white-color">Preferences</th>
-                <td class="green-cell"></td>
-            </tr>
-            <tr>
-                <th>Gender preference</th>
-                <td>
-                    <select formControlName="gender_preference" class="form-control">
-                        <option value="No preference">No preference</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <th>Manual booking</th>
-                <td>
-                    <select formControlName="manual_booking" class="form-control">
-                        <option value="false">Disabled</option>
-                        <option value="true">Enabled</option>
-                    </select>
-                </td>
-            </tr>
+        <form  *ngIf="jobDetails" [formGroup]="form">
+            <table class="carer-details-table">
 
-            <!--summary sheet-->
-            <tr>
-                <th class="green-cell white-color">Summary sheet</th>
-                <td class="green-cell"></td>
-            </tr>
-            <tr>
-                <th>Start date</th>
-                <td>
-                    {{ jobDetails?.summary_sheet?.start_date | timestamp }}, {{ jobDetails?.summary_sheet?.start_date | timestampHour }}
-                    <!--<input *ngIf="jobDetails?.summary_sheet" formControlName="summary_sheet_start_date" placeholder="yyyy-mm-dd" type="text"-->
-                    <!--[ngClass]="formUtils.handleValidationStateClass(form, 'summary_sheet_start_date')"-->
-                    <!--class="form-control">-->
-                    <!--<span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'summary_sheet_start_date', messages) }} </span>-->
-                </td>
-            </tr>
-            <tr>
-                <th>End date</th>
-                <td>
-                    {{ jobDetails?.summary_sheet?.end_date | timestamp }}, {{ jobDetails?.summary_sheet?.end_date | timestampHour }}
-                    <!--<input *ngIf="jobDetails?.summary_sheet" formControlName="summary_sheet_end_date" placeholder="yyyy-mm-dd" type="text"-->
-                    <!--[ngClass]="formUtils.handleValidationStateClass(form, 'summary_sheet_end_date')"-->
-                    <!--class="form-control">-->
-                    <!--<span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'summary_sheet_end_date', messages) }} </span>-->
-                </td>
-            </tr>
-            <tr>
-                <th>Voluntary deduction</th>
-                <td>
-                    {{ jobDetails?.summary_sheet?.voluntary_deduction }}
-                    <!--<input *ngIf="jobDetails?.summary_sheet" formControlName="voluntary_deduction" type="number" class="form-control"-->
-                    <!--[ngClass]="formUtils.handleValidationStateClass(form, 'voluntary_deduction')">-->
-                    <!--<span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'voluntary_deduction', messages) }} </span>-->
-                </td>
-            </tr>
-
-            <!--challenge-->
-            <ng-template [ngIf]="jobDetails?.challenge">
+                <!--basic info-->
                 <tr>
-                    <th class="green-cell white-color">Challenge</th>
-                    <td class="green-cell"></td>
+                    <th>Job ID</th>
+                    <td>{{ jobDetails._id }}</td>
+                </tr>
+                <tr>
+                    <th>Start date</th>
+                    <td>
+                        <span *ngIf="!editMode">{{ jobDetails?.start_date | datePattern: "YYYY-MM-DD, h:mm A"}}</span>
+                        <p-calendar *ngIf="editMode" formControlName="start_date" showTime="true" hourFormat="12" [showIcon]="true" [minDate]="now" dateFormat="yy-mm-dd"></p-calendar>
+                    </td>
+                </tr>
+                <tr>
+                    <th>End date</th>
+                    <td>
+                        <span *ngIf="!editMode">{{ jobDetails?.end_date | datePattern: "YYYY-MM-DD, h:mm A"}}</span>
+                        <p-calendar *ngIf="editMode" formControlName="end_date" showTime="true" hourFormat="12" [showIcon]="true" [minDate]="form.get('start_date').value" dateFormat="yy-mm-dd"></p-calendar>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Role</th>
+                    <td>
+                        <span *ngIf="!editMode">{{ jobDetails?.role}}</span>
+                        <select *ngIf="editMode" formControlName="role" class="form-control">
+                            <option value="Carer">Carer</option>
+                            <option value="Senior Carer">Senior Carer</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Notes</th>
+                    <td>
+                        <span *ngIf="!editMode">{{ jobDetails?.notes}}</span>
+                        <textarea *ngIf="editMode" formControlName="notes" class="form-control"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Gender preference</th>
+                    <td>
+                        <span *ngIf="!editMode">{{ jobDetails?.gender_preference}}</span>
+                        <select *ngIf="editMode" formControlName="gender_preference" class="form-control">
+                            <option value="No preference">No preference</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Manual booking</th>
+                    <td>
+                        <span *ngIf="!editMode">{{ jobDetails?.manual_booking ? "Enabled" : "Disabled"}}</span>
+                        <select *ngIf="editMode" formControlName="manual_booking" class="form-control">
+                            <option value="DISABLED">Disabled</option>
+                            <option value="ENABLED">Enabled</option>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <th>Status</th>
-                    <td>{{ jobDetails?.challenge.status | status | capitalize }}</td>
+                    <td>{{ jobDetails.status | capitalize | status }}</td>
+                </tr>
+
+                <!--general guidance-->
+                <tr>
+                    <th class="green-cell white-color">General Guidance</th>
+                    <td class="green-cell"></td>
                 </tr>
                 <tr>
-                    <th>Message</th>
-                    <td>{{ jobDetails?.challenge.description }}</td>
+                    <th>Floor plan</th>
+                    <td>
+                        <span *ngIf="jobDetails.general_guidance.floor_plan">
+                            <a [href]="getAuthLink(jobDetails.general_guidance.floor_plan)" target="_blank" class="green">Floor plan</a>
+                            <br>
+                        </span>
+                        <input *ngIf="editMode" type="file" id="file" class="floor-plan" (change)="handleFileInput($event.target.files)">
+                    </td>
                 </tr>
                 <tr>
-                    <th>Admin response </th>
-                    <td>{{ jobDetails?.challenge.response || "No response so far" }}</td>
+                    <th>Parking</th>
+                    <td>
+                        <span *ngIf="!editMode">{{ jobDetails.general_guidance.parking }}</span>
+                        <textarea *ngIf="editMode" formControlName="parking" class="form-control" [ngClass]="formUtils.handleValidationStateClass(form, 'parking')"></textarea>
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'parking', messages) }} </span>
+                    </td>
                 </tr>
                 <tr>
-                    <th>Challenge date</th>
-                    <td>{{ jobDetails?.challenge.created | datePattern: "YYYY-MM-DD, h:mm A" }}</td>
+                    <th>Notes for carers</th>
+                    <td>
+                        <span *ngIf="!editMode">{{ jobDetails.general_guidance.notes_for_carers }}</span>
+                        <textarea *ngIf="editMode" formControlName="notes_for_carers" class="form-control" [ngClass]="formUtils.handleValidationStateClass(form, 'notes_for_carers')"></textarea>
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'notes_for_carers', messages) }} </span>
+                    </td>
                 </tr>
-            </ng-template>
-        </table>
-        <br>
-        <button (click)="onUpdateJob()" [disabled]="jobDetails?.status === 'CANCELLED'" class="btn btn-success">Edit job</button>
+                <tr>
+                    <th>Emergency guidance</th>
+                    <td>
+                        <span *ngIf="!editMode">{{ jobDetails.general_guidance.emergency_guidance }}</span>
+                        <textarea *ngIf="editMode" formControlName="emergency_guidance" class="form-control" [ngClass]="formUtils.handleValidationStateClass(form, 'emergency_guidance')"></textarea>
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'emergency_guidance', messages) }} </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Report contact</th>
+                    <td>
+                        <span *ngIf="!editMode">{{ jobDetails.general_guidance.report_contact }}</span>
+                        <textarea *ngIf="editMode" formControlName="report_contact" class="form-control" [ngClass]="formUtils.handleValidationStateClass(form, 'report_contact')"></textarea>
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'report_contact', messages) }} </span>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Superior contact</th>
+                    <td>
+                        <span *ngIf="!editMode">{{ jobDetails.general_guidance.superior_contact }}</span>
+                        <textarea *ngIf="editMode" formControlName="superior_contact" class="form-control" [ngClass]="formUtils.handleValidationStateClass(form, 'superior_contact')"></textarea>
+                        <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'superior_contact', messages) }} </span>
+                    </td>
+                </tr>
+
+
+                <!--summary sheet-->
+                <ng-template [ngIf]="jobDetails?.summary_sheet">
+                    <tr>
+                        <th class="green-cell white-color">Summary sheet</th>
+                        <td class="green-cell"></td>
+                    </tr>
+                    <tr>
+                        <th>Signature</th>
+                        <td><a [href]="getAuthLink(jobDetails?.summary_sheet.signature)" target="_blank" class="green">Signature</a></td>
+                    </tr>
+                    <tr>
+                        <th>Name</th>
+                        <td>{{ jobDetails?.summary_sheet.name }}</td>
+                    </tr>
+                    <tr>
+                        <th>Position</th>
+                        <td>{{ jobDetails?.summary_sheet.position }}</td>
+                    </tr>
+                    <tr>
+                        <th>Summary sheet date</th>
+                        <td>{{ jobDetails?.summary_sheet.created | datePattern: "YYYY-MM-DD, h:mm A" }}</td>
+                    </tr>
+                    <tr *ngIf="jobDetails?.summary_sheet.start_date">
+                        <th>Modified start date</th>
+                        <td>{{ jobDetails?.summary_sheet.start_date | datePattern: "YYYY-MM-DD, h:mm A" }}</td>
+                    </tr>
+                    <tr *ngIf="jobDetails?.summary_sheet.end_date">
+                        <th>Modified end date</th>
+                        <td>{{ jobDetails?.summary_sheet.end_date | datePattern: "YYYY-MM-DD, h:mm A" }}</td>
+                    </tr>
+                    <tr *ngIf="jobDetails?.summary_sheet.voluntary_deduction">
+                        <th>Deducted minutes</th>
+                        <td>{{ jobDetails?.summary_sheet.voluntary_deduction }}</td>
+                    </tr>
+                    <tr *ngIf="jobDetails?.summary_sheet.standard_invoice">
+                        <th>Standard invoice</th>
+                        <td><a [href]="getAuthLink(jobDetails?.summary_sheet.standard_invoice)" target="_blank" class="green">Standard invoice</a></td>
+                    </tr>
+
+                </ng-template>
+
+                <!--challenge-->
+                <ng-template [ngIf]="jobDetails?.challenge">
+                    <tr>
+                        <th class="green-cell white-color">Challenge</th>
+                        <td class="green-cell"></td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td>{{ jobDetails?.challenge.status | status | capitalize }}</td>
+                    </tr>
+                    <tr>
+                        <th>Message</th>
+                        <td>{{ jobDetails?.challenge.description }}</td>
+                    </tr>
+                    <tr>
+                        <th>Admin response </th>
+                        <td>{{ jobDetails?.challenge.response || "No response so far" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Challenge date</th>
+                        <td>{{ jobDetails?.challenge.created | datePattern: "YYYY-MM-DD, h:mm A" }}</td>
+                    </tr>
+                </ng-template>
+
+                <!--charge-->
+                <ng-template [ngIf]="jobDetails?.charge">
+                    <tr>
+                        <th class="green-cell white-color">Charge</th>
+                        <td class="green-cell"></td>
+                    </tr>
+                    <tr>
+                        <th>Charge date</th>
+                        <td>{{ jobDetails?.charge.created | datePattern: "YYYY-MM-DD, h:mm A" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Job cost</th>
+                        <td><span>&#163;</span>{{ jobDetails?.charge.job_cost }}</td>
+                    </tr>
+                    <tr>
+                        <th>Manual booking cost</th>
+                        <td><span>&#163;</span>{{ jobDetails?.charge.manual_booking_cost }}</td>
+                    </tr>
+                    <tr>
+                        <th>Deducted credits</th>
+                        <td><span *ngIf="jobDetails?.charge.deductions > 0">-</span> <span>&#163;</span>{{ jobDetails?.charge.deductions }}</td>
+                    </tr>
+                    <tr>
+                        <th>Total cost</th>
+                        <td><span>&#163;</span>{{ jobDetails?.charge.total_cost }}</td>
+                    </tr>
+                    <tr>
+                        <th>Net cost</th>
+                        <td><span>&#163;</span>{{ jobDetails?.charge.net_cost }}</td>
+                    </tr>
+                    <tr>
+                        <th>Invoice</th>
+                        <td><a [href]="getAuthLink(jobDetails?.charge.invoice)" target="_blank" class="green">Invoice</a></td>
+                    </tr>
+                </ng-template>
+
+                <!--payment-->
+                <ng-template [ngIf]="jobDetails?.payment">
+                    <tr>
+                        <th class="green-cell white-color">Payment</th>
+                        <td class="green-cell"></td>
+                    </tr>
+                    <tr>
+                        <th>Debit date</th>
+                        <td>{{ jobDetails?.payment.debit_date | datePattern: "YYYY-MM-DD, h:mm A" }}</td>
+                    </tr>
+                    <tr *ngIf="jobDetails?.payment.status == 'PAID'">
+                        <th>Job income</th>
+                        <td><span>&#163;</span>{{ jobDetails?.payment.job_income }}</td>
+                    </tr>
+                    <tr *ngIf="jobDetails?.payment.status == 'PAID'">
+                        <th>Oliver James Commission</th>
+                        <td><span>&#163;</span>{{ jobDetails?.payment.application_fee }}</td>
+                    </tr>
+                    <tr *ngIf="jobDetails?.payment.status == 'PAID'">
+                        <th>Carer deductions</th>
+                        <td><span *ngIf="jobDetails?.payment.deductions > 0">-</span> <span>&#163;</span>{{ jobDetails?.payment.deductions }}</td>
+                    </tr>
+                    <tr *ngIf="jobDetails?.payment.status == 'PAID'">
+                        <th>Transaction fee</th>
+                        <td><span>&#163;</span>{{ jobDetails?.payment.transaction_charge }}</td>
+                    </tr>
+                    <tr *ngIf="jobDetails?.payment.status == 'PAID'">
+                        <th>Net income</th>
+                        <td><span>&#163;</span>{{ jobDetails?.payment.net_income }}</td>
+                    </tr>
+                    <tr  *ngIf="jobDetails?.payment.invoice">
+                        <th>Invoice</th>
+                        <td><a [href]="getAuthLink(jobDetails?.payment.invoice)" target="_blank" class="green">Invoice</a></td>
+                    </tr>
+                    <tr *ngIf="jobDetails?.payment.commission_confirmation">
+                        <th>Commission</th>
+                        <td><a [href]="getAuthLink(jobDetails?.payment.commission_confirmation)" target="_blank" class="green">Commission</a></td>
+                    </tr>
+                    <tr *ngIf="jobDetails?.payment.payment_date">
+                        <th>Payment date</th>
+                        <td>{{ jobDetails?.payment.payment_date | datePattern: "YYYY-MM-DD, h:mm A" }}</td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td>{{ jobDetails?.payment.status | capitalize | status }}</td>
+                    </tr>
+                </ng-template>
+            </table>
+
+            <br>
+            <button type="submit" *ngIf="editMode" [disabled]="!form.valid || inProgress" class="btn btn-success">Edit job</button>
+        </form>
     </div>
 </div>
 <br>
