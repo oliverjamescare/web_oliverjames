@@ -1,33 +1,32 @@
-import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
-import { CarerProfileService } from '../../../../services/carer-profile.service';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { NotificationsService } from 'angular2-notifications';
-import { AuthService } from '../../../../services/auth.service';
-import { ApiService } from '../../../../services/api.service';
-import { Router } from '@angular/router';
+import {Component, NgZone, OnDestroy, OnInit} from '@angular/core';
+import {Subscription} from 'rxjs/Subscription';
+import {CarerProfileService} from '../../../../services/carer-profile.service';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {NotificationsService} from 'angular2-notifications';
+import {AuthService} from '../../../../services/auth.service';
+import {ApiService} from '../../../../services/api.service';
+import {Router} from '@angular/router';
 import {} from 'googlemaps';
-import { MapsAPILoader } from '@agm/core';
+import {MapsAPILoader} from '@agm/core';
 import {} from '@types/googlemaps';
-import { GoogleService } from '../../../../services/google.service';
-import { alpha, numbers } from '../../../../../../utilities/validators';
-import { User } from '../../../../models/user.model';
-import { handleValidationErrorMessage, handleValidationStateClass } from '../../../../../../utilities/form.utils';
-import { AddressDetail } from '../../../../models/address/address-detail.model';
+import {GoogleService} from '../../../../services/google.service';
+import {alpha, numbers} from '../../../../../../utilities/validators';
+import {User} from '../../../../models/user.model';
+import {handleValidationErrorMessage, handleValidationStateClass} from '../../../../../../utilities/form.utils';
+import {AddressDetail} from '../../../../models/address/address-detail.model';
 
 @Component({
     selector: 'app-carer-my-profile',
     templateUrl: './carer-my-profile.component.html',
     styleUrls: ['./carer-my-profile.component.scss']
 })
-export class CarerMyProfileComponent implements OnInit
-{
+export class CarerMyProfileComponent implements OnInit {
     user: User;
     buttonLoading = false;
 
     //form
     form: FormGroup;
-    formUtils = { handleValidationStateClass, handleValidationErrorMessage };
+    formUtils = {handleValidationStateClass, handleValidationErrorMessage};
     inProgress = false;
 
     messages = [
@@ -104,60 +103,61 @@ export class CarerMyProfileComponent implements OnInit
                 private router: Router,
                 private mapsAPILoader: MapsAPILoader,
                 private ngZone: NgZone,
-                private googleService: GoogleService
-    ) {}
+                private googleService: GoogleService) {
+    }
 
-    ngOnInit()
-    {
+    ngOnInit() {
         this.getCarerProfile();
     }
 
 
-    onRoleChange(): void
-    {
+    onRoleChange(): void {
         this.router.navigate(['/carer-dashboard', 'contact']);
     }
 
-    onUpdateData(): void
-    {
+    onUpdateData(): void {
         this.getCarerProfile();
     }
 
-    onAddressFound(addressDetails: AddressDetail)
-    {
+    onAddressFound(addressDetails: AddressDetail) {
         this.form.patchValue({
             postal_code: addressDetails.PostalCode,
             company: addressDetails.Company,
             address_line_1: addressDetails.Line1,
             address_line_2: addressDetails.Line2,
             city: addressDetails.City
-        })
+        });
     }
 
-    onSubmit(): void
-    {
+    onSubmit(): void {
         this.inProgress = true;
         const data = this.form.value;
         data.max_job_distance = +data.max_job_distance;
         this.carerProfileService.updateCarerProfile(data)
             .subscribe(
-                response =>
-                {
+                response => {
                     this.inProgress = false;
                     this.getCarerProfile();
                     this.notificationService.success('Carer profile', 'Successfully updated');
                 },
-                error =>
-                {
+                error => {
                     this.inProgress = false;
-                    this.notificationService.warn('Update carer profile failed');
+                    let message = '';
+                    if (error && error.error && error.error.errors && error.error.errors) {
+                        for (let i = 0; i < error.error.errors.length; i++) {
+                            if (error.error.errors[i].field === 'phone_number') {
+                                message = ' ' + error.error.errors[i].message;
+                            }
+                        }
+
+                    }
+                    this.notificationService.warn('Update carer profile failed' + message);
                 }
             );
     }
 
     //resend email handle
-    onResendEmail(): void
-    {
+    onResendEmail(): void {
         this.apiService.resendEmail()
             .subscribe(
                 response => {
@@ -167,14 +167,12 @@ export class CarerMyProfileComponent implements OnInit
     }
 
     //profile url
-    getProfileUrl(): string
-    {
+    getProfileUrl(): string {
         return this.user.carer.profile_image ? this.user.carer.profile_image + '?access-token=' + this.authService.getAccessToken().token : null;
     }
 
     //setting up form
-    private createForm(): void
-    {
+    private createForm(): void {
         this.form = new FormGroup({
             phone_number: new FormControl(this.user.phone_number,
                 [Validators.required, Validators.minLength(6), numbers]
@@ -189,24 +187,20 @@ export class CarerMyProfileComponent implements OnInit
     }
 
     //getting profile
-    private getCarerProfile(): void
-    {
+    private getCarerProfile(): void {
         this.carerProfileService.getCarerProfile()
             .subscribe((user: User) => {
-                    this.user = user;
-                    console.log(this.user)
-                    this.createForm();
-                });
+                this.user = user;
+                this.createForm();
+            });
     }
 
-    onBankUpdated()
-    {
+    onBankUpdated() {
         this.showBankAccountForm = false;
         this.getCarerProfile();
     }
 
-    onIdentityProofStored()
-    {
+    onIdentityProofStored() {
         this.showIdentityProofFrom = false;
         this.getCarerProfile();
     }
