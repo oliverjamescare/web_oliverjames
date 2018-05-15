@@ -1,16 +1,16 @@
-<div *ngIf="careHomeService?.jobDetails" [formGroup]="form" class="job-details">
+<div [formGroup]="form" class="job-details">
     <span class="details-header">Job details</span>
     <div class="details-row">
         <span class="details-label">Job ID:</span>
         <span class="details-info">
-            {{ careHomeService.jobDetails._id }}
+            {{ careHomeService?.jobDetails?._id }}
         </span>
     </div>
 
     <div class="details-row">
         <span class="details-label">Start:</span>
         <span class="details-info">
-            <input formControlName="start" class="form-control" type="text">
+            <input id="startJob" formControlName="start" class="form-control" type="text">
         </span>
     </div>
 
@@ -34,62 +34,95 @@
         </span>
     </div>
 
+
     <div class="details-row">
+        <span class="details-label">Gender preference:</span>
+        <span class="details-info">
+            <select formControlName="gender_preference" class="form-control">
+                 <option *ngFor="let gender of genders" [ngValue]="gender">{{ gender }}</option>
+            </select>
+        </span>
+    </div>
+
+    <div class="details-row details-row-textarea">
         <span class="details-label">Job guidance:</span>
         <span class="details-info">
-            <textarea formControlName="notes" class="form-control"></textarea>
+            <textarea autocomplete="off" formControlName="notes"
+                      class="form-control details-row-textarea-inner"></textarea>
         </span>
     </div>
 
-    <div class="details-row">
+    <div class="details-row details-row-file">
         <span class="details-label">Floor plan:</span>
-        <span class="details-info">
+        <span class="details-info d-block">
+            <div *ngIf="getFloorPlanLink(careHomeService?.jobDetails?.general_guidance.floor_plan) && !fileName">
+            <p class="details-info">
+                <a [href]="getFloorPlanLink(careHomeService?.jobDetails?.general_guidance.floor_plan)" class="app-link"
+                   target="_blank">Floor
+                    plan</a>
+            </p>
+            </div>
+            <div>
+                <p class="details-info">
+            <span *ngIf="fileName" class="file-link d-block">
+                        <b>Chosen file:</b> {{ fileName }}
+                    </span>
+                </p>
+            </div>
                                 <input type="file"
                                        id="file"
-                                       class="form-control floor-plan"
+                                       class="form-control floor-plan d-none"
                                        (change)="handleFileInput($event.target.files)">
+            <input type="button" value="Browse" onclick="document.getElementById('file').click();">
                     <span class="red">{{ floorPlanError }}</span>
+
         </span>
     </div>
 
-    <div class="details-row">
+    <div class="details-row details-row-textarea">
         <span class="details-label">Contact on arrival:</span>
         <span class="details-info">
-            <input formControlName="report_contact" class="form-control" type="text">
+            <textarea autocomplete="off" formControlName="report_contact"
+                      class="form-control  details-row-textarea-inner"></textarea>
         </span>
     </div>
 
-    <div class="details-row">
+    <div class="details-row details-row-textarea">
         <span class="details-label">Suprior contact:</span>
         <span class="details-info">
-            <input formControlName="superior_contact" class="form-control" type="text">
+            <textarea autocomplete="off" formControlName="superior_contact"
+                      class="form-control  details-row-textarea-inner"></textarea>
         </span>
     </div>
 
-    <div class="details-row">
+    <div class="details-row details-row-textarea">
         <span class="details-label">Parking:</span>
         <span class="details-info">
-            <input formControlName="parking" class="form-control" type="text">
+            <textarea autocomplete="off" formControlName="parking"
+                      class="form-control details-row-textarea-inner"></textarea>
         </span>
     </div>
 
-    <div class="details-row">
+    <div class="details-row details-row-textarea">
         <span class="details-label">Notes for carers:</span>
         <span class="details-info">
-            <input formControlName="notes_for_carers" class="form-control" type="text">
+            <textarea autocomplete="off" formControlName="notes_for_carers"
+                      class="form-control details-row-textarea-inner"></textarea>
         </span>
     </div>
-    <div class="details-row">
+    <div class="details-row details-row-textarea">
         <span class="details-label">Emergency guidance:</span>
         <span class="details-info">
-            <input formControlName="emergency_guidance" class="form-control" type="text">
+            <textarea autocomplete="off" formControlName="emergency_guidance"
+                      class="form-control details-row-textarea-inner"></textarea>
         </span>
     </div>
 </div>
 <br>
 <div class="details-actions">
     <button (click)="onBackToDetails()" class="btn btn-success margin-r btn-red">Back to details</button>
-    <button (click)="onEditJob()" class="btn btn-success right">Edit job <span *ngIf="buttonLoading"><i class="fa fa-spinner fa-spin"></i></span></button>
+    <button (click)="onEditJob()" class="btn btn-success right">Edit job <span *ngIf="buttonLoading"><i
+            class="fa fa-spinner fa-spin"></i></span></button>
 </div>
 
 <app-warning-popup

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, AfterViewInit} from '@angular/core';
 import {CareHomeService} from '../../../../../services/care-home.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
@@ -7,6 +7,7 @@ import * as dateformat from 'dateformat';
 import {Subscription} from 'rxjs/Subscription';
 import {NotificationsService} from 'angular2-notifications';
 import {isUndefined} from 'util';
+import {getMessageError} from '../../../../../../../utilities/form.utils';
 
 const TIMESTAMP_INTERVAL = 900000; // 15 min in milliseconds
 const MIN_IN_MILLISECONDS = 60000;
@@ -21,8 +22,10 @@ export class CareHomeJobEditComponent implements OnInit, OnDestroy {
     form: FormGroup;
     floorPlanFile: File;
     floorPlanError: string;
+    fileName: string = null;
 
     timeArr: { timestamp: number, formatedDate: string }[] = [];
+    genders: string[] = ['No preference', 'Male', 'Female'];
 
     private allowedMimeTypes = [
         'application/msword',
@@ -42,6 +45,7 @@ export class CareHomeJobEditComponent implements OnInit, OnDestroy {
     buttonLoading = false;
     detailsLoaded: Subscription;
 
+
     constructor(public careHomeService: CareHomeService,
                 private route: ActivatedRoute,
                 private authService: AuthService,
@@ -51,12 +55,17 @@ export class CareHomeJobEditComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.createForm();
+
         this.subscribeToDetailsLoaded();
         if (this.careHomeService.jobDetails) {
             this.setUpForm();
+
+
         }
         this.setHoursIntervals();
+
     }
+
 
     ngOnDestroy() {
         this.detailsLoaded.unsubscribe();
@@ -67,20 +76,27 @@ export class CareHomeJobEditComponent implements OnInit, OnDestroy {
         if (this.allowedMimeTypes.indexOf(file.type) !== -1) {
             this.floorPlanError = null;
             this.floorPlanFile = file;
+            this.fileName = file.name;
         } else {
             this.floorPlanError = 'Invalid file type';
         }
     }
 
     getFloorPlanLink(link: string): string {
-        return `${link}?access-token=${this.authService.getAccessToken().token}`;
+        if (link) {
+            return `${link}?access-token=${this.authService.getAccessToken().token}`;
+        }
+        else {
+            return null;
+        }
     }
 
     subscribeToDetailsLoaded(): void {
-        this.detailsLoaded = this.careHomeService.detailsLoaded
+        this.careHomeService.detailsLoaded
             .subscribe(
                 () => {
                     this.setUpForm();
+                    this.setDatepickers();
                 }
             );
     }
@@ -96,13 +112,12 @@ export class CareHomeJobEditComponent implements OnInit, OnDestroy {
                 .subscribe(
                     response => {
                         this.buttonLoading = false;
-                        console.log('Edit job details success response', response);
                         this.notificationService.success('Job edited successfully');
                         this.getJobDetails();
                     },
                     error => {
                         this.buttonLoading = false;
-                        console.log('Edit job details error response', error);
+                        this.notificationService.error('Job edited failed ' + getMessageError(error));
                     }
                 );
         } else {
@@ -110,14 +125,30 @@ export class CareHomeJobEditComponent implements OnInit, OnDestroy {
         }
     }
 
+    private setDatepickers(): void {
+
+        console.log(this.careHomeService.jobDetails.start_date);
+        $('#startJob').datepicker({
+            showOtherMonths: true,
+            format: 'yyyy-mm-dd',
+            value: moment(this.careHomeService.jobDetails.start_date).format('YYYY-MM-DD'),
+            hide: (event: Event) => {
+                this.form.get('start').setValue(event.target['value']);
+            }
+        });
+    }
+
+    private getInitialToDate(): Date {
+        const endTimestamp = new Date().getTime();
+        return new Date(endTimestamp);
+    }
+
     private getJobDetails(): void {
         this.careHomeService.getJobDetails(this.careHomeService.jobDetails._id)
             .subscribe(
                 response => {
-                    console.log('Get job detail success response', response);
                 },
                 error => {
-                    console.log('Get job detail error response', error);
                 }
             );
     }
@@ -156,8 +187,13 @@ export class CareHomeJobEditComponent implements OnInit, OnDestroy {
         formData.append('emergency_guidance', this.form.get('emergency_guidance').value);
         formData.append('report_contact', this.form.get('report_contact').value);
         formData.append('superior_contact', this.form.get('superior_contact').value);
-        formData.append('notes', this.form.get('notes').value);
-
+        formData.append('gender_preference', this.form.get('gender_preference').value);
+        if (this.form.get('notes').value) {
+            formData.append('notes', this.form.get('notes').value);
+        }
+        else {
+            formData.append('notes', '');
+        }
         return formData;
     }
 
@@ -194,6 +230,9 @@ export class CareHomeJobEditComponent implements OnInit, OnDestroy {
         this.form.get('superior_contact').setValue(this.careHomeService.jobDetails.general_guidance.superior_contact);
         this.form.get('notes').setValue(this.careHomeService.jobDetails.notes);
         this.form.get('gender_preference').setValue(this.careHomeService.jobDetails.gender_preference);
+
+
+
     }
 
     private getDate(property: string): number {
