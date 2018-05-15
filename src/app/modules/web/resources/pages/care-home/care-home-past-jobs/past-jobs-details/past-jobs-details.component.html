@@ -67,7 +67,7 @@
                 <li class="details-row">
                     <span class="details-label">Floor plan:</span>
                     <p class="details-info">
-                        <a [href]="getFloorPlanLink(jobDetails.general_guidance.floor_plan)" class="app-link" target="_blank">Floor plan</a>
+                        <a *ngIf="getFloorPlanLink(jobDetails.general_guidance.floor_plan)" [href]="getFloorPlanLink(jobDetails.general_guidance.floor_plan)" class="app-link" target="_blank">Floor plan</a>
                     </p>
                 </li>
 

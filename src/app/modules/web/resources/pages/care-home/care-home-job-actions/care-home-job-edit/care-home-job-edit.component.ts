@@ -63,7 +63,7 @@ export class CareHomeJobEditComponent implements OnInit, OnDestroy {
 
         }
         this.setHoursIntervals();
-
+        this.getJobDetails();
     }
 
 
@@ -92,7 +92,7 @@ export class CareHomeJobEditComponent implements OnInit, OnDestroy {
     }
 
     subscribeToDetailsLoaded(): void {
-        this.careHomeService.detailsLoaded
+        this.detailsLoaded = this.careHomeService.detailsLoaded
             .subscribe(
                 () => {
                     this.setUpForm();
@@ -106,31 +106,33 @@ export class CareHomeJobEditComponent implements OnInit, OnDestroy {
     }
 
     onEditJob(): void {
-        if (this.canEdit()) {
-            this.buttonLoading = true;
-            this.careHomeService.editJob(this.careHomeService.jobDetails._id, this.prepareDataToUpdate())
-                .subscribe(
-                    response => {
-                        this.buttonLoading = false;
-                        this.notificationService.success('Job edited successfully');
-                        this.getJobDetails();
-                    },
-                    error => {
-                        this.buttonLoading = false;
-                        this.notificationService.error('Job edited failed ' + getMessageError(error));
-                    }
-                );
-        } else {
-            this.showWarningPopup = true;
+        if (this.checkFields()) {
+            if (this.canEdit()) {
+                this.buttonLoading = true;
+                this.careHomeService.editJob(this.careHomeService.jobDetails._id, this.prepareDataToUpdate())
+                    .subscribe(
+                        response => {
+                            this.buttonLoading = false;
+                            this.notificationService.success('Job edited successfully');
+                            this.getJobDetails();
+                        },
+                        error => {
+                            this.buttonLoading = false;
+                            this.notificationService.error('Job edited failed. ' + getMessageError(error));
+                        }
+                    );
+            } else {
+                this.showWarningPopup = true;
+            }
         }
     }
 
     private setDatepickers(): void {
-
-        console.log(this.careHomeService.jobDetails.start_date);
         $('#startJob').datepicker({
             showOtherMonths: true,
             format: 'yyyy-mm-dd',
+            minDate: new Date(new Date(new Date().setDate(new Date().getDate() - 1))),
+            maxDate: new Date(new Date().setDate(new Date().getDate() + 35)),
             value: moment(this.careHomeService.jobDetails.start_date).format('YYYY-MM-DD'),
             hide: (event: Event) => {
                 this.form.get('start').setValue(event.target['value']);
@@ -197,6 +199,31 @@ export class CareHomeJobEditComponent implements OnInit, OnDestroy {
         return formData;
     }
 
+    private checkFields(): boolean {
+        if (!this.form.get('report_contact').value) {
+            this.notificationService.error('Job edited failed. Contact on arrival is required.');
+            return false;
+        }
+        if (!this.form.get('superior_contact').value) {
+            this.notificationService.error('Job edited failed. Suprior contact is required.');
+            return false;
+        }
+        if (!this.form.get('parking').value) {
+            this.notificationService.error('Job edited failed. Parking is required.');
+            return false;
+        }
+        if (!this.form.get('notes_for_carers').value) {
+            this.notificationService.error('Job edited failed. Notes for carers is required.');
+            return false;
+        }
+        if (!this.form.get('emergency_guidance').value) {
+            this.notificationService.error('Job edited failed. Emergency guidance is required.');
+            return false;
+        }
+        return true;
+
+    }
+
 
     private createForm(): void {
         this.form = new FormGroup({
@@ -230,7 +257,6 @@ export class CareHomeJobEditComponent implements OnInit, OnDestroy {
         this.form.get('superior_contact').setValue(this.careHomeService.jobDetails.general_guidance.superior_contact);
         this.form.get('notes').setValue(this.careHomeService.jobDetails.notes);
         this.form.get('gender_preference').setValue(this.careHomeService.jobDetails.gender_preference);
-
 
 
     }
