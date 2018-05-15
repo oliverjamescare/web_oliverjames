@@ -23,7 +23,12 @@ export class CareHomeJobDetailsComponent implements OnInit {
     }
 
     getFloorPlanLink(link: string): string {
-        return `${link}?access-token=${this.authService.getAccessToken().token}`;
+        if (link) {
+            return `${link}?access-token=${this.authService.getAccessToken().token}`;
+        }
+        else {
+            return null;
+        }
     }
 
     onEditJob(): void {

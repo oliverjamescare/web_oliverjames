@@ -31,6 +31,13 @@
         </li>
 
         <li class="details-row">
+            <span class="details-label">Gender preference:</span>
+            <p class="details-info">
+                {{ careHomeService.jobDetails.gender_preference }}
+            </p>
+        </li>
+
+        <li class="details-row">
             <span class="details-label">Phone:</span>
             <p class="details-info">
                 {{ careHomeService.jobDetails.author.phone_number }}
@@ -53,14 +60,14 @@
             </p>
         </li>
 
-        <li class="details-row">
+        <li *ngIf="careHomeService.jobDetails.notes" class="details-row">
             <span class="details-label">Job guidance:</span>
             <p class="details-info">
                 {{ careHomeService.jobDetails.notes }}
             </p>
         </li>
 
-        <li class="details-row">
+        <li *ngIf="getFloorPlanLink(careHomeService.jobDetails.general_guidance.floor_plan)" class="details-row">
             <span class="details-label">Floor plan:</span>
             <p class="details-info">
                 <a [href]="getFloorPlanLink(careHomeService.jobDetails.general_guidance.floor_plan)" class="app-link" target="_blank">Floor
