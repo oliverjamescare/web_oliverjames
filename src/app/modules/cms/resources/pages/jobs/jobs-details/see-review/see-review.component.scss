@@ -1,0 +1,11 @@
+@import "variables";
+.stars i
+{
+    color: $green-color;
+    font-size: 20px;
+    margin: 5px;
+    &:first-child
+    {
+        margin-left: 0;
+    }
+}

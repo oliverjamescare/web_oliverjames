@@ -1,15 +1,15 @@
-import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
-import {JobsService} from '../../../../../services/jobs.service';
-import {NotificationsService} from 'angular2-notifications';
-import { HttpErrorResponse } from '@angular/common/http';
+import { AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/core';
 import { getMessageError } from '../../../../../../../utilities/form.utils';
+import { NotificationsService } from 'angular2-notifications';
+import { HttpErrorResponse } from '@angular/common/http';
+import { JobsService } from '../../../../../services/jobs.service';
 
 @Component({
-    selector: 'app-cancel-job',
-    templateUrl: './cancel-job.component.html',
-    styleUrls: ['./cancel-job.component.scss']
+    selector: 'app-retry-payment',
+    templateUrl: './retry-payment.component.html',
+    styleUrls: ['./retry-payment.component.scss']
 })
-export class CancelJobComponent implements AfterViewInit
+export class RetryPaymentComponent implements AfterViewInit
 {
     @Input() title: string;
     @Input() type: string;
@@ -17,6 +17,7 @@ export class CancelJobComponent implements AfterViewInit
     @Output() closed = new EventEmitter();
     @Output() reload = new EventEmitter();
 
+    //form
     inProgress: boolean = false;
     error: string = '';
 
@@ -28,14 +29,14 @@ export class CancelJobComponent implements AfterViewInit
         $('#' + this.type + '_id').on('hidden.bs.modal', () => this.closed.emit(true));
     }
 
-    onCancelJob(waiveCharges: string): void
+    onAccept(): void
     {
         this.inProgress = true;
         this.jobsService
-            .cancelJob(this.jobId, waiveCharges)
+            .retryJobPayment(this.jobId)
             .subscribe(() =>
                 {
-                    this.notificationService.success('Job cancelled');
+                    this.notificationService.success('Payment scheduled');
                     this.inProgress = false;
                     this.reload.emit();
                     $('#' + this.type + '_id').modal('hide');
@@ -45,6 +46,6 @@ export class CancelJobComponent implements AfterViewInit
                     this.error = getMessageError(error);
                     this.inProgress = false;
                 });
-    }
 
+    }
 }

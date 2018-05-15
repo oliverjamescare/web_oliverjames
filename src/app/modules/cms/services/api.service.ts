@@ -118,6 +118,13 @@ export class ApiService {
             {headers: this.getAuthorizationHeaders()}
         );
     }
+    retryJobPayment(jobId: string): Observable<any> {
+        return this.httpClient.put(
+            `${this.endpoint}/jobs/${jobId}/payment-retry`,
+            {},
+            {headers: this.getAuthorizationHeaders()}
+        );
+    }
 
 
     checkUniqueness(param: string, value: string) {

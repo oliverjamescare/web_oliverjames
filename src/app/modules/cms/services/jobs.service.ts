@@ -27,4 +27,8 @@ export class JobsService {
     resolveChallange(jobId: string, status: string, reason: string): Observable<any> {
         return this.apiService.resolveChallange(jobId, status, reason);
     }
+
+    retryJobPayment(jobId: string): Observable<any> {
+        return this.apiService.retryJobPayment(jobId);
+    }
 }

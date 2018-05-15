@@ -17,7 +17,6 @@ export class PaginationComponent implements OnChanges
 
     ngOnChanges()
     {
-        //pages array init
         this.pages = Array.from(Array(this.numberOfPages).keys());
     }
 

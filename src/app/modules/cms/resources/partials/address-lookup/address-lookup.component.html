@@ -1,0 +1,5 @@
+<div class="results-container">
+    <ul class="results" *ngIf="results.length">
+        <li *ngFor="let result of results" class="result-item" [ngClass]="{'selected': result.id == selectedResultId}" (click)="onItemChosen(result)">{{ result.Type == "Address" ? result.Text + ", " + result.Description: result.Description }}</li>
+    </ul>
+</div>

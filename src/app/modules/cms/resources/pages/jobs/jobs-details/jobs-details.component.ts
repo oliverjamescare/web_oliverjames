@@ -1,17 +1,12 @@
-import {Component, OnInit} from '@angular/core';
-import {JobsService} from '../../../../services/jobs.service';
-import {ActivatedRoute} from '@angular/router';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {isUndefined} from 'util';
-import * as dateformat from 'dateformat';
+import { Component, OnInit } from '@angular/core';
+import { JobsService } from '../../../../services/jobs.service';
+import { ActivatedRoute } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { getMessageError, handleValidationErrorMessage, handleValidationStateClass } from '../../../../../../utilities/form.utils';
-import {AuthService} from '../../../../services/auth.service';
-import {NotificationsService} from 'angular2-notifications';
+import { AuthService } from '../../../../services/auth.service';
+import { NotificationsService } from 'angular2-notifications';
 import { HttpErrorResponse } from '@angular/common/http';
-
-const TIMESTAMP_INTERVAL = 900000; // 15 min in milliseconds
-const MIN_IN_MILLISECONDS = 60000;
-const NUMBER_OF_INTERVALS = 97; // number of 15 min intervals in select list hour from 7:00, 19:00
+import { fileSize, fileType } from '../../../../../../utilities/validators';
 
 @Component({
     selector: 'app-jobs-details',
@@ -24,13 +19,24 @@ export class JobsDetailsComponent implements OnInit
     jobDetails: any;
 
     //dialogs
-    showCancelJobDialog = false;
-    waiveCharges: boolean;
-    showResolveChallengeDialog = false;
+    showResolveChallengeDialog: boolean = false;
+    showRetryPaymentDialog: boolean = false;
+    showCancelJobDialog: boolean = false;
     seeReviewDialog = false;
 
-    //form
+    //floor plan
     floorPlanFile: File;
+    private validMimeTypes = [
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'application/pdf',
+        'image/png',
+        'image/jpg',
+        'image/jpeg'
+    ];
+    private maxFileSizeMB = 10;
+
+    //form
     form: FormGroup;
     formUtils = { handleValidationStateClass, handleValidationErrorMessage };
     inProgress: boolean = false;
@@ -84,20 +90,15 @@ export class JobsDetailsComponent implements OnInit
             ]
         },
         {
-            field: 'summary_sheet_start_date',
+            field: 'floor_plan',
             errors: [
                 {
-                    error: 'required',
-                    message: 'This field ids required'
-                }
-            ]
-        },
-        {
-            field: 'summary_sheet_end_date',
-            errors: [
+                    error: 'fileType',
+                    message: 'Invalid file type. Only doc, docx, pdf, png, jpg.'
+                },
                 {
-                    error: 'required',
-                    message: 'This field ids required'
+                    error: 'fileSize',
+                    message: 'Your floor plan cannot be larger than 10MB'
                 }
             ]
         },
@@ -110,15 +111,6 @@ export class JobsDetailsComponent implements OnInit
                 }
             ]
         }
-    ];
-
-    private allowedMimeTypes = [
-        'application/msword',
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-        'application/pdf',
-        'image/png',
-        'image/jpg',
-        'image/jpeg'
     ];
 
     constructor(
@@ -139,11 +131,6 @@ export class JobsDetailsComponent implements OnInit
         );
     }
 
-    openCancelJobPopup(waiveCharges: boolean): void
-    {
-        this.waiveCharges = waiveCharges;
-        this.showCancelJobDialog = true;
-    }
 
     onReload(): void
     {
@@ -153,6 +140,22 @@ export class JobsDetailsComponent implements OnInit
     getAuthLink(link: string)
     {
         return `${link}?access-token=${this.authService.getAccessToken()}`;
+    }
+
+    onFileChange(event)
+    {
+        if (event.target.files.length)
+        {
+            const fileResource = event.target.files[0];
+            if (this.validMimeTypes.indexOf(fileResource.type) !== -1 && fileResource.size < 1024 * 1024 * this.maxFileSizeMB)
+                this.floorPlanFile = fileResource;
+
+            const control = this.form.get('floor_plan');
+            control.setValue(fileResource.name);
+            control.markAsTouched();
+            control.setValidators([fileType(fileResource, this.validMimeTypes), fileSize(fileResource, this.maxFileSizeMB)]);
+            control.updateValueAndValidity();
+        }
     }
 
     onSubmit(): void
@@ -189,32 +192,31 @@ export class JobsDetailsComponent implements OnInit
         formData.append('gender_preference', this.form.get('gender_preference').value);
         formData.append('notes', this.form.get('notes').value);
 
-
         //general guidance
-        // if (this.floorPlanFile) {
-        //     formData.append('floor_plan', this.floorPlanFile);
-        // }
-        // formData.append('parking', this.form.get('parking').value);
-        // formData.append('notes_for_carers', this.form.get('notes_for_carers').value);
-        // formData.append('emergency_guidance', this.form.get('emergency_guidance').value);
-        // formData.append('report_contact', this.form.get('report_contact').value);
-        // formData.append('superior_contact', this.form.get('superior_contact').value);
-        //formData.append('manual_booking', this.getManualBooking());
-        // if (this.form.get('summary_sheet_start_date').value !== null) {
-        //     formData.append('summary_sheet_start_date', `${new Date(this.form.get('summary_sheet_start_date').value).getTime()}`);
-        //     console.log('summary start', `${new Date(this.form.get('summary_sheet_start_date').value).getTime()}`);
-        // }
-        // if (this.form.get('summary_sheet_end_date').value !== null) {
-        //     formData.append('summary_sheet_end_date', `${new Date(this.form.get('summary_sheet_end_date').value).getTime()}`);
-        // }
-        // if (this.form.get('voluntary_deduction').value !== null) {
-        //     formData.append('voluntary_deduction', `${new Date(this.form.get('voluntary_deduction').value).getTime()}`);
-        // }
+        formData.append('parking', this.form.get('parking').value);
+        formData.append('notes_for_carers', this.form.get('notes_for_carers').value);
+        formData.append('emergency_guidance', this.form.get('emergency_guidance').value);
+        formData.append('report_contact', this.form.get('report_contact').value);
+        formData.append('superior_contact', this.form.get('superior_contact').value);
+        if (this.floorPlanFile)
+            formData.append('floor_plan', this.floorPlanFile);
+
+        //summary sheet
+        if (this.form.get('summary_sheet_start_date').value !== null)
+            formData.append('summary_sheet_start_date', `${new Date(this.form.get('summary_sheet_start_date').value).getTime()}`);
+
+        if (this.form.get('summary_sheet_end_date').value !== null)
+            formData.append('summary_sheet_end_date', `${new Date(this.form.get('summary_sheet_end_date').value).getTime()}`);
+
+        if (this.form.get('voluntary_deduction').value !== null)
+            formData.append('voluntary_deduction', `${this.form.get('voluntary_deduction').value}`);
+
         return formData;
     }
 
     private getJobDetails(): void {
-        this.jobsService.getJobDetails(this.jobId)
+        this.jobsService
+            .getJobDetails(this.jobId)
             .subscribe(response => {
                     this.jobDetails = response;
                     this.editMode = this.jobDetails.status == "CANCELLED" || this.jobDetails.status == "PAID" || this.jobDetails.status == "PAYMENT_CANCELLED" ? false : true;
@@ -240,9 +242,11 @@ export class JobsDetailsComponent implements OnInit
             emergency_guidance: new FormControl(this.jobDetails.general_guidance.emergency_guidance, Validators.required),
             report_contact: new FormControl(this.jobDetails.general_guidance.report_contact, Validators.required),
             superior_contact: new FormControl(this.jobDetails.general_guidance.superior_contact, Validators.required),
-            // summary_sheet_start_date: new FormControl(null, Validators.required),
-            // summary_sheet_end_date: new FormControl(null, Validators.required),
-            // voluntary_deduction: new FormControl(null, [Validators.min(0)]),
+
+            //summary sheet
+            summary_sheet_start_date: new FormControl(this.jobDetails.summary_sheet && this.jobDetails.summary_sheet.start_date ? new Date(this.jobDetails.summary_sheet.start_date) : null),
+            summary_sheet_end_date: new FormControl(this.jobDetails.summary_sheet && this.jobDetails.summary_sheet.end_date ? new Date(this.jobDetails.summary_sheet.end_date) : null),
+            voluntary_deduction: new FormControl(this.jobDetails.summary_sheet && this.jobDetails.summary_sheet.voluntary_deduction ? this.jobDetails.summary_sheet.voluntary_deduction : null, [Validators.min(0)]),
         });
     }
 }

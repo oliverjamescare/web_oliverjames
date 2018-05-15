@@ -9,72 +9,70 @@ import {FormControl, FormGroup} from '@angular/forms';
     templateUrl: './jobs-list.component.html',
     styleUrls: ['./jobs-list.component.scss']
 })
-export class JobsListComponent implements OnInit {
+export class JobsListComponent implements OnInit
+{
     jobs: JobListObject[] = [];
-
-    search = '';
-    jobStatus: string;
-    reviewStatus: string;
-    manualBooking: string;
-    page = 1;
-    pages: number[] = [];
+    page: number = 1;
+    pages: number = 0;
     form: FormGroup;
 
-    constructor(private jobsService: JobsService) {
-    }
+    constructor(private jobsService: JobsService) {}
 
-    ngOnInit() {
+    ngOnInit()
+    {
+        //form and form filters
         this.createForm();
-        this.onSearch();
+        this.form.get('search').valueChanges.debounceTime(400).subscribe(() => {
+            this.page = 1;
+            this.getJobs()
+        });
+        this.form.get('job_status_filter').valueChanges.subscribe(() => {
+            this.page = 1;
+            this.getJobs()
+        });
+        this.form.get('review_status_filter').valueChanges.subscribe(() => {
+            this.page = 1;
+            this.getJobs()
+        });
+        this.form.get('manual_booking_filter').valueChanges.subscribe(() => {
+            this.page = 1;
+            this.getJobs()
+        });
+
+        //getting first page of jobs
         this.getJobs();
     }
 
-    onPageChange(page: number): void {
+    onPageChange(page: number): void
+    {
         this.page = page;
         this.getJobs();
     }
 
-    onFilter(filterName: string, filterValue: string): void {
-        this[filterName] = filterValue;
-        this.getJobs();
-    }
-
-    onSearch(): void {
-        this.form.get('search').valueChanges
-            .debounceTime(400)
-            .subscribe(data => {
-                this.search = data;
-                this.getJobs();
-            });
-    }
-
-    private getJobs(): void {
-        this.jobsService.getJobsList(this.search, this.jobStatus, this.reviewStatus, this.manualBooking, this.page)
+    private getJobs(): void
+    {
+        this.jobsService.getJobsList(
+                this.form.get("search").value,
+                this.form.get("job_status_filter").value,
+                this.form.get("review_status_filter").value,
+                this.form.get("manual_booking_filter").value,
+                this.page
+            )
             .subscribe(
                 (response: JobListResponse) => {
-                    console.log('Get jobs success response', response);
                     this.jobs = response.results;
-                    this.pages = this.setPaginationArray(response.pages);
-                },
-                error => console.log('Get jobs error response', error)
+                    this.pages = response.pages;
+                }
             );
     }
 
-    private setPaginationArray(length: number): number[] {
-        const arr = [];
-        for (let i = 0; i < length; i++) {
-            arr.push(i);
-        }
-        return arr;
-    }
-
-    private createForm(): void {
+    private createForm(): void
+    {
         this.form = new FormGroup({
-            'status': new FormControl('ALL'),
-            'review': new FormControl('ALL'),
-            'manual_booking': new FormControl('ALL'),
+            'job_status_filter': new FormControl('ALL'),
+            'review_status_filter': new FormControl('ALL'),
+            'manual_booking_filter': new FormControl('ALL'),
             'search': new FormControl('')
         });
     }
-
 }

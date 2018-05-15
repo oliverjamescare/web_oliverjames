@@ -36,17 +36,16 @@ const routes: Routes = [
                     { path: 'waiting-list', component: WaitingListComponent },
                     {
                         path: 'carers', component: CarersComponent, children: [
-                            {path: 'list', component: CarersListComponent},
-                            {path: 'details/:id', component: CarerDetailsComponent},
-                            {path: 'add', component: AddCarerComponent}
+                            {path: '', component: CarersListComponent},
+                            {path: 'add', component: AddCarerComponent},
+                            {path: ':id', component: CarerDetailsComponent},
                         ]
                     },
                     {
                         path: 'jobs', component: JobsComponent, children: [
-                            {path: 'list', component: JobsListComponent},
+                            {path: '', component: JobsListComponent},
                             {path: 'add', component: AddJobComponent},
-                            {path: 'details/:id', component: JobsDetailsComponent},
-                            // {path: 'add', component: AddCarerComponent}
+                            {path: ':id', component: JobsDetailsComponent},
                         ]
                     },
                     {

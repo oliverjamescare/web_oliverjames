@@ -13,85 +13,52 @@ export class CarersListComponent implements OnInit {
 
     carers: CarerListObject[] = [];
 
-    searchString: string;
-    statusFilter = 'ALL';
     sort: string;
-    page = 1;
-    pages: number[] = [];
+    page: number = 1;
+    pages: number = 0;
     form: FormGroup;
 
-    // sorters
-    showIdSorters = false;
-    showNameSorters = false;
-    showDobSorters = false;
-    showActivationDateSorters = false;
-    showRatingSorters = false;
-    showStatusSorters = false;
-    showBannedUntilSorters = false;
+    constructor(private carersService: CarersService) {}
 
-    constructor(private carersService: CarersService) {
-    }
-
-    ngOnInit() {
+    ngOnInit()
+    {
+        //form handle
         this.createForm();
+        this.form.get('search').valueChanges.debounceTime(400).subscribe(() => {
+            this.page = 1;
+            this.getCarersList();
+        });
+        this.form.get('status_filter').valueChanges.subscribe(() => {
+            this.page = 1;
+            this.getCarersList();
+        });
         this.getCarersList();
-        this.onSearch();
     }
 
-    onPageChange(page: number): void {
+    onPageChange(page: number)
+    {
         this.page = page;
         this.getCarersList();
     }
 
-    onSearch(): void {
-        this.form.get('search').valueChanges
-            .debounceTime(400)
-            .subscribe(data => {
-                this.searchString = data;
-                this.getCarersList();
-            });
-    }
-
-    onFilter(): void {
-        this.statusFilter = this.form.get('status_filter').value;
+    onChangeSort(sort: string)
+    {
+        this.sort = sort;
         this.getCarersList();
     }
 
-    onShowSorters(sorterName: string): void {
-        this[sorterName] = !this[sorterName];
-    }
-
-    onSelectSorter(sortString: string, sorter: string): void {
-        this.sort = sortString;
-        this[sorter] = false;
-        this.getCarersList();
-    }
-
-    private getCarersList(): void {
-        this.carersService.getCarersList(this.searchString, this.sort, this.statusFilter, this.page)
-            .subscribe(
-                (response: CarersListResponse) => {
-                    this.handleCarersListResponse(response);
+    private getCarersList(): void
+    {
+        this.carersService.getCarersList(this.form.get("search").value, this.sort, this.form.get("status_filter").value, this.page)
+            .subscribe((response: CarersListResponse) => {
+                    this.carers = response.results;
+                    this.pages = response.pages;
                 },
-                error => console.log('Get carers list response', error)
             );
     }
 
-    private handleCarersListResponse(response: CarersListResponse): void {
-        console.log('Get carers list response', response);
-        this.pages = this.setPaginationArray(response.pages);
-        this.carers = response.results;
-    }
-
-    private setPaginationArray(length: number): number[] {
-        const arr = [];
-        for (let i = 0; i < length; i++) {
-            arr.push(i);
-        }
-        return arr;
-    }
-
-    private createForm(): void {
+    private createForm(): void
+    {
         this.form = new FormGroup({
             'search': new FormControl(''),
             'status_filter': new FormControl('ALL')

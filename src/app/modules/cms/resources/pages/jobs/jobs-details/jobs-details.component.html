@@ -3,7 +3,7 @@
 <div class="row">
     <div class="col-sm">
         <h2>Job details</h2>
-        <button routerLink="/admin/jobs/list" class="btn btn-success right btn-nav">Back</button>
+        <button routerLink="/admin/jobs" class="btn btn-success right btn-nav">Back</button>
     </div>
 </div>
 <br>
@@ -11,10 +11,7 @@
 <!--action buttons-->
 <div class="row">
     <div class="col-sm-4">
-        <button (click)="openCancelJobPopup(true)" class="btn btn-success" [disabled]="jobDetails?.status === 'CANCELLED'">Cancel job</button>
-    </div>
-    <div class="col-sm-4">
-        <button (click)="openCancelJobPopup(false)" class="btn btn-success" [disabled]="jobDetails?.status === 'CANCELLED'">Cancel job - waive charges</button>
+        <button (click)="showCancelJobDialog = true;" class="btn btn-success" [disabled]="jobDetails?.status == 'PAID' || jobDetails?.status == 'CANCELLED' || jobDetails?.status == 'PAYMENT_CANCELLED'">Cancel job</button>
     </div>
     <div class="col-sm-4">
         <button (click)="showResolveChallengeDialog = true" [disabled]="jobDetails?.status !== 'CHALLENGED'" class="btn btn-success">Decide on challenged job</button>
@@ -26,7 +23,7 @@
         <button (click)="seeReviewDialog = true" class="btn btn-success" [disabled]="!jobDetails?.review">See review</button>
     </div>
     <div class="col-sm-4">
-        <button class="btn btn-success" [disabled]="true">Retry payment</button>
+        <button class="btn btn-success" (click)="showRetryPaymentDialog = true" [disabled]="jobDetails?.status !== 'PAYMENT_REJECTED'">Retry payment</button>
     </div>
 </div>
 <br>
@@ -34,7 +31,7 @@
 <!--job details-->
 <div class="row">
     <div class="col-sm">
-        <form  *ngIf="jobDetails" [formGroup]="form">
+        <form  *ngIf="jobDetails" [formGroup]="form" (ngSubmit)="onSubmit()">
             <table class="carer-details-table">
 
                 <!--basic info-->
@@ -111,7 +108,9 @@
                             <a [href]="getAuthLink(jobDetails.general_guidance.floor_plan)" target="_blank" class="green">Floor plan</a>
                             <br>
                         </span>
-                        <input *ngIf="editMode" type="file" id="file" class="floor-plan" (change)="handleFileInput($event.target.files)">
+                        <input *ngIf="editMode" type="file" id="file" class="floor-plan" (change)="onFileChange($event)">
+                        <input type="text" class="form-control" class="d-none" formControlName="floor_plan">
+                        <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'floor_plan', messages) }} </span>
                     </td>
                 </tr>
                 <tr>
@@ -155,6 +154,43 @@
                     </td>
                 </tr>
 
+                <!--care home-->
+                <tr>
+                    <th class="green-cell white-color">Care home</th>
+                    <td class="green-cell"></td>
+                </tr>
+                <tr>
+                    <th>Care service name</th>
+                    <td>
+                        <a class="green" [routerLink]="['/','admin', 'care-homes', jobDetails?.author._id]">{{ jobDetails?.author.care_home.care_service_name }}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Type of home</th>
+                    <td>{{ jobDetails?.author.care_home.type_of_home }}</td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td>{{ jobDetails?.author.care_home.name }}</td>
+                </tr>
+                <tr>
+                    <th>Address</th>
+                    <td>{{ (jobDetails?.author.address.company ? jobDetails?.author.address.company + ", " : "") + jobDetails?.author.address.address_line_1 + ", " + (jobDetails?.author.address.address_line_2 ? jobDetails?.author.address.address_line_2 + ", " : "") + jobDetails?.author.address.postal_code + ", " + jobDetails?.author.address.city }}</td>
+                </tr>
+
+                <!--carer-->
+                <ng-template [ngIf]="jobDetails?.carer">
+                    <tr>
+                        <th class="green-cell white-color">Carer</th>
+                        <td class="green-cell"></td>
+                    </tr>
+                    <tr>
+                        <th>Name</th>
+                        <td>
+                            <a class="green" [routerLink]="['/','admin', 'carers', jobDetails?.carer._id]">{{ jobDetails?.carer.carer.first_name }} {{ jobDetails?.carer.carer.surname }}</a>
+                        </td>
+                    </tr>
+                </ng-template>
 
                 <!--summary sheet-->
                 <ng-template [ngIf]="jobDetails?.summary_sheet">
@@ -180,21 +216,57 @@
                     </tr>
                     <tr *ngIf="jobDetails?.summary_sheet.start_date">
                         <th>Modified start date</th>
-                        <td>{{ jobDetails?.summary_sheet.start_date | datePattern: "YYYY-MM-DD, h:mm A" }}</td>
+                        <td>
+                            <span *ngIf="!editMode">{{ jobDetails?.summary_sheet.start_date | datePattern: "YYYY-MM-DD, h:mm A"}}</span>
+                            <p-calendar *ngIf="editMode" formControlName="summary_sheet_start_date" showTime="true" hourFormat="12" [showIcon]="true" [minDate]="now" dateFormat="yy-mm-dd"></p-calendar>
+                        </td>
                     </tr>
                     <tr *ngIf="jobDetails?.summary_sheet.end_date">
                         <th>Modified end date</th>
-                        <td>{{ jobDetails?.summary_sheet.end_date | datePattern: "YYYY-MM-DD, h:mm A" }}</td>
+                        <td>
+                            <span *ngIf="!editMode">{{ jobDetails?.summary_sheet.end_date | datePattern: "YYYY-MM-DD, h:mm A"}}</span>
+                            <p-calendar *ngIf="editMode" formControlName="summary_sheet_end_date" showTime="true" hourFormat="12" [showIcon]="true" [minDate]="form.get('summary_sheet_start_date').value" dateFormat="yy-mm-dd"></p-calendar>
+                        </td>
                     </tr>
-                    <tr *ngIf="jobDetails?.summary_sheet.voluntary_deduction">
+                    <tr *ngIf="jobDetails?.summary_sheet.voluntary_deduction != null">
                         <th>Deducted minutes</th>
-                        <td>{{ jobDetails?.summary_sheet.voluntary_deduction }}</td>
+                        <td>
+                            <span *ngIf="!editMode">{{ jobDetails?.summary_sheet.voluntary_deduction}}</span>
+                            <div class="form-group" *ngIf="editMode">
+                                <input type="text" formControlName="voluntary_deduction" class="form-control" [ngClass]="formUtils.handleValidationStateClass(form, 'voluntary_deduction')">
+                                <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'voluntary_deduction', messages) }} </span>
+                            </div>
+                        </td>
                     </tr>
                     <tr *ngIf="jobDetails?.summary_sheet.standard_invoice">
                         <th>Standard invoice</th>
                         <td><a [href]="getAuthLink(jobDetails?.summary_sheet.standard_invoice)" target="_blank" class="green">Standard invoice</a></td>
                     </tr>
 
+                </ng-template>
+
+                <!--review-->
+                <ng-template [ngIf]="jobDetails?.review">
+                    <tr>
+                        <th class="green-cell white-color">Review</th>
+                        <td class="green-cell"></td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td>{{ jobDetails?.review.status | status | capitalize }}</td>
+                    </tr>
+                    <tr>
+                        <th>Rate</th>
+                        <td>{{ jobDetails?.review.rate }}</td>
+                    </tr>
+                    <tr>
+                        <th>Description</th>
+                        <td>{{ jobDetails?.review.description }}</td>
+                    </tr>
+                    <tr>
+                        <th>Review date</th>
+                        <td>{{ jobDetails?.review.created | datePattern: "YYYY-MM-DD, h:mm A" }}</td>
+                    </tr>
                 </ng-template>
 
                 <!--challenge-->
@@ -307,37 +379,53 @@
             </table>
 
             <br>
+            <br>
             <button type="submit" *ngIf="editMode" [disabled]="!form.valid || inProgress" class="btn btn-success">Edit job</button>
         </form>
     </div>
 </div>
 <br>
 
+<!--review handle-->
+<app-see-review
+        *ngIf="seeReviewDialog"
+        type="see-review"
+        title="Approve job review"
+        [review]="jobDetails.review"
+        [jobId]="jobId"
+        (closed)="seeReviewDialog = false"
+        (reload)="seeReviewDialog = false; onReload()"
+>
+</app-see-review>
+
+<!--cancel job handle-->
 <app-cancel-job
         *ngIf="showCancelJobDialog"
         type="cancel_job"
         [title]="'Cancel job'"
         [jobId]="jobId"
-        [waiveCharges]="waiveCharges"
-        (reload)="onReload()"
+        (reload)="showCancelJobDialog = false; onReload()"
         (closed)="showCancelJobDialog = false"
 >
 </app-cancel-job>
 
+<!--resolve challenge handle-->
 <app-resolve-challenge
         *ngIf="showResolveChallengeDialog"
         [title]="'Decide on challenged job'"
         type="resolve_challenge"
         [jobId]="jobId"
         (closed)="showResolveChallengeDialog = false"
-        (reload)="onReload()"
+        (reload)="showCancelJobDialog = false; onReload()"
 ></app-resolve-challenge>
 
-<app-see-review
-        *ngIf="seeReviewDialog"
-        type="see-review"
-        [review]="jobDetails.review"
-        [jobId]="jobDetails._id"
-        (closed)="seeReviewDialog = false"
+<!--retry payment handle-->
+<app-retry-payment
+    *ngIf="showRetryPaymentDialog"
+    type="retry-payment"
+    [title]="'Retry payment'"
+    [jobId]="jobId"
+    (reload)="showRetryPaymentDialog = false; onReload()"
+    (closed)="showRetryPaymentDialog = false"
 >
-</app-see-review>
+</app-retry-payment>

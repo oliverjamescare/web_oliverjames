@@ -11,14 +11,17 @@
 
 .sort-container
 {
-    display: inline-block;
+    display: block;
     float: right;
+    width: 10px;
+    vertical-align: middle;
 }
 
 .sort-label
 {
-    display: inline-block;
+    display: block;
     margin-top: 10px;
-    margin-right: 10px;
+    margin-right: 20px;
+    width: auto;
 }
 

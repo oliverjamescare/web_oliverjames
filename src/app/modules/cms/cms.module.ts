@@ -45,12 +45,15 @@ import { AddCareHomeComponent } from './resources/pages/care-homes/add-care-home
 
 import { SeeProfilePictrueComponent } from './resources/pages/carers/carer-details/see-profile-pictrue/see-profile-pictrue.component';
 import { AddJobComponent } from './resources/pages/jobs/add-job/add-job.component';
-import { SeeReviewComponent } from './resources/pages/jobs/job-details/see-review/see-review.component';
+import { SeeReviewComponent } from './resources/pages/jobs/jobs-details/see-review/see-review.component';
 import { StatusPipe } from './pipes/status.pipe';
 import { CapitalizePipe } from './pipes/capitalize.pipe';
 import { DatePatternPipe } from './pipes/date-pattern.pipe';
 
 import { CalendarModule } from 'primeng/calendar';
+import { AddressLookupComponent } from './resources/partials/address-lookup/address-lookup.component';
+import { PaginationComponent } from './resources/partials/pagination/pagination.component';
+import { RetryPaymentComponent } from './resources/pages/jobs/jobs-details/retry-payment/retry-payment.component';
 
 
 @NgModule({
@@ -90,7 +93,10 @@ import { CalendarModule } from 'primeng/calendar';
         SeeReviewComponent,
         StatusPipe,
         CapitalizePipe,
-        DatePatternPipe
+        DatePatternPipe,
+        AddressLookupComponent,
+        PaginationComponent,
+        RetryPaymentComponent
     ],
     providers: [
         ApiService,

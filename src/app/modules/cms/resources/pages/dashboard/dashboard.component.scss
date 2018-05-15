@@ -42,6 +42,25 @@
                 font-weight: 500;
                 display: block;
                 margin-bottom: 10px;
+                &:focus
+                {
+                    outline: none;
+                }
+                i
+                {
+                    font-size: 15px;
+                    visibility: hidden;
+                    margin-right: 10px;
+                }
+                &:hover
+                {
+                    text-decoration: none;
+                }
+
+                &.active i
+                {
+                    visibility: visible;
+                }
             }
         }
     }

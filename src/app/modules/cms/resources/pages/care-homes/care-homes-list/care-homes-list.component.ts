@@ -14,23 +14,28 @@ export class CareHomesListComponent implements OnInit {
     form: FormGroup;
     sort: string;
     careHomes: Array<User>
-    pages: Array<number> = [];
-    page: number = 0;
+    page: number = 1;
+    pages: number = 0;
 
     constructor(private careHomesService: CareHomesService, public datesService: DatesService) {}
 
     ngOnInit()
     {
-        //creating form
+        //form handle
         this.form = new FormGroup({
             search: new FormControl(""),
             status_filter: new FormControl("ALL")
-        })
+        });
 
-        this.form
-            .valueChanges
-            .debounceTime(400)
-            .subscribe(() => this.loadCareHomes());
+        this.form.get("search").valueChanges.debounceTime(400).subscribe(() => {
+            this.careHomesService.page = 1;
+            this.loadCareHomes()
+        });
+
+        this.form.get("status_filter").valueChanges.subscribe(() => {
+            this.careHomesService.page = 1;
+            this.loadCareHomes()
+        });
 
         this.loadCareHomes();
     }
@@ -54,7 +59,7 @@ export class CareHomesListComponent implements OnInit {
             .getCareHomesList(this.form.get('search').value, this.form.get('status_filter').value, this.sort)
             .subscribe(() => {
 
-                this.pages = Array.from(Array(this.careHomesService.pages).keys());
+                this.pages = this.careHomesService.pages;
                 this.page = this.careHomesService.page;
                 this.careHomes = this.careHomesService.getCareHomes()
             })

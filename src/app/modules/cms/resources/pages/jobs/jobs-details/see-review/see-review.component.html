@@ -1,0 +1,22 @@
+<app-cms-popup [title]="title" [id]="type + '_id'" [showLogo]="false">
+    <div class="row">
+        <div class="col-12">
+            <label><b>Rate: </b></label>
+            <div class="stars">
+                <i class="fa fa-star" *ngFor="let star of stars"></i>
+            </div>
+            <br>
+
+            <label><b>Description: </b></label>
+            <p>{{review.description }}</p>
+            <br>
+
+            <button (click)="onApproveReview('ARCHIVED')" class="btn btn-success btn-actions" [disabled]="inProgress">Archive review</button>
+            <button (click)="onApproveReview('PUBLISHED')" class="btn right btn-success btn-actions" [disabled]="inProgress">Publish review</button>
+            <br>
+            <div class="text-center">
+                <span class="invalid-feedback">{{ error }}</span>
+            </div>
+        </div>
+    </div>
+</app-cms-popup>

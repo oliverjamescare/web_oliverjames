@@ -1,0 +1,28 @@
+@import "variables";
+.results-container
+{
+    position: relative;
+}
+.results
+{
+    position: absolute;
+    background: $white-color;
+    list-style: none;
+    padding-left: 0;
+    display: block;
+    width: 100%;
+    overflow: auto;
+    border: 1px solid darken($white-color,30%);
+    z-index: 999;
+}
+.result-item
+{
+    padding: 3px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    text-align: left;
+    &:hover, &.selected
+    {
+        background: darken($white-color, 10%);
+    }
+}

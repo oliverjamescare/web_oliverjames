@@ -1,0 +1,12 @@
+<app-cms-popup [title]="title" [id]="type + '_id'" [showLogo]="false">
+    <p class="modal-description">
+        Are you sure you want to retry this payment?
+    </p>
+    <div class="buttons-container">
+        <button type="button" class="btn btn-success" (click)="onAccept()" [disabled]="inProgress">Yes</button>
+        <button type="button" class="btn btn-outline-success" data-dismiss="modal">Cancel</button>
+    </div>
+    <div class="text-center">
+        <span class="invalid-feedback">{{ error }}</span>
+    </div>
+</app-cms-popup>

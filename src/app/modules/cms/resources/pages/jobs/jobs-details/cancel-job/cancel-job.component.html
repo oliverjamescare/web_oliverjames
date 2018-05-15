@@ -1,12 +1,12 @@
 <app-cms-popup [title]="title" [id]="type + '_id'" [showLogo]="false">
-    <div class="row">
-        <div class="col-12 text-center">
-            <p>{{ message }}</p>
-        </div>
-        <br>
-        <div class="div-actions">
-            <button (click)="onCancelJob()" class="btn-success btn-actions">Yes</button>
-            <button (click)="onClose()" class="btn-success btn-actions">No</button>
-        </div>
+    <p class="modal-description">
+        Do you want to cancel this job with charges applied?
+    </p>
+    <div class="buttons-container">
+        <button type="button" class="btn btn-success" (click)="onCancelJob('NO')" [disabled]="inProgress">Yes</button>
+        <button type="button" class="btn btn-success" (click)="onCancelJob('YES')" [disabled]="inProgress">No</button>
+    </div>
+    <div class="text-center">
+        <span class="invalid-feedback">{{ error }}</span>
     </div>
 </app-cms-popup>

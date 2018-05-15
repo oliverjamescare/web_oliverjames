@@ -8,20 +8,26 @@
 </div>
 
 <!-- filters -->
-<div [formGroup]="form" class="row">
-    <div class="col-4">
-        <label>Search</label>
-        <input formControlName="search" type="text" placeholder="Search" class="form-control">
+<form [formGroup]="form">
+    <div  class="row">
+        <div class="col-3">
+            <div class="form-group">
+                <label>Search</label>
+                <input formControlName="search" type="text" placeholder="Search" class="form-control">
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group">
+                <label>Status</label>
+                <select formControlName="status_filter" class="form-control">
+                    <option value="ALL">All</option>
+                    <option value="ACTIVE">Active</option>
+                    <option value="BANNED">Banned</option>
+                </select>
+            </div>
+        </div>
     </div>
-    <div class="col-4">
-        <label>Status</label>
-        <select formControlName="status_filter" class="form-control">
-            <option value="ALL">All</option>
-            <option value="ACTIVE">Active</option>
-            <option value="BANNED">Banned</option>
-        </select>
-    </div>
-</div>
+</form>
 
 <!-- list -->
 <br>
@@ -30,83 +36,73 @@
 
         <!-- no results -->
         <p *ngIf="careHomes?.length === 0">No results</p>
-
         <table *ngIf="careHomes?.length !== 0" class="custom-table text-center">
             <thead>
                 <tr>
                     <th class="sort-cell">
-                        <div class="sort-label">Oliver James ID</div>
                         <div class="sort-container">
                             <div class="asc" (click)="onChangeSort('id_asc')"><i class="fa fa-angle-up"></i></div>
                             <div class="desc" (click)="onChangeSort('id_desc')"><i class="fa fa-angle-down"></i></div>
                         </div>
+                        <div class="sort-label">Oliver James ID</div>
                     </th>
                     <th class="sort-cell">
-                        <div class="sort-label">Service name</div>
                         <div class="sort-container">
                             <div class="asc" (click)="onChangeSort('care_service_name_asc')"><i class="fa fa-angle-up"></i></div>
                             <div class="desc" (click)="onChangeSort('care_service_name_desc')"><i class="fa fa-angle-down"></i></div>
                         </div>
+                        <div class="sort-label">Service name</div>
                     </th>
                     <th class="sort-cell">Address</th>
                     <th class="sort-cell">Post code</th>
                     <th class="sort-cell">
-                        <div class="sort-label">Date went active</div>
                         <div class="sort-container">
                             <div class="asc" (click)="onChangeSort('activation_date_asc')"><i class="fa fa-angle-up"></i></div>
                             <div class="desc" (click)="onChangeSort('activation_date_desc')"><i class="fa fa-angle-down"></i></div>
                         </div>
+                        <div class="sort-label">Date went active</div>
                     </th>
                     <th class="sort-cell">
-                        <div class="sort-label">Profile status</div>
                         <div class="sort-container">
                             <div class="asc" (click)="onChangeSort('status_asc')"><i class="fa fa-angle-up"></i></div>
                             <div class="desc" (click)="onChangeSort('status_desc')"><i class="fa fa-angle-down"></i></div>
                         </div>
+                        <div class="sort-label">Profile status</div>
                     </th>
                     <th class="sort-cell">
-                        <div class="sort-label">Banned deadline</div>
                         <div class="sort-container">
                             <div class="asc" (click)="onChangeSort('banned_until_asc')"><i class="fa fa-angle-up"></i></div>
                             <div class="desc" (click)="onChangeSort('banned_until_desc')"><i class="fa fa-angle-down"></i></div>
                         </div>
+                        <div class="sort-label">Banned deadline</div>
                     </th>
                     <th class="sort-cell">
-                        <div class="sort-label">Credits on account</div>
                         <div class="sort-container">
                             <div class="asc" (click)="onChangeSort('credits_balance_asc')"><i class="fa fa-angle-up"></i></div>
                             <div class="desc" (click)="onChangeSort('credits_balance_desc')"><i class="fa fa-angle-down"></i></div>
                         </div>
+                        <div class="sort-label">Credits on account</div>
                     </th>
                     <th class="sort-cell">Notes</th>
                     <th class="sort-cell">Details</th>
                 </tr>
             </thead>
-
             <tbody>
                 <tr *ngFor="let careHome of careHomes">
                     <td> {{ careHome.id }}</td>
                     <td> {{ careHome.care_home.care_service_name }}</td>
                     <td> {{ careHome.address.stringify() }}</td>
                     <td> {{ careHome.address.postal_code }}</td>
-                    <td> {{ datesService.getDateString(careHome.activation_date) }}</td>
-                    <td> {{ careHome.status.toLocaleLowerCase() }}</td>
-                    <td> {{ careHome.banned_until? datesService.getDateString(careHome.banned_until) : "N/A" }}</td>
-                    <td> £ {{ careHome.care_home.credits_balance }}</td>
+                    <td> {{ careHome.activation_date ? (careHome.activation_date | datePattern: "YYYY-MM-DD") : "" }}</td>
+                    <td> {{ careHome.status | capitalize | status }}</td>
+                    <td> {{ careHome.banned_until ? (careHome.banned_until | datePattern: "YYYY-MM-DD") : "" }}</td>
+                    <td> <span>&#163;</span>{{ careHome.care_home.credits_balance }}</td>
                     <td> {{ careHome.notes }}</td>
                     <td><a routerLink={{careHome.id}} class="cms-link">Details</a></td>
                 </tr>
             </tbody>
         </table>
         <br>
-        <div *ngIf="pages.length > 1" class="text-center">
-            <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                    <li *ngFor="let p of pages" [ngClass]="{'active': page === p + 1}" class="page-item">
-                        <a (click)="onPageChange(p + 1)" class="page-link">{{ p + 1 }}</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+        <app-pagination (pageChanged)="onPageChange($event)" [numberOfPages]="pages" [currentPage]="page"></app-pagination>
     </div>
 </div>
