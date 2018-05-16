@@ -35,7 +35,12 @@ export class PastJobsDetailsComponent implements OnInit {
 
 
     getFloorPlanLink(link: string): string {
-        return `${link}?access-token=${this.authService.getAccessToken().token}`;
+        if (link) {
+            return `${link}?access-token=${this.authService.getAccessToken().token}`;
+        }
+        else {
+            return null;
+        }
     }
 
     getPdf(): string {

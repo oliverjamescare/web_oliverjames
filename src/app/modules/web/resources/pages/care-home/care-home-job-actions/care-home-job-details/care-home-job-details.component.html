@@ -67,10 +67,10 @@
             </p>
         </li>
 
-        <li *ngIf="getFloorPlanLink(careHomeService.jobDetails.general_guidance.floor_plan)" class="details-row">
+        <li class="details-row">
             <span class="details-label">Floor plan:</span>
             <p class="details-info">
-                <a [href]="getFloorPlanLink(careHomeService.jobDetails.general_guidance.floor_plan)" class="app-link" target="_blank">Floor
+                <a *ngIf="getFloorPlanLink(careHomeService.jobDetails.general_guidance.floor_plan)" [href]="getFloorPlanLink(careHomeService.jobDetails.general_guidance.floor_plan)" class="app-link" target="_blank">Floor
                     plan</a>
             </p>
         </li>
