@@ -15,11 +15,11 @@
             </tr>
             <tr>
                 <th>Less deductions: </th>
-                <td>{{ job.summary_sheet.voluntary_deduction }} {{ job.summary_sheet.voluntary_deduction == 1 ? "minute" : "minutes"}}</td>
+                <td>{{ job.summary_sheet && job.summary_sheet.voluntary_deduction ? job.summary_sheet.voluntary_deduction : 0 }} {{ job.summary_sheet && job.summary_sheet.voluntary_deduction == 1 ? "minute" : "minutes"}}</td>
             </tr>
             <tr>
                 <th>Time billed</th>
-                <td>{{ job.getTimeBilled(false) }}</td>
+                <td>{{ job.getTimeBilled(true) }}</td>
             </tr>
             <tr>
                 <th>Gross due</th>
@@ -31,11 +31,15 @@
             </tr>
             <tr>
                 <th>Oliver James deduction: Training</th>
-                <td><span>&#163;</span>{{ job.payment.transaction_charge }} </td>
+                <td><span *ngIf="job.payment.status == 'PAID'">&#163;</span>{{ job.payment.status == 'PAID' ? job.payment.transaction_charge : "Pending" }} </td>
             </tr>
             <tr>
                 <th>Net due</th>
-                <td><span>&#163;</span>{{ job.payment.net_income }} </td>
+                <td><span *ngIf="job.payment.status == 'PAID'">&#163;</span>{{ job.payment.status == 'PAID' ? job.payment.net_income : "Pending" }} </td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ (job.status != "PAYMENT_CANCELLED" ? job.payment.status : job.status) | capitalize | status }} </td>
             </tr>
         </table>
         <br>

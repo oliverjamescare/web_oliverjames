@@ -10,6 +10,7 @@ import {
 import { CareHomesService } from '../../../../services/care-homes.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { AddressDetail } from '../../../../../web/models/address/address-detail.model';
 
 @Component({
     selector: 'app-add-care-home',
@@ -240,24 +241,18 @@ export class AddCareHomeComponent implements OnInit
             .subscribe(
                 (pass: string) => this.form.get('password').setValidators([Validators.required, equalToFieldValue(pass)]));
 
-        // choosing address event from PCA
-        if (pca.load) {
-            pca.load();
-        }
+    }
 
-        pca.on('load', (type, id, control) => {
-
-            control.listen('populate', (address) => {
-                console.log(address);
-                this.form.patchValue({
-                    postal_code: address['PostalCode'],
-                    company: address['Company'],
-                    address_line_1: address['Line1'],
-                    address_line_2: address['Line2'],
-                    city: address['City']
-                });
-            });
-        });
+    //address handle
+    onAddressFound(addressDetails: AddressDetail)
+    {
+        this.form.patchValue({
+            postal_code: addressDetails.PostalCode,
+            company: addressDetails.Company,
+            address_line_1: addressDetails.Line1,
+            address_line_2: addressDetails.Line2,
+            city: addressDetails.City
+        })
     }
 
     onFileChange(event)

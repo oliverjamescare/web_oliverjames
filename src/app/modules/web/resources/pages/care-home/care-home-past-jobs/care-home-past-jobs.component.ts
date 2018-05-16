@@ -68,6 +68,9 @@ export class CareHomePastJobsComponent implements OnInit
             value: moment(this.getInitialFromDate()).format('YYYY-MM-DD'),
             hide: (event: Event) => {
                 this.form.get('from').setValue(event.target['value']);
+                // const start = $(event.target['value']);
+                console.log(" s", event.target['value'])
+
                 this.getPastJobs();
             }
         });

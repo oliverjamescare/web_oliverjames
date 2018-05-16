@@ -59,8 +59,16 @@ export class CarerPaidSubmittedComponent implements OnInit
             showOtherMonths: true,
             format: 'yyyy-mm-dd',
             value: moment(this.getInitialFromDate()).format('YYYY-MM-DD'),
-            hide: (event: Event) => {
+            change: (event: Event) => {
                 this.form.get('from').setValue(event.target['value']);
+
+                // const start = new Date(this.form.get('from').value);
+                // const to = new Date(this.form.get('to').value);
+                // if(to.getTime() < start.getTime())
+                // {
+                //     $('#to').datepicker({ value: this.form.get('from').value, minDate: start})
+                // }
+
                 this.getSubmittedJobs();
             }
         });
@@ -69,7 +77,8 @@ export class CarerPaidSubmittedComponent implements OnInit
             showOtherMonths: true,
             format: 'yyyy-mm-dd',
             value: moment(this.getInitialToDate()).format('YYYY-MM-DD'),
-            hide: (event: Event) => {
+            minDate: moment(this.getInitialFromDate()).format('YYYY-MM-DD'),
+            change: (event: Event) => {
                 this.form.get('to').setValue(event.target['value']);
                 this.getSubmittedJobs();
             }

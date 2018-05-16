@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { ApiService } from '../../../services/api.service';
 import { AddressResult } from '../../../models/address/address-result.model';
 import { FormControl } from '@angular/forms';
@@ -9,7 +9,7 @@ import { AddressDetail } from '../../../models/address/address-detail.model';
     templateUrl: './address-lookup.component.html',
     styleUrls: ['./address-lookup.component.scss']
 })
-export class AddressLookupComponent implements OnInit
+export class AddressLookupComponent implements OnChanges
 {
     @Input() search: FormControl;
     @Output() addressFound: EventEmitter<AddressDetail> = new EventEmitter();
@@ -20,7 +20,7 @@ export class AddressLookupComponent implements OnInit
 
     constructor(private apiService: ApiService) {}
 
-    ngOnInit()
+    ngOnChanges()
     {
         this.search
             .valueChanges

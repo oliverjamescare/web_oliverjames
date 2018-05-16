@@ -1,6 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormControl, FormGroup, Validators} from '@angular/forms';
-import {handleUniqueValidator, handleValidationErrorMessage, handleValidationStateClass} from '../../../../../../utilities/form.utils';
+import {
+    getMessageError,
+    handleUniqueValidator,
+    handleValidationErrorMessage,
+    handleValidationStateClass
+} from '../../../../../../utilities/form.utils';
 import {
     adult, alpha, equalTo, equalToFieldValue, greaterThan, invalidDate, numbers,
     password
@@ -8,6 +13,8 @@ import {
 import {CarersService} from '../../../../services/carers.service';
 import {NotificationsService} from 'angular2-notifications';
 import {Router} from '@angular/router';
+import { AddressDetail } from '../../../../../web/models/address/address-detail.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-add-carer',
@@ -16,11 +23,22 @@ import {Router} from '@angular/router';
 })
 export class AddCarerComponent implements OnInit {
 
-    // form config
+    roles: Array<string> = ["Carer", "Senior Carer"]
+    qualifications: Array<string> = [
+        "Care certificate",
+        "QCF / NVQ level 2 in Health & Social Care",
+        "QCF / NVQ level 3 in Health & Social Care",
+        "QCF / NVQ level 4 in Health & Social Care",
+        "QCF / NVQ level 5 in Health & Social Care",
+        "Agency carer induction training",
+        "Nursing qualification (UK)",
+        "Nursing qualification (elsewhere)"
+    ];
+
+    //form config
     form: FormGroup;
     formUtils = {handleValidationStateClass, handleValidationErrorMessage};
-    pcaControl: any;
-    buttonLoading = false;
+    inProgress = false;
 
     messages = [
         {
@@ -175,19 +193,6 @@ export class AddCarerComponent implements OnInit {
             ]
         },
         {
-            field: 'ukPermission',
-            errors: [
-                {
-                    error: 'required',
-                    message: 'You must select one filed'
-                },
-                {
-                    error: 'equalTo',
-                    message: 'You can\'t register if you don\'t have permissions to work in the UK'
-                }
-            ]
-        },
-        {
             field: 'mobile',
             errors: [
                 {
@@ -201,19 +206,28 @@ export class AddCarerComponent implements OnInit {
             ]
         },
         {
-            field: 'experience_months',
+            field: 'dbs_date',
             errors: [
                 {
-                    error: 'required',
-                    message: 'This field is required'
-                },
+                    error: 'invalidDate',
+                    message: 'Invalid date'
+                }
+            ]
+        },
+        {
+            field: 'experience_months',
+            errors: [
                 {
                     error: 'numbers',
                     message: 'This field can contain only numbers'
                 },
                 {
                     error: 'min',
-                    message: 'This cannot be negative number'
+                    message: 'Number of months cannot be lower than 0'
+                },
+                {
+                    error: 'max',
+                    message: 'Number of months cannot be higher than 12'
                 }
             ]
         },
@@ -221,31 +235,128 @@ export class AddCarerComponent implements OnInit {
             field: 'experience_years',
             errors: [
                 {
-                    error: 'required',
-                    message: 'This field is required'
-                },
-                {
                     error: 'numbers',
                     message: 'This field can contain only numbers'
                 },
                 {
                     error: 'min',
-                    message: 'This cannot be negative number'
+                    message: 'Number of months cannot be lower than 0'
                 }
             ]
-        }
+        },
+        {
+            field: 'fire_safety',
+            errors: [
+                {
+                    error: 'invalidDate',
+                    message: 'Invalid date'
+                }
+            ]
+        },
+        {
+            field: 'dementia',
+            errors: [
+                {
+                    error: 'invalidDate',
+                    message: 'Invalid date'
+                }
+            ]
+        },
+        {
+            field: 'h_and_s',
+            errors: [
+                {
+                    error: 'invalidDate',
+                    message: 'Invalid date'
+                }
+            ]
+        },
+        {
+            field: 'first_aid_awareness',
+            errors: [
+                {
+                    error: 'invalidDate',
+                    message: 'Invalid date'
+                }
+            ]
+        },
+        {
+            field: 'first_aid_and_basic_life_support',
+            errors: [
+                {
+                    error: 'invalidDate',
+                    message: 'Invalid date'
+                }
+            ]
+        },
+        {
+            field: 'infection_control',
+            errors: [
+                {
+                    error: 'invalidDate',
+                    message: 'Invalid date'
+                }
+            ]
+        },
+        {
+            field: 'medication_management',
+            errors: [
+                {
+                    error: 'invalidDate',
+                    message: 'Invalid date'
+                }
+            ]
+        },
+        {
+            field: 'manual_handling_people',
+            errors: [
+                {
+                    error: 'invalidDate',
+                    message: 'Invalid date'
+                }
+            ]
+        },
+        {
+            field: 'safeguarding',
+            errors: [
+                {
+                    error: 'invalidDate',
+                    message: 'Invalid date'
+                }
+            ]
+        },
     ];
 
-    constructor(private carersService: CarersService,
-                private notificationService: NotificationsService,
-                private router: Router) {
-    }
+    referenceMessages = [
+        {
+            field: 'name',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'Reference name is required'
+                }
+            ]
+        },
+        {
+            field: 'type',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'Reference type is required'
+                },
+            ]
+        },
+    ]
 
-    ngOnInit() {
+    constructor(private carersService: CarersService, private notificationService: NotificationsService, private router: Router) {}
+
+    ngOnInit()
+    {
         this.createForm();
     }
 
-    private createForm(): void {
+    private createForm(): void
+    {
         this.form = new FormGroup({
             email: new FormControl(null,
                 [Validators.required, Validators.email],
@@ -266,27 +377,30 @@ export class AddCarerComponent implements OnInit {
             address_line_1: new FormControl(null, Validators.required),
             address_line_2: new FormControl(''),
             city: new FormControl(null, Validators.required),
-            jobRoleCarer: new FormControl(null),
-            jobRoleSeniorCarer: new FormControl(null),
-            dbs_status: new FormControl(null, ),
-            dbs_ref_number: new FormControl(null, ),
-            dbs_date: new FormControl(null, ),
-            experience_months: new FormControl(null, [Validators.required, Validators.min(0), numbers]),
-            experience_years: new FormControl(null, [Validators.required, Validators.min(0), numbers]),
-
-            other: new FormControl(null),
-            fire_safety: new FormControl(),
-            dementia: new FormControl(null),
-            h_and_s: new FormControl(null),
-            first_aid_awareness: new FormControl(null),
-            first_aid_and_basic_life_support: new FormControl(null),
-            infection_control: new FormControl(null),
-            medication_management: new FormControl(null),
-            manual_handling_people: new FormControl(null),
-            safeguarding: new FormControl(null),
-
+            eligible_roles: new FormArray(this.roles.map(() => new FormControl(false))),
             references: new FormArray([]),
-            qualifications: new FormArray([])
+
+            //dbs
+            dbs_status: new FormControl(null),
+            dbs_ref_number: new FormControl(null),
+            dbs_date: new FormControl(null, invalidDate),
+
+            //care exp
+            experience_months: new FormControl(null, [Validators.min(0), Validators.max(12), numbers]),
+            experience_years: new FormControl(null, [ Validators.min(0), numbers]),
+
+            //training record
+            fire_safety: new FormControl(null, invalidDate),
+            dementia: new FormControl(null, invalidDate),
+            h_and_s: new FormControl(null, invalidDate),
+            first_aid_awareness: new FormControl(null, invalidDate),
+            first_aid_and_basic_life_support: new FormControl(null, invalidDate),
+            infection_control: new FormControl(null, invalidDate),
+            medication_management: new FormControl(null, invalidDate),
+            manual_handling_people: new FormControl(null, invalidDate),
+            safeguarding: new FormControl(null, invalidDate),
+            other: new FormControl(null),
+            qualifications: new FormArray(this.qualifications.map(() => new FormControl(false))),
         });
 
         this.form.get('password')
@@ -299,26 +413,7 @@ export class AddCarerComponent implements OnInit {
             .subscribe(
                 (pass: string) => this.form.get('password').setValidators([Validators.required, equalToFieldValue(pass)]));
 
-        // choosing address event from PCA
-        if (pca.load) {
-            pca.load();
-        }
-
-        pca.on('load', (type, id, control) => {
-
-            control.listen('populate', (address) => {
-                console.log(address);
-                this.form.patchValue({
-                    postal_code: address['PostalCode'],
-                    company: address['Company'],
-                    address_line_1: address['Line1'],
-                    address_line_2: address['Line2'],
-                    city: address['City']
-                });
-            });
-        });
-
-        // datepicker config
+        //datepicker config
         const adultDate = new Date();
         adultDate.setFullYear(adultDate.getFullYear() - 18);
 
@@ -401,56 +496,67 @@ export class AddCarerComponent implements OnInit {
         });
     }
 
-    onReferenceControlAdd(): void {
+    //address handle
+    onAddressFound(addressDetails: AddressDetail)
+    {
+        this.form.patchValue({
+            postal_code: addressDetails.PostalCode,
+            company: addressDetails.Company,
+            address_line_1: addressDetails.Line1,
+            address_line_2: addressDetails.Line2,
+            city: addressDetails.City
+        })
+    }
+
+    //reference handle
+    onReferenceControlAdd(): void
+    {
         (<FormArray>this.form.get('references')).push(
             new FormGroup({
-                name: new FormControl(null),
-                type: new FormControl(null)
+                name: new FormControl(null, Validators.required),
+                type: new FormControl(null, Validators.required)
             })
         );
     }
 
-    onRemoveReferenceControl(index: number): void {
+    onRemoveReferenceControl(index: number): void
+    {
         (<FormArray>this.form.get('references')).removeAt(index);
     }
 
-    onQualificationsControlAdd(): void {
-        (<FormArray>this.form.get('qualifications')).push(
-            new FormControl(null)
-        );
+    //submit handle
+    onSubmit(): void
+    {
+        if(this.form.valid)
+        {
+            this.inProgress = true;
+            this.carersService.addCarer(this.prepareDataToCreate())
+                .subscribe(
+                    response => {
+                        this.notificationService.success('Carer created');
+                        this.router.navigate(['/admin', 'carers',  response._id]);
+                    },
+                    (error: HttpErrorResponse) => {
+                        this.notificationService.error(getMessageError(error))
+                        this.inProgress = false;
+                    });
+        }
     }
 
-    onRemoveQualificationsControl(index: number): void {
-        (<FormArray>this.form.get('qualifications')).removeAt(index);
-    }
+    private prepareDataToCreate(): any
+    {
+        const roles = [];
+        this.form.get('eligible_roles').value.forEach((value, index) => {
+            if(value)
+                roles.push(this.roles[index]);
+        })
 
-    onCreateCarer(): void {
-        console.log('Carer object to create', this.prepareDataToCreate());
-        this.buttonLoading = true;
-        this.carersService.addCarer(this.prepareDataToCreate())
-            .subscribe(
-                response => {
-                    console.log('Create carer response', response);
-                    this.notificationService.success('Carer created');
-                    this.router.navigate(['/admin', 'carers', 'details', response._id]);
-                },
-                error => {
-                    console.log('Create carer error', error);
-                    this.notificationService.error('Carer create failed, check out form');
-                }
-            );
-    }
+        const qualifications = [];
+        this.form.get('qualifications').value.forEach((value, index) => {
+            if(value)
+                qualifications.push(this.qualifications[index]);
+        })
 
-    onCheckForm(): void {
-        console.log('Date object', new Date(this.form.get('fire_safety').value));
-        console.log('Date timestamp', new Date(this.form.get('fire_safety').value).getTime());
-    }
-
-    getFormArray(field: string): FormArray {
-        return (<FormArray>this.form.get(field));
-    }
-
-    private prepareDataToCreate(): any {
         return {
             email: this.form.get('email').value,
             password: this.form.get('password').value,
@@ -481,32 +587,19 @@ export class AddCarerComponent implements OnInit {
                 },
                 training_record: {
                     other: this.form.get('other').value,
-                    fire_safety: new Date(this.form.get('fire_safety').value).getTime(),
-                    dementia: new Date(this.form.get('dementia').value).getTime(),
-                    h_and_s: new Date(this.form.get('h_and_s').value).getTime(),
-                    first_aid_awareness: new Date(this.form.get('first_aid_awareness').value).getTime(),
-                    first_aid_and_basic_life_support: new Date(this.form.get('first_aid_and_basic_life_support').value).getTime(),
-                    infection_control: new Date(this.form.get('infection_control').value).getTime(),
-                    medication_management: new Date(this.form.get('medication_management').value).getTime(),
-                    manual_handling_people: new Date(this.form.get('manual_handling_people').value).getTime(),
-                    safeguarding: new Date(this.form.get('safeguarding').value).getTime(),
-                    qualifications: this.form.get('qualifications').value
+                    fire_safety: this.form.get('fire_safety').value ? new Date(this.form.get('fire_safety').value).getTime() : null,
+                    dementia: this.form.get('dementia').value ? new Date(this.form.get('dementia').value).getTime() : null,
+                    h_and_s: this.form.get('h_and_s').value ? new Date(this.form.get('h_and_s').value).getTime() : null,
+                    first_aid_awareness: this.form.get('first_aid_awareness').value ? new Date(this.form.get('first_aid_awareness').value).getTime() : null,
+                    first_aid_and_basic_life_support: this.form.get('first_aid_and_basic_life_support').value ? new Date(this.form.get('first_aid_and_basic_life_support').value).getTime() : null,
+                    infection_control: this.form.get('infection_control').value ? new Date(this.form.get('infection_control').value).getTime() : null,
+                    medication_management: this.form.get('medication_management').value ? new Date(this.form.get('medication_management').value).getTime() : null,
+                    manual_handling_people: this.form.get('manual_handling_people').value ? new Date(this.form.get('manual_handling_people').value).getTime() : null,
+                    safeguarding: this.form.get('safeguarding').value ? new Date(this.form.get('safeguarding').value).getTime() : null,
+                    qualifications: qualifications
                 },
-                eligible_roles: this.getRolesFromForm()
-            },
-            notes: null
+                eligible_roles: roles
+            }
         };
     }
-
-    private getRolesFromForm(): string[] {
-        const arr = [];
-        if (this.form.get('jobRoleCarer').value) {
-            arr.push('Carer');
-        }
-        if (this.form.get('jobRoleSeniorCarer').value) {
-            arr.push('Senior Carer');
-        }
-        return arr;
-    }
-
 }

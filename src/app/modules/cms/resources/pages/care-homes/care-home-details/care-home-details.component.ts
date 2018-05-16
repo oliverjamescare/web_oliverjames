@@ -7,6 +7,7 @@ import { AuthService } from '../../../../services/auth.service';
 import { getMessageError } from '../../../../../../utilities/form.utils';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DatesService } from '../../../../services/dates.service';
+import { AddressDetail } from '../../../../../web/models/address/address-detail.model';
 
 @Component({
     selector: 'app-care-home-details',
@@ -38,13 +39,23 @@ export class CareHomeDetailsComponent implements OnInit
                 }
             );
 
-        //this.loadPca();
-
         //form credits init
         this.creditsForm = new FormGroup({
             amount: new FormControl(""),
             type: new FormControl(""),
             description: new FormControl("")
+        })
+    }
+
+    //address handle
+    onAddressFound(addressDetails: AddressDetail)
+    {
+        this.form.patchValue({
+            postal_code: addressDetails.PostalCode,
+            company: addressDetails.Company,
+            address_line_1: addressDetails.Line1,
+            address_line_2: addressDetails.Line2,
+            city: addressDetails.City
         })
     }
 
@@ -89,25 +100,6 @@ export class CareHomeDetailsComponent implements OnInit
         }
     }
 
-    private loadPca(): void
-    {
-        if (pca.load) {
-            pca.load();
-        }
-
-        pca.on('load', (type, id, control) => {
-            control.listen('populate', (address) => {
-                console.log(address);
-                this.form.patchValue({
-                    postal_code: address['PostalCode'],
-                    address_line_1: address['Line1'],
-                    address_line_2: address['Line2'],
-                    city: address['City'],
-                    company: address['Company'],
-                });
-            });
-        });
-    }
 
     loadCareHome()
     {

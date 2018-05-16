@@ -63,3 +63,9 @@
 textarea, input {
   text-align: left;
 }
+
+.custom-checkbox .custom-control-label::before, .custom-checkbox .custom-control-label::after
+{
+    left: -40px;
+    top: -2px;
+}

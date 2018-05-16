@@ -86,9 +86,28 @@
                 {{ careHomeService.jobDetails.carer.carer.training_record.safeguarding | timestampDate }}
             </p>
         </li>
+        <li *ngIf="careHomeService.jobDetails.carer.carer.training_record.other" class="details-row">
+            <span class="details-label">Other</span>
+            <p class="details-info">
+                {{ careHomeService.jobDetails.carer.carer.training_record.other }}
+            </p>
+        </li>
 
-        <li class="details-row">
-            <span class="details-label">Dbs status</span>
+        <!--dbs-->
+        <li class="details-row" *ngIf="careHomeService.jobDetails.carer.carer.dbs.ref_number">
+            <span class="details-label">DBS ref number</span>
+            <p class="details-info">
+                {{ careHomeService.jobDetails.carer.carer.dbs.ref_number }}
+            </p>
+        </li>
+        <li class="details-row" *ngIf="careHomeService.jobDetails.carer.carer.dbs.dbs_date">
+            <span class="details-label">DBS date</span>
+            <p class="details-info">
+                {{ careHomeService.jobDetails.carer.carer.dbs.dbs_date | timestampDate }}
+            </p>
+        </li>
+        <li class="details-row" *ngIf="careHomeService.jobDetails.carer.carer.dbs.status">
+            <span class="details-label">DBS status</span>
             <p class="details-info">
                 {{ careHomeService.jobDetails.carer.carer.dbs.status }}
             </p>

@@ -6,7 +6,7 @@ export function alpha(control: FormControl): { [ key: string ]: boolean }
 }
 export function numbers(control: FormControl): { [ key: string ]: boolean }
 {
-    return !/^[0-9]*$/.test(control.value) ? { 'numbers': true } : null;
+    return control.value && !/^[0-9]*$/.test(control.value) ? { 'numbers': true } : null;
 }
 export function alphaNumbers(control: FormControl): { [ key: string ]: boolean }
 {
@@ -14,7 +14,7 @@ export function alphaNumbers(control: FormControl): { [ key: string ]: boolean }
 }
 export function invalidDate(control: FormControl): { [ key: string ]: boolean }
 {
-    return isNaN(Date.parse(control.value))? { 'invalidDate': true } : null;
+    return control.value && isNaN(Date.parse(control.value))? { 'invalidDate': true } : null;
 }
 export function adult(control: FormControl): { [ key: string ]: boolean }
 {

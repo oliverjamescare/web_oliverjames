@@ -4,7 +4,7 @@ import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs/Observable';
 import { AuthService } from './auth.service';
 import { Availability } from '../models/carer-availability/carer-availability';
-import { AvailableJobsResponse } from '../models/available-jobs/available-jobs-response';
+import * as momentTz from "moment-timezone"
 
 @Injectable()
 export class ApiService
@@ -99,8 +99,9 @@ export class ApiService
 
     getCarerCalendar(): Observable<any>
     {
+        const timezone = momentTz.tz.guess();
         return this.httpClient.get(
-            `${this.endpoint}/carer/calendar`,
+            `${this.endpoint}/carer/calendar?timezone=${timezone}`,
             { headers: this.getAuthorizationHeaders() }
         );
     }
@@ -188,7 +189,8 @@ export class ApiService
     // care home
     getCalendarData(): Observable<any>
     {
-        return this.httpClient.get(this.endpoint + '/care-home/calendar', { headers: this.getAuthorizationHeaders() });
+        const timezone = momentTz.tz.guess();
+        return this.httpClient.get(this.endpoint + '/care-home/calendar?timezone=' + timezone, { headers: this.getAuthorizationHeaders() });
     }
 
     searchForPriorityUsers(searchString: string): Observable<any>
