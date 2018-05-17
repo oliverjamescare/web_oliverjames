@@ -1,6 +1,7 @@
 <div class="row">
     <div class="col-sm">
         <h2>Add care home</h2>
+        <button routerLink="/admin/care-homes" class="btn btn-success right btn-nav">Back</button>
     </div>
 </div>
 <br>
@@ -178,11 +179,14 @@
                 </div>
             </div>
             <br>
+            <br>
 
             <div class="row">
                 <div class="col-12">
-                    <button class="btn btn-success submit-button" type="submit" [disabled]="!form.valid || inProgress">Save</button>
-                    <span class="invalid-feedback"> {{ error }} </span>
+                    <div class="text-center">
+                        <button class="btn btn-success" type="submit" [disabled]="!form.valid || inProgress">Save</button>
+                        <span class="invalid-feedback"> {{ error }} </span>
+                    </div>
                 </div>
             </div>
             <br>

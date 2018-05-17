@@ -4,7 +4,7 @@
             <ul class="books-list">
                 <li *ngFor="let file of files; let i = index">
                     <a [href]="file + getTokenParameter()" target="_blank">File {{ i + 1 }}</a>
-                    <span (click)="onOpenPopup(file, i)" class="right"><i class="fas fa-trash gj-cursor-pointer"></i></span>
+                    <span (click)="onOpenPopup(file, i)" class="right"><i class="fa fa-times"></i></span>
                 </li>
             </ul>
             <input type="file"

@@ -22,4 +22,9 @@ export class AdminService
             });
     }
 
+    home()
+    {
+        return this.apiService.home();
+    }
+
 }

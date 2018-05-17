@@ -1,35 +1,155 @@
 <div class="row">
     <div class="col-sm">
         <h2>Add job</h2>
-        <button routerLink="/admin/jobs" class="btn-success right btn-nav">Back</button>
+        <a *ngIf="careHomeId" [routerLink]="['/', 'admin', 'care-homes', careHomeId]" class="btn btn-success right btn-nav">Back</a>
     </div>
 </div>
 <br><br>
 
 <div class="row">
-    <div [formGroup]="form" class="col-sm-4">
-        <div class="form-group">
-            <label>Care home</label>
-            <div class="input" (clickOutside)="onClickOutside()">
-                <input [formControl]="searchTerm" type="text" class="form-control margin-bottom10" placeholder="Search">
-                <div class="suggestions text-left" *ngIf="searchResult.length > 0">
-                    <ul>
-                        <li *ngFor="let carer of searchResult" (click)="onSelect(carer)">
-                            {{carer.carer.first_name}} {{ carer.carer.surname }}
-                        </li>
-                    </ul>
+    <div class="col-sm-12">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+            <button class="btn btn-success add-job" (click)="onAddJob()" type="button">Add job</button>
+
+            <!--jobs collection-->
+            <div formArrayName="jobs">
+                <div *ngFor="let job of form.get('jobs')['controls']; let i = index" [formGroupName]="i" class="row">
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label>Start date</label>
+                            <br>
+                            <p-calendar formControlName="start_date" [showIcon]="true" dateFormat="yy-mm-dd" showTime="true" hourFormat="12"></p-calendar>
+                            <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form.get('jobs').controls[i], 'start_date', jobFormMessages) }} </span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label>End date</label>
+                            <br>
+                            <p-calendar formControlName="end_date" [showIcon]="true" dateFormat="yy-mm-dd" showTime="true" hourFormat="12"></p-calendar>
+                            <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form.get('jobs').controls[i], 'end_date', jobFormMessages) }} </span>
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="form-group">
+                            <label>Role</label>
+                            <br>
+                            <select formControlName="role" class="form-control">
+                                <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+                            </select>
+                            <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form.get('jobs').controls[i], 'role', jobFormMessages) }} </span>
+                        </div>
+                    </div>
+                    <div class="col-3">
+                        <div class="form-group">
+                            <label>Notes</label>
+                            <br>
+                            <textarea formControlName="notes" rows="5" class="form-control"></textarea>
+                            <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form.get('jobs').controls[i], 'notes', jobFormMessages) }} </span>
+                        </div>
+                    </div>
+                    <div class="col-1">
+                        <span (click)="onRemoveJob(i)" class="big-icon gj-cursor-pointer"><i class="fa fa-times"></i></span>
+                    </div>
                 </div>
             </div>
-            <p *ngIf="carersNotFoundMessage" class="not-found">No results found</p>
-        </div>
+            <br>
+            <br>
 
-        <div class="form-group">
-            <label>Start date</label>
-            <input type="text" class="form-control" placeholder="yyyy-mm-dd"
-                   formControlName="startDate"
-                   id="startDate"
-                   [ngClass]="formUtils.handleValidationStateClass(form, 'startDate')">
-            <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'startDate', messages) }} </span>
-        </div>
+            <!--gender preference-->
+            <div class="row">
+                <div class="col-sm-4">
+                    <b>Gender preference:</b>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <select class="form-control" formControlName="gender_preference">
+                            <option value="No preference">No preference</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <br>
+
+            <!--general guidance-->
+            <h4>General Guidance / CQC compliance</h4>
+            <div class="row">
+                <div class="col-sm-4">
+                    <b>If our carer needs to call your service, who should they speak to :</b>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <textarea rows="5" class="form-control" placeholder="e.g. senior carer, manager" formControlName="superior_contact"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <b>Where should carer report to upon arrival:</b>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <textarea rows="5" class="form-control" placeholder="e.g. ask to speak to the senior carer or manager" formControlName="report_contact"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <b>Carer guidance in event of fire alarm sounding:</b>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <textarea rows="5" class="form-control" placeholder="e.g. report to fire panel at the main entrance" formControlName="emergency_guidance"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <b>Notes on High risk / complexity residents / any other requests for our carers:</b>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <textarea rows="5" class="form-control" placeholder="e.g. Room 1 has swallowing difficulties. Please Please take written notes during handover" formControlName="notes_for_carers"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <b>Where to park your car :</b>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <textarea rows="5" class="form-control" placeholder="Describe where and if it’s free parking / how to pay" formControlName="parking"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <b>Floor plan :</b>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <input type="file" (change)="onFileChange($event)" >
+                        <input type="text" class="form-control" class="d-none" formControlName="floor_plan">
+                        <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'floor_plan', messages) }} </span>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="text-center">
+                        <button type="submit" [disabled]="!form.valid || inProgress" class="btn btn-success">Add jobs</button>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
+        </form>
     </div>
 </div>

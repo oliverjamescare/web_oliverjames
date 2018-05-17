@@ -44,7 +44,6 @@ const routes: Routes = [
                     {
                         path: 'jobs', component: JobsComponent, children: [
                             {path: '', component: JobsListComponent},
-                            {path: 'add', component: AddJobComponent},
                             {path: ':id', component: JobsDetailsComponent},
                         ]
                     },
@@ -52,6 +51,7 @@ const routes: Routes = [
                         path: 'care-homes', component: CareHomesComponent, children: [
                             { path: '', component: CareHomesListComponent },
                             { path: 'add', component: AddCareHomeComponent },
+                            { path: ':id/book-jobs', component: AddJobComponent},
                             { path: ':id', component: CareHomeDetailsComponent },
                         ]
                     },

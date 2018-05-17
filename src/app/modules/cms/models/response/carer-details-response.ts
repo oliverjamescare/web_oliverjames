@@ -6,4 +6,11 @@ export interface CarerDetailsResponse {
     status: string;
     notes: string;
     banned_until: number;
+    address: {
+        postal_code: string
+        company: string
+        address_line_1: string
+        address_line_2: string
+        city: string
+    }
 }

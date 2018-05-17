@@ -2,12 +2,14 @@ import { AfterContentChecked, AfterContentInit, AfterViewChecked, Component, OnI
 import { CarersService } from '../../../../services/carers.service';
 import { ActivatedRoute } from '@angular/router';
 import { CarerDetailsResponse } from '../../../../models/response/carer-details-response';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DatesService } from '../../../../services/dates.service';
 import { isUndefined } from 'util';
 import { NotificationsService } from 'angular2-notifications';
 import { getMessageError } from '../../../../../../utilities/form.utils';
 import { HttpErrorResponse } from '@angular/common/http';
+import { numbers } from '../../../../../../utilities/validators';
+import { AddressDetail } from '../../../../../web/models/address/address-detail.model';
 
 @Component({
     selector: 'app-carer-details',
@@ -196,7 +198,17 @@ export class CarerDetailsComponent implements OnInit
         }
     }
 
-
+    //address handle
+    onAddressFound(addressDetails: AddressDetail)
+    {
+        this.form.patchValue({
+            postal_code: addressDetails.PostalCode,
+            company: addressDetails.Company,
+            address_line_1: addressDetails.Line1,
+            address_line_2: addressDetails.Line2,
+            city: addressDetails.City
+        })
+    }
 
     private createForm(): void
     {
@@ -213,10 +225,10 @@ export class CarerDetailsComponent implements OnInit
         }
 
         this.form = new FormGroup({
-            'reference': refArr,
-            'notes': new FormControl(),
-            'status': new FormControl(),
-            'banned_until': new FormControl(this.carerDetails.banned_until),
+            reference: refArr,
+            notes: new FormControl(this.carerDetails.notes),
+            status: new FormControl(this.carerDetails.status),
+            banned_until: new FormControl(this.carerDetails.banned_until ? moment(this.carerDetails.banned_until || new Date()).format("YYYY-MM-DD") : null),
             gender: new FormControl(this.carerDetails.carer.gender),
 
             //training record
@@ -241,12 +253,23 @@ export class CarerDetailsComponent implements OnInit
             dbs_ref_number: new FormControl(this.carerDetails.carer.dbs.ref_number),
             dbs_status: new FormControl(this.carerDetails.carer.dbs.status),
 
+            //care exp
+            experience_months: new FormControl(this.carerDetails.carer.joining_care_experience.months, [ Validators.min(0), Validators.max(12), numbers]),
+            experience_years: new FormControl(this.carerDetails.carer.joining_care_experience.years, [ Validators.min(0), numbers]),
+
             //eligible roles
             eligible_roles: new FormArray(
                 this.roles.map(role =>
                     new FormControl(this.carerDetails.carer.eligible_roles.includes(role))
                 )
             ),
+
+            //address
+            postal_code: new FormControl(this.carerDetails.address.postal_code, Validators.required),
+            company: new FormControl(this.carerDetails.address.company),
+            address_line_1: new FormControl(this.carerDetails.address.address_line_1, Validators.required),
+            address_line_2: new FormControl(this.carerDetails.address.address_line_2),
+            city: new FormControl(this.carerDetails.address.city, Validators.required),
         });
     }
 
@@ -279,8 +302,8 @@ export class CarerDetailsComponent implements OnInit
         this.carerDetails.carer.reference.references = this.form.get('reference').value;
 
         //care experience
-        this.carerDetails.carer.joining_care_experience.years = 1;
-        this.carerDetails.carer.joining_care_experience.months = 1;
+        this.carerDetails.carer.joining_care_experience.years = this.form.get('experience_years').value;
+        this.carerDetails.carer.joining_care_experience.months = this.form.get('experience_months').value;
 
         //roles
         const roles = [];
@@ -295,17 +318,12 @@ export class CarerDetailsComponent implements OnInit
         this.carerDetails.notes = this.form.get('notes').value;
         this.carerDetails.status = this.form.get('status').value;
         this.carerDetails.banned_until = this.form.get('banned_until').value === '' ? null : new Date(this.form.get('banned_until').value).getTime();
-    }
 
-    private getEilgableRoles(): string[]
-    {
-        const arr = [];
-        arr.push(this.form.get('job_role1').value);
-        if (this.form.get('job_role2').value !== null && this.form.get('job_role2').value !== '')
-        {
-            arr.push(this.form.get('job_role2').value);
-        }
-        return arr;
+        //address
+        this.carerDetails.address.city = this.form.get('city').value;
+        this.carerDetails.address.address_line_2 = this.form.get('address_line_2').value;
+        this.carerDetails.address.address_line_1 = this.form.get('address_line_1').value;
+        this.carerDetails.address.company = this.form.get('company').value;
+        this.carerDetails.address.postal_code = this.form.get('postal_code').value;
     }
-
 }

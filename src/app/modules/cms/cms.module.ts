@@ -54,6 +54,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { AddressLookupComponent } from './resources/partials/address-lookup/address-lookup.component';
 import { PaginationComponent } from './resources/partials/pagination/pagination.component';
 import { RetryPaymentComponent } from './resources/pages/jobs/jobs-details/retry-payment/retry-payment.component';
+import { AbsolutePipe } from './pipes/absolute.pipe';
 
 
 @NgModule({
@@ -96,7 +97,8 @@ import { RetryPaymentComponent } from './resources/pages/jobs/jobs-details/retry
         DatePatternPipe,
         AddressLookupComponent,
         PaginationComponent,
-        RetryPaymentComponent
+        RetryPaymentComponent,
+        AbsolutePipe
     ],
     providers: [
         ApiService,
@@ -106,7 +108,6 @@ import { RetryPaymentComponent } from './resources/pages/jobs/jobs-details/retry
         CarersService,
         DatesService,
         JobsService,
-        CareHomesService,
         WaitingListService,
     ]
 

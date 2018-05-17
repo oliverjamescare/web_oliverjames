@@ -6,7 +6,7 @@ export function alpha(control: FormControl): { [ key: string ]: boolean }
 }
 export function numbers(control: FormControl): { [ key: string ]: boolean }
 {
-    return control.value && !/^[0-9]*$/.test(control.value) ? { 'numbers': true } : null;
+    return control.value != null && !/^[0-9]*$/.test(control.value) ? { 'numbers': true } : null;
 }
 export function alphaNumbers(control: FormControl): { [ key: string ]: boolean }
 {

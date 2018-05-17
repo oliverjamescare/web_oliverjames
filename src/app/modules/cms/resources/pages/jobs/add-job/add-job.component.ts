@@ -1,90 +1,221 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {handleValidationErrorMessage, handleValidationStateClass} from '../../../../../../utilities/form.utils';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { getMessageError, handleValidationErrorMessage, handleValidationStateClass } from '../../../../../../utilities/form.utils';
+import { dateGreaterThan, fileSize, fileType, invalidDate } from '../../../../../../utilities/validators';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NotificationsService } from 'angular2-notifications';
+import { JobsService } from '../../../../services/jobs.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'app-add-job',
     templateUrl: './add-job.component.html',
     styleUrls: ['./add-job.component.scss']
 })
-export class AddJobComponent implements OnInit {
-    form: FormGroup;
-    formUtils = {handleValidationStateClass, handleValidationErrorMessage};
+export class AddJobComponent implements OnInit
+{
     careHomeId: string;
-    searchTerm: FormControl;
-    searchResult: any[] = [];
-    careHomesNotFound: string;
-    carersNotFoundMessage: boolean = false;
 
+    //floor plan
+    floorPlanFile: File;
+    private validMimeTypes = [
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'application/pdf',
+        'image/png',
+        'image/jpg',
+        'image/jpeg'
+    ];
+    private maxFileSizeMB = 10;
 
-    messages = [
+    //form handle
+    form: FormGroup;
+    formUtils = { handleValidationStateClass, handleValidationErrorMessage };
+    inProgress: boolean = false;
+    roles: Array<string> = [
+        "Carer",
+        "Senior Carer"
+    ]
+
+    jobFormMessages = [
         {
-            field: 'startDate',
+            field: 'start_date',
             errors: [
                 {
                     error: 'required',
                     message: 'Start date is required'
+                },
+                {
+                    error: 'invalidDate',
+                    message: 'Invalid date'
+                }
+            ]
+        },
+        {
+            field: 'end_date',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'Start date is required'
+                },
+                {
+                    error: 'invalidDate',
+                    message: 'Invalid date'
+                },
+                {
+                    error: 'dateGreaterThan',
+                    message: 'End date must be lower than start date'
+                }
+            ]
+        },
+        {
+            field: 'role',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'Role is required'
+                },
+            ]
+        },
+    ];
+
+    messages = [
+        {
+            field: 'floor_plan',
+            errors: [
+                {
+                    error: 'fileType',
+                    message: 'Invalid file type. Only doc, docx, pdf, png, jpg.'
+                },
+                {
+                    error: 'fileSize',
+                    message: 'Your floor plan cannot be larger than 10MB'
                 }
             ]
         },
     ];
 
-    constructor() {
-    }
+    constructor( private route: ActivatedRoute, private notificationService: NotificationsService, private router: Router, private jobsService: JobsService) {}
 
-    ngOnInit() {
+    ngOnInit()
+    {
+        //getting care home
+        this.route
+            .params
+            .subscribe(params => {
+                    this.careHomeId = params['id'];
+                }
+            );
+
         this.createForm();
     }
 
-    private createForm(): void {
-        this.searchTerm = new FormControl(null);
+    onSubmit()
+    {
+        if(this.form.valid)
+        {
+            this.inProgress = true;
+            this.jobsService
+                .addJobs(this.form, this.careHomeId, this.floorPlanFile)
+                .subscribe(
+                    response => {
+                        this.inProgress = false;
+                        this.notificationService.success('Jobs added successfully');
+                        this.router.navigate(['/','admin','jobs']);
+                    },
+                    (error: HttpErrorResponse) => {
+                        this.inProgress = false;
+                        this.notificationService.error(getMessageError(error));
+                    }
+                );
+        }
+    }
+
+    private createForm(): void
+    {
         this.form = new FormGroup({
-            startDate: new FormControl(null, Validators.required),
-            from: new FormControl(null),
-            till: new FormControl(null),
-            duration: new FormGroup({
-                hours: new FormControl(null),
-                minutes: new FormControl(null)
-            }),
-            role: new FormControl(null),
-            manual_booking: new FormControl(''),
-            gender_preference: new FormControl(null),
+            jobs: new FormArray([ new FormGroup({
+                start_date: new FormControl(null, [ Validators.required, invalidDate ]),
+                end_date: new FormControl(null, [ Validators.required, invalidDate ]),
+                role: new FormControl(null, Validators.required),
+                notes: new FormControl(null),
+            })]),
+            gender_preference: new FormControl("No preference"),
             floor_plan: new FormControl(null),
             parking: new FormControl(null),
+            notes_for_carers: new FormControl(null),
             emergency_guidance: new FormControl(null),
             report_contact: new FormControl(null),
             superior_contact: new FormControl(null)
         });
 
-        $('#startDate').datepicker({
-            showOtherMonths: true,
-            format: 'yyyy-mm-dd',
-            value: moment(new Date()).format('YYYY-MM-DD'),
-            hide: (event: Event) => this.form.get('startDate').setValue(event.target['value'])
-        });
+        const jobForm = (<FormArray>this.form.get("jobs")).controls[0];
+
+        jobForm
+            .get("start_date")
+            .valueChanges
+            .subscribe(start => {
+                jobForm.get("end_date").setValidators([ Validators.required, invalidDate, dateGreaterThan(new Date(start)) ])
+            });
+
+        jobForm
+            .get("end_date")
+            .valueChanges
+            .subscribe(end => {
+                jobForm.get("end_date").setValidators([ Validators.required, invalidDate, dateGreaterThan(new Date(jobForm.get("start_date").value)) ])
+            });
+
     }
 
-    onClickOutside()
+    //jobs handle
+    onAddJob()
     {
-        
-    }
-    // private getCarers(): void {
-    //     this.searchTerm.valueChanges
-    //         .debounceTime(400)
-    //         .subscribe(data => {
-    //             this.careHomesNotFound = null;
-    //             if (data !== '') {
-    //                 this.jobsService.getCareHomes(data).subscribe(response => {
-    //                     this.searchResult = response;
-    //                     console.log('searchResult', this.searchResult);
-    //                     if (response.length === 0) {
-    //                         this.careHomesNotFound = 'No carers found';
-    //                     }
-    //                 });
-    //             } else {
-    //                 this.searchResult = [];
-    //             }
-    //         });
-    // }
+        const jobForm = new FormGroup({
+            start_date: new FormControl(null, [ Validators.required, invalidDate ]),
+            end_date: new FormControl(null, [ Validators.required, invalidDate ]),
+            role: new FormControl(null, Validators.required),
+            notes: new FormControl(null),
+        });
 
+        jobForm
+            .get("start_date")
+            .valueChanges
+            .subscribe(start => {
+                jobForm.get("end_date").setValidators([ Validators.required, invalidDate, dateGreaterThan(new Date(start)) ])
+            });
+
+        jobForm
+            .get("end_date")
+            .valueChanges
+            .subscribe(end => {
+                jobForm.get("end_date").setValidators([ Validators.required, invalidDate, dateGreaterThan(new Date(jobForm.get("start_date").value)) ])
+            });
+
+        (<FormArray>this.form.get("jobs")).push(jobForm);
+    }
+
+    onRemoveJob(index: number): void
+    {
+        const jobs = (<FormArray>this.form.get('jobs'));
+        if(jobs.length > 1)
+            jobs.removeAt(index);
+    }
+
+    //files handle
+    onFileChange(event)
+    {
+        if (event.target.files.length)
+        {
+            const fileResource = event.target.files[0];
+            if (this.validMimeTypes.indexOf(fileResource.type) !== -1 && fileResource.size < 1024 * 1024 * this.maxFileSizeMB)
+                this.floorPlanFile = fileResource;
+
+            const control = this.form.get('floor_plan');
+
+            control.setValue(fileResource.name);
+            control.markAsTouched();
+            control.setValidators([Validators.required, fileType(fileResource, this.validMimeTypes), fileSize(fileResource, this.maxFileSizeMB)]);
+            control.updateValueAndValidity();
+        }
+    }
 }

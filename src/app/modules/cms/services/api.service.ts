@@ -7,7 +7,8 @@ import {AuthService} from './auth.service';
 import {CarerDetailsResponse} from '../models/response/carer-details-response';
 
 @Injectable()
-export class ApiService {
+export class ApiService
+{
     private endpoint: string;
     private webEndpoint: string;
 
@@ -20,6 +21,12 @@ export class ApiService {
     // auth
     login(body: Object) {
         return this.httpClient.post(this.endpoint + '/login', body);
+    }
+
+    //admin
+    home(): Observable<any>
+    {
+        return this.httpClient.get(`${this.endpoint}/home`, { headers: this.getAuthorizationHeaders() });
     }
 
     // carers
@@ -124,6 +131,11 @@ export class ApiService {
             {},
             {headers: this.getAuthorizationHeaders()}
         );
+    }
+
+    addJobs(form: FormData, careHomeId: string): Observable<any>
+    {
+        return this.httpClient.post(`${this.endpoint}/care-homes/${careHomeId}/jobs`, form, {headers: this.getAuthorizationHeaders()});
     }
 
 

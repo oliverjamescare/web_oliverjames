@@ -35,10 +35,16 @@ export class AddCarerComponent implements OnInit {
         "Nursing qualification (elsewhere)"
     ];
 
+    genders: Array<string> = [
+        "Male",
+        "Female"
+    ];
+
     //form config
     form: FormGroup;
     formUtils = {handleValidationStateClass, handleValidationErrorMessage};
     inProgress = false;
+    adultDate: Date;
 
     messages = [
         {
@@ -369,6 +375,7 @@ export class AddCarerComponent implements OnInit {
             first_name: new FormControl(null, [Validators.required, Validators.maxLength(100), alpha]),
             middle_name: new FormControl('', [Validators.maxLength(100), alpha]),
             surname: new FormControl(null, [Validators.required, Validators.maxLength(100), alpha]),
+            gender: new FormControl(null),
             password: new FormControl(null, [Validators.required, Validators.minLength(6), password]),
             password_confirm: new FormControl(null, [Validators.required]),
             date_of_birth: new FormControl(null, [Validators.required, invalidDate, adult]),
@@ -386,7 +393,7 @@ export class AddCarerComponent implements OnInit {
             dbs_date: new FormControl(null, invalidDate),
 
             //care exp
-            experience_months: new FormControl(null, [Validators.min(0), Validators.max(12), numbers]),
+            experience_months: new FormControl(null, [ Validators.min(0), Validators.max(12), numbers]),
             experience_years: new FormControl(null, [ Validators.min(0), numbers]),
 
             //training record
@@ -414,86 +421,8 @@ export class AddCarerComponent implements OnInit {
                 (pass: string) => this.form.get('password').setValidators([Validators.required, equalToFieldValue(pass)]));
 
         //datepicker config
-        const adultDate = new Date();
-        adultDate.setFullYear(adultDate.getFullYear() - 18);
-
-        $('#datepicker').datepicker({
-            showOtherMonths: true,
-            format: 'yyyy-mm-dd',
-            maxDate: adultDate,
-            value: moment(adultDate).format('YYYY-MM-DD'),
-            hide: (event: Event) => this.form.get('date_of_birth').setValue(event.target['value'])
-        });
-
-        $('#dbs_date').datepicker({
-            showOtherMonths: true,
-            format: 'yyyy-mm-dd',
-            value: moment(new Date()).format('YYYY-MM-DD'),
-            hide: (event: Event) => this.form.get('dbs_date').setValue(event.target['value'])
-        });
-
-        $('#fire_safety').datepicker({
-            showOtherMonths: true,
-            format: 'yyyy-mm-dd',
-            value: moment(new Date()).format('YYYY-MM-DD'),
-            hide: (event: Event) => this.form.get('fire_safety').setValue(event.target['value'])
-        });
-
-        $('#dementia').datepicker({
-            showOtherMonths: true,
-            format: 'yyyy-mm-dd',
-            value: moment(new Date()).format('YYYY-MM-DD'),
-            hide: (event: Event) => this.form.get('dementia').setValue(event.target['value'])
-        });
-
-        $('#h_and_s').datepicker({
-            showOtherMonths: true,
-            format: 'yyyy-mm-dd',
-            value: moment(new Date()).format('YYYY-MM-DD'),
-            hide: (event: Event) => this.form.get('h_and_s').setValue(event.target['value'])
-        });
-
-        $('#first_aid_awareness').datepicker({
-            showOtherMonths: true,
-            format: 'yyyy-mm-dd',
-            value: moment(new Date()).format('YYYY-MM-DD'),
-            hide: (event: Event) => this.form.get('first_aid_awareness').setValue(event.target['value'])
-        });
-
-        $('#first_aid_and_basic_life_support').datepicker({
-            showOtherMonths: true,
-            format: 'yyyy-mm-dd',
-            value: moment(new Date()).format('YYYY-MM-DD'),
-            hide: (event: Event) => this.form.get('first_aid_and_basic_life_support').setValue(event.target['value'])
-        });
-
-        $('#infection_control').datepicker({
-            showOtherMonths: true,
-            format: 'yyyy-mm-dd',
-            value: moment(new Date()).format('YYYY-MM-DD'),
-            hide: (event: Event) => this.form.get('infection_control').setValue(event.target['value'])
-        });
-
-        $('#medication_management').datepicker({
-            showOtherMonths: true,
-            format: 'yyyy-mm-dd',
-            value: moment(new Date()).format('YYYY-MM-DD'),
-            hide: (event: Event) => this.form.get('medication_management').setValue(event.target['value'])
-        });
-
-        $('#manual_handling_people').datepicker({
-            showOtherMonths: true,
-            format: 'yyyy-mm-dd',
-            value: moment(new Date()).format('YYYY-MM-DD'),
-            hide: (event: Event) => this.form.get('manual_handling_people').setValue(event.target['value'])
-        });
-
-        $('#safeguarding').datepicker({
-            showOtherMonths: true,
-            format: 'yyyy-mm-dd',
-            value: moment(new Date()).format('YYYY-MM-DD'),
-            hide: (event: Event) => this.form.get('safeguarding').setValue(event.target['value'])
-        });
+        this.adultDate = new Date();
+        this.adultDate.setFullYear(this.adultDate.getFullYear() - 18);
     }
 
     //address handle
@@ -573,6 +502,7 @@ export class AddCarerComponent implements OnInit {
                 surname: this.form.get('surname').value,
                 middle_name: this.form.get('middle_name').value,
                 date_of_birth: this.form.get('date_of_birth').value,
+                gender: this.form.get('gender').value,
                 reference: {
                     references: this.form.get('references').value
                 },
@@ -582,8 +512,8 @@ export class AddCarerComponent implements OnInit {
                     dbs_date: new Date(this.form.get('dbs_date').value).getTime(),
                 },
                 joining_care_experience: {
-                    months: this.form.get('experience_months').value,
-                    years: this.form.get('experience_years').value
+                    months: this.form.get('experience_months').value || 0,
+                    years: this.form.get('experience_years').value || 0
                 },
                 training_record: {
                     other: this.form.get('other').value,

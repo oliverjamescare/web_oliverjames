@@ -68,7 +68,7 @@
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Date of birth yyyy-mm-dd" id="datepicker" formControlName="date_of_birth" [ngClass]="formUtils.handleValidationStateClass(form, 'date_of_birth')">
+                        <p-calendar formControlName="date_of_birth" [showIcon]="true" [maxDate]="adultDate" placeholder="Date of birth" [defaultDate]="adultDate" dateFormat="yy-mm-dd"></p-calendar>
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'date_of_birth', messages) }} </span>
                     </div>
                 </div>
@@ -96,6 +96,16 @@
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Town / City" id="city" name="city" formControlName="city" [ngClass]="formUtils.handleValidationStateClass(form, 'city')">
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'city', messages) }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <select formControlName="gender" placeholder="Gender" class="form-control">
+                            <option *ngFor="let gender of genders" [value]="gender">{{ gender }}</option>
+                        </select>
                     </div>
                 </div>
             </div>
@@ -139,7 +149,7 @@
                         </div>
                     </div>
                     <div class="col-1">
-                        <span (click)="onRemoveReferenceControl(i)" class="big-icon gj-cursor-pointer"><i class="fa fa-minus-square"></i></span>
+                        <span (click)="onRemoveReferenceControl(i)" class="big-icon gj-cursor-pointer"><i class="fa fa-times"></i></span>
                     </div>
                 </div>
             </div>
@@ -163,7 +173,8 @@
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Dbs date yyyy-mm-dd" id="dbs_date" formControlName="dbs_date" [ngClass]="formUtils.handleValidationStateClass(form, 'dbs_date')">
+                        <label>DBS date</label><br>
+                        <p-calendar formControlName="dbs_date" [showIcon]="true" dateFormat="yy-mm-dd"></p-calendar>
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'dbs_date', messages) }} </span>
                     </div>
                 </div>
@@ -192,48 +203,57 @@
                 <div class="col-12"><h3>Training record</h3></div>
                 <div class="col-4">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Fire safety yyyy-mm-dd" id="fire_safety" formControlName="fire_safety" [ngClass]="formUtils.handleValidationStateClass(form, 'fire_safety')">
+                        <label>Fire safety</label><br>
+                        <p-calendar formControlName="fire_safety" [showIcon]="true" dateFormat="yy-mm-dd"></p-calendar>
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'fire_safety', messages) }} </span>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Dementia yyyy-mm-dd" id="dementia" formControlName="dementia" [ngClass]="formUtils.handleValidationStateClass(form, 'dementia')">
+                        <label>Dementia</label><br>
+                        <p-calendar formControlName="dementia" [showIcon]="true" dateFormat="yy-mm-dd"></p-calendar>
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'dementia', messages) }} </span>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="H&S yyyy-mm-dd" id="h_and_s" formControlName="h_and_s" [ngClass]="formUtils.handleValidationStateClass(form, 'h_and_s')">
+                        <label>H&S</label><br>
+                        <p-calendar formControlName="h_and_s" [showIcon]="true" dateFormat="yy-mm-dd"></p-calendar>
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'h_and_s', messages) }} </span>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="First aid awarness yyyy-mm-dd" id="first_aid_awareness" formControlName="first_aid_awareness" [ngClass]="formUtils.handleValidationStateClass(form, 'first_aid_awareness')">
+                        <label>First aid awareness</label><br>
+                        <p-calendar formControlName="first_aid_awareness" [showIcon]="true" dateFormat="yy-mm-dd"></p-calendar>
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'first_aid_awareness', messages) }} </span>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Safeguarding yyyy-mm-dd" id="safeguarding" formControlName="safeguarding" [ngClass]="formUtils.handleValidationStateClass(form, 'safeguarding')">
+                        <label>Safeguarding</label><br>
+                        <p-calendar formControlName="safeguarding" [showIcon]="true" dateFormat="yy-mm-dd"></p-calendar>
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'safeguarding', messages) }} </span>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="First aid awarness nad basic life support yyyy-mm-dd" id="first_aid_and_basic_life_support" formControlName="first_aid_and_basic_life_support" [ngClass]="formUtils.handleValidationStateClass(form, 'first_aid_and_basic_life_support')">
+                        <label>First aid awareness nad basic life support</label><br>
+                        <p-calendar formControlName="first_aid_and_basic_life_support" [showIcon]="true" dateFormat="yy-mm-dd"></p-calendar>
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'first_aid_and_basic_life_support', messages) }} </span>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Infection control yyyy-mm-dd" id="infection_control" formControlName="infection_control" [ngClass]="formUtils.handleValidationStateClass(form, 'infection_control')">
+                        <label>Infection control</label><br>
+                        <p-calendar formControlName="infection_control" [showIcon]="true" dateFormat="yy-mm-dd"></p-calendar>
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'infection_control', messages) }} </span>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Medication managment yyyy-mm-dd" id="medication_management" formControlName="medication_management" [ngClass]="formUtils.handleValidationStateClass(form, 'medication_management')">
+                        <label>Medication management</label><br>
+                        <p-calendar formControlName="medication_management" [showIcon]="true" dateFormat="yy-mm-dd"></p-calendar>
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'medication_management', messages) }} </span>
                     </div>
 
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Manual handling people yyyy-mm-dd" id="manual_handling_people" formControlName="manual_handling_people" [ngClass]="formUtils.handleValidationStateClass(form, 'manual_handling_people')">
+                        <label>Manual handling people</label><br>
+                        <p-calendar formControlName="manual_handling_people" [showIcon]="true" dateFormat="yy-mm-dd"></p-calendar>
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'manual_handling_people', messages) }} </span>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Other" formControlName="other" [ngClass]="formUtils.handleValidationStateClass(form, 'other')">
+                        <textarea rows="5" class="form-control" placeholder="Other" formControlName="other" [ngClass]="formUtils.handleValidationStateClass(form, 'other')"></textarea>
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'other', messages) }} </span>
                     </div>
                 </div>
@@ -253,14 +273,16 @@
             </div>
 
             <br>
-            <br>
             <div class="row">
-                <div class="col-6">
+                <div class="col-12">
                     <div class="text-center">
                         <button type="submit" [disabled]="!form.valid || inProgress" class="btn btn-success">Create carer</button>
                     </div>
                 </div>
             </div>
+            <br>
+            <br>
+            <br>
         </form>
     </div>
 </div>

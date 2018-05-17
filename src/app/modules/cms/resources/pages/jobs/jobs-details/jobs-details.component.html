@@ -380,7 +380,16 @@
 
             <br>
             <br>
-            <button type="submit" *ngIf="editMode" [disabled]="!form.valid || inProgress" class="btn btn-success">Edit job</button>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="text-center">
+                        <button type="submit" *ngIf="editMode" [disabled]="!form.valid || inProgress" class="btn btn-success">Edit job</button>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
         </form>
     </div>
 </div>

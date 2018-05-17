@@ -1,3 +1,44 @@
-<p>
-  home works!
-</p>
+<div class="row">
+    <div class="col-sm">
+        <h2>General overview</h2>
+    </div>
+</div>
+<br>
+
+<!--results-->
+<div class="row">
+    <div class="col-12">
+        <table class="table">
+            <thead>
+                <th>Subject</th>
+                <th>Value</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Failed payments</td>
+                    <td [ngClass]="{'red': data?.failed_payments > 0}">{{ data?.failed_payments}}</td>
+                </tr>
+                <tr>
+                    <td>Jobs in 'Challenged' status</td>
+                    <td [ngClass]="{'red': data?.challenged_jobs > 0}">{{ data?.challenged_jobs}}</td>
+                </tr>
+                <tr>
+                    <td>Pending reviews</td>
+                    <td [ngClass]="{'red': data?.pending_reviews > 0}">{{ data?.pending_reviews}}</td>
+                </tr>
+                <tr>
+                    <td>Carers in 'Created' status</td>
+                    <td [ngClass]="{'red': data?.in_progress_carers > 0}">{{ data?.in_progress_carers}}</td>
+                </tr>
+                <tr>
+                    <td>Jobs booked in last 24h</td>
+                    <td>{{ data?.booked_in_24_jobs}}</td>
+                </tr>
+                <tr>
+                    <td>Waiting list</td>
+                    <td>{{ data?.waiting_list}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

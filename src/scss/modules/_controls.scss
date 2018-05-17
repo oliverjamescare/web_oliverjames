@@ -1,5 +1,14 @@
-//text input
-.form-control {
+//text input and cms calendar input
+.ui-calendar
+{
+    width: 94%;
+}
+.ui-calendar.ui-calendar-w-btn input
+{
+    width: 100%;
+}
+
+.form-control, .ui-calendar.ui-calendar-w-btn input{
   border-radius: 0;
   border: 2px solid $light-grey-color;
   color: $grey-brown-color;
@@ -126,3 +135,5 @@
   float: left;
   color: red;
 }
+
+//cms calendar input

@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-sm">
         <h2>Care home details</h2>
-        <button class="btn-success right btn-nav">Add job</button>
+        <a *ngIf="careHome" [routerLink]="['/','admin','care-homes', careHome.id, 'book-jobs']" class="btn btn-success right btn-nav">Add job</a>
     </div>
 </div>
 <br>
@@ -233,6 +233,7 @@
                     </div>
                 </div>
 
+                <!--credits-->
                 <br>
                 <br>
                 <h4>Credits</h4>
@@ -240,7 +241,7 @@
                     <div class="col-sm-4">
                         <b>Credits balance:</b>
                     </div>
-                    <div class="col-sm-8">£ {{ careHome.care_home.credits_balance }}</div>
+                    <div class="col-sm-8"><span>&#163;</span>{{ careHome.care_home.credits_balance }}</div>
                 </div>
                 <br>
                 <div class="row">
@@ -259,9 +260,9 @@
                                     <td>{{ i +1 }}</td>
                                     <td>{{ datesService.getDateString(credit.created) }}</td>
                                     <td>{{ credit.description }}</td>
-                                    <td>{{ credit.amount }}</td>
-                                    <td>{{ credit.balance }}</td>
-                                    <td>{{ credit.status.toLowerCase() }}</td>
+                                    <td><span *ngIf="credit.amount < 0">- </span><span>&#163;</span>{{ credit.amount | absolute }}</td>
+                                    <td><span *ngIf="credit.balance < 0">- </span><span>&#163;</span>{{ credit.balance | absolute }}</td>
+                                    <td>{{ credit.status | capitalize | status }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -270,6 +271,7 @@
                     </div>
                 </div>
 
+                <!--blocked carers-->
                 <br>
                 <br>
                 <h4>Blocked carers</h4>
@@ -282,13 +284,21 @@
                 </div>
                 <br>
                 <br>
-                <button type="submit" class="btn btn-success submit-button">Save</button>
-                <div class="invalid-feedback">{{ error }}</div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success">Save changes</button>
+                            <div class="invalid-feedback">{{ error }}</div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <br>
+                <br>
             </form>
         </div>
     </div>
 </div>
-<br><br><br><br><br>
 
 <!-- credits modal -->
 <app-cms-popup [title]="'Add credits'" [id]="'credits'" [showLogo]="false">

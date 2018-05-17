@@ -1,25 +1,30 @@
-.btn-nav {
-  width: 150px;
-  margin-top: -50px;
+.btn-nav
+{
+    width: 150px;
+    margin-top: -50px;
 }
 
 .add-icon {
-  margin-top: -30px;
+    margin-top: -30px;
 }
 
 .big-icon {
-  font-size: 25px;
+    font-size: 25px;
 }
-.custom-control label
-{
+
+.custom-control label {
     margin-left: 20px;
 }
-.custom-control
-{
+
+.custom-control {
     padding-left: 15px;
 }
-.custom-checkbox .custom-control-label::before, .custom-checkbox .custom-control-label::after
-{
+
+.custom-checkbox .custom-control-label::before, .custom-checkbox .custom-control-label::after {
     left: -30px;
     top: 2px;
+}
+
+button[type="submit"] {
+    max-width: 500px;
 }
