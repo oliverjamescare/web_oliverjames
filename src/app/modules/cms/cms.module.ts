@@ -55,6 +55,8 @@ import { AddressLookupComponent } from './resources/partials/address-lookup/addr
 import { PaginationComponent } from './resources/partials/pagination/pagination.component';
 import { RetryPaymentComponent } from './resources/pages/jobs/jobs-details/retry-payment/retry-payment.component';
 import { AbsolutePipe } from './pipes/absolute.pipe';
+import { ListOwesMoneyComponent } from './resources/pages/care-homes/list-owes-money/list-owes-money.component';
+import { ListIsOwesMoneyComponent } from './resources/pages/carers/list-is-owes-money/list-is-owes-money.component';
 
 
 @NgModule({
@@ -98,7 +100,9 @@ import { AbsolutePipe } from './pipes/absolute.pipe';
         AddressLookupComponent,
         PaginationComponent,
         RetryPaymentComponent,
-        AbsolutePipe
+        AbsolutePipe,
+        ListOwesMoneyComponent,
+        ListIsOwesMoneyComponent
     ],
     providers: [
         ApiService,

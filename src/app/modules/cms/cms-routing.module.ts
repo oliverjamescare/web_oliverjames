@@ -21,6 +21,8 @@ import { CareHomeDetailsComponent } from './resources/pages/care-homes/care-home
 import { WaitingListComponent } from './resources/pages/waiting-list/waiting-list.component';
 import { AddCareHomeComponent } from './resources/pages/care-homes/add-care-home/add-care-home.component';
 import {AddJobComponent} from './resources/pages/jobs/add-job/add-job.component';
+import {ListOwesMoneyComponent} from './resources/pages/care-homes/list-owes-money/list-owes-money.component';
+import {ListIsOwesMoneyComponent} from './resources/pages/carers/list-is-owes-money/list-is-owes-money.component';
 
 const routes: Routes = [
     {
@@ -38,6 +40,7 @@ const routes: Routes = [
                         path: 'carers', component: CarersComponent, children: [
                             {path: '', component: CarersListComponent},
                             {path: 'add', component: AddCarerComponent},
+                            {path: 'list-is-owes-money', component: ListIsOwesMoneyComponent},
                             {path: ':id', component: CarerDetailsComponent},
                         ]
                     },
@@ -51,6 +54,7 @@ const routes: Routes = [
                         path: 'care-homes', component: CareHomesComponent, children: [
                             { path: '', component: CareHomesListComponent },
                             { path: 'add', component: AddCareHomeComponent },
+                            { path: 'list-owes-money', component: ListOwesMoneyComponent},
                             { path: ':id/book-jobs', component: AddJobComponent},
                             { path: ':id', component: CareHomeDetailsComponent },
                         ]
