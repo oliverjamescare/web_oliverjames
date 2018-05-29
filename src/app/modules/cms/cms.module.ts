@@ -57,6 +57,12 @@ import { RetryPaymentComponent } from './resources/pages/jobs/jobs-details/retry
 import { AbsolutePipe } from './pipes/absolute.pipe';
 import { ListOwesMoneyComponent } from './resources/pages/care-homes/list-owes-money/list-owes-money.component';
 import { ListIsOwesMoneyComponent } from './resources/pages/carers/list-is-owes-money/list-is-owes-money.component';
+import { AdminsManagementComponent } from './resources/pages/admins-management/admins-management.component';
+import { ListOfAdminsComponent } from './resources/pages/admins-management/list-of-admins/list-of-admins.component';
+import { CreateAdminAccountComponent } from './resources/pages/admins-management/create-admin-account/create-admin-account.component';
+import { EditAdminAccountComponent } from './resources/pages/admins-management/edit-admin-account/edit-admin-account.component';
+import { ChangeAdminPasswordComponent } from './resources/pages/admins-management/change-admin-password/change-admin-password.component';
+import {DeleteAccountComponent} from './resources/pages/admins-management/list-of-admins/delete-account/delete-account.component';
 
 
 @NgModule({
@@ -102,7 +108,13 @@ import { ListIsOwesMoneyComponent } from './resources/pages/carers/list-is-owes-
         RetryPaymentComponent,
         AbsolutePipe,
         ListOwesMoneyComponent,
-        ListIsOwesMoneyComponent
+        ListIsOwesMoneyComponent,
+        AdminsManagementComponent,
+        ListOfAdminsComponent,
+        CreateAdminAccountComponent,
+        EditAdminAccountComponent,
+        ChangeAdminPasswordComponent,
+        DeleteAccountComponent
     ],
     providers: [
         ApiService,

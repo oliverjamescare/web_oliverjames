@@ -23,6 +23,11 @@ import { AddCareHomeComponent } from './resources/pages/care-homes/add-care-home
 import {AddJobComponent} from './resources/pages/jobs/add-job/add-job.component';
 import {ListOwesMoneyComponent} from './resources/pages/care-homes/list-owes-money/list-owes-money.component';
 import {ListIsOwesMoneyComponent} from './resources/pages/carers/list-is-owes-money/list-is-owes-money.component';
+import {AdminsManagementComponent} from './resources/pages/admins-management/admins-management.component';
+import {ListOfAdminsComponent} from './resources/pages/admins-management/list-of-admins/list-of-admins.component';
+import {ChangeAdminPasswordComponent} from './resources/pages/admins-management/change-admin-password/change-admin-password.component';
+import {EditAdminAccountComponent} from './resources/pages/admins-management/edit-admin-account/edit-admin-account.component';
+import {CreateAdminAccountComponent} from './resources/pages/admins-management/create-admin-account/create-admin-account.component';
 
 const routes: Routes = [
     {
@@ -57,6 +62,14 @@ const routes: Routes = [
                             { path: 'list-owes-money', component: ListOwesMoneyComponent},
                             { path: ':id/book-jobs', component: AddJobComponent},
                             { path: ':id', component: CareHomeDetailsComponent },
+                        ]
+                    },
+                    {
+                        path: 'admins-management', component: AdminsManagementComponent, children: [
+                            { path: '', component: ListOfAdminsComponent },
+                            { path: 'change-password', component: ChangeAdminPasswordComponent },
+                            { path: 'create-admin-account', component: CreateAdminAccountComponent},
+                            { path: 'edit-admin-account/:id', component: EditAdminAccountComponent},
                         ]
                     },
                 ]

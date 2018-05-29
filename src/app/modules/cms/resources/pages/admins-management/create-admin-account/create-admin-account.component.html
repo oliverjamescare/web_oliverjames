@@ -1,0 +1,198 @@
+<div class="row">
+  <div class="col-sm">
+    <h2>Create admin account</h2>
+    <button routerLink="/admin/admins-management" class="btn btn-success right btn-nav">Back</button>
+  </div>
+</div>
+<br>
+
+<div class="row">
+  <div class="col-12">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <input type="email" class="form-control" placeholder="Email" formControlName="email" [ngClass]="formUtils.handleValidationStateClass(form, 'email')">
+            <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'email', messages) }} </span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <input type="password" class="form-control" placeholder="Password" formControlName="password" [ngClass]="formUtils.handleValidationStateClass(form, 'password')">
+            <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'password', messages) }} </span>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <input type="password" class="form-control" placeholder="Confirm password" formControlName="password_confirm" [ngClass]="formUtils.handleValidationStateClass(form, 'password_confirm')">
+            <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'password_confirm', messages) }} </span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Phone number" formControlName="phone_number" [ngClass]="formUtils.handleValidationStateClass(form, 'phone_number')">
+            <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'phone_number', messages) }} </span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Name" formControlName="name" [ngClass]="formUtils.handleValidationStateClass(form, 'name')">
+            <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'name', messages) }} </span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Care Service Name" formControlName="care_service_name" [ngClass]="formUtils.handleValidationStateClass(form, 'care_service_name')">
+            <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'care_service_name', messages) }} </span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <select class="form-control" formControlName="type_of_home" [ngClass]="formUtils.handleValidationStateClass(form, 'type_of_home')">
+              <option value="">Type of home</option>
+              <option value="Residential">Residential</option>
+              <option value="Nursing">Nursing</option>
+              <option value="Learning disability">Learning disability</option>
+              <option value="Supported living">Supported living</option>
+            </select>
+            <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'type_of_home', messages) }} </span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Care home postcode" id="postcode" name="postcode" formControlName="postal_code" [ngClass]="formUtils.handleValidationStateClass(form, 'postal_code')">
+            <app-address-lookup [search]="form.get('postal_code')" (addressFound)="onAddressFound($event)"></app-address-lookup>
+            <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'postal_code', messages) }} </span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-3">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Company" id="company" name="company" formControlName="company" [ngClass]="formUtils.handleValidationStateClass(form, 'company')">
+            <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'company', messages) }} </span>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Address line 1" id="line_one" name="line_one" formControlName="address_line_1" [ngClass]="formUtils.handleValidationStateClass(form, 'address_line_1')">
+            <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'address_line_1', messages) }} </span>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Address line 2" id="line_two" name="line_two" formControlName="address_line_2" [ngClass]="formUtils.handleValidationStateClass(form, 'address_line_2')">
+            <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'address_line_2', messages) }} </span>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Town / City" id="city" name="city" formControlName="city" [ngClass]="formUtils.handleValidationStateClass(form, 'city')">
+            <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'city', messages) }} </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <textarea type="text" class="form-control" placeholder="Notes"  formControlName="notes"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <select class="form-control" formControlName="gender_preference">
+              <option value="">Gender preference</option>
+              <option value="No preference">No preference</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <br>
+      <h4>General Guidance / CQC compliance</h4>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <label><b>If our carer needs to call your service, who should they speak to: </b></label>
+            <textarea class="form-control" placeholder="e.g. senior carer, manager" formControlName="superior_contact"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <label><b>Where should carer report to upon arrival:</b></label>
+            <textarea class="form-control" placeholder="e.g. ask to speak to the senior carer or manager" formControlName="report_contact"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <label><b>Carer guidance in event of fire alarm sounding:</b></label>
+            <textarea class="form-control" placeholder="e.g. report to fire panel at the main entrance" formControlName="emergency_guidance"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <label><b>Notes on High risk / complexity residents / any other requests for our carers:</b></label>
+            <textarea class="form-control" placeholder="e.g. Room 1 has swallowing difficulties. Please Please take written notes during handover" formControlName="notes_for_carers"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <label><b>Where to park your car :</b></label>
+            <textarea class="form-control" placeholder="Describe where and if it’s free parking / how to pay" formControlName="parking"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <label><b>Floor plan</b></label>
+            <br>
+            <input type="text" class="form-control" class="d-none" formControlName="floor_plan">
+            <input type="file" (change)="onFileChange($event)">
+            <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'floor_plan', messages) }} </span>
+          </div>
+        </div>
+      </div>
+      <br>
+      <br>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="text-center">
+            <button class="btn btn-success" type="submit" [disabled]="!form.valid || inProgress">Save</button>
+            <span class="invalid-feedback"> {{ error }} </span>
+          </div>
+        </div>
+      </div>
+      <br>
+      <br>
+      <br>
+    </form>
+  </div>
+</div>
+
