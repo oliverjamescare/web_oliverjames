@@ -63,6 +63,8 @@ import { CreateAdminAccountComponent } from './resources/pages/admins-management
 import { EditAdminAccountComponent } from './resources/pages/admins-management/edit-admin-account/edit-admin-account.component';
 import { ChangeAdminPasswordComponent } from './resources/pages/admins-management/change-admin-password/change-admin-password.component';
 import {DeleteAccountComponent} from './resources/pages/admins-management/list-of-admins/delete-account/delete-account.component';
+import {AdminsManagementService} from './services/admins-management.service';
+import { EditMyAdminAccountComponent } from './resources/pages/admins-management/edit-my-admin-account/edit-my-admin-account.component';
 
 
 @NgModule({
@@ -114,7 +116,8 @@ import {DeleteAccountComponent} from './resources/pages/admins-management/list-o
         CreateAdminAccountComponent,
         EditAdminAccountComponent,
         ChangeAdminPasswordComponent,
-        DeleteAccountComponent
+        DeleteAccountComponent,
+        EditMyAdminAccountComponent
     ],
     providers: [
         ApiService,
@@ -125,6 +128,7 @@ import {DeleteAccountComponent} from './resources/pages/admins-management/list-o
         DatesService,
         JobsService,
         WaitingListService,
+        AdminsManagementService
     ]
 
 })

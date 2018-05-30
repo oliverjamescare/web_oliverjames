@@ -1,139 +1,66 @@
 <div class="row">
-  <div class="col-sm">
-    <h2>List of admins</h2>
-    <a [routerLink]="['create-admin-account']" class="btn btn-success right btn-nav btn-width">Create admin account</a>
-    <a [routerLink]="['change-password']" class="btn btn-success right btn-nav btn-width margin-top-0 clear-both ">Change my password</a>
-  </div>
+    <div class="col-sm">
+        <h2>Staff</h2>
+        <a [routerLink]="['create-admin-account']" class="btn btn-success right btn-nav btn-width">Create admin
+            account</a>
+        <a [routerLink]="['edit-my-admin-account']" class="btn btn-success right btn-nav btn-width margin-top-0 clear-both ">Edit my account</a>
+        <a [routerLink]="['change-password']" class="btn btn-success right btn-nav btn-width margin-top-5 clear-both ">Change
+            my password</a>
+    </div>
 </div>
 <br>
-<br>
-
-<!--filters-->
-<form [formGroup]="form">
-  <div class="row">
-    <div class="col-3">
-      <div class="form-group">
-        <label>Search</label>
-        <input formControlName="search" type="text" placeholder="Search" class="form-control">
-      </div>
-    </div>
-    <div class="col-3">
-      <div class="form-group">
-        <label>Status filter</label>
-        <select formControlName="status_filter" class="form-control">
-          <option value="ALL">All</option>
-          <option value="CREATED">Created</option>
-          <option value="ACTIVE">Active</option>
-          <option value="BANNED">Banned</option>
-        </select>
-      </div>
-    </div>
-  </div>
-</form>
 <br>
 
 <!--results-->
 <div class="row">
-  <div class="col-sm">
-    <p *ngIf="carers.length === 0">No results</p>
-    <div *ngIf="carers.length !== 0">
-      <table class="custom-table text-center">
-        <thead>
-        <tr>
-          <th class="sort-cell">
-            <div class="sort-container">
-              <div class="asc" (click)="onChangeSort('id_asc')"><i class="fa fa-angle-up"></i></div>
-              <div class="desc" (click)="onChangeSort('id_desc')"><i class="fa fa-angle-down"></i></div>
-            </div>
-            <div class="sort-label">Carer ID</div>
-          </th>
-          <th class="sort-cell">
-            <div class="sort-container">
-              <div class="asc" (click)="onChangeSort('name_asc')"><i class="fa fa-angle-up"></i></div>
-              <div class="desc" (click)="onChangeSort('name_desc')"><i class="fa fa-angle-down"></i></div>
-            </div>
-            <div class="sort-label">Name</div>
-          </th>
-          <th class="sort-cell">
-            <div class="sort-container">
-              <div class="asc" (click)="onChangeSort('date_of_birth_asc')"><i class="fa fa-angle-up"></i></div>
-              <div class="desc" (click)="onChangeSort('date_of_birth_desc')"><i class="fa fa-angle-down"></i></div>
-            </div>
-            <div class="sort-label">Date of birth</div>
-          </th>
-          <th class="sort-cell">
-            <div class="sort-container">
-              <div class="asc" (click)="onChangeSort('activation_date_asc')"><i class="fa fa-angle-up"></i></div>
-              <div class="desc" (click)="onChangeSort('activation_date_desc')"><i class="fa fa-angle-down"></i></div>
-            </div>
-            <div class="sort-label">Date went active</div>
-          </th>
-          <th class="sort-cell">
-            <div class="sort-container">
-              <div class="asc" (click)="onChangeSort('rating_asc')"><i class="fa fa-angle-up"></i></div>
-              <div class="desc" (click)="onChangeSort('rating_desc')"><i class="fa fa-angle-down"></i></div>
-            </div>
-            <div class="sort-label">Rating</div>
-          </th>
-          <th class="sort-cell">
-            <div class="sort-container">
-              <div class="asc" (click)="onChangeSort('status_asc')"><i class="fa fa-angle-up"></i></div>
-              <div class="desc" (click)="onChangeSort('status_desc')"><i class="fa fa-angle-down"></i></div>
-            </div>
-            <div class="sort-label">Status</div>
-          </th>
-          <th class="sort-cell">
-            <div class="sort-container">
-              <div class="asc" (click)="onChangeSort('banned_until_asc')"><i class="fa fa-angle-up"></i></div>
-              <div class="desc" (click)="onChangeSort('banned_until_desc')"><i class="fa fa-angle-down"></i></div>
-            </div>
-            <div class="sort-label"></div>
-          </th>
-          <th class="sort-cell">
-            <div class="sort-container">
-              <div class="asc" (click)="onChangeSort('deductions_balance_asc')"><i class="fa fa-angle-up"></i></div>
-              <div class="desc" (click)="onChangeSort('deductions_balance_desc')"><i class="fa fa-angle-down"></i></div>
-            </div>
-            <div class="sort-label"></div>
-          </th>
-          <th>Edit admin account</th>
-          <th>Delete admin account</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let carer of carers">
-          <td>{{ carer._id }}</td>
-          <td>{{ carer.carer.first_name }} {{ carer.carer.surname }}</td>
-          <td>{{ carer.carer.date_of_birth }}</td>
-          <td>{{ carer.activation_date ? (carer.activation_date | datePattern: "YYYY-MM-DD") : "" }}</td>
-          <td>{{ carer.carer.reviews.average }}</td>
-          <td>{{ carer.status | capitalize | status }}</td>
-          <td>{{ carer.banned_until ? (carer.banned_until | datePattern: "YYYY-MM-DD") : "" }}</td>
-          <td><span>&#163;</span>{{ carer.carer.deductions_balance }}</td>
-          <td>
-            <a [routerLink]="['edit-admin-account',carer._id]" class="actions">Edit account</a>
-          </td>
-          <td>
-            <div class="text-center">
-              <a (click)="showDeleteAccountDialog = true;adminId = carer._id" class="actions actionsLink">Delete account</a>
-            </div>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-      <br>
-      <app-pagination (pageChanged)="onPageChange($event)" [numberOfPages]="pages" [currentPage]="page"></app-pagination>
+    <div class="col-sm">
+        <p *ngIf="admins.length === 0">No results</p>
+        <div *ngIf="admins.length !== 0">
+            <table *ngIf="admins?.length !== 0" class="custom-table text-center">
+                <thead>
+                <tr>
+                    <th>Admin ID</th>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>E-mail</th>
+                    <th>Created</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let admin of admins">
+                    <td>{{ admin._id }}</td>
+                    <td>{{ admin.first_name }} {{ admin.surname }}</td>
+                    <td>Administrator</td>
+                    <td>{{ admin.email }}</td>
+                    <td>{{ admin.created | date}}</td>
+                    <td>
+                        <div class="text-center">
+                            <a [routerLink]="['edit-admin-account',admin._id]" class="actions">Edit account</a>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="text-center">
+                            <a (click)="deleteAccountFromList(admin._id);" class="actions actionsLink">Delete
+                                account</a>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <br>
+            <app-pagination (pageChanged)="onPageChange($event)" [numberOfPages]="pages"
+                            [currentPage]="page"></app-pagination>
+        </div>
     </div>
-  </div>
 </div>
-
-
-
 <!--cancel job handle-->
 <app-delete-account
         *ngIf="showDeleteAccountDialog"
         type="delete_account"
         [title]="'Delete admin account'"
+        [listAdminId]="listAdminId"
         [AdminId]="adminId"
         (reload)="showDeleteAccountDialog = false; onReload()"
         (closed)="showDeleteAccountDialog = false"

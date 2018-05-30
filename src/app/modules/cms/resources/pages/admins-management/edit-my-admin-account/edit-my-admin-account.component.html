@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="col-sm">
+        <h2>Edit my admin account</h2>
+        <button routerLink="/admin/admins-management" class="btn btn-success right btn-nav">Back</button>
+    </div>
+</div>
+<br><br>
+<br>
+<br>
+
+
+<div class="row">
+    <div class="col-12">
+        <form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group form-group-max">
+                        <input type="email" class="form-control" placeholder="Email"
+                               formControlName="email"
+                               [ngClass]="formUtils.handleValidationStateClass(form, 'email')">
+                        <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'email', messages) }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group form-group-max">
+                        <input type="text" class="form-control" placeholder="First name"
+                               formControlName="first_name"
+                               [ngClass]="formUtils.handleValidationStateClass(form, 'first_name')">
+                        <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'first_name', messages) }} </span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group form-group-max">
+                        <input type="text" class="form-control" placeholder="Last name"
+                               formControlName="surname"
+                               [ngClass]="formUtils.handleValidationStateClass(form, 'surname')">
+                        <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'surname', messages) }} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="text-center">
+                        <button class="btn btn-success" type="submit" [disabled]="!form.valid || inProgress">Save
+                        </button>
+                        <span class="invalid-feedback"> {{ error }} </span>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <br>
+        </form>
+    </div>
+</div>
+
+

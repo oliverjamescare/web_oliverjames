@@ -14,12 +14,13 @@ import {AddressDetail} from '../../../../../web/models/address/address-detail.mo
 import {AdminsManagementService} from '../../../../services/admins-management.service';
 import {NotificationsService} from 'angular2-notifications';
 
+
 @Component({
-    selector: 'app-change-admin-password',
-    templateUrl: './change-admin-password.component.html',
-    styleUrls: ['./change-admin-password.component.scss']
+  selector: 'app-edit-my-admin-account',
+  templateUrl: './edit-my-admin-account.component.html',
+  styleUrls: ['./edit-my-admin-account.component.scss']
 })
-export class ChangeAdminPasswordComponent implements OnInit {
+export class EditMyAdminAccountComponent implements OnInit {
 
     // form config
     form: FormGroup;
@@ -60,30 +61,29 @@ export class ChangeAdminPasswordComponent implements OnInit {
     }
 
     createForm(): void {
-        this.form = new FormGroup({
-            old_password: new FormControl(null, [Validators.required]),
-            password: new FormControl(null, [Validators.required, Validators.minLength(6), password]),
-            password_confirm: new FormControl(null, [Validators.required]),
-        });
-
-        this.form.get('password')
-            .valueChanges
-            .subscribe(
-                (pass: string) => this.form.get('password_confirm').setValidators([Validators.required, equalToFieldValue(pass)]));
-
-        this.form.get('password_confirm')
-            .valueChanges
-            .subscribe(
-                (pass: string) => this.form.get('password').setValidators([Validators.required, equalToFieldValue(pass)]));
-
+        this.adminsManagementService
+            .getAdminProfile()
+            .subscribe((data) => {
+                    this.inProgress = false;
+                    this.form = new FormGroup({
+                        email: new FormControl(data.email, [Validators.required]),
+                        first_name: new FormControl(data.first_name, [Validators.required]),
+                        surname: new FormControl(data.surname, [Validators.required]),
+                    });
+                },
+                (error: HttpErrorResponse) => {
+                    this.error = getMessageError(error);
+                    this.inProgress = false;
+                });
     }
 
 
-    onSubmit() {
+    onSubmit()
+    {
         if (this.form.valid) {
             this.inProgress = true;
             this.adminsManagementService
-                .changeAdminPassword(this.form.get('old_password').value, this.form.get('password').value)
+                .updateAdminProfile(this.form.get('email').value, this.form.get('first_name').value, this.form.get('surname').value)
                 .subscribe(() => {
                         this.inProgress = false;
                         this.notificationService.success('Your admin password updated successfully');

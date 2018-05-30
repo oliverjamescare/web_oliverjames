@@ -28,6 +28,7 @@ import {ListOfAdminsComponent} from './resources/pages/admins-management/list-of
 import {ChangeAdminPasswordComponent} from './resources/pages/admins-management/change-admin-password/change-admin-password.component';
 import {EditAdminAccountComponent} from './resources/pages/admins-management/edit-admin-account/edit-admin-account.component';
 import {CreateAdminAccountComponent} from './resources/pages/admins-management/create-admin-account/create-admin-account.component';
+import {EditMyAdminAccountComponent} from './resources/pages/admins-management/edit-my-admin-account/edit-my-admin-account.component';
 
 const routes: Routes = [
     {
@@ -70,6 +71,7 @@ const routes: Routes = [
                             { path: 'change-password', component: ChangeAdminPasswordComponent },
                             { path: 'create-admin-account', component: CreateAdminAccountComponent},
                             { path: 'edit-admin-account/:id', component: EditAdminAccountComponent},
+                            { path: 'edit-my-admin-account', component: EditMyAdminAccountComponent},
                         ]
                     },
                 ]

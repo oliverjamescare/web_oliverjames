@@ -143,7 +143,7 @@ export class ApiService
         return this.httpClient.get(this.webEndpoint + '/user/uniqueness', {params: new HttpParams().set(param, value)});
     }
 
-    private getAuthorizationHeaders(): HttpHeaders {
+    public getAuthorizationHeaders(): HttpHeaders {
         return new HttpHeaders({
             'X-access-token': this.authService.getAccessToken()
         });
