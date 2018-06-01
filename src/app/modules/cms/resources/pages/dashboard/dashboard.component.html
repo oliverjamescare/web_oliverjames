@@ -4,7 +4,8 @@
     <div class="user-section">
         <span>Logged as {{ admin.first_name }} {{ admin.surname }}</span>
         <div class="buttons-container">
-            <a href="#" routerLink="/admin/admins-management">Edit</a>
+            <a href="#" routerLink="/admin/admins-management/edit-my-admin-account">Edit account</a><br/>
+            <a href="#" routerLink="/admin/admins-management/change-my-admin-password">Change password</a><br/>
             <a href="#" (click)="onLogout($event)">Logout</a>
         </div>
     </div>

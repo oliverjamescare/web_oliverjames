@@ -38,16 +38,16 @@ export class ListOfAdminsComponent implements OnInit {
                 },
             );
     }
+
     private deleteAccountFromList(listAdminId) {
         this.listAdminId = listAdminId;
         this.showDeleteAccountDialog = true;
     }
-    onReload(): void
-    {
+
+    onReload(): void {
+        this.page = 1;
         this.getAdminsList();
     }
-
-
 
 
 }

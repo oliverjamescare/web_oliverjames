@@ -25,8 +25,9 @@ export class AuthService
         {
             sessionStorage.setItem("authAdmin", JSON.stringify(admin));
             this.authenticated = true;
-            this.token = admin.token;
-            delete admin["token"];
+            this.token = admin.access_token.token;
+
+            // delete admin.access_token.token;
             this.admin = admin;
             this.authChanged.next(admin);
         }

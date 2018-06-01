@@ -48,6 +48,78 @@ export class EditMyAdminAccountComponent implements OnInit {
                 {
                     error: 'equalToFieldValue',
                     message: 'Passwords don\'t match'
+                },
+            ]
+        },
+        {
+            field: 'password_confirm',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'Password confirmaton is required'
+                },
+                {
+                    error: 'equalToFieldValue',
+                    message: 'Passwords don\'t match'
+                },
+            ]
+        },
+        {
+            field: 'email',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'Email is required'
+                },
+                {
+                    error: 'email',
+                    message: 'This is not a valid email address'
+                },
+                {
+                    error: 'uniqueness',
+                    message: 'This email is already taken'
+                }
+            ]
+        },
+        {
+            field: 'first_name',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'First name is required'
+                },
+                {
+                    error: 'alpha',
+                    message: 'First name can contain only alphabetical characters'
+                },
+                {
+                    error: 'maxlength',
+                    message: 'First name annot be longer than 100 characters'
+                },
+                {
+                    error: 'pattern',
+                    message: 'Spaces is not allowed, field can contain only alphabetical characters'
+                }
+            ]
+        },
+        {
+            field: 'surname',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'Last name is required'
+                },
+                {
+                    error: 'alpha',
+                    message: 'Last name can contain only alphabetical characters'
+                },
+                {
+                    error: 'maxlength',
+                    message: 'Last name cannot be longer than 100 characters'
+                },
+                {
+                    error: 'pattern',
+                    message: 'Spaces is not allowed, field can contain only alphabetical characters'
                 }
             ]
         },
@@ -66,9 +138,9 @@ export class EditMyAdminAccountComponent implements OnInit {
             .subscribe((data) => {
                     this.inProgress = false;
                     this.form = new FormGroup({
-                        email: new FormControl(data.email, [Validators.required]),
-                        first_name: new FormControl(data.first_name, [Validators.required]),
-                        surname: new FormControl(data.surname, [Validators.required]),
+                        email: new FormControl(data.email, [Validators.required, Validators.email]),
+                        first_name: new FormControl(data.first_name, [Validators.required, Validators.pattern('^[A-z]+$')]),
+                        surname: new FormControl(data.surname, [Validators.required, Validators.pattern('^[A-z]+$')]),
                     });
                 },
                 (error: HttpErrorResponse) => {

@@ -67,7 +67,66 @@ export class CreateAdminAccountComponent implements OnInit {
                     message: 'Passwords don\'t match'
                 },
             ]
-        }
+        },
+        {
+            field: 'email',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'Email is required'
+                },
+                {
+                    error: 'email',
+                    message: 'This is not a valid email address'
+                },
+                {
+                    error: 'uniqueness',
+                    message: 'This email is already taken'
+                }
+            ]
+        },
+        {
+            field: 'first_name',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'First name is required'
+                },
+                {
+                    error: 'alpha',
+                    message: 'First name can contain only alphabetical characters'
+                },
+                {
+                    error: 'maxlength',
+                    message: 'First name annot be longer than 100 characters'
+                },
+                {
+                    error: 'pattern',
+                    message: 'Spaces is not allowed, field can contain only alphabetical characters'
+                }
+            ]
+        },
+        {
+            field: 'surname',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'Last name is required'
+                },
+                {
+                    error: 'alpha',
+                    message: 'Last name can contain only alphabetical characters'
+                },
+                {
+                    error: 'maxlength',
+                    message: 'Last name cannot be longer than 100 characters'
+                },
+                {
+                    error: 'pattern',
+                    message: 'Spaces is not allowed, field can contain only alphabetical characters'
+                }
+            ]
+        },
     ];
 
 
@@ -80,9 +139,9 @@ export class CreateAdminAccountComponent implements OnInit {
 
     createAdminForm() {
         this.form = new FormGroup({
-            email: new FormControl(null, [Validators.required]),
-            first_name: new FormControl(null, [Validators.required]),
-            surname: new FormControl(null, [Validators.required]),
+            email: new FormControl(null, [Validators.required, Validators.email]),
+            first_name: new FormControl(null, [Validators.required, Validators.pattern('^[A-z]+$')]),
+            surname: new FormControl(null, [Validators.required, Validators.pattern('^[A-z]+$')]),
             password: new FormControl(null, [Validators.required, Validators.minLength(6), password]),
             password_confirm: new FormControl(null, [Validators.required]),
         });

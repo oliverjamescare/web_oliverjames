@@ -55,8 +55,6 @@ import { AddressLookupComponent } from './resources/partials/address-lookup/addr
 import { PaginationComponent } from './resources/partials/pagination/pagination.component';
 import { RetryPaymentComponent } from './resources/pages/jobs/jobs-details/retry-payment/retry-payment.component';
 import { AbsolutePipe } from './pipes/absolute.pipe';
-import { ListOwesMoneyComponent } from './resources/pages/care-homes/list-owes-money/list-owes-money.component';
-import { ListIsOwesMoneyComponent } from './resources/pages/carers/list-is-owes-money/list-is-owes-money.component';
 import { AdminsManagementComponent } from './resources/pages/admins-management/admins-management.component';
 import { ListOfAdminsComponent } from './resources/pages/admins-management/list-of-admins/list-of-admins.component';
 import { CreateAdminAccountComponent } from './resources/pages/admins-management/create-admin-account/create-admin-account.component';
@@ -110,8 +108,6 @@ import { EditMyAdminAccountComponent } from './resources/pages/admins-management
         PaginationComponent,
         RetryPaymentComponent,
         AbsolutePipe,
-        ListOwesMoneyComponent,
-        ListIsOwesMoneyComponent,
         AdminsManagementComponent,
         ListOfAdminsComponent,
         CreateAdminAccountComponent,

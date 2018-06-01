@@ -16,7 +16,10 @@ export class AdminService
             .map(result => {
 
                 //admin login handle
-                const admin = new Admin(result["user"]);
+                // const admin = new Admin(result["user"]);
+                let admin = result["user"];
+                admin.id = admin._id;
+                delete admin._id;
                 this.authService.login(admin);
                 return result;
             });

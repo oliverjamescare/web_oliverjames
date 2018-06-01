@@ -62,6 +62,15 @@ export class ChangeMyAdminPasswordComponent implements OnInit {
                     message: 'Passwords don\'t match'
                 },
             ]
+        },
+        {
+            field: 'old_password',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'Old password is required'
+                }
+            ]
         }
     ];
 
