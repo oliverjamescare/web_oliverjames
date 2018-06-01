@@ -9,7 +9,7 @@ import {
 } from '../../../../../../utilities/form.utils';
 import {CareHomesService} from '../../../../services/care-homes.service';
 import {HttpErrorResponse} from '@angular/common/http';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AddressDetail} from '../../../../../web/models/address/address-detail.model';
 import {AdminsManagementService} from '../../../../services/admins-management.service';
 import {NotificationsService} from 'angular2-notifications';
@@ -27,6 +27,7 @@ export class ChangeAdminPasswordComponent implements OnInit {
     inProgress = false;
     private maxFileSizeMB = 10;
     error = '';
+    adminId: string;
 
     messages = [
         {
@@ -47,21 +48,34 @@ export class ChangeAdminPasswordComponent implements OnInit {
                 {
                     error: 'equalToFieldValue',
                     message: 'Passwords don\'t match'
-                }
+                },
             ]
         },
+        {
+            field: 'password_confirm',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'Password confirmaton is required'
+                },
+                {
+                    error: 'equalToFieldValue',
+                    message: 'Passwords don\'t match'
+                },
+            ]
+        }
     ];
 
-    constructor(private adminsManagementService: AdminsManagementService, private router: Router, private notificationService: NotificationsService) {
+    constructor(private route: ActivatedRoute, private adminsManagementService: AdminsManagementService, private router: Router, private notificationService: NotificationsService) {
     }
 
     ngOnInit() {
+        this.adminId = this.route.snapshot.params['id'];
         this.createForm();
     }
 
     createForm(): void {
         this.form = new FormGroup({
-            old_password: new FormControl(null, [Validators.required]),
             password: new FormControl(null, [Validators.required, Validators.minLength(6), password]),
             password_confirm: new FormControl(null, [Validators.required]),
         });
@@ -83,10 +97,11 @@ export class ChangeAdminPasswordComponent implements OnInit {
         if (this.form.valid) {
             this.inProgress = true;
             this.adminsManagementService
-                .changeAdminPassword(this.form.get('old_password').value, this.form.get('password').value)
+                .changeListAdminPassword(this.adminId, this.form.get('password').value)
                 .subscribe(() => {
                         this.inProgress = false;
-                        this.notificationService.success('Your admin password updated successfully');
+                        this.router.navigate(['admin/admins-management']);
+                        this.notificationService.success('Admin password updated successfully');
                     },
                     (error: HttpErrorResponse) => {
                         this.error = getMessageError(error);

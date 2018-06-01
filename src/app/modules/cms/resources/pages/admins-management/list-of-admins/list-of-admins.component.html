@@ -4,7 +4,7 @@
         <a [routerLink]="['create-admin-account']" class="btn btn-success right btn-nav btn-width">Create admin
             account</a>
         <a [routerLink]="['edit-my-admin-account']" class="btn btn-success right btn-nav btn-width margin-top-0 clear-both ">Edit my account</a>
-        <a [routerLink]="['change-password']" class="btn btn-success right btn-nav btn-width margin-top-5 clear-both ">Change
+        <a [routerLink]="['change-my-admin-password']" class="btn btn-success right btn-nav btn-width margin-top-5 clear-both ">Change
             my password</a>
     </div>
 </div>
@@ -24,6 +24,7 @@
                     <th>Role</th>
                     <th>E-mail</th>
                     <th>Created</th>
+                    <th>Change password</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
@@ -35,6 +36,11 @@
                     <td>Administrator</td>
                     <td>{{ admin.email }}</td>
                     <td>{{ admin.created | date}}</td>
+                    <td>
+                        <div class="text-center">
+                            <a [routerLink]="['change-admin-password',admin._id]" class="actions">Change password</a>
+                        </div>
+                    </td>
                     <td>
                         <div class="text-center">
                             <a [routerLink]="['edit-admin-account',admin._id]" class="actions">Edit account</a>

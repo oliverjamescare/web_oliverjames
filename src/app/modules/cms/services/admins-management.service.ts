@@ -46,6 +46,16 @@ export class AdminsManagementService {
             }
         );
     }
+    changeListAdminPassword(id, new_password): Observable<any> {
+        return this.httpClient.put(
+            `${this.endpoint}/admins/` + id + '/password',
+            {id: id, password: new_password}
+            ,
+            {
+                headers: this.apiService.getAuthorizationHeaders()
+            }
+        );
+    }
     getAdminProfile(): Observable<any> {
         return this.httpClient.get(
             `${this.endpoint}/profile`,
@@ -65,5 +75,34 @@ export class AdminsManagementService {
         );
     }
 
+    getAdminDetails(page: number, results: number): Observable<any> {
+        return this.httpClient.get(
+            `${this.endpoint}/admins`,
+            {
+                headers: this.apiService.getAuthorizationHeaders(),
+                params: new HttpParams().set('page', `${page}`).set('results', `${results}`)
+            }
+        );
+    }
+    updateAdminProfileList(id, email, first_name, surname): Observable<any> {
+        return this.httpClient.put(
+            `${this.endpoint}/admins/` + id,
+            {email: email, first_name: first_name, surname: surname}
+            ,
+            {
+                headers: this.apiService.getAuthorizationHeaders()
+            }
+        );
+    }
+    addNewAdminAccount(email, first_name, surname, password): Observable<any> {
+        return this.httpClient.post(
+            `${this.endpoint}/admins/`,
+            {email: email, first_name: first_name, surname: surname, password: password}
+            ,
+            {
+                headers: this.apiService.getAuthorizationHeaders()
+            }
+        );
+    }
 
 }

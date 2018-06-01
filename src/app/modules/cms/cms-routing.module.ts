@@ -25,7 +25,9 @@ import {ListOwesMoneyComponent} from './resources/pages/care-homes/list-owes-mon
 import {ListIsOwesMoneyComponent} from './resources/pages/carers/list-is-owes-money/list-is-owes-money.component';
 import {AdminsManagementComponent} from './resources/pages/admins-management/admins-management.component';
 import {ListOfAdminsComponent} from './resources/pages/admins-management/list-of-admins/list-of-admins.component';
+import {ChangeMyAdminPasswordComponent} from './resources/pages/admins-management/change-my-admin-password/change-my-admin-password.component';
 import {ChangeAdminPasswordComponent} from './resources/pages/admins-management/change-admin-password/change-admin-password.component';
+
 import {EditAdminAccountComponent} from './resources/pages/admins-management/edit-admin-account/edit-admin-account.component';
 import {CreateAdminAccountComponent} from './resources/pages/admins-management/create-admin-account/create-admin-account.component';
 import {EditMyAdminAccountComponent} from './resources/pages/admins-management/edit-my-admin-account/edit-my-admin-account.component';
@@ -68,7 +70,8 @@ const routes: Routes = [
                     {
                         path: 'admins-management', component: AdminsManagementComponent, children: [
                             { path: '', component: ListOfAdminsComponent },
-                            { path: 'change-password', component: ChangeAdminPasswordComponent },
+                            { path: 'change-my-admin-password', component: ChangeMyAdminPasswordComponent },
+                            { path: 'change-admin-password/:id', component: ChangeAdminPasswordComponent },
                             { path: 'create-admin-account', component: CreateAdminAccountComponent},
                             { path: 'edit-admin-account/:id', component: EditAdminAccountComponent},
                             { path: 'edit-my-admin-account', component: EditMyAdminAccountComponent},

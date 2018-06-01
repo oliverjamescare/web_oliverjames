@@ -61,6 +61,7 @@ import { AdminsManagementComponent } from './resources/pages/admins-management/a
 import { ListOfAdminsComponent } from './resources/pages/admins-management/list-of-admins/list-of-admins.component';
 import { CreateAdminAccountComponent } from './resources/pages/admins-management/create-admin-account/create-admin-account.component';
 import { EditAdminAccountComponent } from './resources/pages/admins-management/edit-admin-account/edit-admin-account.component';
+import { ChangeMyAdminPasswordComponent } from './resources/pages/admins-management/change-my-admin-password/change-my-admin-password.component';
 import { ChangeAdminPasswordComponent } from './resources/pages/admins-management/change-admin-password/change-admin-password.component';
 import {DeleteAccountComponent} from './resources/pages/admins-management/list-of-admins/delete-account/delete-account.component';
 import {AdminsManagementService} from './services/admins-management.service';
@@ -115,6 +116,7 @@ import { EditMyAdminAccountComponent } from './resources/pages/admins-management
         ListOfAdminsComponent,
         CreateAdminAccountComponent,
         EditAdminAccountComponent,
+        ChangeMyAdminPasswordComponent,
         ChangeAdminPasswordComponent,
         DeleteAccountComponent,
         EditMyAdminAccountComponent

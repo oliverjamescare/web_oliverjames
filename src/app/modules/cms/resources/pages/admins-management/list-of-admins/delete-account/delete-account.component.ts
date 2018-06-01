@@ -32,7 +32,7 @@ export class DeleteAccountComponent implements AfterViewInit {
     }
 
 
-    private deleteAdminAccount(): void {
+    deleteAdminAccount(): void {
         this.adminsManagementService.deleteAdminAccount(this.listAdminId)
             .subscribe(() => {
                     this.notificationService.success('Admin account removed');
@@ -47,7 +47,7 @@ export class DeleteAccountComponent implements AfterViewInit {
 
     }
 
-    private cancelDeleteAdminAccount(): void {
+    cancelDeleteAdminAccount(): void {
         $('#' + this.type + '_id').modal('hide');
     }
 
