@@ -1,3 +1,128 @@
-<p>
-  parameterization works!
-</p>
+<div class="row">
+    <div class="col-sm">
+        <h2>Parameters</h2>
+    </div>
+</div>
+<br><br>
+<br>
+<br>
+
+
+<div class="row">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group form-group-max">
+                    <select *ngIf="usersRoles" class="form-control">
+                        <option *ngFor="let userRole of usersRoles" [value]="userRole._id">{{ userRole.role }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+    </div>
+</div>
+<form *ngIf="pricing" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-12">
+            <table class="custom-table text-center">
+                <thead>
+                <tr>
+                    <th></th>
+                    <th colspan="7"><b>Day</b></th>
+                </tr>
+                <tr>
+                    <th>Time</th>
+                    <th>Mon</th>
+                    <th>Tues</th>
+                    <th>Weds</th>
+                    <th>Thurs</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                    <th>Sun</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>24 - 1</td>
+                    <td><input type="text" class="form-control"
+                                 formControlName="hour_23_0_sunday_price"></td>
+                    <td>{{ pricing['hour_0_1']['tuesday_price']}}</td>
+                    <td>{{ pricing['hour_0_1']['wednesday_price']}}</td>
+                    <td>{{ pricing['hour_0_1']['thursday_price']}}</td>
+                    <td>{{ pricing['hour_0_1']['friday_price']}}</td>
+                    <td>{{ pricing['hour_0_1']['saturday_price']}}</td>
+                    <td>{{ pricing['hour_0_1']['sunday_price']}}</td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</form>
+
+
+<!--&lt;!&ndash;results&ndash;&gt;-->
+<!--<div class="row">-->
+<!--<div class="col-sm">-->
+<!--<p *ngIf="admins.length === 0">No results</p>-->
+<!--<div *ngIf="admins.length !== 0">-->
+<!--<table *ngIf="admins?.length !== 0" class="custom-table text-center">-->
+<!--<thead>-->
+<!--<tr>-->
+<!--<th>Admin ID</th>-->
+<!--<th>Name</th>-->
+<!--<th>Role</th>-->
+<!--<th>E-mail</th>-->
+<!--<th>Created</th>-->
+<!--<th>Change password</th>-->
+<!--<th>Edit</th>-->
+<!--<th>Delete</th>-->
+<!--</tr>-->
+<!--</thead>-->
+<!--<tbody>-->
+<!--<tr *ngFor="let admin of admins">-->
+<!--<td>{{ admin._id }}</td>-->
+<!--<td>{{ admin.first_name }} {{ admin.surname }}</td>-->
+<!--<td class="text-nowrap">{{ getUserFriendlyRole(admin.role) }}</td>-->
+<!--<td>{{ admin.email }}</td>-->
+<!--<td>{{ admin.created ? (admin.created| datePattern: "YYYY-MM-DD") : "" }}</td>-->
+<!--<td>-->
+<!--<div class="text-center">-->
+<!--<a *ngIf="authService.getCurrentRole() == 3 || ((authService.getCurrentRole() == 2) && (admin.role != 'ADMIN_DIRECTOR'))" [routerLink]="['change-admin-password',admin._id]" class="actions">Change password</a>-->
+<!--</div>-->
+<!--</td>-->
+<!--<td>-->
+<!--<div class="text-center">-->
+<!--<a [routerLink]="['edit-admin-account',admin._id]" class="actions">Edit account</a>-->
+<!--</div>-->
+<!--</td>-->
+<!--<td>-->
+<!--<div class="text-center">-->
+<!--<a (click)="deleteAccountFromList(admin._id);" *ngIf="authService.getCurrentRole() == 3 || ((authService.getCurrentRole() == 2) && (admin.role != 'ADMIN_DIRECTOR'))" class="actions actionsLink">Delete-->
+<!--account</a>-->
+<!--</div>-->
+<!--</td>-->
+<!--</tr>-->
+<!--</tbody>-->
+<!--</table>-->
+<!--<br>-->
+<!--<app-pagination (pageChanged)="onPageChange($event)" [numberOfPages]="pages"-->
+<!--[currentPage]="page"></app-pagination>-->
+<!--</div>-->
+<!--</div>-->
+<!--</div>-->
+<!--&lt;!&ndash;cancel job handle&ndash;&gt;-->
+<!--<app-delete-account-->
+<!--*ngIf="showDeleteAccountDialog"-->
+<!--type="delete_account"-->
+<!--[title]="'Delete admin account'"-->
+<!--[listAdminId]="listAdminId"-->
+<!--[AdminId]="adminId"-->
+<!--(reload)="showDeleteAccountDialog = false; onReload()"-->
+<!--(closed)="showDeleteAccountDialog = false"-->
+<!--&gt;-->
+<!--</app-delete-account>-->

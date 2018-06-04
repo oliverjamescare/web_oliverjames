@@ -14,6 +14,7 @@ import {AdminService} from './services/admin.service';
 import {CarersService} from './services/carers.service';
 import { CareHomesService } from './services/care-homes.service';
 import { WaitingListService } from './services/waiting-list.service';
+import { ParameterizationService } from './services/parameterization.service';
 
 // components
 import {CmsComponent} from './cms.component';
@@ -130,7 +131,8 @@ import { ExportsComponent } from './resources/pages/exports/exports.component';
         DatesService,
         JobsService,
         WaitingListService,
-        AdminsManagementService
+        AdminsManagementService,
+        ParameterizationService
     ]
 
 })
