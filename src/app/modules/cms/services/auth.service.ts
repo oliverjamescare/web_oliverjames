@@ -6,6 +6,7 @@ export class AuthService
     private admin: Admin;
     private token: string;
     private authenticated = false;
+    private currentRole:string;
     authChanged: Subject<Admin> = new Subject();
 
     constructor()
@@ -29,6 +30,7 @@ export class AuthService
 
             // delete admin.access_token.token;
             this.admin = admin;
+            this.currentRole =  admin.role;
             this.authChanged.next(admin);
         }
     }
@@ -55,5 +57,18 @@ export class AuthService
     isAuthenticated()
     {
         return this.authenticated;
+    }
+
+    getCurrentRole(currentRole = this.currentRole) {
+        switch (currentRole) {
+            case 'ADMIN':
+                return 1;
+            case 'ADMIN_MANAGER':
+                return 2;
+            case 'ADMIN_DIRECTOR':
+                return 3;
+            default:
+                return 99;
+        }
     }
 }

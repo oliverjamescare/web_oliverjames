@@ -33,12 +33,12 @@
                 <tr *ngFor="let admin of admins">
                     <td>{{ admin._id }}</td>
                     <td>{{ admin.first_name }} {{ admin.surname }}</td>
-                    <td>Administrator</td>
+                    <td class="text-nowrap">{{ getUserFriendlyRole(admin.role) }}</td>
                     <td>{{ admin.email }}</td>
                     <td>{{ admin.created ? (admin.created| datePattern: "YYYY-MM-DD") : "" }}</td>
                     <td>
                         <div class="text-center">
-                            <a [routerLink]="['change-admin-password',admin._id]" class="actions">Change password</a>
+                            <a *ngIf="authService.getCurrentRole() == 3 || ((authService.getCurrentRole() == 2) && (admin.role != 'ADMIN_DIRECTOR'))" [routerLink]="['change-admin-password',admin._id]" class="actions">Change password</a>
                         </div>
                     </td>
                     <td>
@@ -48,7 +48,7 @@
                     </td>
                     <td>
                         <div class="text-center">
-                            <a (click)="deleteAccountFromList(admin._id);" class="actions actionsLink">Delete
+                            <a (click)="deleteAccountFromList(admin._id);" *ngIf="authService.getCurrentRole() == 3 || ((authService.getCurrentRole() == 2) && (admin.role != 'ADMIN_DIRECTOR'))" class="actions actionsLink">Delete
                                 account</a>
                         </div>
                     </td>

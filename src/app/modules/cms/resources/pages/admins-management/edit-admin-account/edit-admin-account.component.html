@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-sm">
-    <h2>Edit my admin account</h2>
+    <h2>Edit admin account</h2>
     <button routerLink="/admin/admins-management" class="btn btn-success right btn-nav">Back</button>
   </div>
 </div>
@@ -19,6 +19,20 @@
                    formControlName="email"
                    [ngClass]="formUtils.handleValidationStateClass(form, 'email')">
             <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'email', messages) }} </span>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group form-group-max">
+            <select formControlName="role" *ngIf="authService.getCurrentRole() == 3" formControlName="role" class="form-control">
+              <option [attr.selected]="this.form.get('role').value=='ADMIN' ? '' : null" value="ADMIN">Admin</option>
+              <option [attr.selected]="this.form.get('role').value=='ADMIN_MANAGER' ? '' : null" value="ADMIN_MANAGER">Manager</option>
+              <option [attr.selected]="this.form.get('role').value=='ADMIN_DIRECTOR' ? '' : null" value="ADMIN_DIRECTOR">Director</option>
+            </select>
+            <select formControlName="role" *ngIf="(authService.getCurrentRole() == 2) && (this.form.get('role').value != 'ADMIN_DIRECTOR')" formControlName="role" class="form-control">
+              <option [attr.selected]="this.form.get('role').value=='ADMIN' ? '' : null" value="ADMIN">Admin</option>
+              <option [attr.selected]="this.form.get('role').value=='ADMIN_MANAGER' ? '' : null" value="ADMIN_MANAGER">Manager</option>
+            </select>
+            <input *ngIf="(authService.getCurrentRole() == 2) && (this.form.get('role').value == 'ADMIN_DIRECTOR')" class="form-control ng-untouched ng-pristine ng-valid" disabled type="text" value="Director">
           </div>
         </div>
       </div>

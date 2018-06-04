@@ -16,9 +16,9 @@
             <li><a routerLink="/admin/carers" routerLinkActive="active"><i class="fa fa-circle-o"></i> Carers</a></li>
             <li><a routerLink="/admin/care-homes" routerLinkActive="active"><i class="fa fa-circle-o"></i> Care homes</a></li>
             <li><a routerLink="/admin/waiting-list" routerLinkActive="active"><i class="fa fa-circle-o"></i> Waiting list</a></li>
-            <li><a><i class="fa fa-circle-o"></i> Export data</a></li>
-            <li><a routerLink="/admin/admins-management" routerLinkActive="active"><i class="fa fa-circle-o"></i> Staff</a></li>
-            <li><a><i class="fa fa-circle-o"></i> Parameters settings</a></li>
+            <li><a routerLink="/admin/exports" routerLinkActive="active"><i class="fa fa-circle-o"></i> Export data</a></li>
+            <li *ngIf="(authService.getCurrentRole() >= 2)"><a routerLink="/admin/admins-management" routerLinkActive="active"><i class="fa fa-circle-o"></i> Staff</a></li>
+            <li *ngIf="(authService.getCurrentRole() == 3)"><a routerLink="/admin/parameterization" routerLinkActive="active"><i class="fa fa-circle-o"></i> Parameters settings</a></li>
         </ul>
     </div>
 </nav>

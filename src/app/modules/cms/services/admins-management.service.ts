@@ -84,10 +84,10 @@ export class AdminsManagementService {
             }
         );
     }
-    updateAdminProfileList(id, email, first_name, surname): Observable<any> {
+    updateAdminProfileList(id, email, first_name, surname, role): Observable<any> {
         return this.httpClient.put(
             `${this.endpoint}/admins/` + id,
-            {email: email, first_name: first_name, surname: surname}
+            {email: email, first_name: first_name, surname: surname, role: role}
             ,
             {
                 headers: this.apiService.getAuthorizationHeaders()

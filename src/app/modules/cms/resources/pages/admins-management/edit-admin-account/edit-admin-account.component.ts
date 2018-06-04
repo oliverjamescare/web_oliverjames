@@ -13,6 +13,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AddressDetail} from '../../../../../web/models/address/address-detail.model';
 import {AdminsManagementService} from '../../../../services/admins-management.service';
 import {NotificationsService} from 'angular2-notifications';
+import {AuthService} from '../../../../services/auth.service';
 
 
 @Component({
@@ -128,8 +129,7 @@ export class EditAdminAccountComponent implements OnInit {
     ];
 
 
-
-    constructor(private route: ActivatedRoute, private adminsManagementService: AdminsManagementService, private router: Router, private notificationService: NotificationsService) {
+    constructor(private route: ActivatedRoute, private adminsManagementService: AdminsManagementService, private router: Router, private notificationService: NotificationsService, private authService: AuthService) {
     }
 
     ngOnInit() {
@@ -144,24 +144,24 @@ export class EditAdminAccountComponent implements OnInit {
         };
         this.adminsManagementService.getAdminDetails(1, 9999)
             .subscribe((response) => {
-                this.adminDetails = response.results.find(getOneActivity);
-                this.inProgress = false;
-                this.form = new FormGroup({
-                    email: new FormControl(this.adminDetails.email, [Validators.required, Validators.email]),
-                    first_name: new FormControl(this.adminDetails.first_name, [Validators.required, Validators.pattern('^[A-z]+$')]),
-                    surname: new FormControl(this.adminDetails.surname, [Validators.required, Validators.pattern('^[A-z]+$')]),
-                });
+                    this.adminDetails = response.results.find(getOneActivity);
+                    this.inProgress = false;
+                    this.form = new FormGroup({
+                        email: new FormControl(this.adminDetails.email, [Validators.required, Validators.email]),
+                        first_name: new FormControl(this.adminDetails.first_name, [Validators.required, Validators.pattern('^[A-z]+$')]),
+                        surname: new FormControl(this.adminDetails.surname, [Validators.required, Validators.pattern('^[A-z]+$')]),
+                        role: new FormControl(this.adminDetails.role, []),
+                    });
                 },
             );
     }
 
 
-    onSubmit()
-    {
+    onSubmit() {
         if (this.form.valid) {
             this.inProgress = true;
             this.adminsManagementService
-                .updateAdminProfileList(this.adminId, this.form.get('email').value, this.form.get('first_name').value, this.form.get('surname').value)
+                .updateAdminProfileList(this.adminId, this.form.get('email').value, this.form.get('first_name').value, this.form.get('surname').value, this.form.get('role').value)
                 .subscribe(() => {
                         this.inProgress = false;
                         this.notificationService.success('Admin account updated successfully');

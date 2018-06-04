@@ -13,6 +13,7 @@ import {Router} from '@angular/router';
 import {AddressDetail} from '../../../../../web/models/address/address-detail.model';
 import {AdminsManagementService} from '../../../../services/admins-management.service';
 import {NotificationsService} from 'angular2-notifications';
+import {AuthService} from '../../../../services/auth.service';
 
 
 @Component({
@@ -141,12 +142,27 @@ export class EditMyAdminAccountComponent implements OnInit {
                         email: new FormControl(data.email, [Validators.required, Validators.email]),
                         first_name: new FormControl(data.first_name, [Validators.required, Validators.pattern('^[A-z]+$')]),
                         surname: new FormControl(data.surname, [Validators.required, Validators.pattern('^[A-z]+$')]),
+                        role: new FormControl(data.role, []),
                     });
                 },
                 (error: HttpErrorResponse) => {
                     this.error = getMessageError(error);
                     this.inProgress = false;
                 });
+    }
+
+    getUserFriendlyRole() {
+        switch (this.form.get('role').value) {
+            case 'ADMIN':
+               return 'Admin';
+            case 'ADMIN_MANAGER':
+               return 'Manager';
+            case 'ADMIN_DIRECTOR':
+                return 'Director';
+            default:
+                return '';
+        }
+
     }
 
 

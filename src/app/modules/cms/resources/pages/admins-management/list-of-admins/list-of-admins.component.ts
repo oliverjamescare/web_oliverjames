@@ -3,6 +3,7 @@ import {CarerListObject} from '../../../../models/response/carer-list-object';
 import {FormControl, FormGroup} from '@angular/forms';
 import {CarersListResponse} from '../../../../models/response/carers-list-response';
 import {AdminsManagementService} from '../../../../services/admins-management.service';
+import {AuthService} from '../../../../services/auth.service';
 
 @Component({
     selector: 'app-list-of-admins',
@@ -18,7 +19,7 @@ export class ListOfAdminsComponent implements OnInit {
     adminId;
     listAdminId: string;
 
-    constructor(private adminsManagementService: AdminsManagementService) {
+    constructor(private adminsManagementService: AdminsManagementService, private authService: AuthService) {
     }
 
     ngOnInit() {
@@ -47,6 +48,20 @@ export class ListOfAdminsComponent implements OnInit {
     onReload(): void {
         this.page = 1;
         this.getAdminsList();
+    }
+
+    getUserFriendlyRole(adminRole) {
+        switch (adminRole) {
+            case 'ADMIN':
+                return 'Admin';
+            case 'ADMIN_MANAGER':
+                return 'Manager';
+            case 'ADMIN_DIRECTOR':
+                return 'Director';
+            default:
+                return '';
+        }
+
     }
 
 
