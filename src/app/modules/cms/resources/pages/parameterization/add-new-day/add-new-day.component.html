@@ -1,0 +1,36 @@
+<app-cms-popup [title]="title" [id]="type + '_id'" [showLogo]="false">
+    <form [formGroup]="formCustomDay" (ngSubmit)="submitCustomDay()">
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group form-group-max">
+                            <select formControlName="role" *ngIf="usersRoles"
+                                    class="form-control">
+                                <option *ngFor="let userRole of usersRoles"  [value]="userRole.role">{{ userRole.role }}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="form-group form-group-max">
+                            <p-calendar formControlName="date" [showIcon]="true" [minDate]="now"
+                                        placeholder="Special date" [defaultDate]="now"
+                                        dateFormat="yy-mm-dd"></p-calendar>
+                            <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(formCustomDay, 'date', messages) }} </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="buttons-container">
+        <button type="button" class="btn btn-success" (click)="submitCustomDay()" [disabled]="inProgress">Add</button>
+        <button type="button" class="btn btn-success" (click)="cancelAddDay()" [disabled]="inProgress">Cancel</button>
+    </div>
+    <div class="text-center">
+        <span class="invalid-feedback">{{ error }}</span>
+    </div>
+</app-cms-popup>

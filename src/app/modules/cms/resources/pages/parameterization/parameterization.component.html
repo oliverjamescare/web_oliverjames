@@ -3,34 +3,33 @@
         <h2>Parameters</h2>
     </div>
 </div>
-<br><br>
 <br>
-<br>
-
+<div class="row">
+    <div class="col-sm">
+        <h4>Price matrix - normal</h4>
+    </div>
+</div>
 
 <div class="row">
     <div class="col-12">
         <div class="row">
             <div class="col-6">
                 <div class="form-group form-group-max">
-                    <select *ngIf="usersRoles" class="form-control">
+                    <select (change)="onChangeRole($event.target.value)" *ngIf="usersRoles" class="form-control">
                         <option *ngFor="let userRole of usersRoles" [value]="userRole._id">{{ userRole.role }}
                         </option>
                     </select>
                 </div>
             </div>
         </div>
-        <br>
-        <br>
-        <br>
     </div>
 </div>
 <form *ngIf="pricing" [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="row">
         <div class="col-12">
-            <table class="custom-table text-center">
+            <table class="custom-table text-center prizing-table">
                 <thead>
-                <tr>
+                <tr class="headerTop">
                     <th></th>
                     <th colspan="7"><b>Day</b></th>
                 </tr>
@@ -46,23 +45,854 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>24 - 1</td>
-                    <td><input type="text" class="form-control"
-                                 formControlName="hour_23_0_sunday_price"></td>
-                    <td>{{ pricing['hour_0_1']['tuesday_price']}}</td>
-                    <td>{{ pricing['hour_0_1']['wednesday_price']}}</td>
-                    <td>{{ pricing['hour_0_1']['thursday_price']}}</td>
-                    <td>{{ pricing['hour_0_1']['friday_price']}}</td>
-                    <td>{{ pricing['hour_0_1']['saturday_price']}}</td>
-                    <td>{{ pricing['hour_0_1']['sunday_price']}}</td>
+                <tr formGroupName="hour_0_1">
+                    <td class="no-wrap">24 - 1</td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="monday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="tuesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="thursday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="wednesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="friday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="saturday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="sunday_price">
+                    </td>
+                </tr>
+
+                <tr formGroupName="hour_1_2">
+                    <td class="no-wrap">1 - 2</td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="monday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="tuesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="thursday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="wednesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="friday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="saturday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="sunday_price">
+                    </td>
+                </tr>
+
+                <tr formGroupName="hour_2_3">
+                    <td class="no-wrap">2 - 3</td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="monday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="tuesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="thursday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="wednesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="friday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="saturday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="sunday_price">
+                    </td>
+                </tr>
+
+                <tr formGroupName="hour_3_4">
+                    <td class="no-wrap">3 - 4</td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="monday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="tuesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="thursday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="wednesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="friday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="saturday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="sunday_price">
+                    </td>
+                </tr>
+
+                <tr formGroupName="hour_4_5">
+                    <td class="no-wrap">4 - 5</td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="monday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="tuesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="thursday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="wednesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="friday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="saturday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="sunday_price">
+                    </td>
+                </tr>
+
+                <tr formGroupName="hour_5_6">
+                    <td class="no-wrap">5 - 6</td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="monday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="tuesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="thursday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="wednesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="friday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="saturday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="sunday_price">
+                    </td>
+                </tr>
+
+                <tr formGroupName="hour_6_7">
+                    <td class="no-wrap">6 - 7</td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="monday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="tuesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="thursday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="wednesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="friday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="saturday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="sunday_price">
+                    </td>
+                </tr>
+
+                <tr formGroupName="hour_7_8">
+                    <td class="no-wrap">7 - 8</td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="monday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="tuesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="thursday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="wednesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="friday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="saturday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="sunday_price">
+                    </td>
+                </tr>
+
+                <tr formGroupName="hour_8_9">
+                    <td class="no-wrap">8 - 9</td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="monday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="tuesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="thursday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="wednesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="friday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="saturday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="sunday_price">
+                    </td>
+                </tr>
+
+                <tr formGroupName="hour_9_10">
+                    <td class="no-wrap">9 - 10</td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="monday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="tuesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="thursday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="wednesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="friday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="saturday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="sunday_price">
+                    </td>
+                </tr>
+
+                <tr formGroupName="hour_10_11">
+                    <td class="no-wrap">10 - 11</td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="monday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="tuesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="thursday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="wednesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="friday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="saturday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="sunday_price">
+                    </td>
+                </tr>
+
+                <tr formGroupName="hour_11_12">
+                    <td class="no-wrap">11 - 12</td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="monday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="tuesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="thursday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="wednesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="friday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="saturday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="sunday_price">
+                    </td>
+                </tr>
+
+                <tr formGroupName="hour_12_13">
+                    <td class="no-wrap">12 - 13</td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="monday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="tuesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="thursday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="wednesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="friday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="saturday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="sunday_price">
+                    </td>
+                </tr>
+
+                <tr formGroupName="hour_13_14">
+                    <td class="no-wrap">13 - 14</td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="monday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="tuesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="thursday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="wednesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="friday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="saturday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="sunday_price">
+                    </td>
+                </tr>
+
+                <tr formGroupName="hour_14_15">
+                    <td class="no-wrap">14 - 15</td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="monday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="tuesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="thursday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="wednesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="friday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="saturday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="sunday_price">
+                    </td>
+                </tr>
+
+                <tr formGroupName="hour_15_16">
+                    <td class="no-wrap">15 - 16</td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="monday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="tuesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="thursday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="wednesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="friday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="saturday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="sunday_price">
+                    </td>
+                </tr>
+
+                <tr formGroupName="hour_16_17">
+                    <td class="no-wrap">16 - 17</td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="monday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="tuesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="thursday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="wednesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="friday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="saturday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="sunday_price">
+                    </td>
+                </tr>
+
+                <tr formGroupName="hour_17_18">
+                    <td class="no-wrap">17 - 18</td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="monday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="tuesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="thursday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="wednesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="friday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="saturday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="sunday_price">
+                    </td>
+                </tr>
+
+                <tr formGroupName="hour_18_19">
+                    <td class="no-wrap">18 - 19</td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="monday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="tuesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="thursday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="wednesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="friday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="saturday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="sunday_price">
+                    </td>
+                </tr>
+
+                <tr formGroupName="hour_19_20">
+                    <td class="no-wrap">19 - 20</td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="monday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="tuesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="thursday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="wednesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="friday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="saturday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="sunday_price">
+                    </td>
+                </tr>
+
+                <tr formGroupName="hour_20_21">
+                    <td class="no-wrap">20 - 21</td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="monday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="tuesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="thursday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="wednesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="friday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="saturday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="sunday_price">
+                    </td>
+                </tr>
+
+                <tr formGroupName="hour_21_22">
+                    <td class="no-wrap">21 - 22</td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="monday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="tuesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="thursday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="wednesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="friday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="saturday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="sunday_price">
+                    </td>
+                </tr>
+
+                <tr formGroupName="hour_22_23">
+                    <td class="no-wrap">22 - 23</td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="monday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="tuesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="thursday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="wednesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="friday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="saturday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="sunday_price">
+                    </td>
+                </tr>
+
+                <tr formGroupName="hour_23_0">
+                    <td class="no-wrap">23 - 24</td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="monday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="tuesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="thursday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="wednesday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="friday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="saturday_price">
+                    </td>
+                    <td>
+                        <input step="any" type="number" class="form-control"
+                               formControlName="sunday_price">
+                    </td>
                 </tr>
                 </tbody>
             </table>
 
         </div>
     </div>
+    <div class="row">
+        <div class="col-12">
+            <div class="text-center">
+                <br/><br/>
+                <button class="btn btn-success" type="submit" [disabled]="!form.valid || inProgress">Save
+                </button>
+                <span class="invalid-feedback"> {{ error }} </span>
+                <br/><br/>
+            </div>
+        </div>
+    </div>
 </form>
+
+<form *ngIf="pricing" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-12">
+            <a (click)="showAddDayModal=true;"  class="btn btn-success custom-button-parametrization pull-right gj-margin-left-5">Add new special day</a>
+            <a class="btn btn-success custom-button-parametrization pull-right">Normal day matrix</a>
+        </div>
+        <br>
+        <br>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <table class="custom-table text-center prizing-table">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Role</th>
+                    <th>Show</th>
+                    <th>Delete</th>
+                </tr>
+                </thead>
+                <tbody *ngIf="customList.length">
+                <tr *ngFor="let customDay of customList">
+                    <td class="no-wrap">
+                        {{ customDay.date }}
+                    </td>
+                    <td class="no-wrap">
+                        {{ customDay.role }}
+                    </td>
+                    <td>
+                        <a class="btn btn-success custom-button-parametrization">Show</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger custom-button-parametrization">Delete</a>
+                    </td>
+                </tr>
+                <tbody *ngIf="!customList.length">
+                <tr>
+                    <td colspan="4">
+                        No custom days
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</form>
+<br>
+<br>
+<br>
+<br>
+<app-add-new-day
+        *ngIf="showAddDayModal"
+        type="add-day"
+        [title]="'Add new custom day'"
+        [specialDayId]="specialDayId"
+        (reload)="showAddDayModal = false; onReload()"
+        (closed)="showAddDayModal = false"
+        [usersRoles]="usersRoles"
+>
+</app-add-new-day>
+
+
+
 
 
 <!--&lt;!&ndash;results&ndash;&gt;-->

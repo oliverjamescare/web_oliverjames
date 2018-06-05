@@ -67,6 +67,7 @@ import {AdminsManagementService} from './services/admins-management.service';
 import { EditMyAdminAccountComponent } from './resources/pages/admins-management/edit-my-admin-account/edit-my-admin-account.component';
 import { ParameterizationComponent } from './resources/pages/parameterization/parameterization.component';
 import { ExportsComponent } from './resources/pages/exports/exports.component';
+import {AddNewDayComponent} from './resources/pages/parameterization/add-new-day/add-new-day.component';
 
 
 @NgModule({
@@ -118,6 +119,7 @@ import { ExportsComponent } from './resources/pages/exports/exports.component';
         ChangeMyAdminPasswordComponent,
         ChangeAdminPasswordComponent,
         DeleteAccountComponent,
+        AddNewDayComponent,
         EditMyAdminAccountComponent,
         ParameterizationComponent,
         ExportsComponent

@@ -69,5 +69,24 @@ export class ParameterizationService {
             }
         );
     }
+    updateGeneralPricing(carerRoleId, generalPricing): Observable<any> {
+        return this.httpClient.put(
+            `${this.endpoint}/parameters/pricing/roles/` + carerRoleId,
+            generalPricing,
+            {
+                headers: this.apiService.getAuthorizationHeaders()
+            }
+        );
+    }
+    addSpecialDatePricing(customDay): Observable<any> {
+        console.log(customDay);
+        return this.httpClient.post(
+            `${this.endpoint}/parameters/pricing/special-dates`,
+            customDay,
+            {
+                headers: this.apiService.getAuthorizationHeaders()
+            }
+        );
+    }
 
 }
