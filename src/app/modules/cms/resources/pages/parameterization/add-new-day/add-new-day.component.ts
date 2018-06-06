@@ -18,12 +18,12 @@ import {HttpErrorResponse} from '@angular/common/http';
 export class AddNewDayComponent implements AfterViewInit, OnInit {
     @Input() title: string;
     @Input() type: string;
-
     @Input() specialDayId: string;
     @Input() usersRoles;
     @Output() closed = new EventEmitter();
-    @Output() reload = new EventEmitter();
+    @Output() reload = new EventEmitter<string>();
     formCustomDay: FormGroup;
+    now: Date = new Date();
 
     inProgress: boolean = false;
     error: string = '';
@@ -103,10 +103,10 @@ export class AddNewDayComponent implements AfterViewInit, OnInit {
             this.inProgress = true;
             this.parameterizationService
                 .addSpecialDatePricing(this.formCustomDay.value)
-                .subscribe(() => {
+                .subscribe((response) => {
                         this.inProgress = false;
                         $('#' + this.type + '_id').modal('hide');
-                        this.reload.emit();
+                        this.reload.emit(response._id);
                         this.notificationService.success('Date added successfully');
                     },
                     (error: HttpErrorResponse) => {
@@ -116,8 +116,6 @@ export class AddNewDayComponent implements AfterViewInit, OnInit {
         }
     }
 
-    addDay(): void {
-    }
 
     cancelAddDay(): void {
         $('#' + this.type + '_id').modal('hide');

@@ -69,6 +69,7 @@ export class ParameterizationService {
             }
         );
     }
+
     updateGeneralPricing(carerRoleId, generalPricing): Observable<any> {
         return this.httpClient.put(
             `${this.endpoint}/parameters/pricing/roles/` + carerRoleId,
@@ -78,8 +79,8 @@ export class ParameterizationService {
             }
         );
     }
+
     addSpecialDatePricing(customDay): Observable<any> {
-        console.log(customDay);
         return this.httpClient.post(
             `${this.endpoint}/parameters/pricing/special-dates`,
             customDay,
@@ -89,4 +90,41 @@ export class ParameterizationService {
         );
     }
 
+    deleteSpecialDay(customDay): Observable<any> {
+        return this.httpClient.delete(
+            `${this.endpoint}/parameters/pricing/special-dates/` + customDay,
+            {
+                headers: this.apiService.getAuthorizationHeaders()
+            }
+        );
+    }
+
+    updateSpecialDatePricing(specialDatePracing, id): Observable<any> {
+        return this.httpClient.put(
+            `${this.endpoint}/parameters/pricing/special-dates/` + id,
+            specialDatePracing,
+            {
+                headers: this.apiService.getAuthorizationHeaders()
+            }
+        );
+    }
+
+    updateCommissionParameters(commissionParameters): Observable<any> {
+        return this.httpClient.put(
+            `${this.endpoint}/parameters/commission`,
+            commissionParameters,
+            {
+                headers: this.apiService.getAuthorizationHeaders()
+            }
+        );
+    }
+    updateNotificationsParameters(NotificationsParameters): Observable<any> {
+        return this.httpClient.put(
+            `${this.endpoint}/parameters/notifications`,
+            NotificationsParameters,
+            {
+                headers: this.apiService.getAuthorizationHeaders()
+            }
+        );
+    }
 }

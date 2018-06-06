@@ -40,7 +40,7 @@
                     </td>
                     <td>
                         <div class="text-center">
-                            <a [routerLink]="['edit-admin-account',admin._id]" class="actions">Edit account</a>
+                            <a *ngIf="authService.getCurrentRole() == 3 || ((authService.getCurrentRole() == 2) && (admin.role != 'ADMIN_DIRECTOR'))"  [routerLink]="['edit-admin-account',admin._id]" class="actions">Edit account</a>
                         </div>
                     </td>
                     <td>

@@ -25,5 +25,18 @@ button[type="submit"]
 .custom-button-parametrization {
   color:white!important;
   display: inline;
+  max-width: 300px;
+  padding: .375rem .75rem!important;
+  border-radius: 0;
+}
+.tableLabel {
+  font-size: 11px;
+  margin-top:10px;
+}
+.max-width-select {
   max-width: 200px;
+}
+.cms-link {
+  cursor: pointer!important;
+  color: #03c88b!important;
 }
