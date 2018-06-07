@@ -1,0 +1,28 @@
+.max-width-select {
+  max-width: 200px;
+}
+.max-width-400 {
+  max-width: 400px;
+}
+.btn-success
+{
+  margin-top: 15px;
+}
+.buttons-container
+{
+  margin: 20px auto 10px;
+  button
+  {
+    display: inline-block;
+    width: 48%;
+    margin-top: 0;
+    &.btn-outline-success
+    {
+      float: right;
+    }
+  }
+}
+button[type="submit"]
+{
+  max-width: 500px;
+}

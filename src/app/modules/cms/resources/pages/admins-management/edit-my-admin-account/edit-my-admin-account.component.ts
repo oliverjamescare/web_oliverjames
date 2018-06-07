@@ -174,6 +174,7 @@ export class EditMyAdminAccountComponent implements OnInit {
                 .updateAdminProfile(this.form.get('email').value, this.form.get('first_name').value, this.form.get('surname').value)
                 .subscribe(() => {
                         this.inProgress = false;
+                        // TODO get new data, save to localstorage
                         this.notificationService.success('Your admin account updated successfully');
                     },
                     (error: HttpErrorResponse) => {

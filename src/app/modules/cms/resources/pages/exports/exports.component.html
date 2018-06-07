@@ -1,9 +1,63 @@
 <div class="row">
-  <div class="col-sm">
-    <h2>Exports</h2>
-  </div>
+    <div class="col-sm">
+        <h2>Exports</h2>
+    </div>
 </div>
 <br>
 <br>
+<form [formGroup]="formExport" (ngSubmit)="onSubmitExport()">
+    <div class="row">
+        <div class="col-sm-6">
 
+            <span>Collection name</span>
+            <select formControlName="collection" class="form-control max-width-select">
+                <option selected value="jobs">Jobs</option>
+                <option value="carers">Carers</option>
+                <option value="care_homes">Care Homes</option>
+                <option value="admins">Admins</option>
+                <option value="waiting_list">Waiting List</option>
+                <option value="notifications">Notifications</option>
+                <option value="settings">Settings</option>
+                <option value="job_withdrawals">Job Withdrawals</option>
+            </select>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-12">
+            <span>Date range</span>
+        </div>
+        <div class="col-4">
+            <div class="form-group form-group-max max-width-400">
+                <p-calendar formControlName="from" [showIcon]="true"
+                            placeholder="From" [defaultDate]="now"
+                            dateFormat="yy-mm-dd"></p-calendar>
+                <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(formExport, 'from', messages) }} </span>
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="form-group form-group-max max-width-400">
+                <p-calendar formControlName="to" [showIcon]="true"
+                            placeholder="To" [defaultDate]="now"
+                            dateFormat="yy-mm-dd"></p-calendar>
+                <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(formExport, 'to', messages) }} </span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8">
+            <div class="row">
+                <div class="col-12">
+                    <div class="text-center">
+                        <button class="btn btn-success" type="submit"
+                                [disabled]="!formExport.valid || inProgress">Generate
+                        </button>
+                        <span class="invalid-feedback"> {{ error }} </span>
+                        <br/><br/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
 
