@@ -250,6 +250,12 @@ export class ParameterizationComponent implements OnInit {
             }, {validator: []}),
         });
         this.calculateTotalsNotifications();
+        this.formNotificationsParameters.valueChanges
+            .subscribe(term => {
+                this.calculateTotalsNotifications();
+            });
+
+
     }
 
     private calculateTotalsNotifications(): void {
