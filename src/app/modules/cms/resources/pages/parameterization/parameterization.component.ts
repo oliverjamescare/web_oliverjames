@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ParameterizationService} from '../../../services/parameterization.service';
 import {FormControl, FormGroup, Validators, FormBuilder} from '@angular/forms';
 import {password} from '../../../../../utilities/validators';
-import {getMessageError} from '../../../../../utilities/form.utils';
+import {getMessageError, handleValidationErrorMessage, handleValidationStateClass} from '../../../../../utilities/form.utils';
 import {HttpErrorResponse} from '@angular/common/http';
 import {NotificationsService} from 'angular2-notifications';
 
@@ -39,6 +39,9 @@ export class ParameterizationComponent implements OnInit {
     notifiedTotal = {};
     insertedId;
 
+    formUtils = {handleValidationStateClass, handleValidationErrorMessage};
+
+
     constructor(private parameterizationService: ParameterizationService, private fb: FormBuilder, private notificationService: NotificationsService) {
     }
 
@@ -59,22 +62,22 @@ export class ParameterizationComponent implements OnInit {
 
     private generateCommissionParameters() {
         this.formCommissionParameters = new FormGroup({
-            manual_booking_pricing: new FormControl(this.commissionParameters['manual_booking_pricing'], []),
-            max_to_deduct: new FormControl(this.commissionParameters['max_to_deduct'], []),
-            app_commission: new FormControl(this.commissionParameters['app_commission'], []),
+            manual_booking_pricing: new FormControl(this.commissionParameters['manual_booking_pricing'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]),
+            max_to_deduct: new FormControl(this.commissionParameters['max_to_deduct'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0), Validators.max(100)]),
+            app_commission: new FormControl(this.commissionParameters['app_commission'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0), Validators.max(100)]),
         });
     }
 
 
     private createGroup(groupName) {
         return {
-            'monday_price': [this.pricing[groupName]['monday_price'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]],
-            'tuesday_price': [this.pricing[groupName]['tuesday_price'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]],
-            'wednesday_price': [this.pricing[groupName]['wednesday_price'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]],
-            'thursday_price': [this.pricing[groupName]['thursday_price'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]],
-            'friday_price': [this.pricing[groupName]['friday_price'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]],
-            'saturday_price': [this.pricing[groupName]['saturday_price'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]],
-            'sunday_price': [this.pricing[groupName]['sunday_price'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]]
+            'monday_price': [this.pricing[groupName]['monday_price'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]],
+            'tuesday_price': [this.pricing[groupName]['tuesday_price'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]],
+            'wednesday_price': [this.pricing[groupName]['wednesday_price'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]],
+            'thursday_price': [this.pricing[groupName]['thursday_price'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]],
+            'friday_price': [this.pricing[groupName]['friday_price'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]],
+            'saturday_price': [this.pricing[groupName]['saturday_price'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]],
+            'sunday_price': [this.pricing[groupName]['sunday_price'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]]
         };
     }
 
@@ -124,30 +127,30 @@ export class ParameterizationComponent implements OnInit {
 
     private generateSpecialDate() {
         this.formSpecialDate = new FormGroup({
-            hour_0_1: new FormControl(this.pricingSpecialDate['hour_0_1'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]),
-            hour_1_2: new FormControl(this.pricingSpecialDate['hour_1_2'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]),
-            hour_2_3: new FormControl(this.pricingSpecialDate['hour_2_3'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]),
-            hour_3_4: new FormControl(this.pricingSpecialDate['hour_3_4'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]),
-            hour_4_5: new FormControl(this.pricingSpecialDate['hour_4_5'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]),
-            hour_5_6: new FormControl(this.pricingSpecialDate['hour_5_6'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]),
-            hour_6_7: new FormControl(this.pricingSpecialDate['hour_6_7'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]),
-            hour_7_8: new FormControl(this.pricingSpecialDate['hour_7_8'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]),
-            hour_8_9: new FormControl(this.pricingSpecialDate['hour_8_9'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]),
-            hour_9_10: new FormControl(this.pricingSpecialDate['hour_9_10'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]),
-            hour_10_11: new FormControl(this.pricingSpecialDate['hour_10_11'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]),
-            hour_11_12: new FormControl(this.pricingSpecialDate['hour_11_12'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]),
-            hour_12_13: new FormControl(this.pricingSpecialDate['hour_12_13'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]),
-            hour_13_14: new FormControl(this.pricingSpecialDate['hour_13_14'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]),
-            hour_14_15: new FormControl(this.pricingSpecialDate['hour_14_15'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]),
-            hour_15_16: new FormControl(this.pricingSpecialDate['hour_15_16'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]),
-            hour_16_17: new FormControl(this.pricingSpecialDate['hour_16_17'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]),
-            hour_17_18: new FormControl(this.pricingSpecialDate['hour_17_18'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]),
-            hour_18_19: new FormControl(this.pricingSpecialDate['hour_18_19'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]),
-            hour_19_20: new FormControl(this.pricingSpecialDate['hour_19_20'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]),
-            hour_20_21: new FormControl(this.pricingSpecialDate['hour_20_21'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]),
-            hour_21_22: new FormControl(this.pricingSpecialDate['hour_21_22'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]),
-            hour_22_23: new FormControl(this.pricingSpecialDate['hour_22_23'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]),
-            hour_23_0: new FormControl(this.pricingSpecialDate['hour_23_0'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$')]),
+            hour_0_1: new FormControl(this.pricingSpecialDate['hour_0_1'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]),
+            hour_1_2: new FormControl(this.pricingSpecialDate['hour_1_2'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]),
+            hour_2_3: new FormControl(this.pricingSpecialDate['hour_2_3'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]),
+            hour_3_4: new FormControl(this.pricingSpecialDate['hour_3_4'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]),
+            hour_4_5: new FormControl(this.pricingSpecialDate['hour_4_5'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]),
+            hour_5_6: new FormControl(this.pricingSpecialDate['hour_5_6'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]),
+            hour_6_7: new FormControl(this.pricingSpecialDate['hour_6_7'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]),
+            hour_7_8: new FormControl(this.pricingSpecialDate['hour_7_8'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]),
+            hour_8_9: new FormControl(this.pricingSpecialDate['hour_8_9'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]),
+            hour_9_10: new FormControl(this.pricingSpecialDate['hour_9_10'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]),
+            hour_10_11: new FormControl(this.pricingSpecialDate['hour_10_11'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]),
+            hour_11_12: new FormControl(this.pricingSpecialDate['hour_11_12'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]),
+            hour_12_13: new FormControl(this.pricingSpecialDate['hour_12_13'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]),
+            hour_13_14: new FormControl(this.pricingSpecialDate['hour_13_14'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]),
+            hour_14_15: new FormControl(this.pricingSpecialDate['hour_14_15'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]),
+            hour_15_16: new FormControl(this.pricingSpecialDate['hour_15_16'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]),
+            hour_16_17: new FormControl(this.pricingSpecialDate['hour_16_17'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]),
+            hour_17_18: new FormControl(this.pricingSpecialDate['hour_17_18'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]),
+            hour_18_19: new FormControl(this.pricingSpecialDate['hour_18_19'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]),
+            hour_19_20: new FormControl(this.pricingSpecialDate['hour_19_20'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]),
+            hour_20_21: new FormControl(this.pricingSpecialDate['hour_20_21'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]),
+            hour_21_22: new FormControl(this.pricingSpecialDate['hour_21_22'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]),
+            hour_22_23: new FormControl(this.pricingSpecialDate['hour_22_23'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]),
+            hour_23_0: new FormControl(this.pricingSpecialDate['hour_23_0'], [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]),
         });
     }
 
@@ -210,40 +213,40 @@ export class ParameterizationComponent implements OnInit {
     private createNotificationsParametersForm(): void {
         this.formNotificationsParameters = new FormGroup({
             'preferred': this.fb.group({
-                'lessThanFourHours': [this.notificationsParameters.preferred.lessThanFourHours, []],
-                'betweenFourAndTwelveHours': [this.notificationsParameters.preferred.betweenFourAndTwelveHours, []],
-                'betweenTwelveAndTwentyFourHours': [this.notificationsParameters.preferred.betweenTwelveAndTwentyFourHours, []],
-                'moreThanTwentyFourHours': [this.notificationsParameters.preferred.moreThanTwentyFourHours, []]
+                'lessThanFourHours': [this.notificationsParameters.preferred.lessThanFourHours, [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]],
+                'betweenFourAndTwelveHours': [this.notificationsParameters.preferred.betweenFourAndTwelveHours, [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]],
+                'betweenTwelveAndTwentyFourHours': [this.notificationsParameters.preferred.betweenTwelveAndTwentyFourHours, [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]],
+                'moreThanTwentyFourHours': [this.notificationsParameters.preferred.moreThanTwentyFourHours, [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]]
             }, {validator: []}),
             'starsFourToFive': this.fb.group({
-                'lessThanFourHours': [this.notificationsParameters.starsFourToFive.lessThanFourHours, []],
-                'betweenFourAndTwelveHours': [this.notificationsParameters.starsFourToFive.betweenFourAndTwelveHours, []],
-                'betweenTwelveAndTwentyFourHours': [this.notificationsParameters.starsFourToFive.betweenTwelveAndTwentyFourHours, []],
-                'moreThanTwentyFourHours': [this.notificationsParameters.starsFourToFive.moreThanTwentyFourHours, []]
+                'lessThanFourHours': [this.notificationsParameters.starsFourToFive.lessThanFourHours, [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]],
+                'betweenFourAndTwelveHours': [this.notificationsParameters.starsFourToFive.betweenFourAndTwelveHours, [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]],
+                'betweenTwelveAndTwentyFourHours': [this.notificationsParameters.starsFourToFive.betweenTwelveAndTwentyFourHours, [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]],
+                'moreThanTwentyFourHours': [this.notificationsParameters.starsFourToFive.moreThanTwentyFourHours, [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]]
             }, {validator: []}),
             'starsThreeToFour': this.fb.group({
-                'lessThanFourHours': [this.notificationsParameters.starsThreeToFour.lessThanFourHours, []],
-                'betweenFourAndTwelveHours': [this.notificationsParameters.starsThreeToFour.betweenFourAndTwelveHours, []],
-                'betweenTwelveAndTwentyFourHours': [this.notificationsParameters.starsThreeToFour.betweenTwelveAndTwentyFourHours, []],
-                'moreThanTwentyFourHours': [this.notificationsParameters.starsThreeToFour.moreThanTwentyFourHours, []]
+                'lessThanFourHours': [this.notificationsParameters.starsThreeToFour.lessThanFourHours, [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]],
+                'betweenFourAndTwelveHours': [this.notificationsParameters.starsThreeToFour.betweenFourAndTwelveHours, [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]],
+                'betweenTwelveAndTwentyFourHours': [this.notificationsParameters.starsThreeToFour.betweenTwelveAndTwentyFourHours, [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]],
+                'moreThanTwentyFourHours': [this.notificationsParameters.starsThreeToFour.moreThanTwentyFourHours, [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]]
             }, {validator: []}),
             'unrated': this.fb.group({
-                'lessThanFourHours': [this.notificationsParameters.unrated.lessThanFourHours, []],
-                'betweenFourAndTwelveHours': [this.notificationsParameters.unrated.betweenFourAndTwelveHours, []],
-                'betweenTwelveAndTwentyFourHours': [this.notificationsParameters.unrated.betweenTwelveAndTwentyFourHours, []],
-                'moreThanTwentyFourHours': [this.notificationsParameters.unrated.moreThanTwentyFourHours, []]
+                'lessThanFourHours': [this.notificationsParameters.unrated.lessThanFourHours, [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]],
+                'betweenFourAndTwelveHours': [this.notificationsParameters.unrated.betweenFourAndTwelveHours, [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]],
+                'betweenTwelveAndTwentyFourHours': [this.notificationsParameters.unrated.betweenTwelveAndTwentyFourHours, [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]],
+                'moreThanTwentyFourHours': [this.notificationsParameters.unrated.moreThanTwentyFourHours, [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]]
             }, {validator: []}),
             'starsTwoToThree': this.fb.group({
-                'lessThanFourHours': [this.notificationsParameters.starsTwoToThree.lessThanFourHours, []],
-                'betweenFourAndTwelveHours': [this.notificationsParameters.starsTwoToThree.betweenFourAndTwelveHours, []],
-                'betweenTwelveAndTwentyFourHours': [this.notificationsParameters.starsTwoToThree.betweenTwelveAndTwentyFourHours, []],
-                'moreThanTwentyFourHours': [this.notificationsParameters.starsTwoToThree.moreThanTwentyFourHours, []]
+                'lessThanFourHours': [this.notificationsParameters.starsTwoToThree.lessThanFourHours, [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]],
+                'betweenFourAndTwelveHours': [this.notificationsParameters.starsTwoToThree.betweenFourAndTwelveHours, [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]],
+                'betweenTwelveAndTwentyFourHours': [this.notificationsParameters.starsTwoToThree.betweenTwelveAndTwentyFourHours, [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]],
+                'moreThanTwentyFourHours': [this.notificationsParameters.starsTwoToThree.moreThanTwentyFourHours, [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]]
             }, {validator: []}),
             'starsOneToTwo': this.fb.group({
-                'lessThanFourHours': [this.notificationsParameters.starsOneToTwo.lessThanFourHours, []],
-                'betweenFourAndTwelveHours': [this.notificationsParameters.starsOneToTwo.betweenFourAndTwelveHours, []],
-                'betweenTwelveAndTwentyFourHours': [this.notificationsParameters.starsOneToTwo.betweenTwelveAndTwentyFourHours, []],
-                'moreThanTwentyFourHours': [this.notificationsParameters.starsOneToTwo.moreThanTwentyFourHours, []]
+                'lessThanFourHours': [this.notificationsParameters.starsOneToTwo.lessThanFourHours, [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]],
+                'betweenFourAndTwelveHours': [this.notificationsParameters.starsOneToTwo.betweenFourAndTwelveHours, [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]],
+                'betweenTwelveAndTwentyFourHours': [this.notificationsParameters.starsOneToTwo.betweenTwelveAndTwentyFourHours, [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]],
+                'moreThanTwentyFourHours': [this.notificationsParameters.starsOneToTwo.moreThanTwentyFourHours, [Validators.required, Validators.pattern('^[+-]?\\d+(\\.\\d+)?$'), Validators.min(0)]]
             }, {validator: []}),
         });
         this.calculateTotalsNotifications();
@@ -251,6 +254,7 @@ export class ParameterizationComponent implements OnInit {
             .subscribe(term => {
                 this.calculateTotalsNotifications();
             });
+
 
     }
 
