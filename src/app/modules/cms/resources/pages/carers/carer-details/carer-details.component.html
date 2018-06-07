@@ -287,7 +287,7 @@
                 <tr>
                     <th>Ban carer until</th>
                     <td>
-                        <p-calendar formControlName="banned_until" [showIcon]="true" dateFormat="yy-mm-dd"></p-calendar>
+                        <p-calendar formControlName="banned_until" [showIcon]="true" dateFormat="yy-mm-dd" [minDate]="bannMinDate"></p-calendar>
                     </td>
                 </tr>
             </table>

@@ -233,7 +233,7 @@ export class AddCarerComponent implements OnInit {
                 },
                 {
                     error: 'max',
-                    message: 'Number of months cannot be higher than 12'
+                    message: 'Number of months cannot be higher than 11'
                 }
             ]
         },
@@ -246,7 +246,7 @@ export class AddCarerComponent implements OnInit {
                 },
                 {
                     error: 'min',
-                    message: 'Number of months cannot be lower than 0'
+                    message: 'Number of years cannot be lower than 0'
                 }
             ]
         },
@@ -393,8 +393,8 @@ export class AddCarerComponent implements OnInit {
             dbs_date: new FormControl(null, invalidDate),
 
             //care exp
-            experience_months: new FormControl(null, [ Validators.min(0), Validators.max(12), numbers]),
-            experience_years: new FormControl(null, [ Validators.min(0), numbers]),
+            experience_months: new FormControl(0, [ Validators.min(0), Validators.max(11), numbers]),
+            experience_years: new FormControl(0, [ Validators.min(0), numbers]),
 
             //training record
             fire_safety: new FormControl(null, invalidDate),
@@ -410,15 +410,19 @@ export class AddCarerComponent implements OnInit {
             qualifications: new FormArray(this.qualifications.map(() => new FormControl(false))),
         });
 
+        //password
         this.form.get('password')
             .valueChanges
             .subscribe(
-                (pass: string) => this.form.get('password_confirm').setValidators([Validators.required, equalToFieldValue(pass)]));
+                () => {
+                    const control = this.form.get('password_confirm');
+                    control.setValidators([Validators.required, equalToFieldValue(this.form.get('password').value)]);
+                    control.updateValueAndValidity();
+                });
 
         this.form.get('password_confirm')
             .valueChanges
-            .subscribe(
-                (pass: string) => this.form.get('password').setValidators([Validators.required, equalToFieldValue(pass)]));
+            .subscribe(() => this.form.get('password_confirm').setValidators([Validators.required, equalToFieldValue(this.form.get('password').value)]));
 
         //datepicker config
         this.adultDate = new Date();

@@ -19,7 +19,7 @@
                         <div class="form-group">
                             <label>Start date</label>
                             <br>
-                            <p-calendar formControlName="start_date" [showIcon]="true" dateFormat="yy-mm-dd" showTime="true" hourFormat="12"></p-calendar>
+                            <p-calendar formControlName="start_date" [showIcon]="true" dateFormat="yy-mm-dd" showTime="true" hourFormat="12" [showOtherMonths]="false" [minDate]="now"></p-calendar>
                             <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form.get('jobs').controls[i], 'start_date', jobFormMessages) }} </span>
                         </div>
                     </div>
@@ -27,7 +27,7 @@
                         <div class="form-group">
                             <label>End date</label>
                             <br>
-                            <p-calendar formControlName="end_date" [showIcon]="true" dateFormat="yy-mm-dd" showTime="true" hourFormat="12"></p-calendar>
+                            <p-calendar formControlName="end_date" [showIcon]="true" dateFormat="yy-mm-dd" showTime="true" hourFormat="12" [showOtherMonths]="false" [minDate]="form.get('jobs').controls[i].get('start_date').value" [maxDate]="maxJobDuration(form.get('jobs').controls[i].get('start_date').value)"></p-calendar>
                             <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form.get('jobs').controls[i], 'end_date', jobFormMessages) }} </span>
                         </div>
                     </div>

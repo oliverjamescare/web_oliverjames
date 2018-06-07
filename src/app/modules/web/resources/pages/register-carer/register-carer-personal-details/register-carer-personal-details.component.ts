@@ -285,16 +285,19 @@ export class RegisterCarerPersonalDetailsComponent implements OnInit
             this.form.setValue(this.carerService.personalDetailsFormValues);
         }
 
-        // password confirmation
+        //password
         this.form.get('password')
             .valueChanges
             .subscribe(
-                (pass: string) => this.form.get('password_confirm').setValidators([ Validators.required, equalToFieldValue(pass)]));
+                () => {
+                    const control = this.form.get('password_confirm');
+                    control.setValidators([Validators.required, equalToFieldValue(this.form.get('password').value)]);
+                    control.updateValueAndValidity();
+                });
 
         this.form.get('password_confirm')
             .valueChanges
-            .subscribe(
-                (pass: string) => this.form.get('password').setValidators([Validators.required, equalToFieldValue(pass)]));
+            .subscribe(() => this.form.get('password_confirm').setValidators([Validators.required, equalToFieldValue(this.form.get('password').value)]));
 
 
         // datepicker config

@@ -40,14 +40,27 @@ export class CareHomesService
         return this.apiService.getCareHomeDetails(id).map(result => new User(result));
     }
 
-    updateCareHomeDetails(id: string, form: FormGroup): Observable<any>
+    updateCareHomeDetails(id: string, form: FormGroup, floorPlan: File): Observable<any>
     {
         //data serialisation
         const formData: FormData = new FormData();
 
         Object.keys(form.value).forEach(key => {
-            formData.append(key, form.get(key).value)
+            if(key == "banned_until")
+            {
+                if(form.get(key).value !== '')
+                {
+                    const date = new Date(form.get(key).value);
+                    date.setHours(23,59,59,999);
+                    formData.append(key, date.getTime().toString());
+                }
+            }
+            else if(key != "floor_plan")
+                formData.append(key, form.get(key).value);
         });
+
+        if(floorPlan)
+            formData.append("floor_plan", floorPlan);
 
         return this.apiService.updateCareHome(id, formData);
     }

@@ -187,7 +187,7 @@ export class AddCareHomeComponent implements OnInit
                 },
                 {
                     error: 'fileSize',
-                    message: 'Your CV cannot be larger than 10MB'
+                    message: 'Your floor plan cannot be larger than 10MB'
                 },
             ]
         },
@@ -231,15 +231,19 @@ export class AddCareHomeComponent implements OnInit
             superior_contact: new FormControl(''),
         });
 
+        //password
         this.form.get('password')
             .valueChanges
             .subscribe(
-                (pass: string) => this.form.get('password_confirm').setValidators([Validators.required, equalToFieldValue(pass)]));
+                () => {
+                    const control = this.form.get('password_confirm');
+                    control.setValidators([Validators.required, equalToFieldValue(this.form.get('password').value)]);
+                    control.updateValueAndValidity();
+                });
 
         this.form.get('password_confirm')
             .valueChanges
-            .subscribe(
-                (pass: string) => this.form.get('password').setValidators([Validators.required, equalToFieldValue(pass)]));
+            .subscribe(() => this.form.get('password_confirm').setValidators([Validators.required, equalToFieldValue(this.form.get('password').value)]));
 
     }
 
