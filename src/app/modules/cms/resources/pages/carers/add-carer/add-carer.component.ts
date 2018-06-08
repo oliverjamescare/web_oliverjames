@@ -375,7 +375,7 @@ export class AddCarerComponent implements OnInit {
             first_name: new FormControl(null, [Validators.required, Validators.maxLength(100), alpha]),
             middle_name: new FormControl('', [Validators.maxLength(100), alpha]),
             surname: new FormControl(null, [Validators.required, Validators.maxLength(100), alpha]),
-            gender: new FormControl(null),
+            gender: new FormControl(''),
             password: new FormControl(null, [Validators.required, Validators.minLength(6), password]),
             password_confirm: new FormControl(null, [Validators.required]),
             date_of_birth: new FormControl(null, [Validators.required, invalidDate, adult]),

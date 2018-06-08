@@ -25,7 +25,7 @@
       <div class="row">
         <div class="col-6">
           <div class="form-group form-group-max">
-            <input type="text" class="form-control" placeholder="First name"
+            <input trim="blur" type="text" class="form-control" placeholder="First name"
                    formControlName="first_name"
                    [ngClass]="formUtils.handleValidationStateClass(form, 'first_name')">
             <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'first_name', messages) }} </span>
@@ -33,7 +33,7 @@
         </div>
         <div class="col-6">
           <div class="form-group form-group-max">
-            <input type="text" class="form-control" placeholder="Last name"
+            <input trim="blur" type="text" class="form-control" placeholder="Last name"
                    formControlName="surname"
                    [ngClass]="formUtils.handleValidationStateClass(form, 'surname')">
             <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'surname', messages) }} </span>

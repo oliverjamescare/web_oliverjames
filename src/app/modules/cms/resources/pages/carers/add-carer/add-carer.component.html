@@ -19,7 +19,7 @@
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Phone number" formControlName="phone_number" [ngClass]="formUtils.handleValidationStateClass(form, 'phone_number')">
+                        <input type="text" trim="blur" class="form-control" placeholder="Phone number" formControlName="phone_number" [ngClass]="formUtils.handleValidationStateClass(form, 'phone_number')">
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'phone_number', messages) }} </span>
                     </div>
                 </div>
@@ -41,19 +41,19 @@
             <div class="row">
                 <div class="col-4">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="First name (as it appears on passport)" formControlName="first_name" [ngClass]="formUtils.handleValidationStateClass(form, 'first_name')">
+                        <input type="text" trim="blur" class="form-control" placeholder="First name (as it appears on passport)" formControlName="first_name" [ngClass]="formUtils.handleValidationStateClass(form, 'first_name')">
                         <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'first_name', messages) }} </span>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Middle names (as it appears on passport)" formControlName="middle_name" [ngClass]="formUtils.handleValidationStateClass(form, 'middle_name')">
+                        <input type="text" trim="blur" class="form-control" placeholder="Middle names (as it appears on passport)" formControlName="middle_name" [ngClass]="formUtils.handleValidationStateClass(form, 'middle_name')">
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'middle_name', messages) }} </span>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Surname (as it appears on passport)" formControlName="surname" [ngClass]="formUtils.handleValidationStateClass(form, 'surname')">
+                        <input type="text" trim="blur" class="form-control" placeholder="Surname (as it appears on passport)" formControlName="surname" [ngClass]="formUtils.handleValidationStateClass(form, 'surname')">
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'surname', messages) }} </span>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
             <div class="row">
                 <div class="col-4">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Carer postcode" id="postcode" name="postcode" formControlName="postal_code" [ngClass]="formUtils.handleValidationStateClass(form, 'postal_code')">
+                        <input type="text" trim="blur" class="form-control" placeholder="Carer postcode" id="postcode" name="postcode" formControlName="postal_code" [ngClass]="formUtils.handleValidationStateClass(form, 'postal_code')">
                         <app-address-lookup [search]="form.get('postal_code')" (addressFound)="onAddressFound($event)"></app-address-lookup>
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'postal_code', messages) }} </span>
                     </div>
@@ -76,25 +76,25 @@
             <div class="row">
                 <div class="col-3">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Carer name / Company name" id="company" name="company" formControlName="company" [ngClass]="formUtils.handleValidationStateClass(form, 'company')">
+                        <input type="text" trim="blur" class="form-control" placeholder="Carer name / Company name" id="company" name="company" formControlName="company" [ngClass]="formUtils.handleValidationStateClass(form, 'company')">
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'company', messages) }} </span>
                     </div>
                 </div>
                 <div class="col-3">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Address line 1" id="line_one" name="line_one" formControlName="address_line_1" [ngClass]="formUtils.handleValidationStateClass(form, 'address_line_1')">
+                        <input type="text" trim="blur" class="form-control" placeholder="Address line 1" id="line_one" name="line_one" formControlName="address_line_1" [ngClass]="formUtils.handleValidationStateClass(form, 'address_line_1')">
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'address_line_1', messages) }} </span>
                     </div>
                 </div>
                 <div class="col-3">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Address line 2" id="line_two" name="line_two" formControlName="address_line_2" [ngClass]="formUtils.handleValidationStateClass(form, 'address_line_2')">
+                        <input type="text" trim="blur" class="form-control" placeholder="Address line 2" id="line_two" name="line_two" formControlName="address_line_2" [ngClass]="formUtils.handleValidationStateClass(form, 'address_line_2')">
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'address_line_2', messages) }} </span>
                     </div>
                 </div>
                 <div class="col-3">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Town / City" id="city" name="city" formControlName="city" [ngClass]="formUtils.handleValidationStateClass(form, 'city')">
+                        <input type="text" trim="blur" class="form-control" placeholder="Town / City" id="city" name="city" formControlName="city" [ngClass]="formUtils.handleValidationStateClass(form, 'city')">
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'city', messages) }} </span>
                     </div>
                 </div>
@@ -104,6 +104,7 @@
                     <div class="form-group">
                         <label>Gender</label>
                         <select formControlName="gender" placeholder="Gender" class="form-control">
+                            <option value="" disabled selected>Gender</option>
                             <option *ngFor="let gender of genders" [value]="gender">{{ gender }}</option>
                         </select>
                     </div>
@@ -168,7 +169,7 @@
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'dbs_status', messages) }} </span>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Reference number" formControlName="dbs_ref_number" [ngClass]="formUtils.handleValidationStateClass(form, 'dbs_ref_number')">
+                        <input type="text" trim="blur" class="form-control" placeholder="Reference number" formControlName="dbs_ref_number" [ngClass]="formUtils.handleValidationStateClass(form, 'dbs_ref_number')">
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'dbs_ref_number', messages) }} </span>
                     </div>
 
