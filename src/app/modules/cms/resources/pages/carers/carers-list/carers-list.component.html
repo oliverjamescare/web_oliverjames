@@ -43,59 +43,60 @@
                     <tr>
                         <th class="sort-cell">
                             <div class="sort-container">
-                                <div class="asc" (click)="onChangeSort('id_asc')"><i class="fa fa-angle-up"></i></div>
-                                <div class="desc" (click)="onChangeSort('id_desc')"><i class="fa fa-angle-down"></i></div>
+                                <div [ngClass]="{'chosenSort':sort === 'id_asc'}"
+                                class="asc" (click)="onChangeSort('id_asc')"><i class="fa fa-angle-up"></i></div>
+                                <div [ngClass]="{'chosenSort':sort === 'id_desc'}" class="desc" (click)="onChangeSort('id_desc')"><i class="fa fa-angle-down"></i></div>
                             </div>
-                            <div class="sort-label">Carer ID</div>
+                            <div class="sort-label">Carer&nbsp;ID</div>
                         </th>
                         <th class="sort-cell">
                             <div class="sort-container">
-                                <div class="asc" (click)="onChangeSort('name_asc')"><i class="fa fa-angle-up"></i></div>
-                                <div class="desc" (click)="onChangeSort('name_desc')"><i class="fa fa-angle-down"></i></div>
+                                <div [ngClass]="{'chosenSort':sort === 'name_asc'}" class="asc" (click)="onChangeSort('name_asc')"><i class="fa fa-angle-up"></i></div>
+                                <div [ngClass]="{'chosenSort':sort === 'name_desc'}" class="desc" (click)="onChangeSort('name_desc')"><i class="fa fa-angle-down"></i></div>
                             </div>
                             <div class="sort-label">Name</div>
                         </th>
                         <th class="sort-cell">
                             <div class="sort-container">
-                                <div class="asc" (click)="onChangeSort('date_of_birth_asc')"><i class="fa fa-angle-up"></i></div>
-                                <div class="desc" (click)="onChangeSort('date_of_birth_desc')"><i class="fa fa-angle-down"></i></div>
+                                <div [ngClass]="{'chosenSort':sort === 'date_of_birth_asc'}" class="asc" (click)="onChangeSort('date_of_birth_asc')"><i class="fa fa-angle-up"></i></div>
+                                <div [ngClass]="{'chosenSort':sort === 'date_of_birth_desc'}" class="desc" (click)="onChangeSort('date_of_birth_desc')"><i class="fa fa-angle-down"></i></div>
                             </div>
-                            <div class="sort-label">Date of birth</div>
+                            <div class="sort-label">Date&nbsp;of&nbsp;birth</div>
                         </th>
                         <th class="sort-cell">
                             <div class="sort-container">
-                                <div class="asc" (click)="onChangeSort('activation_date_asc')"><i class="fa fa-angle-up"></i></div>
-                                <div class="desc" (click)="onChangeSort('activation_date_desc')"><i class="fa fa-angle-down"></i></div>
+                                <div [ngClass]="{'chosenSort':sort === 'activation_date_asc'}" class="asc" (click)="onChangeSort('activation_date_asc')"><i class="fa fa-angle-up"></i></div>
+                                <div [ngClass]="{'chosenSort':sort === 'activation_date_desc'}" class="desc" (click)="onChangeSort('activation_date_desc')"><i class="fa fa-angle-down"></i></div>
                             </div>
-                            <div class="sort-label">Date went active</div>
+                            <div class="sort-label">Date&nbsp;went&nbsp;active</div>
                         </th>
                         <th class="sort-cell">
                             <div class="sort-container">
-                                <div class="asc" (click)="onChangeSort('rating_asc')"><i class="fa fa-angle-up"></i></div>
-                                <div class="desc" (click)="onChangeSort('rating_desc')"><i class="fa fa-angle-down"></i></div>
+                                <div [ngClass]="{'chosenSort':sort === 'rating_asc'}" class="asc" (click)="onChangeSort('rating_asc')"><i class="fa fa-angle-up"></i></div>
+                                <div [ngClass]="{'chosenSort':sort === 'rating_desc'}" class="desc" (click)="onChangeSort('rating_desc')"><i class="fa fa-angle-down"></i></div>
                             </div>
                             <div class="sort-label">Rating</div>
                         </th>
                         <th class="sort-cell">
                             <div class="sort-container">
-                                <div class="asc" (click)="onChangeSort('status_asc')"><i class="fa fa-angle-up"></i></div>
-                                <div class="desc" (click)="onChangeSort('status_desc')"><i class="fa fa-angle-down"></i></div>
+                                <div [ngClass]="{'chosenSort':sort === 'status_asc'}" class="asc" (click)="onChangeSort('status_asc')"><i class="fa fa-angle-up"></i></div>
+                                <div [ngClass]="{'chosenSort':sort === 'status_desc'}" class="desc" (click)="onChangeSort('status_desc')"><i class="fa fa-angle-down"></i></div>
                             </div>
                             <div class="sort-label">Status</div>
                         </th>
                         <th class="sort-cell">
                             <div class="sort-container">
-                                <div class="asc" (click)="onChangeSort('banned_until_asc')"><i class="fa fa-angle-up"></i></div>
-                                <div class="desc" (click)="onChangeSort('banned_until_desc')"><i class="fa fa-angle-down"></i></div>
+                                <div [ngClass]="{'chosenSort':sort === 'banned_until_asc'}" class="asc" (click)="onChangeSort('banned_until_asc')"><i class="fa fa-angle-up"></i></div>
+                                <div [ngClass]="{'chosenSort':sort === 'banned_until_desc'}" class="desc" (click)="onChangeSort('banned_until_desc')"><i class="fa fa-angle-down"></i></div>
                             </div>
-                            <div class="sort-label">Banned deadline</div>
+                            <div class="sort-label">Banned&nbsp;deadline</div>
                         </th>
                         <th class="sort-cell">
                             <div class="sort-container">
-                                <div class="asc" (click)="onChangeSort('deductions_balance_asc')"><i class="fa fa-angle-up"></i></div>
-                                <div class="desc" (click)="onChangeSort('deductions_balance_desc')"><i class="fa fa-angle-down"></i></div>
+                                <div [ngClass]="{'chosenSort':sort === 'deductions_balance_asc'}" class="asc" (click)="onChangeSort('deductions_balance_asc')"><i class="fa fa-angle-up"></i></div>
+                                <div [ngClass]="{'chosenSort':sort === 'deductions_balance_desc'}" class="desc" (click)="onChangeSort('deductions_balance_desc')"><i class="fa fa-angle-down"></i></div>
                             </div>
-                            <div class="sort-label">Total still to deduct</div>
+                            <div class="sort-label">Total&nbsp;still to&nbsp;deduct</div>
                         </th>
                         <th>Notes</th>
                         <th>Details</th>
