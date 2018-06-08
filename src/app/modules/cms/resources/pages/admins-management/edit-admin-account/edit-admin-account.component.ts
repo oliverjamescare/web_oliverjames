@@ -101,7 +101,7 @@ export class EditAdminAccountComponent implements OnInit {
                 },
                 {
                     error: 'pattern',
-                    message: 'Spaces is not allowed, field can contain only alphabetical characters'
+                    message: 'Field can contain only alphabetical characters'
                 }
             ]
         },
@@ -122,7 +122,7 @@ export class EditAdminAccountComponent implements OnInit {
                 },
                 {
                     error: 'pattern',
-                    message: 'Spaces is not allowed, field can contain only alphabetical characters'
+                    message: 'Field can contain only alphabetical characters'
                 }
             ]
         },
@@ -148,8 +148,8 @@ export class EditAdminAccountComponent implements OnInit {
                     this.inProgress = false;
                     this.form = new FormGroup({
                         email: new FormControl(this.adminDetails.email, [Validators.required, Validators.email]),
-                        first_name: new FormControl(this.adminDetails.first_name, [Validators.required, Validators.pattern('^[A-z]+$')]),
-                        surname: new FormControl(this.adminDetails.surname, [Validators.required, Validators.pattern('^[A-z]+$')]),
+                        first_name: new FormControl(this.adminDetails.first_name, [Validators.required, Validators.pattern('^[a-zA-Z\\s]*$')]),
+                        surname: new FormControl(this.adminDetails.surname, [Validators.required, Validators.pattern('^[a-zA-Z\\s]*$')]),
                         role: new FormControl(this.adminDetails.role, []),
                     });
                 },

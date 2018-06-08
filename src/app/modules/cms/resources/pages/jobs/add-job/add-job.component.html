@@ -66,7 +66,7 @@
                             <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form.get('jobs').controls[i], 'notes', jobFormMessages) }} </span>
                         </div>
                     </div>
-                    <div class="col-1">
+                    <div *ngIf="i>0" class="col-1">
                         <span (click)="onRemoveJob(i)" class="big-icon gj-cursor-pointer"><i class="fa fa-times"></i></span>
                     </div>
                 </div>

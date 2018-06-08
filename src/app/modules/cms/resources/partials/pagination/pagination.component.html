@@ -1,9 +1,23 @@
 <div *ngIf="pages.length > 1" class="text-center">
-    <nav>
-        <ul class="pagination">
-            <li *ngFor="let p of pages" [ngClass]="{'active': currentPage === p + 1}" class="page-item">
-                <a (click)="onPageChangeClicked(p + 1)" class="page-link">{{ p + 1 }}</a>
-            </li>
-        </ul>
-    </nav>
+    <div class="rightSide">
+                                    <span class="pull-right buttonPag"><b
+                                            *ngIf="pageValidity(currentPage + 1)"
+                                            (click)="incrementPageValue()">></b></span>
+        <span class="pull-right pageTop">Page {{ currentPage }} of {{ numberOfPages }}</span>
+        <span class="pull-right buttonPag"><b
+                *ngIf="pageValidity(currentPage - 1)"
+                (click)="decrementPageValue()"><</b></span>
+    </div>
+    <div class="leftSide">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="text-right">
+            <label class="d-inline">Page: </label><input formControlName="pageField" class="form-control m-input--solid d-inline w-25"
+                   value="{{ currentPage }}"><button type="submit" [disabled]="!form.valid || !pageValidity(this.form.value.pageField)"
+                    class="btn btn-success d-inline customChangeButton">Change
+            </button>
+            <span *ngIf="!form.valid || !pageValidity(this.form.value.pageField)"
+                  class="invalid-feedback clear-both">The page number is not valid</span>
+
+        </form>
+    </div>
 </div>
+<br/><br/><br/>

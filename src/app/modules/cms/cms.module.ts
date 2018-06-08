@@ -3,6 +3,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {CmsRoutingModule} from './cms-routing.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { InputTrimModule } from 'ng2-trim-directive';
 
 //guards
 import {AuthGuardService} from './guards/auth-guard.service';
@@ -77,7 +78,8 @@ import {DeleteDayComponent} from './resources/pages/parameterization/delete-day/
         CmsRoutingModule,
         ReactiveFormsModule,
         FormsModule,
-        CalendarModule
+        CalendarModule,
+        InputTrimModule
     ],
     declarations: [
         CmsComponent,

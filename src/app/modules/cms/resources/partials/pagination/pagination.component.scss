@@ -1,0 +1,55 @@
+.paginatorFooter {
+  .footerPagLabel {
+    padding-top: 9px;
+    float: left;
+    margin-right: 10px;
+  }
+  > div > div {
+    margin-top: 5px;
+  }
+  .m-w-35 {
+    width: 35% !important;
+  }
+}
+.buttonPag {
+  font-size: 25px;
+  margin: 0 10px;
+  font-weight: bold;
+  min-height: 1px;
+  display: block;
+  width: 15px;
+}
+
+.buttonPag {
+  font-size: 25px;
+  margin: 0 10px;
+  font-weight: bold;
+  min-height: 1px;
+  display: block;
+  width: 15px;
+  cursor: pointer;
+}
+
+.pageTop {
+  margin-top: 8px;
+  min-height: 1px;
+}
+.actions {
+  cursor: pointer;
+  color: #03c88b;
+}
+.customChangeButton {
+  max-width: 111px;
+  padding: 6px;
+  display: inline;
+  margin-top:-1px;
+  margin-left: 5px;
+}
+.leftSide {
+  width: 400px;
+  float:right;
+}
+.rightSide {
+  width: 240px;
+  float:right;
+}

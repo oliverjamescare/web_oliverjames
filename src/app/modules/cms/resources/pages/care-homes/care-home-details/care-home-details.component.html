@@ -45,7 +45,7 @@
                     </div>
                     <div class="col-sm-8">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Name" formControlName="name" [ngClass]="formUtils.handleValidationStateClass(form, 'name')">
+                            <input type="text" trim="blur" class="form-control" placeholder="Name" formControlName="name" [ngClass]="formUtils.handleValidationStateClass(form, 'name')">
                             <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'name', messages) }} </span>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                     </div>
                     <div class="col-sm-8">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Name" formControlName="care_service_name" [ngClass]="formUtils.handleValidationStateClass(form, 'care_service_name')">
+                            <input type="text" trim="blur" class="form-control" placeholder="Name" formControlName="care_service_name" [ngClass]="formUtils.handleValidationStateClass(form, 'care_service_name')">
                             <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'care_service_name', messages) }} </span>
                         </div>
                     </div>
@@ -123,7 +123,7 @@
                     </div>
                     <div class="col-sm-8">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="postcode" name="postcode" formControlName="postal_code" placeholder="Postcode" [ngClass]="formUtils.handleValidationStateClass(form, 'postal_code')">
+                            <input type="text" trim="blur" class="form-control" id="postcode" name="postcode" formControlName="postal_code" placeholder="Postcode" [ngClass]="formUtils.handleValidationStateClass(form, 'postal_code')">
                             <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'postal_code', messages) }} </span>
                             <app-address-lookup [search]="form.get('postal_code')" (addressFound)="onAddressFound($event)"></app-address-lookup>
                         </div>
@@ -135,7 +135,7 @@
                     </div>
                     <div class="col-sm-8">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="company" placeholder="Company name" formControlName="company">
+                            <input type="text" trim="blur" class="form-control" name="company" placeholder="Company name" formControlName="company">
                         </div>
                     </div>
                 </div>
@@ -145,7 +145,7 @@
                     </div>
                     <div class="col-sm-8">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="address_line_1" placeholder="Address line 1" formControlName="address_line_1" [ngClass]="formUtils.handleValidationStateClass(form, 'address_line_1')">
+                            <input type="text" trim="blur" class="form-control" name="address_line_1" placeholder="Address line 1" formControlName="address_line_1" [ngClass]="formUtils.handleValidationStateClass(form, 'address_line_1')">
                             <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'address_line_1', messages) }} </span>
                         </div>
                     </div>
@@ -156,7 +156,7 @@
                     </div>
                     <div class="col-sm-8">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="address_line_2" placeholder="Address line 2" formControlName="address_line_2">
+                            <input type="text" trim="blur" class="form-control" name="address_line_2" placeholder="Address line 2" formControlName="address_line_2">
                         </div>
                     </div>
                 </div>
@@ -166,7 +166,7 @@
                     </div>
                     <div class="col-sm-8">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="city" placeholder="City" formControlName="city" [ngClass]="formUtils.handleValidationStateClass(form, 'city')">
+                            <input type="text" trim="blur" class="form-control" name="city" placeholder="City" formControlName="city" [ngClass]="formUtils.handleValidationStateClass(form, 'city')">
                             <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'city', messages) }} </span>
                         </div>
                     </div>
@@ -182,7 +182,7 @@
                     <div class="col-sm-8">
                         <div class="form-group">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="e.g. senior carer, manager" formControlName="superior_contact">
+                                <input type="text" trim="blur" class="form-control" placeholder="e.g. senior carer, manager" formControlName="superior_contact">
                             </div>
                         </div>
                     </div>
@@ -194,7 +194,7 @@
                     <div class="col-sm-8">
                         <div class="form-group">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="e.g. ask to speak to the senior carer or manager" formControlName="report_contact">
+                                <input type="text" trim="blur" class="form-control" placeholder="e.g. ask to speak to the senior carer or manager" formControlName="report_contact">
                             </div>
                         </div>
                     </div>
@@ -206,7 +206,7 @@
                     <div class="col-sm-8">
                         <div class="form-group">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="e.g. report to fire panel at the main entrance" formControlName="emergency_guidance">
+                                <input type="text" trim="blur" class="form-control" placeholder="e.g. report to fire panel at the main entrance" formControlName="emergency_guidance">
                             </div>
                         </div>
                     </div>
@@ -230,7 +230,7 @@
                     <div class="col-sm-8">
                         <div class="form-group">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Describe where and if it’s free parking / how to pay" formControlName="parking">
+                                <input type="text" trim="blur" class="form-control" placeholder="Describe where and if it’s free parking / how to pay" formControlName="parking">
                             </div>
                         </div>
                     </div>
@@ -335,7 +335,7 @@
                 </div>
                 <div class="form-group">
                     <label>Amount</label>
-                    <input type="text" class="form-control" formControlName="amount" placeholder="Amount" [ngClass]="formUtils.handleValidationStateClass(creditsForm, 'amount')">
+                    <input type="text" trim="blur" class="form-control" formControlName="amount" placeholder="Amount" [ngClass]="formUtils.handleValidationStateClass(creditsForm, 'amount')">
                     <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(creditsForm, 'amount', creditsMessages) }} </span>
                 </div>
                 <div class="form-group">

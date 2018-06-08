@@ -380,7 +380,7 @@
                 </div>
                 <div class="form-group">
                     <label>Amount</label>
-                    <input type="text" class="form-control" formControlName="amount" placeholder="Amount" [ngClass]="formUtils.handleValidationStateClass(deductionForm, 'amount')">
+                    <input type="text" trim="blur" class="form-control" formControlName="amount" placeholder="Amount" [ngClass]="formUtils.handleValidationStateClass(deductionForm, 'amount')">
                     <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(deductionForm, 'amount', deductionsMessages) }} </span>
                 </div>
                 <div class="form-group">
