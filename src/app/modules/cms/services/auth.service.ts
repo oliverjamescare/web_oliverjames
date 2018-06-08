@@ -1,5 +1,8 @@
 import { Admin } from '../models/admin.model';
-import { Subject } from 'rxjs/Subject';
+import { Subject,  } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import {Observable} from 'rxjs/Observable';
+
 
 export class AuthService
 {
@@ -8,6 +11,7 @@ export class AuthService
     private authenticated = false;
     private currentRole:string;
     authChanged: Subject<Admin> = new Subject();
+    adminData$ = new BehaviorSubject<boolean>(true);
 
     constructor()
     {
@@ -35,6 +39,14 @@ export class AuthService
         }
     }
 
+    editedAdminData(): Observable<boolean> {
+        return this.adminData$.asObservable();
+    }
+
+    changeAdminData(change: boolean) {
+        this.adminData$.next(change);
+    }
+
     logout()
     {
         sessionStorage.removeItem("authAdmin");
@@ -44,8 +56,9 @@ export class AuthService
         this.authChanged.next(this.admin);
     }
 
-    getLoggedUser() : Admin
+    getLoggedUser(): Admin
     {
+        this.admin = JSON.parse(sessionStorage.getItem("authAdmin"));
         return this.admin;
     }
 
