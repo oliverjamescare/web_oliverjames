@@ -70,6 +70,7 @@ import { ParameterizationComponent } from './resources/pages/parameterization/pa
 import { ExportsComponent } from './resources/pages/exports/exports.component';
 import {AddNewDayComponent} from './resources/pages/parameterization/add-new-day/add-new-day.component';
 import {DeleteDayComponent} from './resources/pages/parameterization/delete-day/delete-day.component';
+import {DeleteWaitingComponent} from './resources/pages/waiting-list/delete-waiting/delete-waiting.component';
 
 
 @NgModule({
@@ -126,7 +127,8 @@ import {DeleteDayComponent} from './resources/pages/parameterization/delete-day/
         DeleteDayComponent,
         EditMyAdminAccountComponent,
         ParameterizationComponent,
-        ExportsComponent
+        ExportsComponent,
+        DeleteWaitingComponent
     ],
     providers: [
         ApiService,

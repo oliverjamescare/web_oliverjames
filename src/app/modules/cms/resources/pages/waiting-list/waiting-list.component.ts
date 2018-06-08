@@ -1,44 +1,40 @@
-import { Component, OnInit } from '@angular/core';
-import { WaitingListService } from '../../../services/waiting-list.service';
-import { WaitingUser } from '../../../models/waiting-user.model';
-import { DatesService } from '../../../services/dates.service';
+import {Component, OnInit} from '@angular/core';
+import {WaitingListService} from '../../../services/waiting-list.service';
+import {WaitingUser} from '../../../models/waiting-user.model';
+import {DatesService} from '../../../services/dates.service';
 
 @Component({
     selector: 'app-waiting-list',
     templateUrl: './waiting-list.component.html',
     styleUrls: ['./waiting-list.component.scss']
 })
-export class WaitingListComponent implements OnInit
-{
-    waitingList: Array<WaitingUser>
+export class WaitingListComponent implements OnInit {
+    waitingList: Array<WaitingUser>;
     pages: Array<number> = [];
     page: number = 0;
+    showDeleteWaitingDialog = false;
+    waitingId: string;
 
-    constructor(private waitingListService: WaitingListService, public datesService: DatesService) {}
 
-    ngOnInit()
-    {
+    constructor(private waitingListService: WaitingListService, public datesService: DatesService) {
+    }
+
+    ngOnInit() {
         this.loadWaitingList();
     }
 
-    onRemove(event: Event, id: string)
-    {
+    onRemove(event: Event, id: string) {
         event.preventDefault();
-        this.waitingListService
-            .deleteWaitingUser(id)
-            .subscribe(() => {
-                this.loadWaitingList();
-            })
+        this.showDeleteWaitingDialog = true;
+        this.waitingId = id;
     }
 
-    onPageChange(page: number)
-    {
+    onPageChange(page: number) {
         this.waitingListService.page = page;
         this.loadWaitingList();
     }
 
-    loadWaitingList()
-    {
+    loadWaitingList() {
         //getting care homes
         this.waitingListService
             .getWaitingList()
@@ -46,8 +42,14 @@ export class WaitingListComponent implements OnInit
 
                 this.pages = Array.from(Array(this.waitingListService.pages).keys());
                 this.page = this.waitingListService.page;
-                this.waitingList = this.waitingListService.getWaitingUsers()
-            })
+                this.waitingList = this.waitingListService.getWaitingUsers();
+            });
     }
+
+    onReload(): void {
+        this.showDeleteWaitingDialog = false;
+        this.loadWaitingList();
+    }
+
 
 }

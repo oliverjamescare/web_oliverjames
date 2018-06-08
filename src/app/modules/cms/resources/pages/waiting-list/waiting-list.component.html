@@ -50,3 +50,14 @@
         </div>
     </div>
 </div>
+
+
+<app-delete-waiting
+        *ngIf="showDeleteWaitingDialog"
+        type="delete_waiting_item"
+        [title]="'Delete waiting item'"
+        [waitingId]="waitingId"
+        (reload)="showDeleteWaitingDialog = false; onReload()"
+        (closed)="showDeleteWaitingDialog = false"
+>
+</app-delete-waiting>
