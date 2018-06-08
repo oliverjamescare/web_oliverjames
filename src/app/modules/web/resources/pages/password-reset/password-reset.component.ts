@@ -64,10 +64,19 @@ export class PasswordResetComponent implements OnInit
             password_confirm: new FormControl(null, [ Validators.required ])
         });
 
-        //password confirmation
+        //password
         this.form.get('password')
             .valueChanges
-            .subscribe((password: string) => this.form.get('password_confirm').setValidators([ Validators.required, equalToFieldValue(password)]));
+            .subscribe(
+                () => {
+                    const control = this.form.get('password_confirm');
+                    control.setValidators([Validators.required, equalToFieldValue(this.form.get('password').value)]);
+                    control.updateValueAndValidity();
+                });
+
+        this.form.get('password_confirm')
+            .valueChanges
+            .subscribe(() => this.form.get('password_confirm').setValidators([Validators.required, equalToFieldValue(this.form.get('password').value)]));
     }
 
     onSubmit()

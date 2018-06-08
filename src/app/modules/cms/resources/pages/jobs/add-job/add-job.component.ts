@@ -32,6 +32,7 @@ export class AddJobComponent implements OnInit
     form: FormGroup;
     formUtils = { handleValidationStateClass, handleValidationErrorMessage };
     inProgress: boolean = false;
+    now = new Date();
     roles: Array<string> = [
         "Carer",
         "Senior Carer"
@@ -135,8 +136,8 @@ export class AddJobComponent implements OnInit
     {
         this.form = new FormGroup({
             jobs: new FormArray([ new FormGroup({
-                start_date: new FormControl(null, [ Validators.required, invalidDate ]),
-                end_date: new FormControl(null, [ Validators.required, invalidDate ]),
+                start_date: new FormControl(new Date(), [ Validators.required, invalidDate ]),
+                end_date: new FormControl(new Date(), [ Validators.required, invalidDate ]),
                 role: new FormControl(null, Validators.required),
                 notes: new FormControl(null),
             })]),
@@ -171,8 +172,8 @@ export class AddJobComponent implements OnInit
     onAddJob()
     {
         const jobForm = new FormGroup({
-            start_date: new FormControl(null, [ Validators.required, invalidDate ]),
-            end_date: new FormControl(null, [ Validators.required, invalidDate ]),
+            start_date: new FormControl(new Date(), [ Validators.required, invalidDate ]),
+            end_date: new FormControl(new Date(), [ Validators.required, invalidDate ]),
             role: new FormControl(null, Validators.required),
             notes: new FormControl(null),
         });
@@ -217,5 +218,12 @@ export class AddJobComponent implements OnInit
             control.setValidators([Validators.required, fileType(fileResource, this.validMimeTypes), fileSize(fileResource, this.maxFileSizeMB)]);
             control.updateValueAndValidity();
         }
+    }
+
+    maxJobDuration(start: Date) : Date
+    {
+        const end = new Date(start.getTime());
+        end.setDate(end.getDate() + 1);
+        return end;
     }
 }

@@ -29,6 +29,7 @@ export class CarerDetailsComponent implements OnInit
     uploadTitle: string;
     files: string[] = [];
 
+    bannMinDate = new Date();
     deductionForm: FormGroup;
     modalError: string = '';
     inProgress: boolean = false;
@@ -317,7 +318,17 @@ export class CarerDetailsComponent implements OnInit
         this.carerDetails.carer.gender = this.form.get('gender').value;
         this.carerDetails.notes = this.form.get('notes').value;
         this.carerDetails.status = this.form.get('status').value;
-        this.carerDetails.banned_until = this.form.get('banned_until').value === '' ? null : new Date(this.form.get('banned_until').value).getTime();
+
+        //bann
+        if(this.form.get('banned_until').value !== '')
+        {
+            const date = new Date(this.form.get('banned_until').value);
+            date.setHours(23,59,59,999);
+            this.carerDetails.banned_until = date.getTime();
+        }
+        else
+            this.carerDetails.banned_until = null;
+
 
         //address
         this.carerDetails.address.city = this.form.get('city').value;

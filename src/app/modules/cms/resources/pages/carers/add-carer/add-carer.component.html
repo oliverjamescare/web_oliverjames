@@ -186,11 +186,13 @@
                 <div class="col-4">
                     <h3>Carer joining experience</h3>
                     <div class="form-group">
+                        <label>Number of years</label><br>
                         <input type="number" class="form-control" placeholder="Experience in years" formControlName="experience_years" [ngClass]="formUtils.handleValidationStateClass(form, 'experience_years')">
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'experience_years', messages) }} </span>
                     </div>
 
                     <div class="form-group">
+                        <label>Number of months</label><br>
                         <input type="number" class="form-control" placeholder="Experience in months" formControlName="experience_months" [ngClass]="formUtils.handleValidationStateClass(form, 'experience_months')">
                         <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'experience_months', messages) }} </span>
                     </div>
