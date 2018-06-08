@@ -17,9 +17,9 @@ import {AuthService} from '../../../../services/auth.service';
 
 
 @Component({
-  selector: 'app-edit-my-admin-account',
-  templateUrl: './edit-my-admin-account.component.html',
-  styleUrls: ['./edit-my-admin-account.component.scss']
+    selector: 'app-edit-my-admin-account',
+    templateUrl: './edit-my-admin-account.component.html',
+    styleUrls: ['./edit-my-admin-account.component.scss']
 })
 export class EditMyAdminAccountComponent implements OnInit {
 
@@ -126,7 +126,7 @@ export class EditMyAdminAccountComponent implements OnInit {
         },
     ];
 
-    constructor(private adminsManagementService: AdminsManagementService, private router: Router, private notificationService: NotificationsService) {
+    constructor(private authService: AuthService, private adminsManagementService: AdminsManagementService, private router: Router, private notificationService: NotificationsService) {
     }
 
     ngOnInit() {
@@ -154,9 +154,9 @@ export class EditMyAdminAccountComponent implements OnInit {
     getUserFriendlyRole() {
         switch (this.form.get('role').value) {
             case 'ADMIN':
-               return 'Admin';
+                return 'Admin';
             case 'ADMIN_MANAGER':
-               return 'Manager';
+                return 'Manager';
             case 'ADMIN_DIRECTOR':
                 return 'Director';
             default:
@@ -166,15 +166,20 @@ export class EditMyAdminAccountComponent implements OnInit {
     }
 
 
-    onSubmit()
-    {
+    onSubmit() {
         if (this.form.valid) {
             this.inProgress = true;
             this.adminsManagementService
                 .updateAdminProfile(this.form.get('email').value, this.form.get('first_name').value, this.form.get('surname').value)
                 .subscribe(() => {
                         this.inProgress = false;
-                        // TODO get new data, save to localstorage
+                        let adminStorage = JSON.parse(sessionStorage.getItem('authAdmin'));
+                        adminStorage.first_name = this.form.get('first_name').value;
+                        adminStorage.surname = this.form.get('surname').value;
+                        adminStorage.email = this.form.get('email').value;
+                        sessionStorage.setItem("authAdmin", JSON.stringify(adminStorage));
+                        this.authService.changeAdminData(true);
+
                         this.notificationService.success('Your admin account updated successfully');
                     },
                     (error: HttpErrorResponse) => {

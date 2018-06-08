@@ -16,6 +16,7 @@ export class DashboardComponent implements OnInit
     ngOnInit()
     {
         this.admin = this.authService.getLoggedUser();
+        this.getChangeOfAdminUser();
     }
 
     onLogout(event: Event)
@@ -23,5 +24,10 @@ export class DashboardComponent implements OnInit
         event.preventDefault();
         this.authService.logout();
         this.router.navigate(["/admin","login"]);
+    }
+    getChangeOfAdminUser() {
+        this.authService.editedAdminData().subscribe(changeStatus => {
+            this.admin = this.authService.getLoggedUser();
+        });
     }
 }
