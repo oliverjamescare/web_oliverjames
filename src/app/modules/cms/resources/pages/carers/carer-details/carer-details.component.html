@@ -278,7 +278,9 @@
                     <th>Status</th>
                     <td>
                         <select formControlName="status" class="form-control">
-                            <option value="CREATED">Created</option>
+                            <ng-template [ngIf]="carerDetails.status == 'CREATED'">
+                                <option value="CREATED">Created</option>
+                            </ng-template>
                             <option value="ACTIVE">Active</option>
                             <option value="BANNED">Banned</option>
                         </select>
@@ -287,7 +289,7 @@
                 <tr>
                     <th>Ban carer until</th>
                     <td>
-                        <p-calendar formControlName="banned_until" [showIcon]="true" dateFormat="yy-mm-dd" [minDate]="bannMinDate"></p-calendar>
+                        <p-calendar formControlName="banned_until" [showIcon]="true" dateFormat="yy-mm-dd" [minDate]="bannMinDate" (onSelect)="onBanSelected()"></p-calendar>
                     </td>
                 </tr>
             </table>
@@ -305,26 +307,28 @@
             <br>
             <div class="row">
                 <div class="col-sm-12">
-                    <table class="deductions-table table" *ngIf="carerDetails.carer.deductions.length">
-                        <thead>
-                        <th>ID</th>
-                        <th>Date</th>
-                        <th>Description</th>
-                        <th>Credit / Debit</th>
-                        <th>Balance</th>
-                        <th>Status</th>
-                        </thead>
-                        <tbody>
-                        <tr *ngFor="let deduction of carerDetails.carer.deductions; let i = index;">
-                            <td>{{ i +1 }}</td>
-                            <td>{{ datesService.getDateString(deduction.created) }}</td>
-                            <td>{{ deduction.description }}</td>
-                            <td><span *ngIf="deduction.amount < 0">- </span><span>&#163;</span>{{ deduction.amount | absolute  }}</td>
-                            <td><span *ngIf="deduction.balance < 0">- </span><span>&#163;</span>{{ deduction.balance | absolute }}</td>
-                            <td>{{ deduction.status | capitalize | status }}</td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-container">
+                        <table class="deductions-table table" *ngIf="carerDetails.carer.deductions.length">
+                            <thead>
+                            <th>ID</th>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Credit / Debit</th>
+                            <th>Balance</th>
+                            <th>Status</th>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let deduction of carerDetails.carer.deductions; let i = index;">
+                                <td>{{ i +1 }}</td>
+                                <td>{{ datesService.getDateString(deduction.created) }}</td>
+                                <td>{{ deduction.description }}</td>
+                                <td><span *ngIf="deduction.amount < 0">- </span><span>&#163;</span>{{ deduction.amount | absolute  }}</td>
+                                <td><span *ngIf="deduction.balance < 0">- </span><span>&#163;</span>{{ deduction.balance | absolute }}</td>
+                                <td>{{ deduction.status | capitalize | status }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                     <br>
                     <button (click)="addDeduction()" class="btn btn-success  submit-button" type="button">Add deduction</button>
                 </div>
@@ -367,23 +371,25 @@
         <div class="col-sm">
             <form (ngSubmit)="onAddDeduction()" [formGroup]="deductionForm">
                 <div class="form-group">
-                    <label>Amount</label>
-                    <select class="form-control" formControlName="type">
-                        <option value="">Select type</option>
+                    <label>Type</label>
+                    <select class="form-control" formControlName="type" [ngClass]="formUtils.handleValidationStateClass(deductionForm, 'type')">
                         <option value="DEBIT">Debit</option>
                         <option value="CREDIT">Credit</option>
                     </select>
+                    <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(deductionForm, 'type', deductionsMessages) }} </span>
                 </div>
                 <div class="form-group">
                     <label>Amount</label>
-                    <input type="text" class="form-control" formControlName="amount" placeholder="Amount">
+                    <input type="text" class="form-control" formControlName="amount" placeholder="Amount" [ngClass]="formUtils.handleValidationStateClass(deductionForm, 'amount')">
+                    <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(deductionForm, 'amount', deductionsMessages) }} </span>
                 </div>
                 <div class="form-group">
                     <label>Description</label>
-                    <textarea class="form-control" formControlName="description" placeholder="Description" rows="5"></textarea>
+                    <textarea class="form-control" formControlName="description" placeholder="Description" rows="5" [ngClass]="formUtils.handleValidationStateClass(deductionForm, 'description')"></textarea>
+                    <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(deductionForm, 'description', deductionsMessages) }} </span>
                 </div>
 
-                <button type="submit" class="btn btn-success">Add</button>
+                <button type="submit" class="btn btn-success" [disabled]="!deductionForm.valid || inProgress">Add</button>
                 <div class="invalid-feedback">{{ modalError }}</div>
             </form>
         </div>
@@ -391,4 +397,8 @@
 </app-cms-popup>
 
 <!--profile image-->
-<app-see-profile-pictrue *ngIf="showProfilePicture" [url]="carerDetails.carer.profile_image"></app-see-profile-pictrue>
+<app-see-profile-pictrue
+    *ngIf="showProfilePicture"
+    [url]="carerDetails.carer.profile_image"
+    (closed)="showProfilePicture = false"
+></app-see-profile-pictrue>

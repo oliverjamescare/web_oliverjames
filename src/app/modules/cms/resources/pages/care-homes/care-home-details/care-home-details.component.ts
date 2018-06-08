@@ -9,7 +9,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { DatesService } from '../../../../services/dates.service';
 import { AddressDetail } from '../../../../../web/models/address/address-detail.model';
 import { NotificationsService } from 'angular2-notifications';
-import { alpha, fileSize, fileType } from '../../../../../../utilities/validators';
+import { alpha, fileSize, fileType, greaterThan, numbers } from '../../../../../../utilities/validators';
 
 @Component({
     selector: 'app-care-home-details',
@@ -118,6 +118,44 @@ export class CareHomeDetailsComponent implements OnInit
         },
     ];
 
+    creditsMessages = [
+        {
+            field: 'amount',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'Amount is required'
+                },
+                {
+                    error: 'numbers',
+                    message: 'Amount must be numeric value'
+                },
+                {
+                    error: 'greaterThan',
+                    message: 'Amount must be greater than 0'
+                }
+            ]
+        },
+        {
+            field: 'type',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'Type is required'
+                }
+            ]
+        },
+        {
+            field: 'description',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'Description is required'
+                }
+            ]
+        }
+    ];
+
 
     constructor(
         private route: ActivatedRoute,
@@ -140,9 +178,9 @@ export class CareHomeDetailsComponent implements OnInit
 
         //form credits init
         this.creditsForm = new FormGroup({
-            amount: new FormControl(""),
-            type: new FormControl(""),
-            description: new FormControl("")
+            amount: new FormControl(0, [ Validators.required, numbers, greaterThan(0)  ]),
+            type: new FormControl("CREDIT", [ Validators.required ]),
+            description: new FormControl(null, [ Validators.required ])
         })
     }
 
@@ -187,16 +225,19 @@ export class CareHomeDetailsComponent implements OnInit
     {
         if(this.creditsForm.valid)
         {
+            this.inProgress = true;
             this.careHomesService
                 .addCredits(this.id, this.creditsForm.value)
                 .subscribe(() => {
                         $("#credits").modal("hide");
                         this.modalError = "";
+                        this.inProgress = false;
                         this.creditsForm.reset();
                         this.loadCareHome();
                     },
                     (error: HttpErrorResponse) => {
                         this.modalError = getMessageError(error);
+                        this.inProgress = false;
                     });
         }
     }
@@ -231,7 +272,7 @@ export class CareHomeDetailsComponent implements OnInit
                 this.form = new FormGroup({
                     care_service_name: new FormControl(this.careHome.care_home.care_service_name, [Validators.required, Validators.maxLength(100), alpha]),
                     name: new FormControl(this.careHome.care_home.name, [ Validators.required, Validators.maxLength(100), alpha ]),
-                    notes: new FormControl(this.careHome.notes),
+                    notes: new FormControl(this.careHome.notes || ""),
                     status: new FormControl(this.careHome.status),
                     banned_until:  new FormControl(this.careHome.banned_until ? moment(this.careHome.banned_until || new Date()).format("YYYY-MM-DD") : null),
                     type_of_home: new FormControl(this.careHome.care_home.type_of_home),
@@ -239,11 +280,11 @@ export class CareHomeDetailsComponent implements OnInit
                     //general guidance and gender preference
                     gender_preference: new FormControl(this.careHome.care_home.gender_preference),
                     floor_plan: new FormControl(null),
-                    parking: new FormControl(this.careHome.care_home.general_guidance.parking),
-                    notes_for_carers: new FormControl(this.careHome.care_home.general_guidance.notes_for_carers),
-                    emergency_guidance: new FormControl(this.careHome.care_home.general_guidance.emergency_guidance),
-                    report_contact: new FormControl(this.careHome.care_home.general_guidance.report_contact),
-                    superior_contact: new FormControl(this.careHome.care_home.general_guidance.superior_contact),
+                    parking: new FormControl(this.careHome.care_home.general_guidance.parking || ""),
+                    notes_for_carers: new FormControl(this.careHome.care_home.general_guidance.notes_for_carers || ""),
+                    emergency_guidance: new FormControl(this.careHome.care_home.general_guidance.emergency_guidance || ""),
+                    report_contact: new FormControl(this.careHome.care_home.general_guidance.report_contact || ""),
+                    superior_contact: new FormControl(this.careHome.care_home.general_guidance.superior_contact || ""),
 
                     //adddress
                     postal_code: new FormControl(this.careHome.address.postal_code),

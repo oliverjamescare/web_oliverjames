@@ -264,16 +264,17 @@
                 <br>
                 <div class="row">
                     <div class="col-sm-12">
-                        <table class="credits-table table" *ngIf="careHome.care_home.credits.length">
-                            <thead>
+                        <div class="table-container">
+                            <table class="credits-table table" *ngIf="careHome.care_home.credits.length">
+                                <thead>
                                 <th>ID</th>
                                 <th>Date</th>
                                 <th>Description</th>
                                 <th>Credit / Debit</th>
                                 <th>Balance</th>
                                 <th>Status</th>
-                            </thead>
-                            <tbody>
+                                </thead>
+                                <tbody>
                                 <tr *ngFor="let credit of careHome.care_home.credits; let i = index;">
                                     <td>{{ i +1 }}</td>
                                     <td>{{ datesService.getDateString(credit.created) }}</td>
@@ -282,8 +283,9 @@
                                     <td><span *ngIf="credit.balance < 0">- </span><span>&#163;</span>{{ credit.balance | absolute }}</td>
                                     <td>{{ credit.status | capitalize | status }}</td>
                                 </tr>
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                         <br>
                         <button (click)="addCredits()" class="btn btn-success  submit-button" type="button">Add credits</button>
                     </div>
@@ -324,23 +326,25 @@
         <div class="col-sm">
             <form (ngSubmit)="onAddCredits()" [formGroup]="creditsForm">
                 <div class="form-group">
-                    <label>Amount</label>
-                    <select class="form-control" formControlName="type">
-                        <option value="">Select type</option>
+                    <label>Type</label>
+                    <select class="form-control" formControlName="type" [ngClass]="formUtils.handleValidationStateClass(creditsForm, 'type')">
                         <option value="DEBIT">Debit</option>
                         <option value="CREDIT">Credit</option>
                     </select>
+                    <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(creditsForm, 'type', creditsMessages) }} </span>
                 </div>
                 <div class="form-group">
                     <label>Amount</label>
-                    <input type="text" class="form-control" formControlName="amount" placeholder="Amount">
+                    <input type="text" class="form-control" formControlName="amount" placeholder="Amount" [ngClass]="formUtils.handleValidationStateClass(creditsForm, 'amount')">
+                    <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(creditsForm, 'amount', creditsMessages) }} </span>
                 </div>
                 <div class="form-group">
                     <label>Description</label>
-                    <textarea class="form-control" formControlName="description" placeholder="Description" rows="5"></textarea>
+                    <textarea class="form-control" formControlName="description" placeholder="Description" rows="5" [ngClass]="formUtils.handleValidationStateClass(creditsForm, 'description')"></textarea>
+                    <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(creditsForm, 'description', creditsMessages) }} </span>
                 </div>
 
-                <button type="submit" class="btn btn-success">Add</button>
+                <button type="submit" class="btn btn-success" [disabled]="!creditsForm.valid || inProgress">Add</button>
                 <div class="invalid-feedback">{{ modalError }}</div>
             </form>
         </div>

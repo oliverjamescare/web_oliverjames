@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()">
 
             <button class="btn btn-success add-job" (click)="onAddJob()" type="button">Add job</button>
 
@@ -19,7 +19,15 @@
                         <div class="form-group">
                             <label>Start date</label>
                             <br>
-                            <p-calendar formControlName="start_date" [showIcon]="true" dateFormat="yy-mm-dd" showTime="true" hourFormat="12" [showOtherMonths]="false" [minDate]="now"></p-calendar>
+                            <p-calendar
+                                formControlName="start_date"
+                                [showIcon]="true"
+                                dateFormat="yy-mm-dd"
+                                showTime="true"
+                                hourFormat="12"
+                                [showOtherMonths]="false"
+                                [minDate]="now"
+                            ></p-calendar>
                             <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form.get('jobs').controls[i], 'start_date', jobFormMessages) }} </span>
                         </div>
                     </div>
@@ -27,7 +35,16 @@
                         <div class="form-group">
                             <label>End date</label>
                             <br>
-                            <p-calendar formControlName="end_date" [showIcon]="true" dateFormat="yy-mm-dd" showTime="true" hourFormat="12" [showOtherMonths]="false" [minDate]="form.get('jobs').controls[i].get('start_date').value" [maxDate]="maxJobDuration(form.get('jobs').controls[i].get('start_date').value)"></p-calendar>
+                            <p-calendar
+                                formControlName="end_date"
+                                [showIcon]="true"
+                                dateFormat="yy-mm-dd"
+                                showTime="true"
+                                hourFormat="12"
+                                [showOtherMonths]="false"
+                                [minDate]="form.get('jobs').controls[i].get('start_date').value"
+                                [maxDate]="maxJobDuration(form.get('jobs').controls[i].get('start_date').value)"
+                            ></p-calendar>
                             <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form.get('jobs').controls[i], 'end_date', jobFormMessages) }} </span>
                         </div>
                     </div>
@@ -135,6 +152,7 @@
                         <input type="file" (change)="onFileChange($event)" >
                         <input type="text" class="form-control" class="d-none" formControlName="floor_plan">
                         <span class="invalid-feedback"> {{ formUtils.handleValidationErrorMessage(form, 'floor_plan', messages) }} </span>
+                        <a *ngIf="careHome.care_home.general_guidance.floor_plan" href="{{ careHome.care_home.general_guidance.floor_plan }}?access-token={{token}}" class="green" target="_blank">Floor plan</a>
                     </div>
                 </div>
             </div>

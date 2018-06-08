@@ -6,6 +6,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
 import { JobsService } from '../../../../services/jobs.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { CareHomesService } from '../../../../services/care-homes.service';
+import { User } from '../../../../models/user.model';
+import { AuthService } from '../../../../services/auth.service';
 
 @Component({
     selector: 'app-add-job',
@@ -15,6 +18,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class AddJobComponent implements OnInit
 {
     careHomeId: string;
+    careHome: User;
+    token: string;
 
     //floor plan
     floorPlanFile: File;
@@ -96,19 +101,33 @@ export class AddJobComponent implements OnInit
         },
     ];
 
-    constructor( private route: ActivatedRoute, private notificationService: NotificationsService, private router: Router, private jobsService: JobsService) {}
+    constructor(
+        private route: ActivatedRoute,
+        private notificationService: NotificationsService,
+        private router: Router,
+        private jobsService: JobsService,
+        private authService: AuthService,
+        private careHomesService: CareHomesService
+    ) {}
 
     ngOnInit()
     {
-        //getting care home
+        //getting access token
+        this.token = this.authService.getAccessToken();
+
+        //getting care home id
         this.route
             .params
             .subscribe(params => {
                     this.careHomeId = params['id'];
+
+                    //getting care home and creating form
+                    this.careHomesService.getCareHome(this.careHomeId).subscribe((careHome: User) => {
+                        this.careHome = careHome;
+                        this.createForm();
+                    })
                 }
             );
-
-        this.createForm();
     }
 
     onSubmit()
@@ -141,13 +160,13 @@ export class AddJobComponent implements OnInit
                 role: new FormControl(null, Validators.required),
                 notes: new FormControl(null),
             })]),
-            gender_preference: new FormControl("No preference"),
+            gender_preference: new FormControl(this.careHome.care_home.gender_preference),
             floor_plan: new FormControl(null),
-            parking: new FormControl(null),
-            notes_for_carers: new FormControl(null),
-            emergency_guidance: new FormControl(null),
-            report_contact: new FormControl(null),
-            superior_contact: new FormControl(null)
+            parking: new FormControl(this.careHome.care_home.general_guidance.parking),
+            notes_for_carers: new FormControl(this.careHome.care_home.general_guidance.notes_for_carers),
+            emergency_guidance: new FormControl(this.careHome.care_home.general_guidance.emergency_guidance),
+            report_contact: new FormControl(this.careHome.care_home.general_guidance.report_contact),
+            superior_contact: new FormControl(this.careHome.care_home.general_guidance.superior_contact)
         });
 
         const jobForm = (<FormArray>this.form.get("jobs")).controls[0];

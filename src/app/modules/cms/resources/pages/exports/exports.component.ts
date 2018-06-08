@@ -62,9 +62,14 @@ export class ExportsComponent implements OnInit {
     }
 
     ngOnInit() {
+
+        const to = new Date();
+        const from = new Date();
+        from.setDate(from.getDate() - 7);
+
         this.formExport = new FormGroup({
-            from: new FormControl(null, [invalidDate]),
-            to: new FormControl(null, [invalidDate]),
+            from: new FormControl(from, [invalidDate]),
+            to: new FormControl(to, [invalidDate]),
             collection: new FormControl('jobs', [Validators.required]),
         });
     }

@@ -6,9 +6,9 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DatesService } from '../../../../services/dates.service';
 import { isUndefined } from 'util';
 import { NotificationsService } from 'angular2-notifications';
-import { getMessageError } from '../../../../../../utilities/form.utils';
+import { getMessageError, handleValidationErrorMessage, handleValidationStateClass } from '../../../../../../utilities/form.utils';
 import { HttpErrorResponse } from '@angular/common/http';
-import { numbers } from '../../../../../../utilities/validators';
+import { greaterThan, numbers } from '../../../../../../utilities/validators';
 import { AddressDetail } from '../../../../../web/models/address/address-detail.model';
 
 @Component({
@@ -21,6 +21,7 @@ export class CarerDetailsComponent implements OnInit
     carerId: string;
     carerDetails: CarerDetailsResponse;
     form: FormGroup;
+    formUtils = { handleValidationStateClass, handleValidationErrorMessage };
 
     buttonLoading = false;
     showFileUploader = false;
@@ -52,7 +53,46 @@ export class CarerDetailsComponent implements OnInit
     genders: Array<string> = [
         "Male",
         "Female"
-    ]
+    ];
+
+    deductionsMessages = [
+        {
+            field: 'amount',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'Amount is required'
+                },
+                {
+                    error: 'numbers',
+                    message: 'Amount must be numeric value'
+                },
+                {
+                    error: 'greaterThan',
+                    message: 'Amount must be greater than 0'
+                }
+            ]
+        },
+        {
+            field: 'type',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'Type is required'
+                }
+            ]
+        },
+        {
+            field: 'description',
+            errors: [
+                {
+                    error: 'required',
+                    message: 'Description is required'
+                }
+            ]
+        }
+    ];
+
 
     constructor(private carersService: CarersService,
                 private route: ActivatedRoute,
@@ -71,12 +111,10 @@ export class CarerDetailsComponent implements OnInit
 
         //deduction form init
         this.deductionForm = new FormGroup({
-            amount: new FormControl(''),
-            type: new FormControl(''),
-            description: new FormControl('')
+            amount: new FormControl(0, [ Validators.required, numbers, greaterThan(0)  ]),
+            type: new FormControl("DEBIT", [ Validators.required ]),
+            description: new FormControl(null, [ Validators.required ])
         });
-
-
     }
 
 
@@ -107,18 +145,21 @@ export class CarerDetailsComponent implements OnInit
     {
         if (this.deductionForm.valid)
         {
+            this.inProgress = true;
             this.carersService
                 .addDeduction(this.carerId, this.deductionForm.value)
                 .subscribe(() =>
                     {
                         $('#deduction').modal('hide');
                         this.modalError = '';
+                        this.inProgress = false;
                         this.deductionForm.reset();
                         this.getCarerDetails();
                     },
                     (error: HttpErrorResponse) =>
                     {
                         this.modalError = getMessageError(error);
+                        this.inProgress = false;
                     });
         }
     }
@@ -272,6 +313,14 @@ export class CarerDetailsComponent implements OnInit
             address_line_2: new FormControl(this.carerDetails.address.address_line_2),
             city: new FormControl(this.carerDetails.address.city, Validators.required),
         });
+
+        //status handle
+        this.form.get('status')
+            .valueChanges
+            .subscribe((status: string) => {
+                if(status == "ACTIVE")
+                    this.form.get('banned_until').patchValue(null);
+            })
     }
 
     private prepareDetailsToUpdate(): void
@@ -336,5 +385,11 @@ export class CarerDetailsComponent implements OnInit
         this.carerDetails.address.address_line_1 = this.form.get('address_line_1').value;
         this.carerDetails.address.company = this.form.get('company').value;
         this.carerDetails.address.postal_code = this.form.get('postal_code').value;
+    }
+
+    //ban selected
+    onBanSelected()
+    {
+        this.form.get('status').patchValue("BANNED");
     }
 }
