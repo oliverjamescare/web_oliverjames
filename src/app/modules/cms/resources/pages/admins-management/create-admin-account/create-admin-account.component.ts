@@ -102,7 +102,7 @@ export class CreateAdminAccountComponent implements OnInit {
                 },
                 {
                     error: 'pattern',
-                    message: 'Spaces is not allowed, field can contain only alphabetical characters'
+                    message: 'Field can contain only alphabetical characters'
                 }
             ]
         },
@@ -123,7 +123,7 @@ export class CreateAdminAccountComponent implements OnInit {
                 },
                 {
                     error: 'pattern',
-                    message: 'Spaces is not allowed, field can contain only alphabetical characters'
+                    message: 'Field can contain only alphabetical characters'
                 }
             ]
         },
@@ -140,8 +140,8 @@ export class CreateAdminAccountComponent implements OnInit {
     createAdminForm() {
         this.form = new FormGroup({
             email: new FormControl(null, [Validators.required, Validators.email]),
-            first_name: new FormControl(null, [Validators.required, Validators.pattern('^[A-z]+$')]),
-            surname: new FormControl(null, [Validators.required, Validators.pattern('^[A-z]+$')]),
+            first_name: new FormControl(null, [Validators.required, Validators.pattern('^[a-zA-Z\\s]*$')]),
+            surname: new FormControl(null, [Validators.required, Validators.pattern('^[a-zA-Z\\s]*$')]),
             password: new FormControl(null, [Validators.required, Validators.minLength(6), password]),
             password_confirm: new FormControl(null, [Validators.required]),
         });

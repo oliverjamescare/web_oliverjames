@@ -233,7 +233,7 @@
                         <td>
                             <span *ngIf="!editMode">{{ jobDetails?.summary_sheet.voluntary_deduction}}</span>
                             <div class="form-group" *ngIf="editMode">
-                                <input type="text" formControlName="voluntary_deduction" class="form-control" [ngClass]="formUtils.handleValidationStateClass(form, 'voluntary_deduction')">
+                                <input type="text" trim="blur" formControlName="voluntary_deduction" class="form-control" [ngClass]="formUtils.handleValidationStateClass(form, 'voluntary_deduction')">
                                 <span class="invalid-feedback">{{ formUtils.handleValidationErrorMessage(form, 'voluntary_deduction', messages) }} </span>
                             </div>
                         </td>

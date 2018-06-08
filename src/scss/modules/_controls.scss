@@ -1,19 +1,18 @@
 //text input and cms calendar input
-.ui-calendar
-{
-    width: 94%;
-}
-.ui-calendar.ui-calendar-w-btn input
-{
-    width: 100%;
+.ui-calendar {
+  width: 94%;
 }
 
-.form-control, .ui-calendar.ui-calendar-w-btn input{
+.ui-calendar.ui-calendar-w-btn input {
+  width: 100%;
+}
+
+.form-control, .ui-calendar.ui-calendar-w-btn input {
   border-radius: 0;
   border: 2px solid $light-grey-color;
   color: $grey-brown-color;
-  padding: 5px;
-  text-align: center;
+  padding: 5px 10px;
+  text-align: left;
   overflow: hidden;
   &:focus {
     border-color: $light-grey-color;
@@ -36,6 +35,12 @@
   //        box-shadow: 0 0 0 0.2rem rgba($red-color, 0.25);
   //    }
   //}
+}
+
+textarea.form-control {
+  overflow-y: auto;
+  text-align: left;
+
 }
 
 //custom controls
