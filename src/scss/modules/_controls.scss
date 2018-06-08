@@ -11,8 +11,8 @@
   border-radius: 0;
   border: 2px solid $light-grey-color;
   color: $grey-brown-color;
-  padding: 5px 10px;
-  text-align: left;
+  padding: 5px;
+  text-align: center;
   overflow: hidden;
   &:focus {
     border-color: $light-grey-color;
@@ -37,11 +37,7 @@
   //}
 }
 
-textarea.form-control {
-  overflow-y: auto;
-  text-align: left;
 
-}
 
 //custom controls
 .custom-control {
