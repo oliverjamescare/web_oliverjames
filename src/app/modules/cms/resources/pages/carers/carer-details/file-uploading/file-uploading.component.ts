@@ -78,22 +78,25 @@ export class FileUploadingComponent implements OnInit, AfterViewInit, OnChanges 
         const files = this.filesToUpload;
         console.log(files);
 
-        for (let i = 0; i < files.length; i++) {
-            formData.append('files', files[i], files[i]['name']);
+        if(files && files.length)
+        {
+            for (let i = 0; i < files.length; i++)
+                formData.append('files', files[i], files[i]['name']);
+
+            this.carersService.uploadCarerResources(this.carerId, this.resourceName, formData)
+                .subscribe(
+                    response => {
+                        this.buttonLoading = false;
+                        $('#' + this.type + '_id').modal("hide");
+                        this.notificationService.success('Files uploaded successfully');
+                        this.reload.emit();
+                    },
+                    error => {
+                        console.log('Upload files error response', error);
+                        this.buttonLoading = false;
+                    }
+                );
         }
-        this.carersService.uploadCarerResources(this.carerId, this.resourceName, formData)
-            .subscribe(
-                response => {
-                    this.buttonLoading = false;
-                    $('#' + this.type + '_id').modal("hide");
-                    this.notificationService.success('Files uploaded successfully');
-                    this.reload.emit();
-                },
-                error => {
-                    console.log('Upload files error response', error);
-                    this.buttonLoading = false;
-                }
-            );
     }
 
     onDeleteFile(): void {

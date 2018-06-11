@@ -7,14 +7,11 @@
                     <span (click)="onOpenPopup(file, i)" class="right"><i class="fa fa-times"></i></span>
                 </li>
             </ul>
-            <input type="file"
-                   id="file"
-                   multiple
-                   class="form-control floor-plan"
-                   (change)="handleFileInput($event.target.files)">
+            <input type="file" id="file" multiple class="floor-plan" (change)="handleFileInput($event.target.files)">
             <span *ngFor="let error of uploadErros" class="input-error">{{ error }}</span>
             <br>
-            <button (click)="onFilesUpload()" class="btn btn-success">Upload files <span *ngIf="buttonLoading"><i class="fa fa-spinner fa-spin"></i></span></button>
+            <br>
+            <button (click)="onFilesUpload()" class="btn btn-success" [disabled]="!filesToUpload || !filesToUpload.length">Upload files <span *ngIf="buttonLoading"><i class="fa fa-spinner fa-spin"></i></span></button>
         </div>
     </div>
 </app-cms-popup>

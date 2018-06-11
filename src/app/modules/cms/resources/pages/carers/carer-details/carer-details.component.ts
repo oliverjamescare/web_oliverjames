@@ -228,7 +228,7 @@ export class CarerDetailsComponent implements OnInit
             case 'dbs':
             {
                 this.files = this.carerDetails.carer.dbs.files;
-                this.uploadTitle = 'Dbs photo record';
+                this.uploadTitle = 'DBS photo record';
                 break;
             }
             case 'reference':

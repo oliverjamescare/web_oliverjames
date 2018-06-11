@@ -72,7 +72,7 @@ export class CareHomesService
 
         Object.keys(form.value).forEach(key => {
             if(key != "floor_plan")
-                formData.append(key, form.get(key).value);
+                formData.append(key, form.get(key).value != null ? form.get(key).value : "");
         });
 
         if(floorPlan)
